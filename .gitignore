@@ -24,7 +24,7 @@ yarn-error.log
 /.vscode
 .git-ftp-ignore
 
-
+/app/Providers/AppServiceProvider.php
 #luego de modificar usar lo siguiente
 #git rm -rf --cached .
 #y tambien

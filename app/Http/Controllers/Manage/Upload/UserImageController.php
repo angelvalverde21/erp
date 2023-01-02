@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\manage\upload;
+namespace App\Http\Controllers\Manage\Upload;
 
 use App\Http\Controllers\Controller;
 use App\Models\Carousel;
