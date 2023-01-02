@@ -3,7 +3,7 @@
 use App\Http\Controllers\Manage\Print\Order\PdfController;
 use App\Http\Controllers\Manage\ProductController;
 use App\Http\Controllers\Manage\Upload\OrderController;
-use App\Http\Controllers\manage\upload\UserImageController;
+use App\Http\Controllers\Manage\Upload\UserImageController;
 use App\Http\Livewire\Manage\Customers\CreateCustomer;
 use App\Http\Livewire\Manage\Customers\EditCustomer;
 use App\Http\Livewire\Manage\Customers\ShowCustomers;

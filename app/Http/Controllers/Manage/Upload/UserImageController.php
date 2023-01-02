@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Manage\Upload;
+namespace App\Http\Controllers\Manage\Uploadx;
 
 use App\Http\Controllers\Controller;
 use App\Models\Carousel;
@@ -38,7 +38,6 @@ class UserImageController extends Controller
         $carousel->image = $url;
 
         $carousel->save();
-
 
     }
 }
