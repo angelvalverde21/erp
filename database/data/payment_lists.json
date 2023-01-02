@@ -1,0 +1,8 @@
+[
+	{"id":"1","name":"efectivo","title":"EFECTIVO"},
+	{"id":"2","name":"visa","title":"TARJETA VISA"},
+	{"id":"3","name":"master","title":"TARJETA MASTER"},
+	{"id":"4","name":"yape","title":"YAPE"},
+	{"id":"5","name":"plin","title":"PLIN"},
+	{"id":"6","name":"transfer_depos","title":"TRANSFERENCIA / DEPOSITO"}
+]

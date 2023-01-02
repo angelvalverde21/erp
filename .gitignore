@@ -1,0 +1,31 @@
+#erp.zip
+#erp.7z
+#node_modules.zip
+#node_modules.7z
+#vendor.zip
+#vendor.7z
+#public.zip
+#public.7z
+/git-ftp.git
+/node_modules
+/public*
+/storage/*.key
+/vendor
+/extras_ang
+.env
+.env.backup
+.phpunit.result.cache
+docker-compose.override.yml
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/.idea
+/.vscode
+.git-ftp-ignore
+
+
+#luego de modificar usar lo siguiente
+#git rm -rf --cached .
+#y tambien
+#git add .

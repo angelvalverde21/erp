@@ -1,0 +1,13 @@
+[
+	{"id":"1","payment_method_id":"1","payment_list_id":"1"},
+	{"id":"2","payment_method_id":"1","payment_list_id":"2"},
+	{"id":"3","payment_method_id":"1","payment_list_id":"3"},
+	{"id":"4","payment_method_id":"1","payment_list_id":"4"},
+	{"id":"5","payment_method_id":"1","payment_list_id":"5"},
+	{"id":"6","payment_method_id":"1","payment_list_id":"6"},
+	{"id":"7","payment_method_id":"2","payment_list_id":"2"},
+	{"id":"8","payment_method_id":"2","payment_list_id":"3"},
+	{"id":"9","payment_method_id":"2","payment_list_id":"4"},
+	{"id":"10","payment_method_id":"2","payment_list_id":"5"},
+	{"id":"11","payment_method_id":"2","payment_list_id":"6"}
+]

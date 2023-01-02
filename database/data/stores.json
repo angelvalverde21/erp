@@ -1,0 +1,13 @@
+[
+	{"id":"1","name":"Polos de algodon","slug":"","image":"","category_id":"2","has_color":"1","has_size":"1"},
+	{"id":"2","name":"Chompas","slug":"","image":"","category_id":"2","has_color":"1","has_size":"1"},
+	{"id":"3","name":"Casacas","slug":"","image":"","category_id":"2","has_color":"1","has_size":"1"},
+	{"id":"4","name":"Poleras de algodon","slug":"","image":"","category_id":"2","has_color":"1","has_size":"1"},
+	{"id":"5","name":"Joggers","slug":"","image":"","category_id":"2","has_color":"1","has_size":"1"},
+	{"id":"6","name":"Blazers","slug":"","image":"","category_id":"2","has_color":"1","has_size":"1"},
+	{"id":"7","name":"vestidos","slug":"","image":"","category_id":"2","has_color":"1","has_size":"1"},
+	{"id":"8","name":"faldas","slug":"","image":"","category_id":"2","has_color":"1","has_size":"1"},
+	{"id":"9","name":"chompas de hilo","slug":"","image":"","category_id":"2","has_color":"1","has_size":"1"},
+	{"id":"10","name":"capas de algodon","slug":"","image":"","category_id":"2","has_color":"1","has_size":"1"},
+	{"id":"11","name":"capas tejidas","slug":"","image":"","category_id":"2","has_color":"1","has_size":"1"}
+]

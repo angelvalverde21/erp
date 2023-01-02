@@ -1,0 +1,18 @@
+[
+	{"id":"1","name":"Ninguno","slug":"ninguno","has_color":"1","has_size":"1"},
+	{"id":"2","name":"Ropa Mujeres","slug":"ropa-para-mujeres","has_color":"1","has_size":"1"},
+	{"id":"3","name":"Ropa Hombres","slug":"ropa-para-hombres","has_color":"1","has_size":"1"},
+	{"id":"4","name":"Calzado para mujeres","slug":"calzado-para-mujeres","has_color":"1","has_size":"1"},
+	{"id":"5","name":"Calzado para hombres","slug":"calzado-para-hombres","has_color":"1","has_size":"1"},
+	{"id":"6","name":"Accesorios","slug":"accesorios","has_color":"1","has_size":"1"},
+	{"id":"7","name":"Ropa mascotas","slug":"ropa-para-mascotas","has_color":"1","has_size":"1"},
+	{"id":"8","name":"Poleras de algodon","slug":"poleras-de-algodon","category_id":"2","has_color":"1","has_size":"1"},
+	{"id":"9","name":"Casacas","slug":"casacas","category_id":"2","has_color":"1","has_size":"1"},
+	{"id":"10","name":"Tejidas","slug":"tejidas","category_id":"9","has_color":"1","has_size":"1"},
+	{"id":"11","name":"Con forro interior","slug":"con-forro-interior","category_id":"10","has_color":"1","has_size":"1"},
+	{"id":"12","name":"Pantalones","slug":"pantalones","category_id":"3","has_color":"1","has_size":"1"},
+	{"id":"13","name":"Capas","slug":"capas","category_id":"2","has_color":"1","has_size":"1"},
+	{"id":"14","name":"Tejidas","slug":"tejidas","category_id":"13","has_color":"1","has_size":"1"},
+	{"id":"15","name":"De franela","slug":"de-franela","category_id":"13","has_color":"1","has_size":"1"},
+	{"id":"16","name":"De french terry","slug":"de-french-terry","category_id":"13","has_color":"1","has_size":"1"}
+]

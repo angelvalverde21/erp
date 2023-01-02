@@ -1,0 +1,9 @@
+[
+	{"id":"1","name":"LINA VALVERDE AYAMAMANI","dni":"40181896","phone":"991495052","primary":"MZ V LT 1","secondary":"URB. Villas de Oquendo","references":"ALTURA PUENTE AJINOMOTO","user_id":"7","district_id":"70101"},
+	{"id":"2","name":"JORDY VASQUEZ VALVERDE","dni":"40181896","phone":"991495052","primary":"MZ V LT 1","secondary":"URB. Villas de Oquendo","references":"ALTURA PUENTE AJINOMOTO","user_id":"7","district_id":"70101"},
+	{"id":"3","name":"CAMILA VASQUEZ VALVERDE","dni":"40181896","phone":"991495052","primary":"MZ V LT 1","secondary":"URB. Villas de Oquendo","references":"ALTURA PUENTE AJINOMOTO","user_id":"7","district_id":"70101"},
+	{"id":"4","name":"OLVA COURIER SAC","dni":"23645563","phone":"996352149","primary":"Izaguirre","secondary":"","references":"","user_id":"8","district_id":"70101"},
+	{"id":"5","name":"SHALOM SAC","dni":"22364563","phone":"886352149","primary":"Canta callao","secondary":"","references":"Al frente de totus","user_id":"9","district_id":"70101"},
+	{"id":"6","name":"Aquarella Ropa y Accesorios","dni":"00000003","phone":"5740124","primary":"Calle Larco 687","secondary":"Dpto 101","references":"Al frente de totus","user_id":"10","district_id":"70101"},
+	{"id":"7","name":"Vali Moda SAC","dni":"000000004","phone":"4840596","primary":"Avenida Arequipa 3425","secondary":"","references":"Altura de ATV","user_id":"11","district_id":"70101"}
+]
