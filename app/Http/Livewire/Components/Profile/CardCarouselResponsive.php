@@ -4,16 +4,15 @@ namespace App\Http\Livewire\Components\Profile;
 
 use App\Models\Carousel;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 
-class CardCarouselHome extends Component
+class CardCarouselResponsive extends Component
 {
 
     //Si los nombres no estan correctamente definidos no se enviara por wire:model
 
     protected $listeners = [
-        'refreshCarousel' => 'refreshCarousel',
+        'refreshCarouselMobile' => 'refreshCarouselMobile',
     ];
 
     public $carousel = [];
@@ -30,7 +29,7 @@ class CardCarouselHome extends Component
         
         //$this->carousel = Carousel::where('store_id',$this->store->id)->get();
 
-        foreach ($this->store->carousel as $carousel) {
+        foreach ($this->store->carouselMobile as $carousel) {
 
             # code...
             //$this->carousel es una variable a parte que ira al template
@@ -47,7 +46,7 @@ class CardCarouselHome extends Component
     public function saveAll(){
         //guardando todos los datos de una sola ves
         //ojo recorremos todo el carousel existente en la base de datos y luego guardamos uno por uno
-        foreach ($this->store->carousel as $carousel) {
+        foreach ($this->store->carouselMobile as $carousel) {
             $this->saveItem($carousel);
         }
 
@@ -72,7 +71,7 @@ class CardCarouselHome extends Component
     // {
     // }
 
-    public function refreshCarousel(){
+    public function refreshCarouselMobile(){
         
         Log::info("se termino de subir");
         $this->store = $this->store->fresh();
@@ -82,6 +81,7 @@ class CardCarouselHome extends Component
     public function render()
     {
         $store = $this->store;
-        return view('livewire.components.profile.card-carousel-home', compact('store'));
+        return view('livewire.components.profile.card-carousel-responsive', compact('store'));
     }
+
 }

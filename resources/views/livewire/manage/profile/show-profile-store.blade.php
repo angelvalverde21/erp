@@ -2,7 +2,7 @@
     {{-- <x-breadcrumbs title="Profile" /> --}}
     <x-breadcrumbs title="{{ $store->name }}" />
 
-    <x-sectioncontent>
+    {{-- <x-sectioncontent>
         <!-- Small boxes (Stat box) -->
         <div class="row">
             <div class="col-lg-3 col-6">
@@ -67,7 +67,7 @@
             <!-- ./col -->
         </div>
         <!-- /.row -->
-    </x-sectioncontent>
+    </x-sectioncontent> --}}
 
     <x-sectioncontent>
 

@@ -36,6 +36,7 @@ class UserImageController extends Controller
         $carousel->store_id = $user->id;
 
         $carousel->image = $url;
+        $carousel->type = $request->type;
 
         $carousel->save();
 

@@ -220,7 +220,12 @@ class User extends Authenticatable
 
     public function carousel(){
 
-        return $this->hasMany(Carousel::class,'store_id');
+        return $this->hasMany(Carousel::class,'store_id')->where('type','web');
+    }
+
+    public function carouselMobile(){
+
+        return $this->hasMany(Carousel::class,'store_id')->where('type','mobile');
     }
 
     public function getQrYapeAttribute($value){

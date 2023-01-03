@@ -9,7 +9,8 @@
                     <ul class="nav nav-pills">
                         <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Settings</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contacto" data-toggle="tab">Contacto</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#carousel" data-toggle="tab">Carousel</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#carousel" data-toggle="tab">Carousel Web</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#carousel-responsive" data-toggle="tab">Carousel Mobile</a></li>
                     </ul>
                 </div><!-- /.card-header -->
                 <div class="card-body">
@@ -80,7 +81,14 @@
                             
                         </div>
                         <!-- /.tab-pane -->
-
+                        
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="carousel-responsive">
+                            <!-- The timeline -->
+                            @livewire('components.profile.card-carousel-responsive', ['store' => $store] , key('card-carousel-responsive-home'))
+                            
+                        </div>
+                        <!-- /.tab-pane -->
                         <!-- /.tab-pane -->
                     </div>
                     <!-- /.tab-content -->

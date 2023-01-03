@@ -21,6 +21,7 @@ class CreateCarouselsTable extends Migration
             $table->string('sub_title')->nullable();
             $table->string('slug')->nullable();
             $table->string('image');
+            $table->string('type')->default('web');
             $table->unsignedBigInteger('store_id');
             $table->foreign('store_id')->references('id')->on('users');
 
