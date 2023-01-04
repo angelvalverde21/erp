@@ -67,6 +67,7 @@ class CardCarouselResponsive extends Component
         $this->store = $this->store->fresh();
         $this->emit('eliminado');
     }
+    
     // public function guardarItemCarousel(Carousel $carousel)
     // {
     // }

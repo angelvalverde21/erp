@@ -7,7 +7,7 @@
         <div class="col position-relative">
 
             <form method="POST" action="{{ route('manage.post.profile.carousel', [$store->nickname, 'carousel']) }}" class="dropzone" 
-                id="my-awesome-dropzone-images">
+                id="my-awesome-dropzone-images-web">
             </form> 
 
         </div>
@@ -78,13 +78,14 @@
 
     @push('script')
         <script>
-            Dropzone.options.myAwesomeDropzoneImages = {
+            Dropzone.options.myAwesomeDropzoneImagesWeb = {
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 dictDefaultMessage: "<div>Agregar fotos para la portada de este producto</div> <i class=\"fas fa-camera mt-15\" style=\"font-size: 18pt;\"></i>",
                 acceptedFiles: "image/*",
                 paramName: "file", // The name that will be used to transfer the file
+                params: {'type':'web'},
                 maxFilesize: 10, //10MB max, Tambien hemos agregado un validador en el servidor
                 complete: function(file) {
                     this.removeFile(file);

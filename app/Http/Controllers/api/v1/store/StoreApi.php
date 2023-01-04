@@ -45,6 +45,8 @@ class StoreApi extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Api para el Home
     public function show($nickname)
     {
 
@@ -70,21 +72,25 @@ class StoreApi extends Controller
         // "profile_photo_path": null,
         // "birthday": null,
 
-        $store = User::where('nickname',$nickname)->select(['id', 'name', 'email', 'phone', 'logo','wallet'])
-                            ->with('carousel')
-                            ->with('profile')
-                            ->with('offices')
-                            ->first();
-        return $store;
+        //Api para el Home
 
+        $store = User::where('nickname', $nickname)
+            ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
+            ->with('products')
+            ->with('carousel')
+            ->with('carouselMobile')
+            ->with('profile')
+            ->with('offices')
+            ->first();
+        return $store;
+        
     }
 
     public function carousel($nickname)
     {
 
-        $store = User::where('nickname',$nickname)->with('carousel')->first();
+        $store = User::where('nickname', $nickname)->with('carousel')->with('carouselMobile')->first();
         return $store->carousel;
-
     }
     /**
      * Show the form for editing the specified resource.

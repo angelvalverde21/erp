@@ -7,7 +7,7 @@
         <div class="col position-relative">
 
             <form method="POST" action="{{ route('manage.post.profile.carousel', [$store->nickname,'carousel']) }}" class="dropzone" 
-                id="my-awesome-dropzone-images">
+                id="my-awesome-dropzone-images-Mobile">
             </form> 
 
         </div>
@@ -77,7 +77,11 @@
 
     @push('script')
         <script>
-            Dropzone.options.myAwesomeDropzoneImages = {
+            // la variable
+            // myAwesomeDropzoneImagesMobile
+            // se relaciona con el id
+            // my-awesome-dropzone-images-Mobile
+            Dropzone.options.myAwesomeDropzoneImagesMobile = {
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
@@ -90,7 +94,7 @@
                     this.removeFile(file);
                 },
                 queuecomplete: function() {
-                    Livewire.emit('refreshCarousel');
+                    Livewire.emit('refreshCarouselMobile');
                 },
                 accept: function(file, done) {
                     if (file.name == "justinbieber.jpg") {
