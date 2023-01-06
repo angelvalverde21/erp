@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1\store;
 
 use App\Http\Controllers\Controller;
+use App\Models\ColorSize;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -39,6 +40,14 @@ class ProductApi extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function showStockColorSizeId($nickname, ColorSize $colorSize)
+    {
+        //
+        Log::info($colorSize);
+       
+        return response()->json(['status' => '200', 'stock' => $colorSize->quantity]);
+    }
+
     public function store(Request $request)
     {
         //

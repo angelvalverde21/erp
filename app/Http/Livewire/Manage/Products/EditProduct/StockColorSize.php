@@ -51,7 +51,7 @@ class StockColorSize extends Component
         $i = 0;
 
         foreach ($this->inputs as $item) {
-            if($this->inputs[$keys[$i]]['quantity']){
+            if($this->inputs[$keys[$i]]['quantity'] >= 0){
                 ColorSize::where('id', '=', $keys[$i])->update(array('quantity' => $this->inputs[$keys[$i]]['quantity'])); 
             }
             $i++;

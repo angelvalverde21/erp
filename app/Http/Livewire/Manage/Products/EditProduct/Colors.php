@@ -15,7 +15,6 @@ class Colors extends Component
     public $product;
     public $stock = [];
 
-
     protected $listeners = [
         'render'=>'render',
         'refreshColor'=>'refreshColor',
@@ -30,17 +29,24 @@ class Colors extends Component
         $this->product = $this->product->fresh();
     }
 
-    public function deleteColor(Color $colorPost){
+    public function deleteColor(Color $color){
 
-
-        Log::debug($colorPost);
+        Log::info('Imprimiendo datos del color');
+        
+        Log::debug($color);
 
         //Borra los archivos de la carpeta del servidor
-        Storage::delete([$colorPost->file_name]);
+        Log::info('Imprimiendo el nombre del archivo a eliminar');
+
+        Log::info($color->name);
+
+        Log::info('Borrando el archivo');
+        
+        Storage::delete([$color->name]);
 
         //Borra los registros de la base de datos
 
-        $color = Color::find($colorPost->id);
+        //$color = Color::find($colorPost->id);
 
         Log::debug($color);
 

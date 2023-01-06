@@ -34,6 +34,7 @@ Route::get('/', [StoreApi::class, 'show']);
 Route::get('/products', [ProductApi::class, 'index']);
 Route::get('/products/{id}', [ProductApi::class, 'show']);
 Route::get('/products/{id}/colors', [ProductColorApi::class, 'index']);
+Route::get('/products/color/size/stock/{colorSize}', [ProductApi::class, 'showStockColorSizeId']);
 
 //info store
 

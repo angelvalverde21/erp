@@ -62,7 +62,7 @@ class OrderController extends Controller
 
         return response()->json(
             $data = [
-                "message" => "se accedio con el token proporcionado ",
+                "message" => "Create order con login: se accedio con el token proporcionado ",
                 "user"=> $user
             ],
             // $status = 500
