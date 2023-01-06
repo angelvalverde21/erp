@@ -53,6 +53,7 @@ class ProductSeeder extends Seeder
                     'price' => '19.75',
                     'status' => '1',
                     'store_id' => $store_id,
+                    'owner_id' => 1,
                     'category_id' => '2',
                     'excerpt' => $obj->EXCERPT,
                     'created_at' => $obj->FECHA,

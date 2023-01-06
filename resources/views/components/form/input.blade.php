@@ -1,4 +1,4 @@
-@props(['wirevalue', 'type'=> 'text', 'icon' => '', 'texticon' => '', 'error' => '', 'label' => ''])
+@props(['wirevalue', 'type' => 'text', 'icon' => '', 'texticon' => '', 'error' => '', 'label' => '', 'debounce' => ''])
 
 @if ($label != '')
     <label for="" class="form-label">{{ $label }}</label>
@@ -9,30 +9,36 @@
         {{-- <label for="inputDni" class="form-label">DNI</label> --}}
 
         @if ($texticon != '' || $icon != '')
-        <div class="input-group-prepend">
-            <span class="input-group-text">
-                @if ($texticon != '')
-                    {{ $texticon }}
-                @else
-                    @if ($icon != '')
-                        <i class="{{ $icon }}"></i>
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    @if ($texticon != '')
+                        {{ $texticon }}
+                    @else
+                        @if ($icon != '')
+                            <i class="{{ $icon }}"></i>
+                        @endif
                     @endif
-                @endif
-            </span>
-        </div>
+                </span>
+            </div>
         @endif
 
-        <input type="{{ $type }}" class="form-control" wire:model="{{ $wirevalue }}" aria-describedby="nameHelp"
-            placeholder="{{ $slot }}">
+        @if ($debounce > 150)
+            <input type="{{ $type }}" class="form-control" wire:model.debounce.{{$debounce}}ms="{{ $wirevalue }}"
+                aria-describedby="nameHelp" placeholder="{{ $slot }}">
+        @else
+            <input type="{{ $type }}" class="form-control" wire:model="{{ $wirevalue }}"
+                aria-describedby="nameHelp" placeholder="{{ $slot }}">
+        @endif
+
+
     </div>
 
     @if ($error != '')
         @error($wirevalue)
-        <div class=" has-danger">
-            <span class="form-control-feedback">{{ $error }}</span>
-        </div>
+            <div class=" has-danger">
+                <span class="form-control-feedback">{{ $error }}</span>
+            </div>
         @enderror
     @endif
 
 </div>
-

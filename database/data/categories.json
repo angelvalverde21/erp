@@ -14,5 +14,6 @@
 	{"id":"13","name":"Capas","slug":"capas","category_id":"2","has_color":"1","has_size":"1"},
 	{"id":"14","name":"Tejidas","slug":"tejidas","category_id":"13","has_color":"1","has_size":"1"},
 	{"id":"15","name":"De franela","slug":"de-franela","category_id":"13","has_color":"1","has_size":"1"},
-	{"id":"16","name":"De french terry","slug":"de-french-terry","category_id":"13","has_color":"1","has_size":"1"}
+	{"id":"16","name":"De french terry","slug":"de-french-terry","category_id":"13","has_color":"1","has_size":"1"},
+	{"id":"17","name":"Polos","slug":"polos","category_id":"2","has_color":"1","has_size":"1"}
 ]

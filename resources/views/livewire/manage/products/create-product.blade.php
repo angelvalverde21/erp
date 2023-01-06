@@ -14,7 +14,7 @@
                         <div class="row p-t-20">
                             <div class="col-md-9">
 
-                                <x-form.input type="text" wirevalue="product.name"
+                                <x-form.input type="text" wirevalue="product.name" debounce="500"
                                     error="Este campo es requerido">
                                     Titulo
                                 </x-form.input>

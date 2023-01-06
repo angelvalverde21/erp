@@ -71,7 +71,8 @@ class CreateProduct extends Component
         $product->category_id = $this->product['category_id'];
         $product->price = $this->product['price'];
         $product->status = '1';
-        $product->owner_id = $this->store->id;
+        $product->owner_id = $this->user->id;
+        $product->store_id = $this->store->id;
 
         Log::info($product);
 
