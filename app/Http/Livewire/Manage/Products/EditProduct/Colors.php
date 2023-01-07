@@ -65,6 +65,8 @@ class Colors extends Component
 
         $this->product = $this->product->fresh();
 
+        $this->emit('eliminado');
+
     }
 
     public function render()

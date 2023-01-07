@@ -10,18 +10,26 @@ use Livewire\Component;
 class ShowProducts extends Component
 {
 
+    public $store; //si uso public esta variable lo podre usar en la plantilla
+    //private $store; //si uso private podre usar esta palabra pero con $this en la plantilla
+
     public function mount(){
         $this->store = Request::get('store');
+    }
+
+    public function deleteProduct(Product $product){
+
+        $product->delete();
+        $this->store->products = $this->store->products->fresh();
+        $this->emit('eliminado');
+
     }
 
     public function render()
     {
 
-        $store = $this->store;
-
-        $products = Product::where('status','1')->where('store_id',$this->store->id)->get();
-
-        return view('livewire.manage.products.show-products',compact('store','products'))->layout('layouts.manage');
+        $products = $this->store->products;
+        return view('livewire.manage.products.show-products',compact('products'))->layout('layouts.manage');
 
     }
 

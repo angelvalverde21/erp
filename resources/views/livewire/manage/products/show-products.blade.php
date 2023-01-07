@@ -70,7 +70,7 @@
                                     <div class="d-flex  justify-content-center">
                                         <a href="{{ route('manage.products.edit', [$store->nickname, $product->id]) }}"
                                             class="btn btn-success mr-2"><i class="fa-solid fa-pen-to-square"></i></a>
-                                        <a href="#" class="btn btn-secondary"><i
+                                        <a href="#" wire:click.prevent="deleteProduct({{ $product->id }})" class="btn btn-secondary"><i
                                                 class="fa-solid fa-trash"></i></a>
                                     </div>
                                 </td>

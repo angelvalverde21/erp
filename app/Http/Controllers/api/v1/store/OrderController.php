@@ -70,6 +70,7 @@ class OrderController extends Controller
         );
     }
 
+    //Registrar sin login
     public function createOneStep($nickname, Request $request)
     {
 
@@ -145,8 +146,6 @@ class OrderController extends Controller
             $buyer->saveOrFail();
             //una vez creado se asigna el rol de cliente
             $buyer->assignRole('buyer');
-
-            
 
             //Log::debug($accessToken);
             Log::debug('Usuario creado :' . $buyer);

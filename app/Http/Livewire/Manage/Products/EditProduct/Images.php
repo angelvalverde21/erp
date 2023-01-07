@@ -37,6 +37,8 @@ class Images extends Component
 
         //Actualizamos todo el producto
         $this->product = $this->product->fresh();
+
+        $this->emit('eliminado');
     }
 
     public function render()
