@@ -253,4 +253,8 @@ class User extends Authenticatable
         //apunto a la tabla orders pero en ves de ir con user_id por defecto le indico a la funcion que lo haga con store_id
         return $this->hasMany(Order::class,'store_id');
     }
+
+    public function myOrders(){
+        return $this->hasMany(Order::class,'buyer_id');
+    }
 }

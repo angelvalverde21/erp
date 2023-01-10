@@ -2,13 +2,9 @@
 
 namespace App\Http\Livewire\Manage\Orders;
 
-use App\Models\DeliveryMethod;
-use App\Models\Item;
 use App\Models\Order;
-use App\Models\PaymentMethod;
-use App\Models\User;
-use Livewire\Component;
 use Illuminate\Support\Facades\Log;
+use Livewire\Component;
 use Illuminate\Support\Facades\Request;
 
 class EditOrder extends Component
@@ -19,6 +15,8 @@ class EditOrder extends Component
     ];
 
     public $order, $item, $repartidores, $delivery_methods, $payment_methods, $show_card_shipping, $current;
+    public $store;
+    public $user;
 
     protected $rules = [
 
@@ -40,9 +38,7 @@ class EditOrder extends Component
         }else{
             abort(403);
         }
-
-
-        $this->user = User::find($this->order->buyer_id);
+        // $this->user = User::find($this->order->buyer_id);
     }
 
     //Como ya esta definida la podemos guardar
@@ -50,7 +46,6 @@ class EditOrder extends Component
     {
 
         // $product->name = $this->item->content->price;
-
         // if($this->item)
 
         $this->order->save();
@@ -76,7 +71,6 @@ class EditOrder extends Component
 
     public function test()
     {
-
         $this->emit('creado');
         $this->dispatchBrowserEvent('cerrar-modal', ['modalID' => '#editItem']);
     }
@@ -91,6 +85,12 @@ class EditOrder extends Component
        
 
         $order = $this->order;
+        
+        // Log::info('inicio de status');
+        
+        // Log::info($order->verify('pago_confirmado'));
+        
+        // Log::info('fin de status');
 
         return view('livewire.manage.orders.edit-order', compact('order'))->layout('layouts.manage');
     }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api\v1\store;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\ColorSize;
+use App\Models\Item;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -25,21 +27,88 @@ class OrderController extends Controller
 
     public function index($nickname)
     {
-        //
+        //show All
 
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($nickname, $id)
+    {
+        //
+        $store = User::where('nickname', $nickname)->first();
+
+        //User $store llama a la variable $nickname que viene en las rutas
+
+        $order = Order::where('id', $id)
+            ->with('address')
+            ->with('items')->first();
+
+        //despues de llamar a la coleccion le aplicamos las restricciones
+
+        /*********** este es un ejemplo  *********/
+        // $users = User::query()
+        //     ->join('location', 'users.id', '=', 'location.id')
+        //     ->join('user_technical_details', 'users.id', '=', 'user_technical_details.id')
+        //     ->get();
+        // foreach ($users as $user) {
+        //     $user->makeHidden(['password', 'OTP']);
+        // }
+        /****************************************/
+        
+        $order = $order->makeHidden(['observations_private', 'shipping_cost_to_carrier','shipping_cost_carrier']);
+
+        Log::info($order);
+
+        $user = Auth::user();
+
+        // $order = Order::where('id',$id)->where('buyer_id',$user->id)->where('store_id',$store->id)->first();
+
+        if ($order) {
+            return response()->json(
+                $data = [
+                    "message" => "se accedio con el token proporcionado ",
+                    "order" => $order
+                    // "order" => $order->makeHidden(['observations_private','shipping_cost_to_carrier'])
+                    //             ->with('address')->first()
+                    //Ojo para que funcione la inclusion colocar first() ya que la instancia solo trae una coleccion sino no funcionara
+                ],
+                // $status = 500
+                // $status = 200
+            );
+        } else {
+            return response()->json(
+                $data = [
+                    "message" => "Ha ocurrido un error al seleccionar la orden",
+                    "error" => 1,
+                    "order_id" => $order->id,
+                    "buyer_id" => $user->id,
+                    "store_id" => $store->id
+                ],
+                // $status = 500
+                // $status = 200
+            );
+        }
     }
 
     public function showAll($nickname)
     {
         //
+
+        $user = Auth::user();
+
         return response()->json(
             $data = [
                 "message" => "se accedio con el token proporcionado ",
+                "orders" => $user->myOrders
             ],
             // $status = 500
             // $status = 200
         );
-        
     }
 
     /**
@@ -52,18 +121,19 @@ class OrderController extends Controller
         //
     }
 
-    public function createOrder($nickname, Request $request){
+    public function createOrder($nickname, Request $request)
+    {
 
         $user = Auth::user();
-// $user = request()->user();
+        // $user = request()->user();
 
-// //Si usas una instancia de Request $request
-// $user = $request ->user();
+        // //Si usas una instancia de Request $request
+        // $user = $request ->user();
 
         return response()->json(
             $data = [
                 "message" => "Create order con login: se accedio con el token proporcionado ",
-                "user"=> $user
+                "user" => $user
             ],
             // $status = 500
             // $status = 200
@@ -97,9 +167,9 @@ class OrderController extends Controller
 
             $buyer->name = trim($request->name); //Elimina los espacios en blanco al incio y final
 
-            $userPhone = User::where('phone',str_replace(' ', '', $request->phone))->first();
+            $userPhone = User::where('phone', str_replace(' ', '', $request->phone))->first();
 
-            if($userPhone){
+            if ($userPhone) {
                 //Telefono ya existe
                 return response()->json(
                     $data = [
@@ -109,16 +179,15 @@ class OrderController extends Controller
                     // $status = 500
                     // $status = 200
                 );
-            }else{
+            } else {
                 $buyer->phone = str_replace(' ', '', $request->phone); //Elimina los espacios en blanco de toda la cadena
             }
 
-
-            $userDni = User::where('dni',$request->dni)->first();
+            $userDni = User::where('dni', $request->dni)->first();
 
             if ($request->dni) {
 
-                if($userDni){
+                if ($userDni) {
                     return response()->json(
                         $data = [
                             "error" => "500",
@@ -127,9 +196,9 @@ class OrderController extends Controller
                         // $status = 500
                         // $status = 200
                     );
-                }else{
+                } else {
                     $buyer->dni = str_replace(' ', '', $request->dni); //Elimina los espacios en blanco de toda la cadena
-                }   
+                }
             }
 
             if ($request->password) {
@@ -189,6 +258,83 @@ class OrderController extends Controller
 
                     Log::debug('Orden creado :' . $order);
 
+                    //Ahora Agregar los items del carrito de compras a la orden
+
+                    if ($request->order) {
+
+                        Log::info('imprimiendo todo el objeto');
+
+                        Log::info($request->order);
+
+                        foreach ($request->order as $itemOrder) {
+
+                            //ojo $itemOrder->color_size_id no funciona en el foreach
+                            //se tiene que usar $itemOrder['color_size_id']
+
+                            // Log::info('imprimiendo el item del obejto');
+
+                            // Log::info($itemOrder);
+
+                            // Log::info('imprimiendo el id');
+
+                            // Log::info($itemOrder['color_size_id']);
+
+                            // Log::info('imprimiendo el qty');
+
+                            // Log::info($itemOrder->qty);
+
+                            try {
+                                # code...
+                                //Recibiendo los parametros del formulario uno por uno
+
+                                //fin de recibiendo los parametros del formulario
+
+                                $colorSize = ColorSize::find($itemOrder['color_size_id']);
+
+                                $id = $colorSize->id;
+                                $talla = $colorSize->size->name;
+                                $imagenColor = $colorSize->color->image;
+                                $price = $colorSize->color->product->price;
+                                $qty = $itemOrder['qty'];
+
+                                $description = $colorSize->color->product->name;
+
+                                //Prapando el json content
+                                $content =             [
+                                    'color_size_id' => $id, //es el id del item que se agregara a la orden, este contiene el color y talla
+                                    'talla' => $talla, //name indica la talla
+                                    'image' => $imagenColor, //image indica la url de la imagen del colors
+                                    'price' => $price //Este sera el precio real que se le cobrara al cliente, por eso que se pone en el json
+                                    // Asi lo podremos variarar sin malograr la base de datos
+                                ];
+
+                                //Renombrando la variable
+                                $item = new Item();
+
+                                $item->quantity = $qty;
+
+                                $item->price = $price;
+                                $item->description = $description;
+                                $item->content = $content;
+                                $item->order_id = $order->id;
+
+                                $item->saveOrFail();
+
+                                actualizarStock($item->id, "separar"); //Separar quiere decir que descuente de la base de datos el pedido porque este es seguro para entrega
+
+                            } catch (\Exception $error) {
+                                return response()->json(
+                                    $data = [
+                                        "error" => "500",
+                                        "msg" => "Error al insertar los items de la orden",
+                                        "message_api" => $error->getMessage(),
+                                    ],
+                                    // $status = 500
+                                );
+                            }
+                        }
+                    }
+
                     //Hasta aqui todo se creo correctamente
 
                     //$accessToken = $buyer->createToken('authToken')->accessToken;
@@ -197,15 +343,14 @@ class OrderController extends Controller
                     if ($buyer->id && $order->id && $address->id) {
                         return response()->json(
                             $data = [
-                                "register"=>"success",
-                                "id"=> $order->id,
+                                "register" => "success",
+                                "id" => $order->id,
                                 "msg" => "se han creado los datos correctamente",
                                 "access_token" => $accessToken
                             ],
                             $status = 200
                         );
                     }
-
                 } catch (\Exception $error) {
                     return response()->json(
                         $data = [
@@ -237,7 +382,6 @@ class OrderController extends Controller
                 // $status = 500
             );
         }
-
     }
 
     /**
@@ -251,16 +395,6 @@ class OrderController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.

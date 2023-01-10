@@ -12,6 +12,7 @@ class ShowItemAll extends Component
 {
 
     public $stockReal;
+    public $order;
 
     protected $listeners = [
         'render' => 'render'

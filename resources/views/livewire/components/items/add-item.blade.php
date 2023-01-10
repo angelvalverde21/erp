@@ -107,7 +107,7 @@
                                                                     <td class="text-center"
                                                                         rowspan="{{ $loop->count }}">
                                                                         <img width="100"
-                                                                            src="{{ Storage::url($color->file_name) }}"
+                                                                            src="{{ $color->image }}"
                                                                             alt="">
                                                                     </td>
 
@@ -126,8 +126,8 @@
                                                                 {{-- Talla real --}}
                                                                 <td class="py-3">
 
-                                                                    {{ $size->name }} (color_size_id:
-                                                                    {{ $size->pivot->id }})
+                                                                    {{ $size->name }} 
+                                                                    {{-- (color_size_id: {{ $size->pivot->id }}) --}}
 
              
                                                                 </td>

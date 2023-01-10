@@ -40,7 +40,7 @@ Route::get('/products/color/size/stock/{colorSize}', [ProductApi::class, 'showSt
 
 Route::get('/carousel', [StoreApi::class, 'carousel']);
 Route::get('/offices', [StoreOfficeApi::class, 'index']);
-Route::get('/orders', [OrderController::class, 'showAll']);
+
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -49,6 +49,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/orders/create-one-step', [OrderController::class, 'createOneStep']);
 Route::post('/orders/create-order', [OrderController::class, 'createOrder']);
+Route::get('/orders', [OrderController::class, 'showAll']);
+Route::get('/orders/{order}', [OrderController::class, 'show']);
+
 
 Route::post('/register/verify-phone', [RegisterController::class, 'verifyPhone']);
 Route::post('/register/verify-dni', [RegisterController::class, 'verifyDni']);

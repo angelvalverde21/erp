@@ -18,6 +18,9 @@ class CardComprobantes extends Component
         'deletePhotoOrder' => 'deletePhotoOrder',
         'registrarCordenada' => 'registrarCordenada'
     ];
+
+    public $order;
+    public $store;
     
     public function mount(Order $order){
         $this->order = $order;
@@ -36,9 +39,26 @@ class CardComprobantes extends Component
     //Esta funcion viene de un emit
     public function deletePhotoOrder(Order $order, $deleteFunction){
        
+        //ejemplo setea el campo "photo_payment" a null y luego guarda el cambio
+        
+        
+
+        switch ($deleteFunction) {
+            case 'photo_payment':
+                $order->removeStatus('pago_confirmado');
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+
         $order[$deleteFunction] = null;
         $order->save();
+        
         $this->order = $this->order->fresh();
+
+        
         //Log::debug($order);
         //Log::debug($deleteFunction);
 

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 
 class Order extends Model
 {
@@ -19,6 +20,9 @@ class Order extends Model
     const DELIVERY = 2;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
+
+    //incluir accesores a la apis
+    protected $appends = ['total_final','total_mount','total_products','status_pago'];
 
     //Relacino uno a uno polimorfica
 
@@ -80,6 +84,7 @@ class Order extends Model
         //OJO order_id pertenece al modelo de Order.php y status_id es de la tabla foarenea
     }
 
+    
     public function getTotalProductsAttribute()
     {
         $items = Item::where('order_id', $this->id)->sum('quantity');
@@ -140,7 +145,6 @@ class Order extends Model
     //Plural
     public function getPaymentListsAttribute()
     {
-
         return PaymentList::all();
     }
 
@@ -149,11 +153,9 @@ class Order extends Model
     {
 
         $paymentListMethod = PaymentListMethod::find($this->payment_list_method_id);
-
         return PaymentList::find($paymentListMethod->payment_list_id);
+
     }
-
-
 
     public function getSubTotalAttribute()
     {
@@ -209,8 +211,74 @@ class Order extends Model
         }
     }
 
+    // public function status(){
+    //     return $this->belongsToMany(Status::class);
+    // }
+
+    public function getStatusPagoAttribute(){
+        return $this->verify('pago_confirmado');
+    }
+
+    public function verify($value = "null"){ //ojo cuando se crea un relacion aqui se debe llamar con el nombre de la funcion y ()
+
+        //$order_status = OrderStatus::where('order_id',$this->id)->where('status_id','15');
+        // $order_status = Order::where('id',$this->id)->with('status')->get();
+        
+        //$order_status = $this->belongsToMany(Status::class, 'order_status', 'order_id', 'status_id')->wherePivot('status_id','15')->get();
+        $order_status = $this->belongsToMany(Status::class, 'order_status', 'order_id', 'status_id')->where('name',$value)->first();
+
+        if($order_status){
+            return 1;
+        }else{
+            return 0;
+        }
+
+        // Log::info($order_status);
+        // Log::info($value);
+
+        // return $order_status;
+
+        // if($order_status->count() == 1){
+        //     return "pago_confirmado";
+        // }else{
+        //     return "pendiente_pago";
+        // }
+
+        // Log::info($this->status);
+
+        // $status = $this->belongsToMany(Status::class, 'order_status', 'order_id', 'status_id')->get();
+        
+        // $pago_confirmado = 2;
+
+        // Log::info($status);
+        
+        // foreach ($status as $fila) {
+        //     # code...
+        //     Log::info($fila);
+            
+        //     foreach ($fila as $key => $value) {
+        //         # code...
+        //         Log::info($value);
+                
+        //     }
+
+        // }
+
+
+
+        // foreach ($$his->status as $key => $value) {
+        //     # code... 
+        // }
+    
+        // if($order_status->count()==1){
+        //     return $order_status->
+        // }
+    }
+
     public function Addstatus(string $statusValue, $current)
     {
+
+        //$current es la url de donde proviene la peticion
 
         Log::info('OrderController: ' . $statusValue);
 
@@ -243,6 +311,22 @@ class Order extends Model
         }
     }
 
+    public function removeStatus(string $statusName){
+
+        if ($statusName) {
+
+            $status = Status::where('name', $statusName)->first();
+
+            $orderStatus = OrderStatus::where('order_id',$this->id)->where('status_id', $status->id);
+
+            $orderStatus->delete();
+
+        }else{
+            Log::info('App/Models/Order: Error al remover el status: '.$statusName);
+            
+        }
+    }
+
     //Las funciones que no tienen get y attribute son usadas de la forma $order->nombrefuncion()
     //Pero las que si tienen son usadas sin los parentesis
 
@@ -268,7 +352,6 @@ class Order extends Model
         }
     }
 
-
     //Relacion uno a muchos polimorfica
     public function coordinates()
     {
@@ -281,4 +364,6 @@ class Order extends Model
 
 
     }
+
+
 }

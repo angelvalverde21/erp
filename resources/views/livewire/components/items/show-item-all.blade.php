@@ -35,8 +35,7 @@
 
                                 </td>
                                 <td class="text-center">{{ $item->quantity }}</td>
-                                <td class="text-center"><img src="{{ Storage::url($item->content->file_name) }}"
-                                        height="75px" alt=""></td>
+                                <td class="text-center"><img src="{{ $item->content->image }}" height="75px" alt=""></td>
                                 <td>{{ $item->description }}</td>
                                 <td>{{ $item->talla_real }}</td>
                                 <td>{{ $item->talla_impresa }}</td>

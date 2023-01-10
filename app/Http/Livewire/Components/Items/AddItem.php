@@ -18,6 +18,8 @@ class AddItem extends Component
     public $search, $quantity_oversale = [], $qty, $product, $size;
     public $size_pivot, $sizepivot, $quantity = [];
     public $stock, $size_color, $showSelect;
+    public $order;
+    public $store;
 
     public function mount(Order $order){
 
@@ -30,7 +32,6 @@ class AddItem extends Component
     public function addItem($value){
 
         $color_size_id = $value;
-
 
         // Log::debug($this->order->id);
         // Log::debug($this->quantity[$value]);
@@ -46,16 +47,16 @@ class AddItem extends Component
         //y el titulo del producto
 
         $colorSize = ColorSize::find($color_size_id);
+
         $size_name = $colorSize->size->name;
-        $color_name = $colorSize->color->name;
-        $color_file_name = $colorSize->color->file_name;
+        $color_file_name = $colorSize->color->image;
         $description = $colorSize->color->product->name;
         $price = $colorSize->color->product->price;
 
         $content =             [
             'color_size_id'=>$color_size_id,
             'talla'=>$size_name,
-            'file_name'=>$color_file_name,
+            'image'=>$color_file_name,
             'price'=>$price
         ];
 

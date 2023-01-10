@@ -43,8 +43,8 @@ class ShowAddress extends Component
     {
 
         $address = $this->address;
-        Log::info('SE RENDERIZO EL COMPONENTE: ' . $address);
-        Log::info('el model es: ' . $this->model);
+        Log::info('ShowAddress.php: SE RENDERIZO EL COMPONENTE: ' . $address);
+        Log::info('ShowAddress.php: el model es: ' . $this->model);
         return view('livewire.components.addresses.show-address',compact('address'));
         
     }
