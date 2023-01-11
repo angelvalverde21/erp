@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1\store;
 
 use App\Http\Controllers\Controller;
+use App\Models\District;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -84,6 +85,24 @@ class StoreApi extends Controller
             ->first();
         return $store;
         
+    }
+
+    public function buscarDistritos(Request $request){
+
+        // $distritos = District::where('name', 'like','%'.$request->cadena.'%')->get();
+
+        $districts = District::with(['province.department'])
+                        ->where('name', 'like', '%' . $request->cadena . '%')
+                        ->orderBy('name', 'asc')
+                        ->limit(20)
+                        ->get();
+
+        $data = [
+            "message" => "buscando el distrito: ".$request->cadena,
+            "districts" => $districts
+        ];
+
+        return $data;
     }
 
     public function carousel($nickname)

@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Route;
 //url de la pagina de inicial 
 
 Route::get('/', [StoreApi::class, 'show']);
+Route::post('/buscar/distritos', [StoreApi::class, 'buscarDistritos']);
 
 // info del producto o catalogo
 
