@@ -62,4 +62,5 @@ Route::post('/login', [AuthController::class, 'login']);
 
 //Obtener token de pasarelas de pago
 
-Route::post('/token/izipay', [PayController::class, 'tokenIzipay']);
+Route::post('/izipay/token', [PayController::class, 'tokenIzipay']);
+Route::post('/izipay/registrarpago', [PayController::class, 'registrarPagoIzipay']);

@@ -51,6 +51,15 @@ class PayController extends Controller
 
     }
 
+    public function registrarPagoIzipay($nickname, Request $request){
+
+        $data = [
+            "status_order" => "PAGADO",
+        ];
+
+        return $data;
+    }
+
 
     // public function generatePreferenceId()
     // {
