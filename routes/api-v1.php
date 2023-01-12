@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\v1\AuthController;
 use App\Http\Controllers\api\v1\store\OrderController;
+use App\Http\Controllers\api\v1\store\PayController;
 use App\Http\Controllers\api\v1\store\ProductApi;
 use App\Http\Controllers\api\v1\store\ProductColorApi;
 use App\Http\Controllers\api\v1\store\RegisterController;
@@ -58,3 +59,7 @@ Route::post('/register/verify-phone', [RegisterController::class, 'verifyPhone']
 Route::post('/register/verify-dni', [RegisterController::class, 'verifyDni']);
 
 Route::post('/login', [AuthController::class, 'login']);
+
+//Obtener token de pasarelas de pago
+
+Route::post('/token/izipay', [PayController::class, 'tokenIzipay']);
