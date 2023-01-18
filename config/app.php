@@ -2,6 +2,13 @@
 
 return [
 
+    /* propiedad agregada para solucionar el error del pdf */
+
+    'public_path' => public_path(),
+
+    /* ya que el pdf quiere encontra la carpeta publica en erp_laravel/public*/
+    /* pero esta carpeta no se encuentra ahi*/
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
