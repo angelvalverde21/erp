@@ -19,18 +19,31 @@
     <script src="{{ mix('js/app.js') }}" defer></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-        // console.log(JSON.stringify(getPosition()));
-        getCurrent()
-            .then((position) => {
-                current = JSON.stringify(getCoordenadaSuccess(position));
-            })
-            .catch((error) => {
-                current = JSON.stringify(getCoordenadaError(error));
-                // console.log(JSON.stringify(getCoordenadaError(error)));
-            });
+    <style>
+        .dropzone {
+            border: 1.5px dashed #ccc !important;
+            padding: 0 !important;
+            min-height: 75px !important;
+            width: 100%;
+        }
 
-    </script>
+        .dropzone .dz-preview {
+            margin: 0px !important;
+        }
+
+        .dropzone .dz-message {
+            margin: 0;
+        }
+
+        .card {
+            border: 1px !important;
+        }
+
+        .dz-remove {
+            margin: 2px;
+            text-decoration: none;
+        }
+    </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
@@ -57,17 +70,18 @@
 
     @stack('script-header')
 
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    {{-- <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
 
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('admin-lte/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style_custom.css') }}">
     <!-- overlayScrollbars -->
 
 
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet"
-        href="{{ asset('admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
 
     <style>

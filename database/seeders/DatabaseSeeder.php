@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CollectMethod;
 use App\Models\DeliveryMethod;
 use App\Models\PaymentMethod;
 use Illuminate\Database\Seeder;
@@ -15,8 +16,6 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-
-
 
     function run()
     {
@@ -63,10 +62,11 @@ class DatabaseSeeder extends Seeder
                 $this->call(DeliveryMethodSeeder::class);
                 $this->call(PaymentListSeeder::class);
                 $this->call(PaymentListMethodSeeder::class);
+                $this->call(CollectMethodSeeder::class);
                 $this->call(OrderSeeder::class);
                 $this->call(StatusSeeder::class);
                 $this->call(CarouselSeeder::class);
-
-
+                $this->call(PaymentStatusSeeder::class);
+                $this->call(PaymentSeeder::class);
     }
 }

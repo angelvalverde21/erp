@@ -1,4 +1,4 @@
-@props(['wirevalue', 'icon' => '', 'texticon' => '', 'error' => '', 'label' => '', 'wirechange'=>''])
+@props(['wirevalue', 'id' => '', 'icon' => '', 'texticon' => '', 'error' => '', 'label' => '', 'wirechange'=>''])
 
 @if ($label != '')
     <label for="" class="form-label">{{ $label }}</label>
@@ -17,7 +17,7 @@
             @endif
         </label>
     </div>
-    <select class="custom-select" wire:model="{{ $wirevalue }}" wire:change="{{ $wirechange }}">
+    <select class="custom-select" id="{{ $id }}" wire:model="{{ $wirevalue }}" wire:change="{{ $wirechange }}">
         {{ $slot }}
     </select>
 

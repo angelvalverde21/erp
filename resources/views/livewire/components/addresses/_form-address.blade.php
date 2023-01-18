@@ -1,5 +1,5 @@
 {{-- ================================================================================== --}}
-{{-- ==== INICIO DEL INPUT DISTRITO QUE SOLO SERVIRARA PARA SELECCIONAR EL DISTRITO ====--}}
+{{-- ==== INICIO DEL INPUT DISTRITO QUE SOLO SERVIRARA PARA SELECCIONAR EL DISTRITO ==== --}}
 {{-- ================================================================================== --}}
 
 
@@ -23,8 +23,7 @@
 <div class="row">
 
     <div class="col-lg-12 col-12">
-        <x-form.input type="text" wirevalue="address.name" icon="fa-solid fa-user"
-            error="Este campo es requerido">
+        <x-form.input type="text" wirevalue="address.name" icon="fa-solid fa-user" error="Este campo es requerido">
             Nombre completo o Razon Social
         </x-form.input>
     </div>
@@ -58,7 +57,7 @@
 </div>
 
 {{-- ================================================================================== --}}
-{{-- ==== INICIO DEL INPUT DISTRITO QUE SOLO SERVIRARA PARA SELECCIONAR EL DISTRITO ====--}}
+{{-- ==== INICIO DEL INPUT DISTRITO QUE SOLO SERVIRARA PARA SELECCIONAR EL DISTRITO ==== --}}
 {{-- ================================================================================== --}}
 
 <div class="row">
@@ -66,20 +65,21 @@
     <div class="col-lg-12 col-12">
 
         @if (isset($form_type) && $form_type == 'update')
-            <div class="mb-3" wire:key="disctric-{{ $address->id }}"> 
-        @else
-            <div class="mb-3">  
+            <div class="mb-3" wire:key="disctric-{{ $address->id }}">
+            @else
+                <div class="mb-3">
         @endif
-        
+
         <input type="text" class="form-control" wire:model.debounce.250ms="namedistrict" aria-describedby="nameHelp"
             placeholder="Distrito">
 
         {{-- Elemento para fijar el valor del district_ id y activar el error por si el cliente no selecciona distrito --}}
-        
+
         @if (isset($form_type) && $form_type == 'update')
-            <input type="hidden" class="form-control" wire:model="address.district_id" wire:key="address-receibe-{{ $address->id }}">
+            <input type="hidden" class="form-control" wire:model="address.district_id"
+                wire:key="address-receibe-{{ $address->id }}">
         @else
-            <input type="hidden" class="form-control" wire:model="address.district_id">  
+            <input type="hidden" class="form-control" wire:model="address.district_id">
         @endif
 
         @error('address.district_id')
@@ -88,58 +88,59 @@
 
         {{-- FIN Elemento para fijar el valor del district_ id y activar el error por si el cliente no selecciona distrito --}}
 
-        <div class="resultados">
-            <ul>
+        <div class="">
+
+            <div class="list-group">
 
                 @if (is_array($districts) || is_object($districts))
 
                     @foreach ($districts as $district)
-                        <li><a href="#"
-                                wire:click.prevent="districtAdd('{{ $district->id }}')">{{ $district->name }}
-                                - {{ $district->province->name }} - Dpto.
-                                {{ $district->province->department->name }}</a>
-                        </li>
+                        <button type="button" wire:click="districtAdd('{{ $district->id }}')" class="list-group-item list-group-item-action">{{ $district->name }}
+                            - {{ $district->province->name }} - Dpto.
+                            {{ $district->province->department->name }}</button>
                     @endforeach
-                @endif
 
-            </ul>
-        </div>
+                @endif
+            </div>
 
         </div>
 
     </div>
+
+</div>
 </div>
 
 {{-- ================================================================================== --}}
-{{-- ===== FIN DEL INPUT DISTRITO QUE SOLO SERVIRARA PARA SELECCIONAR EL DISTRITO =====--}}
+{{-- ===== FIN DEL INPUT DISTRITO QUE SOLO SERVIRARA PARA SELECCIONAR EL DISTRITO ===== --}}
 {{-- ================================================================================== --}}
 
 
 <div class="row">
     <div class="col-lg-12 col-12">
         <hr>
-        <x-form.textarea label="Ingrese un url de google maps de su local" type="text" wirevalue="address.maps" icon="fa-solid fa-map-location">
+        <x-form.textarea label="Ingrese un url de google maps de su local" type="text" wirevalue="address.maps"
+            icon="fa-solid fa-map-location">
             Ingrese un url de google maps
         </x-form.textarea>
 
-        <x-form.input type="text" wirevalue="address.title" icon="fa-regular fa-user"  error="Este campo es requerido">
+        <x-form.input type="text" wirevalue="address.title" icon="fa-regular fa-user"
+            error="Este campo es requerido">
             Agregue un titulo a la direccion Ejemplo: Oficina Principal
         </x-form.input>
     </div>
 
 </div>
 {{-- =================================== --}}
-{{-- ===== CONTROLES DEL FORMULARIO =====--}}
+{{-- ===== CONTROLES DEL FORMULARIO ===== --}}
 {{-- =================================== --}}
 
 
 <div class="btn-controls">
 
 
-    
-    @if (isset($form_type) && $form_type == 'update' && !$selected)
 
-    {{-- {{ $selected }} --}}
+    @if (isset($form_type) && $form_type == 'update' && !$selected)
+        {{-- {{ $selected }} --}}
         <div class="col">
             <div class="float-right" wire:key="delete-address-{{ $address->id }}">
                 <button wire:click="deleteAddress({{ $address->id }})" wire:loading.attr="disabled"
@@ -160,5 +161,5 @@
 </div>
 
 {{-- ======================================= --}}
-{{-- ===== FIN CONTROLES DEL FORMULARIO =====--}}
+{{-- ===== FIN CONTROLES DEL FORMULARIO ===== --}}
 {{-- ======================================= --}}

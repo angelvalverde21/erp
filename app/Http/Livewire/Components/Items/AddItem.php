@@ -97,6 +97,7 @@ class AddItem extends Component
       
         $this->emitTo('components.items.show-item-all','render');
         $this->emitTo('manage.orders.edit-order.card-show-summary','render');
+        $this->emitTo('manage.orders.edit-order.card-show-invoice','render');
 
         //este emit necesita un listener
         $this->emit('creado');

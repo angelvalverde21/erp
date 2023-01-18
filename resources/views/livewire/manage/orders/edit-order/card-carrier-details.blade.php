@@ -2,8 +2,15 @@
     <div class="card">
 
         <div class="card-header">
-            <i class="fa-solid fa-truck mr-2"></i> Empresa a dejar
+
+            <div class="d-flex justify-content-between">
+                <div class="title">
+                    <i class="fa-solid fa-truck mr-2"></i> Empresa a dejar
+                </div>
+                <x-form.button-open-modal target="#editCarrierOrder" />
+            </div>
         </div>
+        
         <div class="card-body py-3">
 
             <li><h4>{{ $order->carrier_address->title }}</h4></li>
@@ -15,11 +22,6 @@
                 {{ $order->carrier_address->district->province->name }} -
                 {{ $order->carrier_address->district->province->department->name }}</li>
 
-        </div>
-
-        <div class="card-footer">
-            {{-- Levanta el modal --}}
-            <x-form.button-open-modal target="#editCarrierOrder" />
         </div>
 
     </div>

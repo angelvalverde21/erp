@@ -13,8 +13,8 @@ class ModalCarrierDetails extends Component
     protected $listeners = ['render'=>'render'];
 
     protected $rules = [
-        'order.delivery_man_id' => 'required',
-        'order.payment_list_method_id' => 'required',
+        // 'order.delivery_man_id' => 'required',
+        // 'order.payment_list_method_id' => 'required',
         'order.shipping_cost_carrier' => 'required',
         'order.shipping_cost_buyer' => 'required',
         'order.shipping_cost_to_carrier' => '',
@@ -35,7 +35,7 @@ class ModalCarrierDetails extends Component
     public function render()
     {
         $order = $this->order;
-        $this->paymentMethods = PaymentMethod::orderBy('name','asc')->get();
+        // $this->paymentMethods = PaymentMethod::orderBy('name','asc')->get();
 
         return view('livewire.manage.orders.edit-order.modal-carrier-details',compact('order'));
     }

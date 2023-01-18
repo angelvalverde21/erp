@@ -1,4 +1,4 @@
-@props(['orderid','store', 'field', 'wirekey', 'filename', 'iddrop', 'bg'=>'light'])
+@props(['orderid','store', 'field'=>"", 'wirekey', 'filename', 'iddrop', 'bg'=>'light', 'post'=>'manage.orders.upload'])
 
 <div class="card border-warning">
     <div class="card-header bg-{{ $bg }}">{{ $slot }}</div>
@@ -7,8 +7,13 @@
         {{-- Funcion para cargar la foto --}}
         <div wire:ignore class="" wire:key="{{ $wirekey }}">
 
-            <form method="POST" action="{{ route('manage.orders.upload', [ 'nickname'=> $store, 'order'=> $orderid, 'field'=> $field ]) }}" class="dropzone"
+            @if ($field)
+            <form method="POST" action="{{ route( $post , [ 'nickname'=> $store, 'order'=> $orderid, 'field'=> $field ]) }}" class=" d-flex justify-content-center p-2 dropzone"
                 id="{{ $iddrop }}">
+            @else
+            <form method="POST" action="{{ route( $post , [ 'nickname'=> $store, 'order'=> $orderid ]) }}" class=" d-flex justify-content-center p-2 dropzone"
+                id="{{ $iddrop }}">
+            @endif
 
             </form>
         </div>

@@ -24,7 +24,7 @@ class CardShowSummary extends Component
     public function render()
     {
         $order = $this->order;
-        $this->payment_methods = PaymentMethod::orderBy('name','asc')->get();
+        // $this->payment_methods = PaymentMethod::orderBy('name','asc')->get();
         return view('livewire.manage.orders.edit-order.card-show-summary',compact('order'));
     }
 }

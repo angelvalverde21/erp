@@ -1,6 +1,6 @@
 @props(['id', 'title' => '', 'footer'=>'', 'size' => '',])
 <div wire:ignore.self class="modal fade" id="{{ $id }}" tabindex="-1" aria-labelledby="{{ $id }}Label" aria-hidden="true" role="dialog"  style="display: none;">
-    <div class="modal-dialog modal-dialog-centered {{ $size }} modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered {{ $size }}" role="document">
         <div class="modal-content">
 
             <div class="modal-header">
@@ -20,7 +20,7 @@
                 {{ $footer }}
 
                 {{-- Boton para cerrar --}}
-                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
  
             </div>
         </div>

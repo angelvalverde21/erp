@@ -1,19 +1,4 @@
 <div class="row">
-    <style>
-        .dropzone {
-            width: 100%;
-            height: 75px;
-            min-height: 0px !important;
-        }
-
-        .dropzone .dz-message {
-            margin: 0;
-        }
-
-        .card{
-            border: 1px !important;
-        }
-    </style>
     {{-- Do your work, then step back. --}}
 
     <div class="col-lg-4 col-12">

@@ -1,0 +1,8 @@
+[
+	{"id":"1","name":"unpaid","title":"Pendiente de pago"},
+	{"id":"2","name":"failed","title":"Error al hacer el pago"},
+	{"id":"3","name":"expired","title":"Expirado"},
+	{"id":"4","name":"paid","title":"Pagado"},
+	{"id":"5","name":"refunding","title":"En proceso de reembolso"},
+	{"id":"6","name":"refunded","title":"Reembolsado"}
+]

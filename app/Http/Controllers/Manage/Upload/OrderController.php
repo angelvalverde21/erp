@@ -13,32 +13,150 @@ use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
-    public function uploadFileOrder($nickname, Order $order, $field, Request $request)
+    public function comprobantesEmpaque($nickname, Order $order, Request $request){
+        try {
+
+            $request->validate([
+                'file' => 'required|image|max:10240'  //10 megas
+            ]);
+
+            Log::info('se paso la validacion');
+            Log::info($request);
+            $image = Storage::put('orders/comprobantes/empaque', $request->file('file'));
+
+            $order->comprobantesEmpaque()->create([ //crea un nuevo registro en la tabla images
+                'usage' => 'comprobante_empaque',
+                'name' => $image,
+            ]);
+
+        } catch (\Throwable $th) {
+
+            Log::info('No se paso la validacion');
+            // Log::info($th);
+            Log::info($request);
+        }
+
+    }
+
+    public function comprobantesEnvio($nickname, Order $order, Request $request){
+        try {
+
+            $request->validate([
+                'file' => 'required|image|max:10240'  //10 megas
+            ]);
+
+            Log::info('se paso la validacion');
+            Log::info($request);
+            $image = Storage::put('orders/comprobantes/empaque', $request->file('file'));
+
+            $order->comprobantesEmpaque()->create([ //crea un nuevo registro en la tabla images
+                'usage' => 'comprobante_envio',
+                'name' => $image,
+            ]);
+
+        } catch (\Throwable $th) {
+
+            Log::info('No se paso la validacion');
+            // Log::info($th);
+            Log::info($request);
+        }
+    }
+
+    public function uploadFileOrderInvoice($nickname, Order $order, Request $request)
+    {
+
+        try {
+            $request->validate([
+                'file' => 'required|image|max:10240'  //10 megas
+            ]);
+
+            Log::info('se paso la validacion');
+            Log::info($request);
+            $image = Storage::put('orders', $request->file('file'));
+            $order->payments()->create([
+                'image' => $image,
+                'payments_status_id' => "4",
+                'amount' => $request->total_amount,
+                'payment_method_id' => $request->payment_method_id,
+                'content' => ["ejemplo" => "otro ejemplo"]
+            ]);
+        } catch (\Throwable $th) {
+
+            Log::info('No se paso la validacion');
+            // Log::info($th);
+            Log::info($request);
+        }
+
+
+
+
+        // Log::info($request->file);
+        // Log::info($request->amount);
+
+        // Log::info('imprimiendo solo el precio');
+
+        // Log::info($request->total_amount);
+        // Log::info($request['total_amount']);
+
+        // Log::info('imprimiendo solo el archivo');
+        // Log::info($request->file('file'));
+        // $request->validate([
+        //     'file' => 'required|image|max:10240'  //10 megas
+        // ]);
+
+        // $image = Storage::put('orders', $request->file('file'));
+
+        // $order->payments()->create([
+        //     'image'=> $image,
+        //     'status' => "PAID",
+        //     'amount' => $request->total_amount,
+        //     'content' => ["ejemplo"=>"otro ejemplo"]
+        // ]);
+
+
+        // $order->payments()->create([
+        //     'image' => $image,
+        //     'content' => ["ejemplo"=>"otro ejemplo"]
+        // ]);
+
+    }
+
+    public function uploadFileOrder($nickname, Order $order, $field, Request $request) //ojo $field viene en el url del manage
     {
         $request->validate([
             'file' => 'required|image|max:10240'  //10 megas
         ]);
-        
+
         $url = Storage::put('orders', $request->file('file'));
         $order[$field] = $url;
         $order->save();
 
         switch ($field) {
+
             case 'photo_payment':
 
-                $order->Addstatus('pago_confirmado',$request->current);
-                
-            break;
+                Log::info($url);
+
+                $order->payments()->create([
+                    'image' => $url,
+                    'content' => ["ejemplo" => "otro ejemplo"]
+                ]);
+
+                //ojo content debe ser un array que contenta los detalles del pago
+
+                $order->Addstatus('pago_confirmado', $request->current);
+
+                break;
             case 'photo_package':
                 # code...
-                $order->Addstatus('listo_para_envio',$request->current);
+                $order->Addstatus('listo_para_envio', $request->current);
 
                 break;
             case 'photo_delivery':
                 # code...
-                $order->Addstatus('entregado',$request->current);
+                $order->Addstatus('entregado', $request->current);
                 break;
-            
+
             default:
                 # code...
                 Log::info('default');
@@ -47,7 +165,6 @@ class OrderController extends Controller
 
         Log::debug('request');
         Log::info($request);
-
     }
 
 
@@ -78,7 +195,7 @@ class OrderController extends Controller
         //Ojo ya no es necesario ingresar la relacion imageable_id e imageable_type
     }
 
-    
+
     public function photoDelivery(Order $order, Request $request)
     {
 

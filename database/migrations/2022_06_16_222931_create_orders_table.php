@@ -30,11 +30,14 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('address_id');
             $table->foreign('address_id')->references('id')->on('addresses');
 
-            $table->unsignedBigInteger('payment_list_method_id')->default(1);
-            $table->foreign('payment_list_method_id')->references('id')->on('payment_list_method');
+            $table->unsignedBigInteger('payment_method_id')->default(1);
+            $table->foreign('payment_method_id')->references('id')->on('payment_methods');
 
             $table->unsignedBigInteger('delivery_method_id')->default(1);
             $table->foreign('delivery_method_id')->references('id')->on('delivery_methods');
+
+            $table->unsignedBigInteger('collect_method_id')->default(2);
+            $table->foreign('collect_method_id')->references('id')->on('collect_methods');
 
             $table->unsignedBigInteger('delivery_man_id')->default('3'); //. es Magaly vanesa
             $table->foreign('delivery_man_id')->references('id')->on('users');  
@@ -50,6 +53,7 @@ class CreateOrdersTable extends Migration
             $table->time('delivery_time_start')->default('10:00')->nullable();
             $table->time('delivery_time_end')->default('20:00')->nullable();
 
+            // $table->string('data_payment')->json()->nullable();
             $table->string('photo_payment')->nullable();
             $table->string('photo_package')->nullable();
             $table->string('photo_delivery')->nullable();

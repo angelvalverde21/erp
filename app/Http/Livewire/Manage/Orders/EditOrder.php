@@ -20,8 +20,10 @@ class EditOrder extends Component
 
     protected $rules = [
 
-        'order.delivery_man_id' => 'required',
-        'order.payment_list_method_id' => 'required',
+        'order.delivery_man_id' => 'required',  //01
+        'order.collect_method_id' => 'required', //02
+        'order.payment_method_id' => 'required', //03
+        // 'order.payment_list_method_id' => 'required',
         'order.delivery_method_id' => 'required',
         'order.observations_private' => 'required',
         'order.observations_public' => 'required',
@@ -69,11 +71,16 @@ class EditOrder extends Component
     //     $this->order = $this->order->fresh();
     // }
 
-    public function test()
-    {
-        $this->emit('creado');
-        $this->dispatchBrowserEvent('cerrar-modal', ['modalID' => '#editItem']);
-    }
+    // public function selectPaymentMethod(){
+
+    // }
+
+    // public function test()
+    // {
+    //     $this->emit('creado');
+    //     $this->dispatchBrowserEvent('cerrar-modal', ['modalID' => '#editItem']);
+    // }
+
     public function render()
     {
         //$this->items = Item::where('order_id', $this->order->id)->get();

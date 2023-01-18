@@ -1,10 +1,16 @@
 <div>
     <div class="card">
         <div class="card-header">
-            <i class="fa-solid fa-calendar mr-2"></i> Fecha de entrega
+
+            <div class="d-flex justify-content-between">
+                <div class="title">
+                    <i class="fa-solid fa-calendar mr-2"></i> Fecha de entrega
+                </div>
+                <x-user.button-open-modal target="#modal-date-edit-details" />
+            </div>
         </div>
         <div class="card-body">
-            <table class="table">
+            <table class="table table-striped">
 
                 <tr>
                     <td class="primer-td">Fecha de entrega:</td>
@@ -32,12 +38,6 @@
                 </tr> --}}
 
             </table>
-
-        </div>
-
-        <div class="card-footer">
-            {{-- Levanta el modal --}}
-            <x-user.button-open-modal target="#modal-date-edit-details" />
 
         </div>
 

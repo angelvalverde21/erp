@@ -1,4 +1,23 @@
 [
-	{"id":"1","name":"contra_entrega","title":"CONTRA ENTREGA"},
-	{"id":"2","name":"previo_deposito","title":"PREVIO DEPOSITO"}
+	{"id":"1","name":"EFECTIVO"},
+	{"id":"2","name":"BILLETERA ELECTRONICA"},
+	{"id":"3","name":"TARJETA"},
+	{"id":"4","name":"TRANSFERENCIA"},
+	{"id":"5","name":"YAPE","payment_method_id":"2"},
+	{"id":"6","name":"PLIN","payment_method_id":"2"},
+	{"id":"7","name":"TUNKI","payment_method_id":"2"},
+	{"id":"8","name":"OTROS","payment_method_id":"2"},
+	{"id":"9","name":"VISA","payment_method_id":"3"},
+	{"id":"10","name":"MASTERCARD","payment_method_id":"3"},
+	{"id":"11","name":"AMERICAN EXPRESS","payment_method_id":"3"},
+	{"id":"12","name":"DINNERS","payment_method_id":"3"},
+	{"id":"13","name":"OTROS","payment_method_id":"3"},
+	{"id":"14","name":"BCP","payment_method_id":"4"},
+	{"id":"15","name":"INTERBANK","payment_method_id":"4"},
+	{"id":"16","name":"BBVA","payment_method_id":"4"},
+	{"id":"17","name":"SCOTIABANK","payment_method_id":"4"},
+	{"id":"18","name":"BANCO DE LA NACION","payment_method_id":"4"},
+	{"id":"19","name":"MI BANCO","payment_method_id":"4"},
+	{"id":"20","name":"OTROS","payment_method_id":"4"},
+	{"id":"21","name":"OTROS (NO INDICA)"}
 ]

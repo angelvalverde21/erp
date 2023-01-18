@@ -23,13 +23,17 @@ class PaymentMethodSeeder extends Seeder
                         $data = json_decode($json);
                 
                         foreach($data as $obj) {
+
+                            if(!isset($obj->payment_method_id)){
+                                $obj->payment_method_id = null;
+                            }
                 
                             PaymentMethod::create(
                 
                                 [
                                     'id' => $obj->id,
-                                    'title' => $obj->title,
-                                    'name' => $obj->name
+                                    'name' => $obj->name,
+                                    'payment_method_id' => $obj->payment_method_id,
                                 ]
                 
                             );

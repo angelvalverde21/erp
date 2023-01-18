@@ -9,7 +9,6 @@ use App\Models\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
-
 class OrderController extends Controller
 {
     //
@@ -26,14 +25,17 @@ class OrderController extends Controller
         //Ojo ya no es necesario ingresar la relacion imageable_id e imageable_type
     }
 
-
-
     public function photoPayment(Order $order, Request $request)
     {
         $request->validate([
             'file' => 'required|image|max:10240'  //10 megas
         ]);
         $url = Storage::put('public/orders', $request->file('file'));
+        
+        $order->payment()->create([
+            "image" => $url
+        ]);
+
         $order->photo_payment = $url;
         $order->save();
 

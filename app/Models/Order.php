@@ -13,8 +13,9 @@ class Order extends Model
 {
     use HasFactory;
 
-    const CONTRAENTREGA = 1;
-    const PREVIODEPOSITO = 2;
+
+    // const CONTRAENTREGA = 1;
+    // const PREVIODEPOSITO = 2;
 
     const RECOJO = 1;
     const DELIVERY = 2;
@@ -22,9 +23,21 @@ class Order extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     //incluir accesores a la apis
-    protected $appends = ['total_final','total_mount','total_products','status_pago'];
+    protected $appends = ['total_final','total_amount','total_products','status_pago'];
 
     //Relacino uno a uno polimorfica
+
+    public function actions(){
+        return $this->morphMany(Action::class,"actionable");
+    }
+
+    public function changes(){
+        return $this->morphMany(Change::class,"changeable");
+    }
+
+    public function payments(){
+        return $this->morphMany(Payment::class,"paymentable")->orderBy('id','DESC'); //paymentable es la funcion que se encuentra en el model Payment
+    }
 
     public function cordenada()
     {
@@ -41,6 +54,7 @@ class Order extends Model
     {
         return $this->belongsTo(DeliveryMethod::class);
     }
+
 
 
     public function items()
@@ -137,9 +151,9 @@ class Order extends Model
     public function getPaymentMethodAttribute()
     {
 
-        $paymentListMethod = PaymentListMethod::find($this->payment_list_method_id);
+        // $paymentListMethod = PaymentListMethod::find($this->payment_list_method_id);
 
-        return PaymentMethod::find($paymentListMethod->payment_method_id);
+        // return PaymentMethod::find($paymentListMethod->payment_method_id);
     }
 
     //Plural
@@ -190,7 +204,7 @@ class Order extends Model
     }
 
     //Este es el costo total que pagara el cliente incluido los costos de envio
-    public function getTotalMountAttribute()
+    public function getTotalAmountAttribute()
     {
         return number_format($this->total_final + $this->shipping_cost_buyer, 2, '.', '');
     }
@@ -352,6 +366,18 @@ class Order extends Model
         }
     }
 
+    public function comprobantesEmpaque(){
+        return $this->morphMany(Image::class,"imageable")->where('usage','comprobante_empaque')->orderBy('id','DESC');
+    }
+
+    public function etiquetasEmpaque(){
+        return $this->morphMany(Change::class,"changeable")->where('name','print_packing_label')->orderBy('id','DESC');
+    }
+
+    public function comprobantesEnvio(){
+        return $this->morphMany(Image::class,"imageable")->where('usage','comprobante_envio')->orderBy('id','DESC');
+    }
+
     //Relacion uno a muchos polimorfica
     public function coordinates()
     {
@@ -365,5 +391,58 @@ class Order extends Model
 
     }
 
+    //status del pedido
 
+    public function is_pay(){
+
+        $total = 0;
+
+        $payments = $this->payments;
+
+        Log::info('se imprime los pagos');
+        // Log::info($payments);
+        
+        
+        foreach ($payments as $payment) {
+            Log::info($payment);
+
+            //$payment->amount, estos pagos vienen de la tabla payments y son los pagos parciales del pedido
+            //aunque tambien podria ser el pago total
+
+            $total += $payment->amount;
+        }
+
+        if($total >= $this->total_amount){
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+
+    public function is_delivered(){
+        if($this->comprobantesEnvio->count()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function is_ready_delivery(){
+
+        if($this->comprobantesEmpaque->count()>0){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    public function is_preparing(){
+        if($this->etiquetasEmpaque->count()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

@@ -22,6 +22,10 @@ class CreateOrderStatusTable extends Migration
             $table->unsignedBigInteger('status_id');
             $table->foreign('status_id')->references('id')->on('status');
 
+            $table->string('image')->nullable();
+            
+            $table->json('data')->nullable();
+
             $table->timestamps();
         });
     }

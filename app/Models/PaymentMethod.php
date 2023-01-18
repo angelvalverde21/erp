@@ -11,6 +11,27 @@ class PaymentMethod extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
     use HasFactory;
 
+    // public function childrenPaymentsc()
+    // {
+    //     return $this->hasMany(PaymentMethod::class)->with('payment_methods');
+    // }
+
+    // public function childrenPayments()
+    // {
+    //     return $this->hasMany(PaymentMethod::class);
+    // }
+
+    
+    public function paymentMethods()
+    {
+        return $this->hasMany(PaymentMethod::class);
+    }
+
+    public function paymentMethodChildrens()
+    {
+        return $this->hasMany(PaymentMethod::class)->with('paymentMethods');
+    }
+
     public function lists(){
 
         //De forma predeterminada, solo las claves del modelo estarán presentes en el objeto pivot. Si tu tabla pivote contiene atributos extras, debes especificarlos cuando definas la relación.

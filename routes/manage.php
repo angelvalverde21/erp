@@ -63,13 +63,16 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
 
    //GET Imprimir PDF
    Route::get('/orders/{order}/print/voucher', [PdfController::class, 'generateVaucher'])->name('orders.print.voucher');
-   Route::get('/orders/{order}/print/packing-label/{current}', [PdfController::class, 'generatePackingLabel'])->name('orders.print.packing-label');
+   Route::get('/orders/{order}/print/packing-label', [PdfController::class, 'generatePackingLabel'])->name('orders.print.packing-label');
 
    //POST orders (comprobantes)
    // Route::post('/orders/{order}/photo-payment', [OrderController::class, 'photoPayment'])->name('orders.photo-payment');
    // Route::post('/orders/{order}/photo-package', [OrderController::class, 'photoPackage'])->name('orders.photo-package');
    // Route::post('/orders/{order}/photo-delivery', [OrderController::class, 'photoDelivery'])->name('orders.photo-delivery');
    Route::post('/orders/{order}/{field}', [OrderController::class, 'uploadFileOrder'])->name('orders.upload');
+   Route::post('/orders/{order}/upload/invoice', [OrderController::class, 'uploadFileOrderInvoice'])->name('orders.upload.invoice');
+   Route::post('/orders/{order}/upload/comprobantes/empaque', [OrderController::class, 'comprobantesEmpaque'])->name('orders.upload.comprobantes.empaque');
+   Route::post('/orders/{order}/upload/comprobantes/envio', [OrderController::class, 'comprobantesEnvio'])->name('orders.upload.comprobantes.envio');
 
    //Post upload home carousel
 

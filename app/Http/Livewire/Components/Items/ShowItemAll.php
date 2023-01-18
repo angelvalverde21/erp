@@ -74,6 +74,8 @@ class ShowItemAll extends Component
 
         $this->order = $this->order->fresh();
 
+        $this->emitTo('manage.orders.edit-order.card-show-summary','render');
+        $this->emitTo('manage.orders.edit-order.card-show-invoice','render');
         $this->emit('eliminado');
     }
 

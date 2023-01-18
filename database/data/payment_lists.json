@@ -4,5 +4,8 @@
 	{"id":"3","name":"master","title":"TARJETA MASTER"},
 	{"id":"4","name":"yape","title":"YAPE"},
 	{"id":"5","name":"plin","title":"PLIN"},
-	{"id":"6","name":"transfer_depos","title":"TRANSFERENCIA / DEPOSITO"}
+	{"id":"6","name":"transfer_depos","title":"TRANSFERENCIA / DEPOSITO"},
+	{"id":"7","name":"izipay_online","title":"Izi Pay Online"},
+	{"id":"8","name":"niubiz_online","title":"Niubiz Online"},
+	{"id":"9","name":"mercadopago","title":"Mercadopago Online"}
 ]

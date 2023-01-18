@@ -17,10 +17,33 @@
         <ul class="navbar-nav ml-auto d-flex align-self-center">
 
             <li class="nav-item active">
+                <div class="dropdown ">
+                    <button class="btn btn-outline-info mx-1 my-1 dropdown-toggle" type="button"
+                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-print mr-2 pt-1"></i> Imprimir
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start dropdown-menu-right"
+                        aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-clipboard-list mr-1"></i>
+                                Orden de compra</a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a class="dropdown-item"
+                                href="{{ route('manage.orders.print.packing-label', [$store->nickname, $order->id]) }}"><i
+                                    class="fa-solid fa-box-open mr-1"></i>
+                                Rotulado</a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a class="dropdown-item"
+                                href="{{ route('manage.orders.print.voucher', [$store->nickname, $order->id]) }}"><i
+                                    class="fa-solid fa-receipt mr-2 pt-1"></i> Voucher</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            {{-- <li class="nav-item active">
                 <a class="btn btn-outline-info d-flex mx-1 my-1" href="#"><i
                         class="fa-solid fa-mobile-screen mr-2 pt-1"></i> Contactar<span class="sr-only"><i
                             class="fa-solid fa-mobile-screen"></i> Contactar</span></a>
-            </li>
+            </li> --}}
 
             <li class="nav-item active">
                 <a class="btn btn-outline-info d-flex mx-1 my-1" data-toggle="modal" data-target="#observations-modal"
@@ -40,28 +63,7 @@
                 </script>
             @endpush
 
-            <li class="nav-item active">
-                <div class="dropdown ">
-                    <button class="btn btn-outline-info mx-1 my-1 dropdown-toggle" type="button"
-                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-print mr-2 pt-1"></i> Imprimir
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start dropdown-menu-right"
-                        aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-clipboard-list mr-1"></i>
-                                Orden de compra</a></li>
-                        <div class="dropdown-divider"></div>
-                        <li><a class="dropdown-item"
-                                href="{{ route('manage.orders.print.packing-label', [$store->nickname, $order->id, urlencode($current)]) }}"><i
-                                    class="fa-solid fa-box-open mr-1"></i>
-                                Rotulado</a></li>
-                        <div class="dropdown-divider"></div>
-                        <li><a class="dropdown-item"
-                                href="{{ route('manage.orders.print.voucher', [$store->nickname, $order->id]) }}"><i
-                                    class="fa-solid fa-receipt mr-2 pt-1"></i> Voucher</a></li>
-                    </ul>
-                </div>
-            </li>
+
 
 
 

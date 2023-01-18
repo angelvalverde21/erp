@@ -4,11 +4,19 @@
     <div class="card">
 
         <div class="card-header">
-            <i class="fa-solid fa-house mr-2"></i> Direccion de envio
+            <div class="d-flex justify-content-between">
+                <div class="title">
+                    <i class="fa-solid fa-house mr-2"></i> Direccion de envio
+                </div>
+                <x-user.button-open-modal target="#show-all-address-modal" />
+            </div>
         </div>
+        
         <div class="card-body">
 
-            <li><h4>{{ $address->title }}</h4></li>
+            <li>
+                <h4>{{ $address->title }}</h4>
+            </li>
             <li>{{ $address->name }}</li>
             <li>DNI: {{ $address->dni }}</li>
             <li>{{ $address->primary }}</li>
@@ -18,12 +26,6 @@
                 {{ $address->district->province->name }} - Dpto.
                 {{ $address->district->province->department->name }}</li>
             <li>CEL: {{ $address->phone }}</li>
-
-        </div>
-
-        <div class="card-footer">
-
-            <x-user.button-open-modal target="#show-all-address-modal" />
 
         </div>
 
