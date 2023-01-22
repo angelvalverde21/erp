@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Request;
 class CreateOrderModal extends Component
 {
 
-    public $namedistrict, $name, $dni, $phone, $primary, $secondary, $references, $district_id, $delivery_date, $payment_list_method_id, $delivery_man_id;
+    public $namedistrict, $name, $dni, $phone, $primary, $secondary, $references, $district_id, $delivery_date, $payment_method_id, $delivery_man_id;
     public $observations_public, $observations_private, $current, $delivery_method_id;
 
 
@@ -35,7 +35,7 @@ class CreateOrderModal extends Component
         'secondary' => '',
         'references' => '',
         'district_id' => 'required',
-        'payment_list_method_id' => 'required',
+        'payment_method_id' => 'required',
         'delivery_man_id' => 'required',
         'delivery_method_id' => 'required',
     ];
@@ -126,7 +126,7 @@ class CreateOrderModal extends Component
         $order = new Order();
 
         $order->delivery_man_id = $this->delivery_man_id;
-        $order->payment_list_method_id = $this->payment_list_method_id;
+        $order->payment_method_id = $this->payment_method_id;
         $order->delivery_method_id = $this->delivery_method_id;
         $order->store_id = $this->store->id;
         $order->seller_id = $owner->id;

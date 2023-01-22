@@ -45,16 +45,17 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::get('/profile/web', ShowProfileWeb::class)->name('web');
 
    //POST Products
-   Route::post('/products/{product}/colors', [ProductController::class, 'colors'])->name('products.colors');
-   Route::post('/products/{product}/images', [ProductController::class, 'images'])->name('products.images');
+   Route::post('/products/colors/upload/{color}/variantes', [ProductController::class, 'uploadVariantsColor'])->name('products.upload.colors.variants');
+   Route::post('/products/{product}/upload/colors', [ProductController::class, 'uploadColors'])->name('products.upload.colors');
+   Route::post('/products/{product}/upload/images', [ProductController::class, 'uploadImages'])->name('products.upload.images');
    // http://erp.test/ara/manage/products/6/colors
    // http://erp.test/user/profile/10/upload_logo_general
    // Route::post('/products/{product}/images', function(){
    //    Log::info("llego al route.php");
    // })->name('products.images');
-   Route::post('/products/editimage/{image}', [ProductController::class, 'editimage'])->name('products.editimage');
+   Route::post('/products/edit/image/{image}', [ProductController::class, 'editImage'])->name('products.editimage');
    //OJO NO PASAMOS LA VARIABLE PRODUCT_ID PORQUE LOS COLORES SON UNICOS
-   Route::post('/products/editcolor/{color}', [ProductController::class, 'editColor'])->name('products.editcolor');
+   Route::post('/products/edit/color/{color}', [ProductController::class, 'editColor'])->name('products.editcolor');
 
    //GET customers
    Route::get('/customers', ShowCustomers::class)->name('customers');

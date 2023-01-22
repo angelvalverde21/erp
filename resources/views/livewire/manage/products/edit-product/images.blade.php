@@ -6,7 +6,7 @@
 
         <div class="col position-relative">
 
-            <form method="POST" action="{{ route('manage.products.images', [$store->nickname, $product]) }}" class="dropzone"
+            <form method="POST" action="{{ route('manage.products.upload.images', [$store->nickname, $product]) }}" class="dropzone"
                 id="my-awesome-dropzone-images">
 
             </form>

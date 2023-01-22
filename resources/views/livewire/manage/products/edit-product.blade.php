@@ -84,7 +84,7 @@
 
                         <div class="row p-t-20">
                             <div class="col-md-12">
-                                <x-form.input type="text" wirevalue="product.name"
+                                <x-form.input type="text" wirevalue="product.name" debounce="500"
                                     error="Este campo es requerido">
                                     Titulo
                                 </x-form.input>
@@ -93,7 +93,7 @@
                         
                         <div class="row">
                             <div class="col-md-12">
-                                <x-form.input type="hidden" wirevalue="product.slug"
+                                <x-form.input type="text" disabled="disabled" wirevalue="product.slug"
                                     error="este producto ya existe">
                                     Url del producto
                                 </x-form.input>

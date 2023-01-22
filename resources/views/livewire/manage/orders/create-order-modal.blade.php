@@ -93,10 +93,6 @@
                     {{-- inicio de buscador de distritos --}}
 
                     <style>
-                        .resultados ul {
-                            margin: 0 !important;
-                            padding: 0 10px !important;
-                        }
 
                         .resultados {
                             box-shadow: -2px 3px 24px 0px rgba(163, 163, 163, 1);
@@ -120,15 +116,20 @@
                                     <span class="error">Debe escoger un distrito</span>
                                 @enderror
 
+
+
+
                                 <div class="resultados">
-                                    <ul>
+
+                                    <ul class="list-group">
 
                                         @foreach ($districts as $district)
-                                            <li><a href="#"
+                                        <li class="list-group-item">
+                                            <a href="#"
                                                     wire:click.prevent="$emit('districtAdded','{{ $district->id }}')">{{ $district->name }}
                                                     - {{ $district->province->name }} - Dpto.
                                                     {{ $district->province->department->name }}</a>
-                                            </li>
+                                                </li>
                                         @endforeach
 
                                     </ul>
@@ -143,7 +144,7 @@
                         <div class="col-lg-6 col-12">
                             <x-form.select wirevalue="delivery_method_id" icon="fa-solid fa-truck"
                                 error="Debe Elegir un metodo de entrega">
-
+                                <option value="">Escoger</option>
                                 @foreach (deliveryMethods() as $delivery_method)
                                     <option value="{{ $delivery_method->id }}">
                                         {{ $delivery_method->title }}</option>
@@ -156,6 +157,7 @@
                         <div class="col-lg-6 col-12">
                             <x-form.select label="" wirevalue="delivery_man_id" icon="fa-solid fa-person-biking"
                                 error="Debe Elegir la persona que entregara el paquete">
+                                <option value="">Escoger</option>
                                 @foreach (repartidores() as $repartidor)
                                     <option value="{{ $repartidor->id }}">{{ $repartidor->name }}
                                     </option>
@@ -164,21 +166,42 @@
                         </div>
 
 
-                        <div class="col-lg-12 col-12">
-                            <x-form.select wirevalue="payment_list_method_id" icon="fa-solid fa-receipt"
+                        {{-- <div class="col-lg-12 col-12">
+                            <x-form.select wirevalue="payment_method_id" icon="fa-solid fa-receipt"
                                 error="Debe elegir el metodo de pago del cliente">
 
-                                @foreach (paymentListMethods() as $paymentListMethod)
-                                    {{-- <option value="{{ $paymentMethod->id }}">
-                                        {{ $paymentMethod->title }}</option> --}}
+                                @foreach (paymentMethods() as $paymentList)
 
-                                    <option value="{{ $paymentListMethod->id }}">
-                                        {{ $paymentListMethod->paymentMethod->title }} -
-                                        {{ $paymentListMethod->paymentList->title }}</option>
+
+                                    <option value="{{ $paymentList->id }}">
+                                        {{ $paymentList->name }}</option>
                                 @endforeach
 
                             </x-form.select>
 
+                        </div> --}}
+
+
+                        <div class="col-lg-12 col-12">
+
+                            <x-form.select id="payment_method_id" label="Cliente indica que pagara con" wirevalue="payment_method_id" icon="fa-solid fa-money-bill-1-wave">
+
+                                @foreach (paymentMethods() as $paymentMethod)
+                            
+                                <option value="{{ $paymentMethod->id }}"> {{ $paymentMethod->name }}</option>
+                            
+                                    @foreach ($paymentMethod->paymentMethodChildrens as $paymentMethodChildren)
+                                        @include('livewire.manage.orders.edit-order._navbar-pay-method-child', [
+                                            'parent_name' => $paymentMethod->name,
+                                            'child' => $paymentMethodChildren,
+                                            'separador' => '--',
+                                        ])
+                                    @endforeach
+                            
+                                @endforeach
+                            
+                            </x-form.select>
+                            
                         </div>
 
                     </div>

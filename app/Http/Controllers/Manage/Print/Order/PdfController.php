@@ -23,7 +23,7 @@ class PdfController extends Controller
 
         $order->changes()->create([
             'name'=>'send_vaucher',
-            'content'=> Request::HEADER_FORWARDED
+            'content'=> Request::Us
         ]);
 
         return $pdf->stream('voucher.pdf');

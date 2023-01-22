@@ -20,4 +20,9 @@ class ColorSize extends Model
     public function size(){
         return $this->belongsTo(Size::class);
     }
+
+    public function stocks(){
+        return $this->morphMany(Stock::class,"stockable")->orderBy('id','DESC');
+    }
+
 }

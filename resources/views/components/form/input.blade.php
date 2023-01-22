@@ -1,4 +1,4 @@
-@props(['wirevalue', 'type' => 'text', 'icon' => '', 'texticon' => '', 'error' => '', 'label' => '', 'debounce' => ''])
+@props(['wirevalue', 'type' => 'text', 'disabled'=> '', 'icon' => '', 'texticon' => '', 'error' => '', 'label' => '', 'debounce' => ''])
 
 @if ($label != '')
     <label for="" class="form-label">{{ $label }}</label>
@@ -23,13 +23,12 @@
         @endif
 
         @if ($debounce > 150)
-            <input type="{{ $type }}" class="form-control" wire:model.debounce.{{$debounce}}ms="{{ $wirevalue }}"
+            <input type="{{ $type }}" {{ $disabled }} class="form-control" wire:model.debounce.{{$debounce}}ms="{{ $wirevalue }}"
                 aria-describedby="nameHelp" placeholder="{{ $slot }}">
         @else
-            <input type="{{ $type }}" class="form-control" wire:model="{{ $wirevalue }}"
+            <input type="{{ $type }}" {{ $disabled }} class="form-control" wire:model="{{ $wirevalue }}"
                 aria-describedby="nameHelp" placeholder="{{ $slot }}">
         @endif
-
 
     </div>
 

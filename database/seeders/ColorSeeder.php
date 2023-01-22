@@ -44,19 +44,23 @@ class ColorSeeder extends Seeder
 
                     $k++; //K puede ser 1 o maximo 5;
 
-                    Color::create(
+                    $color = Color::create(
 
                         [
                             'id' => $obj->id,
-                            'name' => $obj->name,
-                            'image' => 'colors/' . $this->faker->image('public/storage/colors', 640, 480, null, false),
+                            'name' => $this->faker->word(),
                             'quantity' => '1',
                             'product_id' => $obj->post_id
                         ]
 
                     );
 
-
+                    Image::create([
+                        'name' => 'colors/' . $this->faker->image('public/storage/colors', 640, 480, null, false),
+                        'imageable_id' => $color->id,
+                        'imageable_type' => Color::class,
+                        'usage' => 'color'
+                    ]);
 
                 }
             }

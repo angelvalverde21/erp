@@ -7,6 +7,7 @@ use App\Models\Color;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\Models\ColorSize;
+use App\Models\Image;
 use Illuminate\Support\Facades\Request;
 
 class Colors extends Component
@@ -67,6 +68,15 @@ class Colors extends Component
 
         $this->emit('eliminado');
 
+    }
+
+    public function deleteVarianteColor(Image $image){
+
+        $image->delete();
+        
+        $this->product = $this->product->fresh();
+
+        $this->emit('eliminado');
     }
 
     public function render()

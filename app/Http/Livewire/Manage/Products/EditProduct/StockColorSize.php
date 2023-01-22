@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class StockColorSize extends Component
 {
-    
+
     public $color;
     public $pivot_quantity;
     public $inputs = [];
@@ -45,15 +45,30 @@ class StockColorSize extends Component
     {
 
         Log::debug($this->inputs);
-
         $keys =  array_keys($this->inputs);
-
         $i = 0;
 
         foreach ($this->inputs as $item) {
-            if($this->inputs[$keys[$i]]['quantity'] >= 0){
-                ColorSize::where('id', '=', $keys[$i])->update(array('quantity' => $this->inputs[$keys[$i]]['quantity'])); 
+
+            if ($this->inputs[$keys[$i]]['quantity'] >= 0) {
+
+                $colorSize = ColorSize::findOrFail($keys[$i]);
+
+                $colorSize->update(
+                    [
+                        'quantity' => $this->inputs[$keys[$i]]['quantity']
+                    ]
+                );
+                    
+                //Codigo para agregar registros de stock
+                for ($k = 0; $k < $this->inputs[$keys[$i]]['quantity']; $k++) {
+                    # code...
+                    $colorSize->stocks()->create([
+                        'barcode' => '124524'
+                    ]);
+                }
             }
+
             $i++;
         }
 
@@ -65,14 +80,12 @@ class StockColorSize extends Component
 
         $this->emit('refreshColor');
         //$this->emit('refreshProductEdit');
-
         //$this->emitTo('user.product.edit-product','render');
 
     }
-    
+
     public function render()
     {
         return view('livewire.manage.products.edit-product.stock-color-size');
     }
-
 }

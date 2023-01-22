@@ -11,8 +11,8 @@ class Product extends Model
 {
     use HasFactory;
 
-    CONST BORRADOR = 0;
-    CONST PUBLICADO = 1;
+    const BORRADOR = 0;
+    const PUBLICADO = 1;
 
     protected $guarded = ['id', 'created_at', 'image'];
 
@@ -20,35 +20,41 @@ class Product extends Model
     protected $appends = ['image'];
 
     //Uno a muchos inverso (singlular)
-    public function brand(){
+    public function brand()
+    {
         return $this->belongsTo(Brand::class);
     }
 
     //Uno a muchos
-    public function sizes(){
+    public function sizes()
+    {
         return $this->hasMany(Size::class);
     }
 
     //Mucho a muchos
-    public function colors(){
-        return $this->hasMany(Color::class)->orderBy('id','DESC');
+    public function colors()
+    {
+        return $this->hasMany(Color::class)->orderBy('id', 'DESC');
     }
 
     //Uno a muchos inverso
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function images(){
-        return $this->morphMany(Image::class,"imageable")->orderBy('id','DESC');
+    public function images()
+    {
+        return $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC');
     }
 
-    public function getImageAttribute(){
-        $image = $this->morphMany(Image::class,"imageable")->orderBy('id','DESC')->first();
+    public function getImageAttribute()
+    {
+        $image = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
 
-        if($image){
+        if ($image) {
             return $image->name;
-        }else{
+        } else {
             return false;
         }
     }
@@ -59,14 +65,43 @@ class Product extends Model
 
     //Creando un Accesor
 
-    public function getStockAttribute(){
-        
+    public function getStockAttribute()
+    {
+
         //Subcategoria tiene talla
-        if($this->category->has_size){
-            return ColorSize::whereHas('size.product', function(Builder $query){
-                $query->where('id',$this->id);
+        if ($this->category->has_size) {
+            return ColorSize::whereHas('size.product', function (Builder $query) {
+                $query->where('id', $this->id);
             })->sum('quantity');
         }
     }
-    
+
+    public function has()
+    {
+
+        $has_color = $this->category->has_color;
+        $has_size = $this->category->has_size;
+
+        if ($has_color && $has_size) { //AND
+
+            return "has_color_size";
+            //el producto tiene color y talla
+        } else {
+            if ($has_color || $has_size) { //OR
+                if ($has_color) {
+                    //el producto tiene solo color
+                    return "has_color";
+                }else{
+                    if ($has_size) {
+                        //el producto tiene solo talla
+                        return "has_size";
+                    }
+                }
+            } else {
+                //el producto no tiene ni color ni talla
+                return "has_none";
+            }
+        }
+
+    }
 }

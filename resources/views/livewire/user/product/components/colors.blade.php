@@ -2,29 +2,6 @@
     {{-- Because she competes with no one, no one can compete with her. --}}
     <h4><i class="fa-solid fa-cart-flatbed mr-2"></i>Almacen ( {{ $product->stock }} )</h4>
 
-
-
-    
-    <section class="col my-3">
-
-        {{-- cargar imagen --}}
-
-        <div class="row" wire:ignore>
-
-            <div class="col position-relative">
-                
-                <form method="POST" action="{{ route('user.products.colors', $product) }}" class="dropzone"
-                    id="my-awesome-dropzone-colors">
-
-                </form>
-            </div>
-
-        </div>
-
-        {{-- fin de cargar imagen --}}
-
-    </section>
-
     {{-- <h3 class="my-2">Stock Super Total:  {{ $product->stock }}</h3> --}}
 
     <style>
@@ -72,22 +49,31 @@
             color: rgb(44, 44, 44);
         }
 
-        .zoom-color {
-            position: relative;
-        }
 
-        .drop-zoom {
-            position: absolute;
-            bottom: 0px;
-            width: 100%;
-
-        }
-
-        .drop-zoom form{
-            opacity: 0.75;
-
-        }
     </style>
+
+
+    
+    <section class="col my-3">
+
+        {{-- cargar imagen --}}
+
+        <div class="row" wire:ignore>
+
+            <div class="col position-relative">
+                
+                <form method="POST" action="{{ route('user.products.colors', $product) }}" class="dropzone"
+                    id="my-awesome-dropzone-colors">
+
+                </form>
+            </div>
+
+        </div>
+
+        {{-- fin de cargar imagen --}}
+
+    </section>
+
 
     @if ($product->colors->count())
 
@@ -151,79 +137,7 @@
 
         </div>
 
-        {{-- @foreach ($product->colors as $color)
-            <div class="accordion-item">
-
-                <h2 class="accordion-header" id="flush-headingOne-{{ $color->id }}">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#flush-collapseOne-{{ $color->id }}" aria-expanded="false"
-                        aria-controls="flush-collapseOne-{{ $color->id }}">
-
-                        <div class="row">
-                            <div class="col"><img height="150px" src="{{ Storage::url($color->file_name) }}">
-                            </div>
-           
-                            <div class="col">
-                                Stock Total: <span style="font-size: 24pt;">{{ $color->stock }}</span>
-                            </div>
-                        </div>
-
-                    </button>
-                </h2>
-
-                <div id="flush-collapseOne-{{ $color->id }}" class="accordion-collapse collapse"
-                    aria-labelledby="flush-headingOne-{{ $color->id }}" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-
-                        <div class="row mb-3">
-                            <div class="col">
-                                <button class="btn btn-primary">Guardar</button>
-                            </div>
-
-                            <div class="col">
-                                <div class="float-right" wire:key="color-{{ $color->id }}">
-                                    <button wire:click="deleteColor({{ $color->id }})" wire:loading.attr="disabled"
-                                        wire:target="deleteColor({{ $color->id }})"
-                                        class="btn btn-danger">x</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-
-                           
-                            <div class="col-lg-4 col">
-                                <div class="card">
-                                    <div class="card-body">
-                                        @livewire('user.product.components.stock-color-size', ['color' => $color], key('stock-color-size-' . $color->id))
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="col-lg-4"></div>
-
-                           <div wire:ignore class="col-lg-4 col" wire:key="{{ $color->id }}">
-
-                                <form method="POST" action="{{ route('user.products.edit-color', $color) }}"
-                                    class="dropzone" id="my-awesome-dropzone-colors-edit">
-
-                                </form>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-
-            </div>
-        @endforeach --}}
-
     @endif
-
-
-
-
 
     @push('script')
         <script>

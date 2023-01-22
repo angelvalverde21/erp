@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Log;
 class ProductController extends Controller
 {
     //Funcion para cargar las imagenes de los productis (ojo NO los colores)
-    public function images($nickname, Product $product, Request $request)
+    public function uploadImages($nickname, Product $product, Request $request)
     {
 
 
@@ -39,7 +39,7 @@ class ProductController extends Controller
         //Ojo ya no es necesario ingresar la relacion imageable_id e imageable_type
     }
 
-    public function editimage($nickname, Image $image, Request $request){
+    public function editImage($nickname, Image $image, Request $request){
         
         $request->validate([
             'file' => 'required|image|max:10240'  //10 megas
@@ -67,8 +67,13 @@ class ProductController extends Controller
         Log::debug($request);
     }
 
-    public function colors($nickname, Product $product, Request $request)
+    public function uploadColors($nickname, Product $product, Request $request)
     {
+
+        Log::info('el producto recibido es: ');
+        
+        Log::info($product);
+        
 
         $request->validate([
             'file' => 'required|image|max:10240'  //10 megas
@@ -76,16 +81,30 @@ class ProductController extends Controller
 
         $url = Storage::put('colors', $request->file('file'));
 
-        //Crea el stock en caso no haya tallas
+        
+        Log::info('creando los colores e imagenes');
+
+        //Crea el color
         $color = $product->colors()->create(
             [
                 'image' => $url,
                 'name' => $nickname,
                 'quantity' => '1'
-            ]
-        );
+            ]);
 
-        $sizes = Size::where('product_id',$color->product_id)->get();
+
+        //Crea la primera imagen para el color
+        $color->images()->create(
+            [
+                'name' => $url,
+                'usage' => 'color'
+            ]
+            );
+
+        
+        //Crea las tallas para el color creado
+
+        $sizes = Size::where('product_id', $color->product_id)->get();
 
         foreach ($sizes as $size) {
 
@@ -98,6 +117,41 @@ class ProductController extends Controller
                 ]
             );
         }
+
+        Log::info('se creo la sizes para el color->product_id: '. $color->product_id);
+    }
+
+    //Variantes del color
+    public function uploadVariantsColor($nickname, Color $color, Request $request)
+    {
+
+        $request->validate([
+            'file' => 'required|image|max:10240'  //10 megas
+        ]);
+
+        $url = Storage::put('colors', $request->file('file'));
+
+        //Crea el stock en caso no haya tallas
+        $color->images()->create(
+            [
+                'name' => $url,
+                'usage' => 'color',
+            ]
+        );
+
+        // $sizes = Size::where('product_id',$color->product_id)->get();
+
+        // foreach ($sizes as $size) {
+
+        //     //Agregado datos a la tabla pivote
+        //     ColorSize::create(
+        //         [
+        //             'color_id' => $color->id,
+        //             'size_id' => $size->id,
+        //             'quantity' => '0'
+        //         ]
+        //     );
+        // }
     }
 
 }

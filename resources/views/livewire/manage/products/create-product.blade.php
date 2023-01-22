@@ -11,14 +11,16 @@
                     <div class="form-body">
 
                         <hr>
+                        
                         <div class="row p-t-20">
-                            <div class="col-md-9">
 
+                            <div class="col-md-9">
                                 <x-form.input type="text" wirevalue="product.name" debounce="500"
                                     error="Este campo es requerido">
                                     Titulo
                                 </x-form.input>
                             </div>
+
                             <!--/span-->
                             <div class="col-md-3">
                                 <x-form.input type="number" wirevalue="product.price"
@@ -27,11 +29,12 @@
                                 </x-form.input>
                             </div>
                             <!--/span-->
+
                         </div>
                         <!--/row-->
                         <div class="row">
                             <div class="col-md-12">
-                                <x-form.input type="text" wirevalue="product.slug"
+                                <x-form.input disabled="disabled" type="text" wirevalue="product.slug"
                                     error="este producto ya existe">
                                     Url del producto
                                 </x-form.input>
@@ -138,8 +141,6 @@
             <span wire:loading wire:target="saveCategory">Espere...</span>
             <button type="button" wire:loading.attr="disabled" wire.target="save" wire:click="saveCategory"
                 class="btn btn-danger waves-effect waves-light ml-auto">Guardar</button>
-
-                
         </x-slot>
 
     </x-modal>

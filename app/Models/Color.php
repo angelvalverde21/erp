@@ -12,8 +12,6 @@ class Color extends Model
 {
     use HasFactory;
 
-    use HasFactory;
-
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     //Relacion muchos a muchos
@@ -42,6 +40,12 @@ class Color extends Model
     }
 
     public function getImageAttribute($value){
-        return url('/') . Storage::url($value);
+        return $this->morphMany(Image::class,"imageable")->orderBy('id','DESC')->first();
+        //return url('/') . Storage::url($value);
     }
+
+    public function images(){
+        return $this->morphMany(Image::class,"imageable")->orderBy('id','DESC');
+    }
+
 }
