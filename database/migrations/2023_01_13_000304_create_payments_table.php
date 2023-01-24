@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('paymentable_type');
             $table->string('image')->nullable();
 
-            $table->unsignedBigInteger('payments_status_id')->nullable();
-            $table->foreign('payments_status_id')->references('id')->on('payments_status');
+            $table->unsignedBigInteger('payment_status_id')->nullable();
+            $table->foreign('payment_status_id')->references('id')->on('payments_status');
 
             $table->string('amount')->nullable();
             $table->json('content')->nullable();

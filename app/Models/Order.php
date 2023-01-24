@@ -23,7 +23,7 @@ class Order extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     //incluir accesores a la apis
-    protected $appends = ['total_final','total_amount','total_products','status_pago'];
+    protected $appends = ['total_final','total_amount','pagado','total_products','status_pago'];
 
     //Relacino uno a uno polimorfica
 
@@ -393,17 +393,21 @@ class Order extends Model
 
     //status del pedido
 
+    public function getPagadoAttribute(){
+        return $this->is_pay();
+    }
+
     public function is_pay(){
 
         $total = 0;
 
-        $payments = $this->payments;
+        $payments = $this->payments->where('payment_status_id','4');
 
         Log::info('se imprime los pagos');
         // Log::info($payments);
         
-        
-        foreach ($payments as $payment) {
+        foreach ($payments as $payment){
+
             Log::info($payment);
 
             //$payment->amount, estos pagos vienen de la tabla payments y son los pagos parciales del pedido

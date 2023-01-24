@@ -59,18 +59,41 @@ class PayController extends Controller
             "status_order" => "PAGADO",
         ];
 
-        Log::info($request->clientAnswer['orderStatus']);
+        // Log::info($request->clientAnswer['orderStatus']);
+        // Log::info();
+        if (isset($request->clientAnswer['orderStatus']) &&  $request->clientAnswer['orderStatus'] == 'PAID') {
 
-        // $order = Order::findOrFail($request->order_id);
+            $order_id = $request->clientAnswer['orderDetails']['orderId'];
+            $order = Order::findOrFail($order_id);
 
-        // $order->payments()->create([
-        //     'payment_status_id' => 4, // el estatus 4 es 'paid'
-        //     'amount' => 19.95,
-        //     'payment_method_id' => 3,
-        //     'content' => $request->data->clientAnswer->transactions[0]->transactionDetails->cardDetails->effectiveBrand
+            $order->payments()->create([
 
+                'payment_status_id' => 4, // el estatus 4 es 'paid'
+                'amount' => $order->total_amount,
+                'payment_method_id' => 3,
+                'content' => $request->clientAnswer['transactions'][0]['transactionDetails']['cardDetails']
+
+            ]);
+
+        } else {
+
+            Log::info($request);
             
-        // ]);
+
+            $order_id = $request->metadata['answer']['clientAnswer']['orderDetails']['orderId'];
+
+            $order = Order::findOrFail($order_id);
+
+            $order->payments()->create([
+
+                'payment_status_id' => 2, // el estatus 2 es 'failed'
+                'amount' => $order->total_amount,
+                'payment_method_id' => 3,
+                'content' => $request
+
+            ]);     
+
+        }
 
         // $orderStatus = $request->data['clientAnswer']['orderStatus'];
 

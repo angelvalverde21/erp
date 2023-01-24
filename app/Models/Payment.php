@@ -14,7 +14,7 @@ class Payment extends Model
     
     public function status()
     {
-        return $this->belongsTo(PaymentStatus::class,'payments_status_id');  //en la tabla payments busca el atributo 'payments_status_id' y le hace un where a la tabla payments_status
+        return $this->belongsTo(PaymentStatus::class,'payment_status_id');  //en la tabla payments busca el atributo 'payments_status_id' y le hace un where a la tabla payments_status
     }
 
 
@@ -34,5 +34,6 @@ class Payment extends Model
     {
         return $this->belongsTo(PaymentMethod::class);
     }
+
 
 }
