@@ -13,7 +13,7 @@ class Color extends Model
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
-
+    protected $appends = ['image'];
     //Relacion muchos a muchos
 
     public function product(){
@@ -47,5 +47,11 @@ class Color extends Model
     public function images(){
         return $this->morphMany(Image::class,"imageable")->orderBy('id','DESC');
     }
+
+    //Atributo personalizado (Accesor)
+
+    // public function getimageAttribute(){
+    //     return "image";
+    // }
 
 }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('barcode');
             $table->string('stockable_type');
             $table->unsignedBigInteger('stockable_id');
-            $table->string('observaciones')->nullable();
+            $table->string('status')->default('almacen');
             $table->timestamps();
         });
     }

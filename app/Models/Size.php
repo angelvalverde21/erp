@@ -10,7 +10,7 @@ class Size extends Model
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
-
+    // protected $appends = ['image'];
 
     //relacion uno a muchos inversa
 
@@ -25,6 +25,10 @@ class Size extends Model
     }
 
     //Atributo personalizado (Accesor)
+
+    // public function getimageAttribute(){
+    //     return "image";
+    // }
     
     public function getOptionAttribute(){
         

@@ -36,7 +36,7 @@ class CreateAddressesTable extends Migration
             $table->foreign('district_id')->references('id')->on('districts');
             $table->timestamps();
 
-            $table->string('addressable_type')->default('App\\Models\\User');
+            $table->string('addressable_type')->default('App\/Models\/User');
             $table->unsignedBigInteger('addressable_id')->default(1);
             
         });

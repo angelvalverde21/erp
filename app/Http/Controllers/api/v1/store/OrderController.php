@@ -248,7 +248,7 @@ class OrderController extends Controller
 
                     $order->delivery_man_id = 3; //el usuario 3 es magaly vanesa
                     $order->shipping_cost_buyer = 0; //el usuario 3 es magaly vanesa
-                    $order->payment_list_method_id = 11; //simula que el pago lo hico con transferencia deposito
+                    $order->payment_method_id = 1; //simula que el pago lo hico con transferencia deposito
                     $order->delivery_method_id = 1; //quiere decir que se envia via delivery
                     $order->store_id = $store->id;
                     $order->seller_id = 12; //el usuario 12 es que el pedido vino desde internet
@@ -352,6 +352,7 @@ class OrderController extends Controller
                             $status = 200
                         );
                     }
+                    
                 } catch (\Exception $error) {
                     return response()->json(
                         $data = [

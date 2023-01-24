@@ -61,12 +61,12 @@ class StockColorSize extends Component
                 );
                     
                 //Codigo para agregar registros de stock
-                for ($k = 0; $k < $this->inputs[$keys[$i]]['quantity']; $k++) {
-                    # code...
-                    $colorSize->stocks()->create([
-                        'barcode' => '124524'
-                    ]);
-                }
+                // for ($k = 0; $k < $this->inputs[$keys[$i]]['quantity']; $k++) {
+                //     # code...
+                //     $colorSize->stocks()->create([
+                //         'barcode' => '124524'
+                //     ]);
+                // }
             }
 
             $i++;

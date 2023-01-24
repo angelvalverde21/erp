@@ -4,10 +4,11 @@
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
+                {{-- <th>ID</th> --}}
                 <th>Talla</th>
                 <th>Stock</th>
-                <th>Nuevo Stock</th>
+                <th>Actualizar total</th>
+                {{-- <th>Agregar Stock</th> --}}
             </tr>
 
         </thead>
@@ -16,10 +17,11 @@
             @foreach ($color->sizes as $size)
 
                 <tr>
-                    <td>{{ $size->pivot->id }}</td>
+                    {{-- <td>{{ $size->pivot->id }}</td> --}}
                     <td>{{ $size->name }}</td>
                     <td>{{ $size->pivot->quantity }}</td>
                     <td><input type="number" placeholder="0" class="form-control" wire:model="inputs.{{ $size->pivot->id }}.quantity">
+                    {{-- <td><input type="number" placeholder="0" class="form-control" wire:model="inputs.{{ $size->pivot->id }}.quantity"> --}}
                     </td>
                 </tr>
             @endforeach
@@ -28,7 +30,7 @@
 
         <tfoot>
             <tr>
-                <td></td>
+                {{-- <td></td> --}}
                 <td>Total</td>
                 <td>{{ $color->stock }}</td>
                 <td>
@@ -36,6 +38,11 @@
                     <button type="button" wire:loading.attr="disabled" wire:click="guardarStock"
                     class="btn btn-primary w-100">Guardar</button>
                 </td>
+                {{-- <td>
+
+                    <button type="button" wire:loading.attr="disabled" wire:click="guardarStock"
+                    class="btn btn-primary w-100">Guardar</button>
+                </td> --}}
             </tr>
         </tfoot>
 

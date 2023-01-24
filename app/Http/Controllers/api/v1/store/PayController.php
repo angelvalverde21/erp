@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\api\v1\store;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 require base_path('/vendor/autoload.php');
 
@@ -57,7 +59,28 @@ class PayController extends Controller
             "status_order" => "PAGADO",
         ];
 
+        Log::info($request->clientAnswer['orderStatus']);
+
+        // $order = Order::findOrFail($request->order_id);
+
+        // $order->payments()->create([
+        //     'payment_status_id' => 4, // el estatus 4 es 'paid'
+        //     'amount' => 19.95,
+        //     'payment_method_id' => 3,
+        //     'content' => $request->data->clientAnswer->transactions[0]->transactionDetails->cardDetails->effectiveBrand
+
+            
+        // ]);
+
+        // $orderStatus = $request->data['clientAnswer']['orderStatus'];
+
+        // Log::info($request->order_id);
+        // Log::info($request->data['clientAnswer']['transactions'][0]['transactionDetails']['cardDetails']);
+        //Log::info($request->data->clientAnswer->transactions[0]->transactionDetails->cardDetails->effectiveBrand);
+        
+
         return $data;
+
     }
 
 
