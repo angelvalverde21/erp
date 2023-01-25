@@ -64,16 +64,34 @@ class ProductApi extends Controller
         Log::info($id);
         if(is_numeric($id)){
             $product = Product::where('id', $id)->with('images')->with('colors.sizes')->first();
+
+            if ($product) {
+                return $product;
+            } else {
+                return response()->json(['error' => '404', 'message' => 'Pagina no encontradara']);
+            }
+            
         }else{
-            $product = Product::where('slug', $id)->with('images')->with('colors.sizes')->first();
+            $product = Product::where('short_link', $id)->with('images')->with('colors.sizes')->first();
+
+            if ($product) {
+                return $product;
+            } else {
+                
+                $product = Product::where('slug', $id)->with('images')->with('colors.sizes')->first();
+
+                if($product){
+                    return $product;
+                }else{
+                    // return response()->json(['error' => '404', 'message' => 'Pagina no encontradara'],404);
+                    return response()->json(['error' => '404', 'message' => 'Pagina no encontradara']);
+                }
+                //
+            }
+            
         }
-        if($product){
-            return $product;
-        }else{
-            // return response()->json(['error' => '404', 'message' => 'Pagina no encontradara'],404);
-            return response()->json(['error' => '404', 'message' => 'Pagina no encontradara']);
-        }
-        //
+
+
     }
 
     /**

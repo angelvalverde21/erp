@@ -48,6 +48,10 @@ class Color extends Model
         return $this->morphMany(Image::class,"imageable")->orderBy('id','DESC');
     }
 
+
+    // public function getInfoStockAttribute(){
+    //     return $this->pivot->foo;
+    // }
     //Atributo personalizado (Accesor)
 
     // public function getimageAttribute(){

@@ -74,6 +74,8 @@ class CreateProduct extends Component
         $product->owner_id = $this->user->id;
         $product->store_id = $this->store->id;
 
+        $product->short_link = substr(base64_encode(bcrypt(Str::slug($this->product['name']))),0,5);
+
         Log::info($product);
 
         //Guardo el producto

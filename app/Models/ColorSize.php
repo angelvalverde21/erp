@@ -13,6 +13,8 @@ class ColorSize extends Model
     
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    // protected $appends = ['info'];
+
     public function color(){
         return $this->belongsTo(Color::class);
     }
@@ -24,5 +26,16 @@ class ColorSize extends Model
     public function stocks(){
         return $this->morphMany(Stock::class,"stockable")->orderBy('id','DESC');
     }
+
+    // public function getInfotAttribute(){
+
+    //     if ($this->quantity>0) {
+    //         # code...
+    //         return "DISPONIBLE";
+    //     } else {
+    //         return "AGOTADO";
+    //     }
+        
+    // }
 
 }
