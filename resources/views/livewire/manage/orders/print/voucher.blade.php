@@ -1,12 +1,12 @@
 <div>
     <!DOCTYPE html>
-    <html lang="en" dir="ltr">
+    <html lang="es" dir="ltr">
 
     <head>
         <meta charset="utf-8">
         <title>Voucher de venta</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
         <style>
             body {
@@ -161,7 +161,7 @@
 
         <div class="content-items pt-3 text-center">
             @foreach ($order->items as $item)
-                <img class="px-1 pt-1" src="{{ asset(Storage::url($item->content->file_name)) }}" height="85px" alt="">
+                <img class="px-1 pt-1" src="{{ asset(Storage::url($item->content->image->name)) }}" height="85px" alt="">
             @endforeach
         </div>
 
@@ -178,7 +178,7 @@
                 <li>SUBTOTAL: S/. {{ $order->sub_total }}</li>
                 <li>DESCUENTOS: S/. {{ $order->descuentos }}</li>
                 <li>ENVIO: S/. {{ $order->shipping_cost_buyer }}</li>
-                <li><strong style="font-size: 14pt">TOTAL: S/. {{ $order->total_mount}}</strong></li>
+                <li><strong style="font-size: 14pt">TOTAL: S/. {{ $order->total_amount}}</strong></li>
             </div>
 
         </div>

@@ -28,7 +28,9 @@
                                 <th>Cliente</th>
                                 <th>Entregar por</th>
                                 <th>Status</th>
+                                <th>Pago</th>
                                 <th>Total</th>
+                                <th>Autor</th>
                                 <th>Creado</th>
                                 <th>Actualizado</th>
                                 <th>Editar</th>
@@ -59,9 +61,17 @@
                                     <td class="text-center">
                                         {{ $order->delivery_man->name }}
                                     </td>
-                                    <td>{{ $order->price }}</td>
-                                    <td>{{ $order->total_mount }}</td>
-                                    <td>{{ $order->created_at }} ({{$order->seller->name}})</td>
+                                    <td>En proceso de empaque</td>
+                                    <td>
+                                        @if ($order->is_pay())
+                                            <button class="btn btn-success">Pagado</button>
+                                        @else
+                                        <button class="btn btn-warning">Pendiente</button>
+                                        @endif
+                                    </td>
+                                    <td>{{ $order->total_amount }}</td>
+                                    <td>{{$order->seller->name}}</td>
+                                    <td>{{ $order->created_at }}</td>
                                     <td>{{ $order->updated_at }}</td>
                                     <td>
                                         <div class="d-flex  justify-content-center">

@@ -46,6 +46,7 @@ class PayController extends Controller
 
         //devolviendo el token de izipay
         return $result->answer->formToken;
+        
     }
 
     public function example(){

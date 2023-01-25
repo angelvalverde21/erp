@@ -17,14 +17,16 @@ class PdfController extends Controller
    
         $pdf->set_paper([0, 0, 283.465, 595]); // 283.465  puntos equivale a 10 cms y 510.236 equivale a 18cms
         
+        $order->changes()->create([
+            'name'=>'print_vaucher',
+            'content'=> []
+        ]);
+
         $pdf = $pdf->loadview('livewire.manage.orders.print.voucher', compact('order'));
         //return view('livewire.manage.orders.print.voucher', compact('order'));
         //return $pdf-> download ('prueba.pdf');
 
-        $order->changes()->create([
-            'name'=>'send_vaucher',
-            'content'=> Request::Us
-        ]);
+
 
         return $pdf->stream('voucher.pdf');
 
