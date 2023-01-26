@@ -81,7 +81,7 @@
                             <p> Publicado en: {{ $product->category->name }}</p>
                             </div>
                             <div class="col-md-12 p-y-3">
-                            {{-- <p><a target="_blank" href="https://{{ $store->profile->domain}}/{{ $product->short_link }}">https://{{ $store->profile->domain}}/{{ $product->short_link }}</a></p> --}}
+                            <p><a target="_blank" href="https://{{ $store->profile->domain}}/{{ $product->short_link }}">https://{{ $store->profile->domain}}/{{ $product->short_link }}</a></p>
                             </div>
                         </div>
 
