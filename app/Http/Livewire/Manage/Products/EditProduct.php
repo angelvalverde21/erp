@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Livewire\Component;
 use App\Models\Subcategory;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
@@ -27,12 +28,17 @@ class EditProduct extends Component
         'refreshProductEdit' => 'refreshProductEdit'
     ];
 
-    public $product, $slug;
+    public $product, $slug, $store;
 
     public function mount(Product $product){
 
         //Log::debug($product);
         $this->store = Request::get('store');
+        
+        Log::info($this->store);
+        
+
+        // $store = User::findOrFail($this->store->id);
 
         if($this->store->id == $product->store_id){
             $this->product = $product;

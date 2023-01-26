@@ -23,6 +23,7 @@ class CreateProfileStoresTable extends Migration
             // $table->foreign('address_id')->references('id')->on('addresses');
 
             // $table->string('maps')->nullable();
+            $table->string('domain', 2048)->nullable();
             $table->string('instagram', 2048)->nullable();
             $table->string('tiktok', 2048)->nullable();
             $table->string('facebook', 2048)->nullable();

@@ -19,6 +19,11 @@
                         <div class="active tab-pane" id="settings">
                             <form class="form-horizontal">
 
+                                <x-form.input type="text" label="Dominio de la pagina web"  wirevalue="profile.domain" icon="fa-solid fa-link" error="Este campo es requerido">
+                                    Dominio
+                                </x-form.input>
+
+
                                 <x-form.input type="text" label="Titulo de la pagina web" wirevalue="profile.title"
                                     error="Este campo es requerido">
                                     Titulo de la pagina web
@@ -46,6 +51,7 @@
                                     Tiktok
                                 </x-form.input>
                                 
+
 
                                 {{-- <x-form.input type="number" label="Central telefonica" icon="fa-solid fa-phone" wirevalue="profile.phone"
                                     error="Este campo es requerido">
