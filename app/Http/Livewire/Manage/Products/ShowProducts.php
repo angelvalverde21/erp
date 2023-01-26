@@ -21,7 +21,7 @@ class ShowProducts extends Component
 
         $product->status = 3;
         $product->save();
-        $this->store->products = $this->store->products->fresh();
+        $this->store = $this->store->fresh();
         $this->emit('eliminado');
 
     }
@@ -29,7 +29,9 @@ class ShowProducts extends Component
     public function render()
     {
 
-        $products = $this->store->products->where('status',Product::PUBLICADO);
+        $products = $this->store->products;
+
+
         return view('livewire.manage.products.show-products',compact('products'))->layout('layouts.manage');
 
     }
