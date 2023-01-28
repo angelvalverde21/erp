@@ -188,7 +188,7 @@ return [
 
         Milon\Barcode\BarcodeServiceProvider::class,
 
-        // Intervention\Image\ImageServiceProvider::class
+        Intervention\Image\ImageServiceProvider::class
     ],
 
     /*
@@ -252,7 +252,7 @@ return [
         
         //'PDF' => Barryvdh\DomPDF\Facade::class,
 
-        // 'Image' => Intervention\Image\Facades\Image::class,
+        'Image' => Intervention\Image\Facades\Image::class,
         // 'Image' => Intervention\Image\ImageManagerStatic::class,
     ],
 
