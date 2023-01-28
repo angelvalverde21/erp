@@ -23,8 +23,8 @@ class ProductController extends Controller
             'file' => 'required|image|max:10240'  //10 megas
         ]);
 
-        $url = Storage::put('products', $request->file('file'));
-
+        // $url = Storage::put('products', $request->file('file'));
+        $url = uploadImage($request,"products");
         Log::info('inicio de imagen');
         
         Log::info($url);
@@ -45,7 +45,8 @@ class ProductController extends Controller
             'file' => 'required|image|max:10240'  //10 megas
         ]);
 
-        $image->name = Storage::put('products', $request->file('file'));
+        // $image->name = Storage::put('products', $request->file('file'));
+        $image->name = uploadImage($request,"products");
 
         $image->save();
 
@@ -59,7 +60,7 @@ class ProductController extends Controller
             'file' => 'required|image|max:10240'  //10 megas
         ]);
 
-        $color->image = Storage::put('colors', $request->file('file'));
+        $color->image = uploadImage($request,"colors");
 
         $color->save();
         
@@ -129,8 +130,8 @@ class ProductController extends Controller
             'file' => 'required|image|max:10240'  //10 megas
         ]);
 
-        $url = Storage::put('colors', $request->file('file'));
-
+        // $url = Storage::put('colors', $request->file('file'));
+        $url = uploadImage($request,"colors");
         //Crea el stock en caso no haya tallas
         $color->images()->create(
             [
