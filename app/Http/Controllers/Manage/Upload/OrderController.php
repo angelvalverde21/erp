@@ -54,6 +54,10 @@ class OrderController extends Controller
                 'name' => $image,
             ]);
 
+            Log::info('empieza el helper');
+            Log::info(uploadImage($request));
+            Log::info('Termina el helper');
+
         } catch (\Throwable $th) {
 
             Log::info('No se paso la validacion');
@@ -72,14 +76,23 @@ class OrderController extends Controller
 
             Log::info('se paso la validacion');
             Log::info($request);
-            $image = Storage::put('orders', $request->file('file'));
+            
+            $image = uploadImage($request,"orders/comprobantes/payments");
+
             $order->payments()->create([
                 'image' => $image,
-                'payments_status_id' => "4",
+                'payment_status_id' => "4",
                 'amount' => $request->total_amount,
                 'payment_method_id' => $request->payment_method_id,
                 'content' => ["ejemplo" => "otro ejemplo"]
             ]);
+
+
+            // Log::info('empieza el helper');
+            // Log::info(uploadImage($request));
+            // Log::info('Termina el helper');
+
+
         } catch (\Throwable $th) {
 
             Log::info('No se paso la validacion');
@@ -121,7 +134,7 @@ class OrderController extends Controller
 
     }
 
-    public function uploadFileOrder($nickname, Order $order, $field, Request $request) //ojo $field viene en el url del manage
+    public function uploadImageOrder($nickname, Order $order, $field, Request $request) //ojo $field viene en el url del manage
     {
         $request->validate([
             'file' => 'required|image|max:10240'  //10 megas

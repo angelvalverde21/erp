@@ -187,6 +187,8 @@ return [
         /*** pdf  */
 
         Milon\Barcode\BarcodeServiceProvider::class,
+
+        // Intervention\Image\ImageServiceProvider::class
     ],
 
     /*
@@ -249,6 +251,9 @@ return [
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
         
         //'PDF' => Barryvdh\DomPDF\Facade::class,
+
+        // 'Image' => Intervention\Image\Facades\Image::class,
+        // 'Image' => Intervention\Image\ImageManagerStatic::class,
     ],
 
 ];

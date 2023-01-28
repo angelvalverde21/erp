@@ -12,6 +12,9 @@ use App\Models\Product;
 use App\Models\Size;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 function createVaucher()
 {
@@ -19,6 +22,38 @@ function createVaucher()
 
 function helperTotalPagar()
 {
+}
+
+function uploadImage($request, $dir = "")
+{
+
+    // Log::info('up-1');
+
+    $originalName = $request->file('file')->getClientOriginalName();
+    // Log::info('up-2');
+    $extension = pathinfo($originalName, PATHINFO_EXTENSION);
+    // Log::info('up-3');
+    $nameEncrypt = md5(
+        bcrypt(
+            $originalName . bcrypt(time())
+        )
+    );
+    // Log::info('up-4');
+    $guardarEn = storage_path(). "/app/public/" .$dir . "/" . $nameEncrypt . "." . $extension;
+    $returnName = $dir . "/" . $nameEncrypt . "." . $extension;
+    Log::info($guardarEn);
+    
+    // Log::info('up-5');
+
+    Image::make($request->file('file'))
+        ->resize(750, null, function($constraint) {
+            $constraint->aspectRatio();
+        })
+        ->save($guardarEn);
+
+    // Log::info('up-6');
+
+    return $returnName;
 }
 
 function stockColorSizeId($color_size_id)

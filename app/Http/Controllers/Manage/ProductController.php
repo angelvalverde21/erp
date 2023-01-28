@@ -79,7 +79,7 @@ class ProductController extends Controller
             'file' => 'required|image|max:10240'  //10 megas
         ]);
 
-        $url = Storage::put('colors', $request->file('file'));
+        $url = uploadImage($request,"colors");
 
         
         Log::info('creando los colores e imagenes');
