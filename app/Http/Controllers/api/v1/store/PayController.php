@@ -35,14 +35,14 @@ class PayController extends Controller
         //     ],
         // ];
 
-        $autorization = base64_encode("54188994:testpassword_CzNPhqrFHGCaEgmoywi6fshMi6HuezmTZfzxakRKAcLSJ");
+        $autorization = base64_encode(config('services.izipay.client_id').":".config('services.izipay.client_secret'));
         
         $headers = [
             'Authorization' => 'Basic ' . $autorization,
             'Accept' => 'application/json'
         ];
 
-        $result =  Http::withHeaders($headers)->post("https://api.micuentaweb.pe/api-payment/V4/Charge/CreatePayment", $request)->object();
+        $result =  Http::withHeaders($headers)->post(config('services.izipay.url'), $request)->object();
 
         //devolviendo el token de izipay
         return $result->answer->formToken;
