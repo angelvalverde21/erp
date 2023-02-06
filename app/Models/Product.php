@@ -18,7 +18,7 @@ class Product extends Model
     protected $guarded = ['id', 'created_at', 'image'];
 
     //incluir accesores a la api
-    protected $appends = ['image'];
+    protected $appends = ['image','has'];
 
     //Uno a muchos inverso (singlular)
     public function brand()
@@ -77,7 +77,7 @@ class Product extends Model
         }
     }
 
-    public function has()
+    public function getHasAttribute()
     {
 
         $has_color = $this->category->has_color;

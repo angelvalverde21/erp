@@ -33,6 +33,8 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')->references('id')->on('users');
 
+            $table->string('name')->default('normal');
+
 
             $table->unsignedBigInteger('store_id');
             $table->foreign('store_id')->references('id')->on('users');
