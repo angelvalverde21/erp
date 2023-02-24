@@ -87,7 +87,7 @@
 
                         <div class="row p-t-20">
                             <div class="col-md-12">
-                                <x-form.input type="text" wirevalue="product.name" debounce="500"
+                                <x-form.input type="text" wirevalue="product.name" debounce="1000"
                                     error="Este campo es requerido">
                                     Titulo
                                 </x-form.input>
@@ -106,13 +106,13 @@
                         <div class="row">
                             <!--/span-->
                             <div class="col-md-6">
-                                <x-form.input type="number" label="Precio Normal" texticon="S/. " wirevalue="product.price"
+                                <x-form.input type="number" label="Precio Normal" texticon="S/. " wirevalue="product.price" debouce="500"
                                     error="Este campo es requerido">
                                     Precio Normal
                                 </x-form.input>
                             </div>
                             <div class="col-md-6">
-                                <x-form.input type="number" label="Precio Mayor" texticon="S/. "  wirevalue="product.price_seller"
+                                <x-form.input type="number" label="Precio Mayor" texticon="S/. "  wirevalue="product.price_seller" debouce="500"
                                     error="Debe indicar el precio por mayor">
                                     Precio por mayor
                                 </x-form.input>
@@ -120,7 +120,6 @@
                             <!--/span-->
                         </div>
                         <!--/row-->
-
 
                     </div>
 
@@ -168,10 +167,18 @@
                         
                         @livewire('manage.products.edit-product.images', ['product' => $product], key('product-images-' . $product->id))
                     </div>
+
                     <div class="tab-pane py-3" id="messages" role="tabpanel">Aqui ira el album de fotos</div>
+
                 </div>
             </div>
         </div>
+    </x-sectioncontent>
+    
+    <x-sectioncontent>
+    
+        @livewire('components.prices.show-prices', ['product' => $product], key('show-prices-' . $product->id))
+    
     </x-sectioncontent>
 
 </div>

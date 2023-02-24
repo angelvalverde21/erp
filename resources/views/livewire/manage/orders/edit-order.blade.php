@@ -7,8 +7,6 @@
         <li>{{ $status->name }}</li>
     @endforeach --}}
 
-
-
     {{-- @include('livewire.manage.orders.edit-order._navbar-status') --}}
     <x-sectioncontent>
 
@@ -31,8 +29,6 @@
               </div>
  
             </div> --}}
-
-
 
             {{-- <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
                 <div class="info-box mb-3">
@@ -57,8 +53,6 @@
               </div> --}}
 
             <!-- fix for small devices only -->
-
-
 
             <!-- /.col -->
 

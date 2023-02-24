@@ -19,7 +19,7 @@ class CreateProduct extends Component
         'render' => 'render'
     ];
 
-    public $product;
+    public $product, $store, $user;
 
     protected $rules = [
         'product.category_id'=>'required',
@@ -70,6 +70,12 @@ class CreateProduct extends Component
         $product->slug = $this->product['slug'];
         $product->category_id = $this->product['category_id'];
         $product->price = $this->product['price'];
+        
+        $product->prices()->create([
+            'quantity' => 1,
+            'price' => $this->product['price']
+        ]);
+
         $product->status = '1';
         $product->owner_id = $this->user->id;
         $product->store_id = $this->store->id;

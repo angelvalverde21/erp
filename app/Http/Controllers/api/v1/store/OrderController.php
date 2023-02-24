@@ -59,8 +59,8 @@ class OrderController extends Controller
         //     $user->makeHidden(['password', 'OTP']);
         // }
         /****************************************/
-        
-        $order = $order->makeHidden(['observations_private', 'shipping_cost_to_carrier','shipping_cost_carrier']);
+
+        $order = $order->makeHidden(['observations_private', 'shipping_cost_to_carrier', 'shipping_cost_carrier']);
 
         Log::info($order);
 
@@ -290,39 +290,56 @@ class OrderController extends Controller
 
                                 //fin de recibiendo los parametros del formulario
 
-                                $colorSize = ColorSize::find($itemOrder['color_size_id']);
+                                switch ($itemOrder['type']) {
+                                    case 'color_id':
+                                        # code...
+                                        break;
 
-                                $id = $colorSize->id;
-                                $talla = $colorSize->size->name;
-                                $imagenColor = $colorSize->color->image;
-                                $price = $colorSize->color->product->price;
-                                $qty = $itemOrder['qty'];
+                                    case 'size_id':
+                                        # code...
+                                        break;
 
-                                $description = $colorSize->color->product->name;
+                                    case 'none':
+                                        # code...
+                                        break;
 
-                                //Prapando el json content
-                                $content =             [
-                                    'color_size_id' => $id, //es el id del item que se agregara a la orden, este contiene el color y talla
-                                    'talla' => $talla, //name indica la talla
-                                    'image' => $imagenColor, //image indica la url de la imagen del colors
-                                    'price' => $price //Este sera el precio real que se le cobrara al cliente, por eso que se pone en el json
-                                    // Asi lo podremos variarar sin malograr la base de datos
-                                ];
+                                    default:
+                                        $colorSize = ColorSize::find($itemOrder['id']);
 
-                                //Renombrando la variable
-                                $item = new Item();
+                                        $id = $colorSize->id;
+                                        $talla = $colorSize->size->name;
+                                        $imagenColor = $colorSize->color->image;
+                                        $price = $colorSize->color->product->price;
+                                        $qty = $itemOrder['qty'];
 
-                                $item->quantity = $qty;
+                                        $description = $colorSize->color->product->name;
 
-                                $item->price = $price;
-                                $item->description = $description;
-                                $item->content = $content;
-                                $item->order_id = $order->id;
+                                        //Prapando el json content
+                                        $content =             [
+                                            'color_size_id' => $id, //es el id del item que se agregara a la orden, este contiene el color y talla
+                                            'talla' => $talla, //name indica la talla
+                                            'image' => $imagenColor, //image indica la url de la imagen del colors
+                                            'price' => $price //Este sera el precio real que se le cobrara al cliente, por eso que se pone en el json
+                                            // Asi lo podremos variarar sin malograr la base de datos
+                                        ];
 
-                                $item->saveOrFail();
+                                        //Renombrando la variable
+                                        $item = new Item();
 
-                                actualizarStock($item->id, "separar"); //Separar quiere decir que descuente de la base de datos el pedido porque este es seguro para entrega
+                                        $item->quantity = $qty;
 
+                                        $item->price = $price;
+                                        $item->description = $description;
+                                        $item->content = $content;
+                                        $item->order_id = $order->id;
+
+                                        $item->saveOrFail();
+
+                                        actualizarStock($item->id, "separar"); //Separar quiere decir que descuente de la base de datos el pedido porque este es seguro para entrega
+
+                                        break;
+                                }
+                                
                             } catch (\Exception $error) {
                                 return response()->json(
                                     $data = [
@@ -352,7 +369,6 @@ class OrderController extends Controller
                             $status = 200
                         );
                     }
-                    
                 } catch (\Exception $error) {
                     return response()->json(
                         $data = [

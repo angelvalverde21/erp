@@ -44,8 +44,8 @@ class ProductApi extends Controller
     {
         //
         Log::info($colorSize);
-       
         return response()->json(['status' => '200', 'stock' => $colorSize->quantity]);
+
     }
 
     public function store(Request $request)
@@ -62,36 +62,39 @@ class ProductApi extends Controller
     public function show($nickname, $id)
     {
         Log::info($id);
-        if(is_numeric($id)){
-            $product = Product::where('id', $id)->with('images')->with('colors.sizes')->first();
+
+        //si la url es numerica ------(CASO: 1)
+        if (is_numeric($id)) {
+
+            $product = Product::where('id', $id)->with('images')->with('prices')->with('colors.sizes')->first();
 
             if ($product) {
                 return $product;
             } else {
                 return response()->json(['error' => '404', 'message' => 'Pagina no encontradara']);
             }
-            
-        }else{
-            $product = Product::where('short_link', $id)->with('images')->with('colors.sizes')->first();
 
+        } else {
+
+            $product = Product::where('short_link', $id)->with('images')->with('prices')->with('colors.sizes')->first();
+            
+            //si la url es un short_link ------(CASO: 2)
             if ($product) {
                 return $product;
             } else {
-                
-                $product = Product::where('slug', $id)->with('images')->with('colors.sizes')->first();
 
-                if($product){
+                $product = Product::where('slug', $id)->with('images')->with('prices')->with('colors.sizes')->first();
+                
+                //si la url es un slug ------(CASO: 3)
+                if ($product) {
                     return $product;
-                }else{
+                } else {
                     // return response()->json(['error' => '404', 'message' => 'Pagina no encontradara'],404);
                     return response()->json(['error' => '404', 'message' => 'Pagina no encontradara']);
                 }
                 //
             }
-            
         }
-
-
     }
 
     /**

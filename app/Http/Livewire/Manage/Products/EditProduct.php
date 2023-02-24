@@ -66,6 +66,17 @@ class EditProduct extends Component
         
         //$this->product->slug = $this->slug;
 
+        Log::info('log desde el editProduct.php');
+        
+        Log::info($this->product);
+        
+        Log::info('fin de log desde el editProduct.php');
+
+        $this->product->prices()->create([
+            'quantity' => 1,
+            'price' => $this->product->price,
+        ]);
+
         Log::debug($this->product);
         $this->product->save();
         $this->emit('actualizado');

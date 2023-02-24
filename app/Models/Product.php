@@ -38,13 +38,17 @@ class Product extends Model
         return $this->hasMany(Color::class)->orderBy('id', 'DESC');
     }
 
+    public function prices(){
+        return $this->morphMany(Price::class, "priceable")->orderBy('quantity', 'ASC');
+    }
+    
     //Uno a muchos inverso
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function images()
+    public function images() //ojo images se llama en las consultas directamente con el metodo ->with('images), no se llama desde appends
     {
         return $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC');
     }
@@ -77,6 +81,8 @@ class Product extends Model
         }
     }
 
+
+
     public function getHasAttribute()
     {
 
@@ -105,4 +111,5 @@ class Product extends Model
         }
 
     }
+
 }
