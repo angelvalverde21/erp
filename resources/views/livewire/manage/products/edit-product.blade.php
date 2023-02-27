@@ -143,6 +143,12 @@
     </x-sectioncontent>
 
     <x-sectioncontent>
+    
+        @livewire('components.prices.show-prices', ['product' => $product], key('show-prices-' . $product->id))
+    
+    </x-sectioncontent>
+
+    <x-sectioncontent>
         <div class="card">
             <div class="card-body">
                 <ul class="nav nav-tabs" role="tablist">
@@ -175,10 +181,6 @@
         </div>
     </x-sectioncontent>
     
-    <x-sectioncontent>
-    
-        @livewire('components.prices.show-prices', ['product' => $product], key('show-prices-' . $product->id))
-    
-    </x-sectioncontent>
+
 
 </div>
