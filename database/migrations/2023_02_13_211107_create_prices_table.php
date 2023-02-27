@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('priceable_id');
             $table->string('type')->nullable()->default('normal');
             $table->integer('quantity')->default()->nullable();
-            $table->float('value')->nullable()->default('0.00');
+            $table->float('value')->nullable()->default('0.0000');
 
             $table->timestamps();
 
