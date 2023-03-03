@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\ColorSize;
 use App\Models\Item;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -267,6 +268,77 @@ class OrderController extends Controller
 
                         Log::info($request->order);
 
+                        $i = 0;
+
+                        foreach ($request->order as $itemOrder) {
+
+
+                            for ($j = 0; $j < $itemOrder['qty']; $j++) {
+                                # code...
+                                $array_repetidos[] = $itemOrder['product_id'];
+                            }
+
+                            $i++;
+                        }
+
+                        Log::info('Products ids');
+
+                        Log::info($array_repetidos);
+
+
+                        $repetidos = array_count_values($array_repetidos);
+
+                        Log::info('Product_id con el total de repeticiones');
+
+                        Log::info($repetidos);
+
+
+                        // foreach ($repetidos as $product_id) {
+                        //     # code...
+                        // }
+
+                        $array_prices = [];
+
+                        foreach ($repetidos as $product_id => $cantidad) {
+
+                            Log::info('Imprimiendo el product_id');
+
+                            Log::info($product_id);
+
+                            Log::info('Imprimiendo la cantidad');
+
+                            Log::info($cantidad);
+
+                            # code...
+                            $product = Product::find($product_id);
+
+                            Log::info('Imprimiendo el producto');
+                            Log::info($product);
+
+                            $precios = $product->prices;
+
+                            Log::info('Imprimiendo los precios');
+                            Log::info($precios);
+
+                            foreach ($precios as $precio) {
+
+                                Log::info('ingreso al foreach');
+                                Log::info($precio['quantity']);
+
+
+                                if ($cantidad == $precio['quantity']) {
+                                    # code...
+                                    $array_prices[$product_id] = $precio['value'];
+                                    break;
+                                }
+                            }
+                        }
+
+                        Log::info('Array Precios');
+
+                        Log::info($array_prices);
+
+
                         foreach ($request->order as $itemOrder) {
 
                             //ojo $itemOrder->color_size_id no funciona en el foreach
@@ -304,22 +376,29 @@ class OrderController extends Controller
                                         break;
 
                                     default:
+
                                         $colorSize = ColorSize::find($itemOrder['id']);
 
                                         $id = $colorSize->id;
                                         $talla = $colorSize->size->name;
                                         $imagenColor = $colorSize->color->image;
+
+                                        //Precio normal
                                         $price = $colorSize->color->product->price;
+
                                         $qty = $itemOrder['qty'];
 
                                         $description = $colorSize->color->product->name;
+
+                                        //Precio oferta
+                                        $price_oferta = $array_prices[$colorSize->color->product->id];
 
                                         //Prapando el json content
                                         $content =             [
                                             'color_size_id' => $id, //es el id del item que se agregara a la orden, este contiene el color y talla
                                             'talla' => $talla, //name indica la talla
                                             'image' => $imagenColor, //image indica la url de la imagen del colors
-                                            'price' => $price //Este sera el precio real que se le cobrara al cliente, por eso que se pone en el json
+                                            'price' => $price_oferta, //Este sera el precio real que se le cobrara al cliente, por eso que se pone en el json
                                             // Asi lo podremos variarar sin malograr la base de datos
                                         ];
 
@@ -327,6 +406,7 @@ class OrderController extends Controller
                                         $item = new Item();
 
                                         $item->quantity = $qty;
+
 
                                         $item->price = $price;
                                         $item->description = $description;
@@ -339,7 +419,6 @@ class OrderController extends Controller
 
                                         break;
                                 }
-                                
                             } catch (\Exception $error) {
                                 return response()->json(
                                     $data = [
