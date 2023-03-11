@@ -58,6 +58,8 @@ class CreateOrdersTable extends Migration
             $table->string('photo_package')->nullable();
             $table->string('photo_delivery')->nullable();
 
+            $table->boolean('is_active')->default(1);
+
             //$table->float('total')->nullable()->default('0');
             $table->text('observations_time')->nullable();
             $table->text('observations_public')->nullable();

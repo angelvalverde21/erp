@@ -301,43 +301,43 @@ class OrderController extends Controller
 
                         foreach ($repetidos as $product_id => $cantidad) {
 
-                            Log::info('Imprimiendo el product_id');
+                            // Log::info('Imprimiendo el product_id');
 
-                            Log::info($product_id);
+                            // Log::info($product_id);
 
-                            Log::info('Imprimiendo la cantidad');
+                            // Log::info('Imprimiendo la cantidad');
 
-                            Log::info($cantidad);
+                            // Log::info($cantidad);
 
                             # code...
                             $product = Product::find($product_id);
 
-                            Log::info('Imprimiendo el producto');
-                            Log::info($product);
+                            // Log::info('Imprimiendo el producto');
+                            // Log::info($product);
 
                             $precios = $product->prices;
 
-                            Log::info('Imprimiendo los precios');
-                            Log::info($precios);
+                            // Log::info('Imprimiendo los precios');
+                            // Log::info($precios);
 
                             foreach ($precios as $precio) {
 
                                 Log::info('ingreso al foreach');
                                 Log::info($precio['quantity']);
 
-
                                 if ($cantidad == $precio['quantity']) {
                                     # code...
                                     $array_prices[$product_id] = $precio['value'];
                                     break;
+                                }else{
+                                    $array_prices[$product_id] = $product->price;
                                 }
                             }
                         }
 
-                        Log::info('Array Precios');
+                        // Log::info('Array Precios');
 
-                        Log::info($array_prices);
-
+                        // Log::info($array_prices);
 
                         foreach ($request->order as $itemOrder) {
 
@@ -415,7 +415,7 @@ class OrderController extends Controller
 
                                         $item->saveOrFail();
 
-                                        actualizarStock($item->id, "separar"); //Separar quiere decir que descuente de la base de datos el pedido porque este es seguro para entrega
+                                        $item->asignar_stock(); //Asignar quiere decir que descuente de la base de datos el pedido porque este es seguro para entrega
 
                                         break;
                                 }

@@ -81,6 +81,13 @@ class EditOrder extends Component
     //     $this->dispatchBrowserEvent('cerrar-modal', ['modalID' => '#editItem']);
     // }
 
+    public function reactivarOrden(){
+        $this->order->reactivate();
+        $this->emitTo('manage.orders.edit-order.card-status-iconos', 'render');
+        $this->emitTo('components.items.show-item-all', 'render');
+        $this->order = $this->order->fresh();
+    }
+
     public function render()
     {
         //$this->items = Item::where('order_id', $this->order->id)->get();
@@ -89,7 +96,6 @@ class EditOrder extends Component
         //$delivery_method = New DeliveryMethod()
         //y recien ahi aplicarle ::all()->orderBy('name','desc')->get();
         //quedaria como $delivery_methods = $delivery_method::all()->orderBy('name','desc')->get();
-       
 
         $order = $this->order;
         

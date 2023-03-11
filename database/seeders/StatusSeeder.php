@@ -99,6 +99,11 @@ class StatusSeeder extends Seeder
                 'name' => 'listo_para_envio',
                 'title' => 'LISTO PARA SER ENVIADO',
             ],
+            [
+                'id'=> 17,
+                'name' => 'reactivado',
+                'title' => 'ORDEN REACTIVADA',
+            ],
 
         ];
 

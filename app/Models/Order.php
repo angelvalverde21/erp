@@ -92,6 +92,30 @@ class Order extends Model
         return $this->belongsTo(Address::class);    //en la tabla orders busca el atributo 'carrier_address_id' y le hace un where a la tabla Addresses
     }
 
+    public function cancel(){
+
+        $this->status()->attach([5]); //esto quiere decir que agregamos el id 5 de la tabla status a la tabla internmedia order_status (ORDEN CANCELADA)
+        $this->is_active = 0;
+
+        foreach ($this->items as $item) {
+            $item->devolverStock();
+        }
+
+        $this->save();
+    }
+
+    public function reactivate(){
+
+        $this->status()->attach([17]); //esto quiere decir que agregamos el id 17 de la tabla status a la tabla internmedia order_status (REACTIVAOD)
+        $this->is_active = 1;
+
+        foreach ($this->items as $item) {
+            $item->asignarStock();
+        }
+
+        $this->save();
+    }
+
     public function status()
     {
         return $this->belongsToMany(Status::class, 'order_status', 'order_id', 'status_id')->withPivot('created_at', 'updated_at', 'id')->orderByPivot('created_at', 'desc');

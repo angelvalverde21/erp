@@ -35,7 +35,8 @@
 
                                 </td>
                                 <td class="text-center">{{ $item->quantity }}</td>
-                                <td class="text-center"><img src="{{ $item->content->image->name }}" height="75px" alt=""></td>
+                                <td class="text-center"><img src="{{ $item->content->image->name }}" height="75px"
+                                        alt=""></td>
                                 <td>{{ $item->description }}</td>
                                 <td>{{ $item->talla_real }}</td>
                                 <td>{{ $item->talla_impresa }}</td>
@@ -66,11 +67,15 @@
 
                                 <td class="text-center">
 
-                                    <div class="" wire:key="item-{{ $item->id }}">
-                                        <a href="#" wire:click.prevent="deleteItem({{ $item->id }})"
-                                            wire:loading.attr="disabled" wire:target="deleteItem({{ $item->id }})"
-                                            style="font-size: 20pt;"><i class="fa-solid fa-trash"></i></a>
-                                    </div>
+                                    @if ($order->is_active)
+                                        <div class="" wire:key="item-{{ $item->id }}">
+                                            <a href="#" wire:click.prevent="deleteItem({{ $item->id }})"
+                                                wire:loading.attr="disabled"
+                                                wire:target="deleteItem({{ $item->id }})"
+                                                style="font-size: 20pt;"><i class="fa-solid fa-trash"></i></a>
+                                        </div>
+                                    @endif
+
 
                                 </td>
                             </tr>
@@ -82,7 +87,10 @@
         </div>
 
         <div class="card-footer">
-            @livewire('components.items.add-item', ['order' => $order], key('add-item-' . $order->id))
+            @if ($order->is_active)
+                @livewire('components.items.add-item', ['order' => $order], key('add-item-' . $order->id))
+            @else
+            @endif
         </div>
     </div>
 

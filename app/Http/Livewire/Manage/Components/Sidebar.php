@@ -9,12 +9,66 @@ use Livewire\Component;
 
 class Sidebar extends Component
 {
+    public $user ,$store, $product, $menus;
 
     public function mount(){
         //Este requeste viene desde el middleware StoreExist.php
+
+        
         $this->user = Auth::user();
-        $this->store = Request::get('store');
         $this->product = Request::get('product');
+        
+        $this->store = Request::get('store');
+
+        if($this->store){
+
+            $this->menus = [
+
+                [
+                    "name"=>$this->store->nickname,
+                    "slug"=>"profile",
+                    "icon"=>"fa-solid fa-store",
+                    "sub_menu"=>[
+                        [
+                            "name"=>"Mis ventas",
+                            "slug"=> route('manage.orders',[$this->store->nickname]),
+                            "icon"=>"fa-solid fa-align-justify",
+                        ],
+                        [
+                            "name"=>"Mis productos",
+                            "slug"=>route('manage.products',[$this->store->nickname]),
+                            "icon"=>"fa-solid fa-box",
+                        ],
+                        [
+                            "name"=>"Mis clientes",
+                            "slug"=>route('manage.customers',[$this->store->nickname]),
+                            "icon"=>"fa-solid fa-users",
+                        ]
+                    ]
+                ],
+    
+                [
+                    "name"=>"Herramientas",
+                    "slug"=>"#",
+                    "icon"=>"fa-solid fa-screwdriver-wrench",
+                ],
+    
+                [
+                    "name"=>"Mis Producciones",
+                    "slug"=>route('manage.productions', [$this->store->nickname]),
+                    "icon"=>"fa-solid fa-business-time",
+                ],
+    
+                [
+                    "name"=>"Web",
+                    "slug"=>"#",
+                    "icon"=>"fa-solid fa-globe",
+                ],
+                
+    
+            ];
+        }
+
     }
     
     public function render()

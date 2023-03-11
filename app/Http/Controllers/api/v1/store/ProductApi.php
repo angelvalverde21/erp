@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1\store;
 
 use App\Http\Controllers\Controller;
+use App\Models\Color;
 use App\Models\ColorSize;
 use App\Models\Product;
 use App\Models\User;
@@ -40,12 +41,41 @@ class ProductApi extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function showStockColorSizeId($nickname, ColorSize $colorSize)
+    public function showStockColorSizeId($nickname, $id)
     {
         //
-        Log::info($colorSize);
-        return response()->json(['status' => '200', 'stock' => $colorSize->quantity]);
 
+        if(is_numeric($id)){
+
+            $colorSize = ColorSize::findOrFail($id);
+
+            return response()->json(['status' => '200', 'stock' => $colorSize->quantity]);
+
+        }else{
+
+            //si el usuario manda el formato "color-id" entonces eso no es numerico y lo analizamos aqui
+
+            //primero hacemos un explode y buscamos el id del color
+            $colorSize = explode("-",$id);
+
+            //escogemos el id y lo asociamos a una nueva variable $new_id
+            $new_id = $colorSize[1];
+
+            //buscamos el codigo del color en la base de datos
+            $color = Color::findOrFail($new_id);
+
+            $stock = 0;
+            
+            //finalmente recorremos las tallas reales y lo sumamos para brindar un solo stock
+            foreach ($color->sizes as $size) {
+                $stock = $stock + $size->pivot->quantity;
+            }
+
+            return response()->json(['status' => '200', 'stock' => $stock]);
+
+        }
+
+        // Log::info($colorSize);
     }
 
     public function store(Request $request)
@@ -53,38 +83,127 @@ class ProductApi extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+    // public function show($nickname, $id)
+    // {
+    //     // Log::info($id);
+
+    //     //si la url es numerica ------(CASO: 1)
+    //     if (is_numeric($id)) {
+
+    //         $product = Product::where('id', $id)->with('images')->with('prices')->with('colors.sizes')->first();
+
+    //         if ($product) {
+    //             return $product;
+    //         } else {
+    //             return response()->json(['error' => '404', 'message' => 'Pagina no encontradara']);
+    //         }
+
+    //     } else {
+
+    //         $product = Product::where('short_link', $id)->with('images')->with('prices')->with('colors.sizes')->first();
+
+    //         //si la url es un short_link ------(CASO: 2)
+    //         if ($product) {
+    //             return $product;
+    //         } else {
+
+    //             $product = Product::where('slug', $id)->with('images')->with('prices')->with('colors.sizes')->first();
+
+    //             //si la url es un slug ------(CASO: 3)
+    //             if ($product) {
+    //                 return $product;
+    //             } else {
+    //                 // return response()->json(['error' => '404', 'message' => 'Pagina no encontradara'],404);
+    //                 return response()->json(['error' => '404', 'message' => 'Pagina no encontradara']);
+    //             }
+    //             //
+    //         }
+    //     }
+    // }
+
     public function show($nickname, $id)
     {
-        Log::info($id);
 
-        //si la url es numerica ------(CASO: 1)
         if (is_numeric($id)) {
 
             $product = Product::where('id', $id)->with('images')->with('prices')->with('colors.sizes')->first();
+
+            // $sizes = [
+            //     "sizes" => [
+            //         "name" => "ESTANDAR",
+            //         "quantity" => 0,
+            //     ]
+            // ];
+
+            $colors = array_map(function ($color) {
+
+                $color["sizes"] = [
+                    [
+                    "id" => $color['id'],
+                    "name" => "ESTANDAR",
+                    "product_id" => 7,
+                    "quantity" => 5,
+                    "pivot" => [
+                        "id" => "color-".$color['id'],
+                        "quantity" => 10
+                    ],
+                ]
+            ];
+
+                return $color;
+
+            }, $product->colors->toArray());
+
+            // return $product->colors;
+
+            Log::info($product);
+            Log::info($product->toArray());
+
+
+            $product = $product->toArray();
+
+            $product["colors"] = $colors;
+
+            // return $colors;
+
+            // $colors = $product->colors->map(function ($color) {
+
+            //     Log::info($color->sizes);
+
+            //     $color['sizes'] = [
+            //         "name" => "ESTANDAR",
+            //         "quantity" => 0,
+            //     ];
+
+            //     return $color;
+            // });
+
+            // return $colors;
+
+            // foreach ($product->colors as $color) {
+            //     # code...
+            //     foreach ($color->sizes as $size) {
+            //         $color->sizes = $sizes;
+            //     }
+            // }
 
             if ($product) {
                 return $product;
             } else {
                 return response()->json(['error' => '404', 'message' => 'Pagina no encontradara']);
             }
-
         } else {
 
             $product = Product::where('short_link', $id)->with('images')->with('prices')->with('colors.sizes')->first();
-            
+
             //si la url es un short_link ------(CASO: 2)
             if ($product) {
                 return $product;
             } else {
 
                 $product = Product::where('slug', $id)->with('images')->with('prices')->with('colors.sizes')->first();
-                
+
                 //si la url es un slug ------(CASO: 3)
                 if ($product) {
                     return $product;

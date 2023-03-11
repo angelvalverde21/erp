@@ -41,6 +41,47 @@
                     </div>
                 </div>
 
+                {{-- menu --}}
+
+                {{-- {{ $menus }} --}}
+
+
+                @foreach ($menus as $menu)
+
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <div class="info">
+                            <a href="{{ $menu['slug'] }}" class="d-block"><i
+                                    class="{{ $menu['icon'] }} mr-2"></i> {{ $menu['name'] }}</a>
+                        </div>
+                    </div>
+
+
+                    <!-- sub menu -->
+
+                    <nav class="mt-2">
+
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="" role="menu"
+                            data-accordion="">
+
+                            @if (isset($menu['sub_menu']))
+
+                                @foreach ($menu['sub_menu'] as $sub_menu)
+                                    <li class="nav-item">
+                                        <a href="{{ $sub_menu['slug'] }}"
+                                            class="nav-link {{ request()->routeIs('manage.orders*', [$store->nickname]) ? 'active' : '' }}">
+                                            <i class="{{ $sub_menu['icon'] }} nav-icon"></i>
+                                            <p>{{ $sub_menu['name'] }}</p>
+                                        </a>
+                                    </li>
+                                @endforeach
+
+                            @endif
+
+                        </ul>
+                    </nav>
+
+                @endforeach
+
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="info">
                         <a href="{{ route('manage.profile', [$store->nickname]) }}" class="d-block"><i
@@ -48,13 +89,11 @@
                     </div>
                 </div>
 
+                <!-- sub menu -->
 
-                <!-- Sidebar Menu -->
                 <nav class="mt-2">
 
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="" role="menu" data-accordion="">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
 
                         <li class="nav-item">
                             <a href="{{ route('manage.orders', [$store->nickname]) }}"
@@ -73,19 +112,6 @@
                             </a>
                         </li>
 
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('user.purchases') }}"
-                                class="nav-link {{ Route::is('user.purchases') ? 'active' : '' }}">
-                                <i class="fa-solid fa-bag-shopping nav-icon"></i>
-                                <p>
-                                    Mis compras
-                                    
-                                </p>
-                            </a>
-                        </li> --}}
-
-                        <hr class="separador-sidebar">
-
                         <li class="nav-item">
                             <a href="{{ route('manage.customers', [$store->nickname]) }}"
                                 class="nav-link {{ request()->routeIs('manage.customers*', [$store->nickname]) ? 'active' : '' }}">
@@ -94,51 +120,61 @@
                             </a>
                         </li>
 
-                        <hr class="separador-sidebar">
-
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('manage.profile', [$store->nickname]) }}"
-                                class="nav-link {{ Route::is('user.profile') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-user nav-icon"></i>
-                                <p>
-                                    Mi cuenta
-                                </p>
-                            </a>
-                        </li> --}}
-
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('user.profile') }}"
-                                class="nav-link {{ Route::is('user.profile') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-user nav-icon"></i>
-                                <p>
-                                    Otros
-                                    
-                                </p>
-                            </a>
-                        </li> --}}
                     </ul>
                 </nav>
 
+                {{-- herramientas --}}
+
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="info">
+                        <a href="{{ route('manage.profile', [$store->nickname]) }}" class="d-block"><i
+                                class="fa-solid fa-store mr-2"></i> Herramientas</a>
+                    </div>
+                </div>
+
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="" role="menu" data-accordion="">
+
+                        <li class="nav-item">
+                            <a href="{{ route('manage.productions', [$store->nickname]) }}"
+                                class="nav-link {{ request()->routeIs('manage.productions*', [$store->nickname]) ? 'active' : '' }}">
+                                <i class="fa-solid fa-align-justify nav-icon"></i>
+                                <p>Mis producciones</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+
+                <hr class="separador-sidebar">
+
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="info">
+                        <a href="{{ route('manage.web', [$store->nickname]) }}" class="d-block"><i
+                                class="fa-solid fa-store mr-2"></i> web</a>
+                    </div>
+
+
+                </div>
+
+                {{-- fin de herramientas --}}
+
 
                 <li class="nav-item">
-
-                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div class="info">
-                            <a href="{{ route('manage.web', [$store->nickname]) }}" class="d-block"><i
-                                    class="fa-solid fa-store mr-2"></i> web</a>
-                        </div>
-
-
-                    </div>
                 @else
+                    {{-- fin de else --}}
                     <!-- Sidebar Menu -->
 
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="info">
-                            <a href="{{ route('account') }}" class="d-block"><i class="fa-solid fa-store mr-2"></i>Paginas</a>
+                            <a href="{{ route('account') }}" class="d-block"><i
+                                    class="fa-solid fa-store mr-2"></i>Paginas</a>
                         </div>
                     </div>
-      
+
                     <nav class="mt-2">
 
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="" role="menu"
@@ -165,8 +201,9 @@
                             <hr class="separador-sidebar"> --}}
                             <li class="nav-item">
 
-                                <a href="{{ route('account.store.create') }}" class="nav-link"><i class="fa-solid fa-box nav-icon"></i>Crear nueva pagina</a>
-      
+                                <a href="{{ route('account.store.create') }}" class="nav-link"><i
+                                        class="fa-solid fa-box nav-icon"></i>Crear nueva pagina</a>
+
                             </li>
 
                         </ul>

@@ -18,6 +18,16 @@
                 {{-- <h4 class="card-title">Productos</h4>
             <h6 class="card-subtitle">Productos actualmente en almacen</h6> --}}
 
+                {{-- {{ count($orders) }}
+                <hr>
+                {{ count($orders2) }}
+                <hr> --}}
+
+
+                {{-- @foreach ($orders2 as $order)
+                    {{ $order->id }}
+                @endforeach --}}
+
                 @if (count($orders) > 0)
 
                     <table id="example1" class="table table-bordered table-striped">
@@ -53,7 +63,11 @@
                             @foreach ($orders as $order)
                                 {{-- {{ $order }} --}}
 
-                                <tr>
+                                <tr 
+                                @if (!$order->is_active)
+                                    class="bg-danger"
+                                @endif
+                                >
                                     <td class="text-center">{{ $order->id }} </td>
                                     <td class="text-center">
                                         {{ $order->buyer->name }}
@@ -66,19 +80,21 @@
                                         @if ($order->is_pay())
                                             <button class="btn btn-success">Pagado</button>
                                         @else
-                                        <button class="btn btn-warning">Pendiente</button>
+                                            <button class="btn btn-warning">Pendiente</button>
                                         @endif
                                     </td>
                                     <td>{{ $order->total_amount }}</td>
-                                    <td>{{$order->seller->name}}</td>
+                                    <td>{{ $order->seller->name }}</td>
                                     <td>{{ $order->created_at }}</td>
                                     <td>{{ $order->updated_at }}</td>
                                     <td>
                                         <div class="d-flex  justify-content-center">
+
                                             <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
                                                 class="btn btn-success mr-2">Editar</a>
-                                            <a href="#" class="btn btn-danger"><i
-                                                    class="fa-solid fa-trash"></i></a>
+
+                                            <a href="#" wire:click="cancelOrder( {{ $order }} )"
+                                                class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
                                         </div>
                                     </td>
                                 </tr>

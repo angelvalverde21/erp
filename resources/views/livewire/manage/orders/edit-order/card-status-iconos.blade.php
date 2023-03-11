@@ -5,23 +5,23 @@
         <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
             <div class="info-box">
                 @if ($order->is_preparing())
-                <span class="info-box-icon bg-success elevation-1"><i class="fa-solid fa-cart-flatbed"></i></span>
+                    <span class="info-box-icon bg-success elevation-1"><i class="fa-solid fa-cart-flatbed"></i></span>
 
-                <div class="info-box-content">
-                    <span class="info-box-text">PREPARANDO </span>
-                    <span class="info-box-number">
-                        ENVIO
-                    </span>
-                </div>
+                    <div class="info-box-content">
+                        <span class="info-box-text">PREPARANDO </span>
+                        <span class="info-box-number">
+                            ENVIO
+                        </span>
+                    </div>
                 @else
-                <span class="info-box-icon bg-secondary elevation-1"><i class="fa-solid fa-cart-flatbed"></i></span>
+                    <span class="info-box-icon bg-secondary elevation-1"><i class="fa-solid fa-cart-flatbed"></i></span>
 
-                <div class="info-box-content">
-                    <span class="info-box-text">PREPARANDO </span>
-                    <span class="info-box-number">
-                        ENVIO
-                    </span>
-                </div>
+                    <div class="info-box-content">
+                        <span class="info-box-text">PREPARANDO </span>
+                        <span class="info-box-number">
+                            ENVIO
+                        </span>
+                    </div>
                 @endif
                 <!-- /.info-box-content -->
             </div>
@@ -70,20 +70,34 @@
             <div class="info-box mb-3">
 
                 @if ($order->is_delivered())
-                <span class="info-box-icon bg-success elevation-1"><i class="fa-solid fa-paper-plane"></i></span>
+                    <span class="info-box-icon bg-success elevation-1"><i class="fa-solid fa-paper-plane"></i></span>
 
-                <div class="info-box-content">
-                    <span class="info-box-text">ENTREGADO</span>
-                    <span class="info-box-number">16-01-2022</span>
-                </div>   
+                    <div class="info-box-content">
+                        <span class="info-box-text">ENTREGADO</span>
+                        <span class="info-box-number">16-01-2022</span>
+                    </div>
                 @else
-                <span class="info-box-icon bg-secondary elevation-1"><i class="fa-solid fa-paper-plane"></i></span>
+                    @if ($order->is_active)
+                        <span class="info-box-icon bg-secondary elevation-1"><i
+                                class="fa-solid fa-paper-plane"></i></span>
 
-                <div class="info-box-content">
-                    <span class="info-box-text">PENDIENTE</span>
-                    <span class="info-box-number">ENTREGA</span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">PENDIENTE</span>
+                            <span class="info-box-number">ENTREGA</span>
 
-                </div>                    
+                        </div>
+                    @else
+                        <span class="info-box-icon bg-danger elevation-1"><i
+                                class="fa-solid fa-ban"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">ORDEN</span>
+                            <span class="info-box-number">CANCELADA</span>
+
+                        </div>
+                    @endif
+
+
                 @endif
 
 

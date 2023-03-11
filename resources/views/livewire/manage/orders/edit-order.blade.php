@@ -1,96 +1,20 @@
 <div>
-    {{-- <x-breadcrumbs title="Editar venta" /> --}}
 
-    {{-- Menu superior del edit-order.blade.php --}}
-
-    {{-- @foreach ($order->status as $status)
-        <li>{{ $status->name }}</li>
-    @endforeach --}}
-
-    {{-- @include('livewire.manage.orders.edit-order._navbar-status') --}}
     <x-sectioncontent>
-
         @livewire('manage.orders.edit-order.card-status-iconos', ['order' => $order], key('card-status-iconos'))
- 
-            <!-- /.col -->
-
-            {{-- <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
-              <div class="info-box">
-                <span class="info-box-icon bg-secondary elevation-1"><i class="fas fa-cog"></i></span>
-  
-                <div class="info-box-content">
-                  <span class="info-box-text">CPU Traffic</span>
-                  <span class="info-box-number">
-                    10
-                    <small>%</small>
-                  </span>
-                </div>
-  
-              </div>
- 
-            </div> --}}
-
-            {{-- <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
-                <div class="info-box mb-3">
-                    @if ($order->is_pay())
-                    <span class="info-box-icon bg-success elevation-1"><i class="fa-solid fa-comments-dollar"></i></span>
-    
-                    <div class="info-box-content">
-                      <span class="info-box-text">PAGADO</span>
-                      <span class="info-box-number">S/. {{ $order->total_amount }}</span>
-                    </div>        
-                    @else
-                    <span class="info-box-icon bg-secondary elevation-1"><i class="fa-solid fa-comments-dollar"></i></span>
-    
-                    <div class="info-box-content">
-                      <span class="info-box-text">PENDIENTE</span>
-                      <span class="info-box-number">PAGO</span>
-                    </div>
-                    @endif
-
-                </div>
-
-              </div> --}}
-
-            <!-- fix for small devices only -->
-
-            <!-- /.col -->
-
-        <!-- /.row -->
     </x-sectioncontent>
 
-    {{-- @include('livewire.manage.orders.edit-order._navbar-status') --}}
+    @if (!$order->is_active)
+        <x-sectioncontent>
+            <div class="activar d-flex justify-content-center mb-3">
+                <button type="button" class="btn btn-success" wire:click="reactivarOrden()"><i class="fa-solid fa-bolt"></i> Reactivar Orden</button>
+            </div>
+        </x-sectioncontent>
+    @endif
+
     <x-sectioncontent>
         @include('livewire.manage.orders.edit-order._navbar-buttons')
     </x-sectioncontent>
-
-    {{-- <x-sectioncontent>
-
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Pagination Month</h3>
-            </div>
-            <div class="card-body">
-                <ul class="pagination pagination-month justify-content-center">
-                    <li class="page-item"><a class="page-link" href="#">«</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">
-                            <p class="page-month">Lun</p>
-                            <p class="page-year">14</p>
-                        </a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#">
-                            <p class="page-month">Mar</p>
-                            <p class="page-year">15</p>
-                        </a>
-                    </li>
-
-                    <li class="page-item"><a class="page-link" href="#">»</a></li>
-                </ul>
-            </div>
-        </div>
-    </x-sectioncontent> --}}
 
     <x-sectioncontent>
 

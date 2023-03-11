@@ -58,6 +58,42 @@ class Item extends Model
         
     }
 
+    public function separarStock(){
+
+
+        $quantity = $this->quantity;
+        $color_size_id = $this->content->color_size_id;
+        $color_size = ColorSize::find($color_size_id);
+    
+        $color_size->quantity = $color_size->quantity - $quantity;
+    
+        $color_size->save();
+        //return //stock actualizado
+    }
+
+    public function asignarStock(){
+
+        $color_size_id = $this->content->color_size_id;
+        $color_size = ColorSize::find($color_size_id);
+
+        //descontamos el stock en la base de datos
+        $color_size->quantity = $color_size->quantity - $this->quantity;
+
+        $color_size->save();
+        //return //stock actualizado
+    }
+
+
+    public function devolverStock(){
+
+        $quantity = $this->quantity;
+        $color_size_id = $this->content->color_size_id;
+        $color_size = ColorSize::find($color_size_id);
+        $color_size->quantity = $color_size->quantity + $quantity;
+        $color_size->save();
+        //return //stock actualizado
+    }
+
     public function getTallaRealAttribute(){
 
 

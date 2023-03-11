@@ -80,6 +80,7 @@ class ShowItemAll extends Component
     }
 
     public function corregirStock(Item $item){
+
         Log::info($item);
 
         if($item->quantity_oversale > 0 && ( stockColorSizeId($item->content->color_size_id) >= $item->quantity_oversale ) ){
@@ -89,10 +90,12 @@ class ShowItemAll extends Component
 
             $item->save();
 
-            actualizarStock($item->id,'separar');
+            // actualizarStock($item->id,'separar');
+            $item->devolverStock();
 
             $this->order = $this->order->fresh();
         }
+        
     }
 
     public function render()

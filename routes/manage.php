@@ -10,6 +10,9 @@ use App\Http\Livewire\Manage\Customers\ShowCustomers;
 use App\Http\Livewire\Manage\Dashboard;
 use App\Http\Livewire\Manage\Orders\EditOrder;
 use App\Http\Livewire\Manage\Orders\ShowOrders;
+use App\Http\Livewire\Manage\Productions\CreateProduction;
+use App\Http\Livewire\Manage\Productions\EditProduction;
+use App\Http\Livewire\Manage\Productions\ShowProductions;
 use App\Http\Livewire\Manage\Products\CreateProduct;
 use App\Http\Livewire\Manage\Products\EditProduct;
 use App\Http\Livewire\Manage\Products\ShowProducts;
@@ -61,6 +64,13 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::get('/customers', ShowCustomers::class)->name('customers');
    Route::get('/customers/create', CreateCustomer::class)->name('customers.create');
    Route::get('/customers/{customer}/edit', EditCustomer::class)->name('customers.edit');
+
+   //GET Producciones
+
+   Route::get('/productions', ShowProductions::class)->name('productions');
+   Route::get('/productions/create', CreateProduction::class)->name('productions.create');
+   Route::get('/productions/{production}', EditProduction::class)->name('productions.edit');
+
 
    //GET Imprimir PDF
    Route::get('/orders/{order}/print/voucher', [PdfController::class, 'generateVaucher'])->name('orders.print.voucher');
