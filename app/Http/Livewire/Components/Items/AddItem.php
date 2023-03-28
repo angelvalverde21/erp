@@ -77,7 +77,15 @@ class AddItem extends Component
 
         $item->save();
 
-        actualizarStock($item->id,"separar");
+        //Comprobamos si la orden ha sido pagada 
+        if($this->order->is_pay()){
+            //como esta pagado asignamos Stock::VENDIDO
+            $item->asignarStock();
+        }else{
+            //como no esta pagado cambiamos en la base de datos a Stock::SEPARADO
+            $item->separarStock();
+        }
+        // actualizarStock($item->id,"separar");
 
         //quantity
         //price

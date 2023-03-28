@@ -395,7 +395,7 @@ class OrderController extends Controller
 
                                         //Prapando el json content
                                         $content =             [
-                                            'color_size_id' => $id, //es el id del item que se agregara a la orden, este contiene el color y talla
+                                            'color_size_id' => $id, //es el id del item que se agrega ra a la orden, este contiene el color y talla
                                             'talla' => $talla, //name indica la talla
                                             'image' => $imagenColor, //image indica la url de la imagen del colors
                                             'price' => $price_oferta, //Este sera el precio real que se le cobrara al cliente, por eso que se pone en el json
@@ -406,7 +406,6 @@ class OrderController extends Controller
                                         $item = new Item();
 
                                         $item->quantity = $qty;
-
 
                                         $item->price = $price;
                                         $item->description = $description;

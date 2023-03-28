@@ -5,9 +5,17 @@
         <thead>
             <tr>
                 {{-- <th>ID</th> --}}
-                <th>Talla</th>
-                <th>Stock</th>
-                <th>Actualizar total</th>
+                <th colspan="6" style="background-color: #ccc">STOCK</th>
+                {{-- <th>Agregar Stock</th> --}}
+            </tr>
+            <tr>
+                {{-- <th>ID</th> --}}
+                <th>TALLA</th>
+                <th>ACTUAL</th>
+                <th></th>
+                <th>AGREGAR</th>
+                <th></th>
+                <th>NUEVO STOCK</th>
                 {{-- <th>Agregar Stock</th> --}}
             </tr>
 
@@ -20,7 +28,10 @@
                     {{-- <td>{{ $size->pivot->id }}</td> --}}
                     <td>{{ $size->name }}</td>
                     <td>{{ $size->pivot->quantity }}</td>
-                    <td><input type="number" placeholder="0" class="form-control" wire:model="inputs.{{ $size->pivot->id }}.quantity">
+                    <td>+</td>
+                    <td class="text-center"><input type="number" style="width: 100px; margin: 0 auto" placeholder="0" class="form-control" min="1" wire:model.debounce.500ms="inputsAdd.{{ $size->pivot->id }}.quantity">
+                    <td>=</td>
+                    <td class="text-center"><input type="number" style="width: 100px; margin: 0 auto" placeholder="0" class="form-control" min="1" wire:model.debounce.500ms="inputsTotal.{{ $size->pivot->id }}.quantity">
                     {{-- <td><input type="number" placeholder="0" class="form-control" wire:model="inputs.{{ $size->pivot->id }}.quantity"> --}}
                     </td>
                 </tr>

@@ -14,5 +14,6 @@ class ProfileWebSeeder extends Seeder
     public function run()
     {
         //
+
     }
 }

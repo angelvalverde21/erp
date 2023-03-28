@@ -473,4 +473,60 @@ class Order extends Model
             return false;
         }
     }
+
+    public function confirmarStock(){
+
+        if ($this->is_pay()) {
+
+            Log::info('se confirma que la orden esta pagada');
+            
+            $items = $this->items()->get(); //consultamos los items de la orden
+    
+            Log::info('imprimiendo items asociados a la orden: '.$this->id );
+    
+            Log::info($items);
+            
+            foreach ($items as $item) { //recorremos todos los items
+    
+                //Puede que un item tenga mas de un stock asignado
+                $item->asignarStock();
+                // $stocks = Stock::where('item_id',$item->id)->get(); //consultamos a la tabla stock cuantos item_id tiene
+    
+                // foreach ($stocks as $stock) {
+                //     # code...
+                //     Log::info('impriendo el stock de la tabla stocks');
+                //     Log::info($stock);
+                //     $stock->status = Stock::VENDIDO;
+                //     $stock->save();
+                //     Log::info('El stock fue cambiado a :');
+                //     Log::info($stock);
+                // }
+            }
+
+        }
+
+    }
+
+    public function reservar(){
+
+        $items = $this->items()->get(); //consultamos los items de la orden
+
+        foreach ($items as $item) { //recorremos todos los items
+
+            $item->separarStock();
+
+        }
+    }
+
+    public function devolverStock(){
+
+        $items = $this->items()->get(); //consultamos los items de la orden
+
+        foreach ($items as $item) { //recorremos todos los items
+
+            $item->devolverItems();
+
+        }   
+
+    }
 }

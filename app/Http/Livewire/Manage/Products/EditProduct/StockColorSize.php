@@ -15,6 +15,8 @@ class StockColorSize extends Component
     public $color;
     public $pivot_quantity;
     public $inputs = [];
+    public $inputsAdd = [];
+    public $inputsTotal = [];
     public $item = [];
 
 
@@ -41,39 +43,82 @@ class StockColorSize extends Component
     //     Log::debug($value);
     // }
 
+    function updatedInputsAdd(){
+
+        $keys =  array_keys($this->inputsAdd);
+        $i = 0; //mas abajo se encuentra en i++
+
+        foreach ($this->inputsAdd as $item) {
+
+            $colorSize = ColorSize::findOrFail($keys[$i]);
+            $stockReal = $colorSize->stocks()->count();
+
+            if(isset($this->inputsAdd[$keys[$i]]['quantity'])){
+                // unset($this->inputs[$keys[$i]]['quantity']);
+                $quantity = $this->inputsAdd[$keys[$i]]['quantity'];
+                $this->inputsTotal[$keys[$i]]['quantity'] =  $stockReal + intval($quantity);
+            }
+
+            // $quantity_add = $this->inputs[$keys[$i]]['quantity_add'];
+            // $quantity = $this->inputs[$keys[$i]]['quantity'];
+
+            $i++;
+        }
+
+    }
+
+    function updatedInputsTotal(){
+        $keys =  array_keys($this->inputsTotal);
+        $i = 0; //mas abajo se encuentra en i++
+
+        foreach ($this->inputsTotal as $item) {
+
+            $colorSize = ColorSize::findOrFail($keys[$i]);
+            $stockReal = $colorSize->stocks()->count();
+
+            if(isset($this->inputsTotal[$keys[$i]]['quantity'])){
+                // unset($this->inputs[$keys[$i]]['quantity']);
+                $quantity = $this->inputsTotal[$keys[$i]]['quantity'];
+                $this->inputsAdd[$keys[$i]]['quantity'] =  intval($quantity) - $stockReal;
+            }
+
+            // $quantity_add = $this->inputs[$keys[$i]]['quantity_add'];
+            // $quantity = $this->inputs[$keys[$i]]['quantity'];
+
+            $i++;
+        }
+    }
+
     function guardarStock()
     {
 
-        Log::debug($this->inputs);
-        $keys =  array_keys($this->inputs);
-        $i = 0;
+        Log::debug($this->inputsAdd);
+        $keys =  array_keys($this->inputsAdd);
+        $i = 0; //mas abajo se encuentra en i++
 
-        foreach ($this->inputs as $item) {
+        foreach ($this->inputsAdd as $item) {
 
-            if ($this->inputs[$keys[$i]]['quantity'] >= 0) {
+            //Esta es la cantidad que viene de los inputs
+
+            $quantity = $this->inputsTotal[$keys[$i]]['quantity'];
+
+            
+            if ($quantity >= 0) {
 
                 $colorSize = ColorSize::findOrFail($keys[$i]);
 
-                $colorSize->update(
-                    [
-                        'quantity' => $this->inputs[$keys[$i]]['quantity']
-                    ]
-                );
-                    
-                //Codigo para agregar registros de stock
-                // for ($k = 0; $k < $this->inputs[$keys[$i]]['quantity']; $k++) {
-                //     # code...
-                //     $colorSize->stocks()->create([
-                //         'barcode' => '124524'
-                //     ]);
-                // }
+                $colorSize->updateAlmacen($quantity);
+
+            }else{
+                Log::info('el valor ingresado debe ser mayor a cero');
+                
             }
 
             $i++;
         }
 
         foreach ($this->color->sizes as $size) {
-            $this->inputs[$size->pivot->id]['quantity'] = "";
+            $this->inputsAdd[$size->pivot->id]['quantity'] = "";
         }
 
         $this->color = $this->color->fresh();

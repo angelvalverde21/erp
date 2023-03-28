@@ -68,5 +68,6 @@ class DatabaseSeeder extends Seeder
                 $this->call(CarouselSeeder::class);
                 $this->call(PaymentStatusSeeder::class);
                 $this->call(PaymentSeeder::class);
+                $this->call(ProfileStoreSeeder::class);
     }
 }

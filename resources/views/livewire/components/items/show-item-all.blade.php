@@ -76,7 +76,6 @@
                                         </div>
                                     @endif
 
-
                                 </td>
                             </tr>
                         @endforeach

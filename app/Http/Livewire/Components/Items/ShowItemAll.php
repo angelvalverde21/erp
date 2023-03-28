@@ -58,6 +58,8 @@ class ShowItemAll extends Component
     public function deleteItem(Item $item)
     {
 
+        $this->order->devolverStock();
+
         Log::debug($item);
 
         //Borra los archivos de la carpeta del servidor
@@ -68,6 +70,12 @@ class ShowItemAll extends Component
         actualizarStock($item->id,"devolver");
 
         $item->delete();
+
+        //setea el stock
+
+
+        $this->order->reservar();
+
         $this->emitTo('user.sales.edit-sale.show-summary', 'render');
         //Each porque eliminara una coleccion de sizes
         //$color->sizes->each->delete();

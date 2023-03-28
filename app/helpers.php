@@ -38,6 +38,7 @@ function uploadImage($request, $dir = "")
             $originalName . bcrypt(time())
         )
     );
+    
     // Log::info('up-4');
     $guardarEn = storage_path(). "/app/public/" .$dir . "/" . $nameEncrypt . "." . $extension;
     $returnName = $dir . "/" . $nameEncrypt . "." . $extension;

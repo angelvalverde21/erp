@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Image;
 use App\Models\OrderStatus;
 use App\Models\Status;
+use App\Models\Stock;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
@@ -20,7 +21,7 @@ class OrderController extends Controller
                 'file' => 'required|image|max:10240'  //10 megas
             ]);
 
-            Log::info('se paso la validacion');
+            Log::info('se paso la validacion de comprobantes de empaque');
             Log::info($request);
             $image = Storage::put('orders/comprobantes/empaque', $request->file('file'));
 
@@ -31,7 +32,7 @@ class OrderController extends Controller
 
         } catch (\Throwable $th) {
 
-            Log::info('No se paso la validacion');
+            Log::info('No se paso la validacion de comprobantes de empaque');
             // Log::info($th);
             Log::info($request);
         }
@@ -45,7 +46,7 @@ class OrderController extends Controller
                 'file' => 'required|image|max:10240'  //10 megas
             ]);
 
-            Log::info('se paso la validacion');
+            Log::info('se paso la validacion de comprobantes de envio');
             Log::info($request);
             $image = Storage::put('orders/comprobantes/empaque', $request->file('file'));
 
@@ -60,7 +61,7 @@ class OrderController extends Controller
 
         } catch (\Throwable $th) {
 
-            Log::info('No se paso la validacion');
+            Log::info('No se paso la validacion de comprobantes de envio');
             // Log::info($th);
             Log::info($request);
         }
@@ -69,33 +70,39 @@ class OrderController extends Controller
     public function uploadFileOrderInvoice($nickname, Order $order, Request $request)
     {
 
+        Log::info('se llamo a la funcion uploadFileOrderInvoice');
+        
         try {
+
             $request->validate([
                 'file' => 'required|image|max:10240'  //10 megas
             ]);
 
-            Log::info('se paso la validacion');
+            Log::info('se paso la validacion de comprobantes de invoice');
             Log::info($request);
             
-            $image = uploadImage($request,"orders/comprobantes/payments");
+            $image = Storage::put('orders/comprobantes/payments', $request->file('file'));
+            // $image = uploadImage($request,"orders/comprobantes/payments");
 
             $order->payments()->create([
                 'image' => $image,
                 'payment_status_id' => "4",
                 'amount' => $request->total_amount,
                 'payment_method_id' => $request->payment_method_id,
-                'content' => ["ejemplo" => "otro ejemplo"]
+                'content' => ["ejemplo" => "otro ejemplo"],
             ]);
 
+            //Si esta pagado buscamos los items en la tabla Stocks y cambiamos su estatus a vendido
+            
+            $order->confirmarStock();
 
             // Log::info('empieza el helper');
             // Log::info(uploadImage($request));
             // Log::info('Termina el helper');
-
-
+ 
         } catch (\Throwable $th) {
 
-            Log::info('No se paso la validacion');
+            Log::info('No se paso la validacion de comprobantes de pago');
             // Log::info($th);
             Log::info($request);
         }
