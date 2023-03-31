@@ -31,10 +31,9 @@ class ColorSize extends Model
         return $this->morphMany(Stock::class, "stockable")->where('status',Stock::ALMACENADO)->orderBy('id', 'DESC');
     }
 
-    public function updateAlmacen($quantity)
+    public function updateAlmacen($quantity) //quantity es quantityAdd
     {
 
-        $stockReal = $this->stocks()->count();
 
         $this->update(
             [
@@ -42,12 +41,10 @@ class ColorSize extends Model
             ]
         );
 
-        Log::info('Stock real');
+        //quantity es la variable que viene del input, que ha ingresado el usuario, trayendo el stock adicional que se va a ingresar en la base de datos
 
-        Log::info($stockReal);
-
-        if ($quantity - $stockReal > 0) {
-            for ($j = 0; $j < $quantity - $stockReal; $j++) {
+        if ($quantity > 0) {
+            for ($j = 0; $j < $quantity; $j++) {
                 $this->stocks()->create(
                     [
                         'barcode' => 1000000000
@@ -56,7 +53,19 @@ class ColorSize extends Model
             };
         }
 
+        //grabando el stock real en la base de datos
 
+        $this->update(
+            [
+                'quantity' => $this->stocks()->count()
+            ]
+        );
+
+        //$this->quantity = $this->stocks()->count(); //el stockReal es el stock fisico
+        //$stockReal = $this->stocks()->count(); //Este es el stock fisico actual antes de actualizar
+        Log::info('Stock real');
+
+        //Log::info($stockReal);
 
         //Codigo para agregar registros de stock
         // for ($k = 0; $k < $this->inputs[$keys[$i]]['quantity']; $k++) {

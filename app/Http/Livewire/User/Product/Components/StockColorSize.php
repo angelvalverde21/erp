@@ -18,8 +18,6 @@ class StockColorSize extends Component
     public $inputs = [];
     public $item = [];
 
-
-
     public function mount(Color $color)
     {
 

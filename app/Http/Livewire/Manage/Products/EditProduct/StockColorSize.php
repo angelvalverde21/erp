@@ -68,6 +68,7 @@ class StockColorSize extends Component
     }
 
     function updatedInputsTotal(){
+
         $keys =  array_keys($this->inputsTotal);
         $i = 0; //mas abajo se encuentra en i++
 
@@ -96,18 +97,19 @@ class StockColorSize extends Component
         $keys =  array_keys($this->inputsAdd);
         $i = 0; //mas abajo se encuentra en i++
 
-        foreach ($this->inputsAdd as $item) {
+        foreach ($this->inputsAdd as $item) { 
 
             //Esta es la cantidad que viene de los inputs
 
-            $quantity = $this->inputsTotal[$keys[$i]]['quantity'];
+            //venga de donde venga el dato, siempre se tomara en cuenta el inputsTotal
+            $quantityAdd = $this->inputsAdd[$keys[$i]]['quantity'];
 
             
-            if ($quantity >= 0) {
+            if ($quantityAdd >= 0) {
 
                 $colorSize = ColorSize::findOrFail($keys[$i]);
 
-                $colorSize->updateAlmacen($quantity);
+                $colorSize->updateAlmacen($quantityAdd);
 
             }else{
                 Log::info('el valor ingresado debe ser mayor a cero');

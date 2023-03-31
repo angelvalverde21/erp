@@ -26,16 +26,17 @@
                 <thead>
                     <tr>
                         <td class="text-center">Codigo</td>
-                        <td>Agregar Stock</td>
-                        <td>Colores</td>
-                        <td>Stock</td>
+                        <td class="text-center">Agregar Stock</td>
+                        <td class="text-center">Colores</td>
+                        <td class="text-center">Variantes</td>
+                        <td class="text-center">Stock</td>
                         <td class="text-center">Eliminar</td>
                     </tr>
                 </thead>
 
                 <tbody>
                     @foreach ($product->colors as $color)
-                        <tr>
+                        <tr class="text-center">
                             <td class="text-center">{{ $color->id }}</td>
                             <td>
                                 {{-- boton para el stock --}}
