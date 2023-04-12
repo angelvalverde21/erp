@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
+use Illuminate\Support\Facades\Request;
 
 class ShowItemAll extends Component
 {
@@ -26,7 +27,9 @@ class ShowItemAll extends Component
 
     public function mount(Order $order)
     {
+        $this->store = Request::get('store');
         $this->order = $order;
+
     }
 
     //Aqui definimos la variable $item
@@ -67,7 +70,7 @@ class ShowItemAll extends Component
 
         //Borra los registros de la base de datos
 
-        actualizarStock($item->id,"devolver");
+        // actualizarStock($item->id,"devolver");
 
         $item->delete();
 
@@ -84,6 +87,10 @@ class ShowItemAll extends Component
 
         $this->emitTo('manage.orders.edit-order.card-show-summary','render');
         $this->emitTo('manage.orders.edit-order.card-show-invoice','render');
+
+
+        // $this->emitTo('components.items.show-item-all','render');
+
         $this->emit('eliminado');
     }
 
@@ -99,9 +106,10 @@ class ShowItemAll extends Component
             $item->save();
 
             // actualizarStock($item->id,'separar');
-            $item->devolverStock();
+            $item->separarStock();
 
             $this->order = $this->order->fresh();
+
         }
         
     }

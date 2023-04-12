@@ -8,12 +8,12 @@
                         <tr>
                             <td class="text-center">ID</td>
                             <td class="text-center">QTY</td>
-                            <td class="text-center">IMAGEN</td>
-                            <td>DESCRIPCION</td>
-                            <td>TALLA</td>
-                            <td>VIRTUAL</td>
-                            <td>PRECIO</td>
-                            <td>FINAL</td>
+                            <td class="text-center">QTY OVER</td>
+                            <td class="text-center">Imagen</td>
+                            <td>Descripcion</td>
+                            <td>Talla solicitada</td>
+                            <td>Precio</td>
+                            <td>Final</td>
                             <td>Stock</td>
                             <td>Mensaje</td>
                             <td class="text-center">Eliminar</td>
@@ -30,16 +30,41 @@
                                     <a style="font-size: 15pt;" wire:ignore.self
                                         wire:click.prevent="editItem({{ $item }})" href="#"><i
                                             class="fa-solid fa-pen-to-square" data-toggle="modal"
-                                            data-target="#editItem"></i></a>
+                                            data-target="#editItem"></i></a> {{ $item->id }}
                                     <!-- fin de Button trigger modal para editar los item de la orden -->
 
                                 </td>
                                 <td class="text-center">{{ $item->quantity }}</td>
-                                <td class="text-center"><img src="{{ $item->content->image->name }}" height="75px"
-                                        alt=""></td>
-                                <td>{{ $item->description }}</td>
-                                <td>{{ $item->talla_real }}</td>
-                                <td>{{ $item->talla_impresa }}</td>
+                                <td class="text-center">{{ $item->quantity_oversale }}</td>
+                                <td class="text-center"><img src="{{ $item->content->image->name }}" height="75px" alt=""></td>
+
+                                <td>
+                                    <a href="{{ route('manage.products.edit', [$store->nickname, $item->content->product_id]) }}">{{ $item->description }}</a>
+
+                                    <div class="content-stock">
+
+                                        <div class="display-stock">
+
+                                            @if ($item->showStocks()->count())
+                                                @foreach ($item->showStocks() as $stock)
+                                                    <table>
+                                                        <tr>
+                                                            <td>Stock asignado</td>
+                                                            <td>{{ $stock->barcode }}</td>
+                                                            <td>{{ $stock->stockable->size->name }}</td>
+                                                        </tr>
+                                                    </table>
+                                                @endforeach
+                                            @else
+                                                @livewire('components.items.add-stock-item', ['item' => $item], key('add-stock-item-' . $item))
+                                            @endif
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+                                <td class="text-center">{{ $item->talla_impresa }}</td>
                                 <td>{{ $item->price }}</td>
                                 <td>{{ $item->precio_final }}</td>
 
@@ -125,5 +150,7 @@
         </x-slot>
 
     </x-user.modal>
+
+    
 
 </div>

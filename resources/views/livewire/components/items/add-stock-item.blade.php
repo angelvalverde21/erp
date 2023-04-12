@@ -2,19 +2,19 @@
     {{-- Success is as dangerous as failure. --}}
 
 
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add-item-sale">
-        <i class="fa-solid fa fa-square-plus mr-2"></i>Agregar item
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add-stock-item-{{ $item->id }}">
+        <i class="fa-solid fa fa-square-plus mr-2"></i>Agregar item ({{ $item->content->color_id  }})
     </button>
 
 
     <!-- Modal -->
-    <div wire:ignore.self class="modal fade" id="add-item-sale" tabindex="-1" role="dialog"
+    <div wire:ignore.self class="modal fade" id="add-stock-item-{{ $item->id }}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Agregar producto</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Asignar Stock</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -22,62 +22,19 @@
 
                 <div class="modal-body">
 
-                    <style>
-                        .resultados ul {
-                            margin: 0 !important;
-                            padding: 0 10px !important;
-                        }
-
-                        .resultados {
-                            box-shadow: -2px 3px 24px 0px rgba(163, 163, 163, 1);
-                            border-radius: 0 0 10px 10px;
-                        }
-
-                        .resultados ul li {
-                            border-bottom: 1px solid #ccc;
-                            padding-bottom: 3px;
-                        }
-                    </style>
-
-
                     <div class="row">
 
                         <div class="col-lg-12 col">
                             <div class="mb-3">
 
-                                <div class="input-group mb-1">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i
-                                                class="fa-solid fa-magnifying-glass"></i></span></span>
-                                    </div>
-                                    <input type="text" class="form-control" id="inputSearchText" wire:model="search"
-                                        aria-describedby="nameHelp" placeholder="Buscar producto">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><a href="#"
-                                                wire:click.prevent="deleteSearchText"><i
-                                                    class="fa-solid fa-trash"></i></a></span></span>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="resultados">
+                                <div class="">
                                     <ul>
-
-                                        @foreach ($items as $item)
-                                            <li><a href="#"
-                                                    wire:click.prevent="selectItem({{ $item->id }})">{{ $item->name }}</a>
-                                            </li>
-                                        @endforeach
-
-                                        @if ($product && $showSelect)
 
                                             <table class="table">
 
                                                 <thead>
                                                     <tr class="fw-bold">
                                                         <td class="text-center">#ID</td>
-                                                        <td class="text-center">Imagen</td>
                                                         <td class="text-center">Color</td>
                                                         <td></td>
                                                         <td>Qty</td>
@@ -91,10 +48,10 @@
                                                     {{-- Recorremmos todos los colores del producto para poder hacer una lista con foreach --}}
 
                                                     {{-- inicio de cada color --}}
-                                                    @foreach ($product->colors as $color)
+
                                                         {{-- inicio de cada talla --}}
                                                         @foreach ($color->sizes as $size)
-                                                            <tr>
+                                                            <tr class="text-center">
 
                                                                 @if ($loop->first)
                                                                     <td class="text-center"
@@ -103,16 +60,16 @@
 
                                                                     {{-- Imagen --}}
 
-                                                                    <td class="text-center"
+                                                                    {{-- <td class="text-center"
                                                                         rowspan="{{ $loop->count }}">
-                                                                        <img width="100" src="{{ $color->image }}"
+                                                                        <img width="100" src="{{ $color->image->name }}"
                                                                             alt="">
-                                                                    </td>
+                                                                    </td> --}}
 
                                                                     {{-- fin de imagen --}}
 
                                                                     <td rowspan="{{ $loop->count }}">
-                                                                        <img src="{{ $color->image->name }}" height="75px" alt=""></td>
+                                                                        <img src="{{ $color->image->name }}" height="100px" alt=""></td>
                                                                 @endif
 
                                                                 {{-- Precio de venta final --}}
@@ -146,26 +103,22 @@
                                                                     <div class="input-group">
                                                                         {{-- {{$size->pivot->quantity}} --}}
                                                                         @if ($size->pivot->quantity)
-                                                                            <select name="" id=""
-                                                                                {{-- wire:change="consultarStock({{ $size->pivot->id }})" --}}
-                                                                                wire:model="quantity.{{ $size->pivot->id }}"
-                                                                                class="form-control">
 
-                                                                                <option value="0" selected>0
-                                                                                </option>
+                                                                            <select name="" id="" wire:model="quantity.{{ $size->pivot->id }}" class="form-control">
+
+                                                                                <option value="0" selected>0</option>
 
                                                                                 @for ($i = 1; $i <= $size->pivot->quantity; $i++)
-                                                                                    <option
-                                                                                        value="{{ $i }}">
-                                                                                        {{ $i }} (Disponibles)</option>
+                                                                                    <option  value="{{ $i }}"> {{ $i }} (Disponibles)</option>
                                                                                 @endfor
 
                                                                             </select>
+
                                                                         @else
-                                                                        <input
+                                                                        {{-- <input
                                                                             wire:model="quantity_oversale.{{ $size->pivot->id }}"
                                                                             style="width: 75px;" type="number"
-                                                                            class="form-control" placeholder="0">
+                                                                            class="form-control" placeholder="0"> --}}
                                                                         @endif
 
 
@@ -195,16 +148,14 @@
 
                                                                 {{-- Boton de agregar item --}}
                                                                 <td class="text-center">
-                                                                    @if (
-                                                                        (isset($quantity[$size->pivot->id]) && $quantity[$size->pivot->id] > 0) ||
-                                                                            (isset($quantity_oversale[$size->pivot->id]) && $quantity_oversale[$size->pivot->id] > 0))
+                                                                    @if (isset($quantity[$size->pivot->id]) && $quantity[$size->pivot->id] > 0)
                                                                         <a href="#"
-                                                                            wire:click.prevent="addItem({{ $size->pivot->id }})"
+                                                                            wire:click.prevent="separarOrAsignar({{ $size->pivot->id }})"
                                                                             class="btn btn-success">
                                                                             <i class="fa-solid fa-square-plus"></i></a>
                                                                     @else
                                                                         <a href="#"
-                                                                            wire:click.prevent="addItem({{ $size->pivot->id }})"
+                                                                            wire:click.prevent="separarOrAsignar({{ $size->pivot->id }})"
                                                                             class="btn btn-secondary disabled">
                                                                             <i class="fa-solid fa-square-plus"></i></a>
                                                                     @endif
@@ -214,15 +165,12 @@
                                                             </tr>
                                                         @endforeach
                                                         {{-- fin de cada talla --}}
-                                                    @endforeach
+                          
                                                     {{-- fin de cada color --}}
 
                                                 </tbody>
                                             </table>
 
-
-
-                                        @endif
 
                                     </ul>
                                 </div>

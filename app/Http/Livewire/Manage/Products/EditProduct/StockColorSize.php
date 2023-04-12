@@ -6,6 +6,7 @@ use App\Models\Color;
 use Livewire\Component;
 use App\Models\ColorSize as Pivot;
 use App\Models\ColorSize;
+use App\Models\Stock;
 use Illuminate\Support\Facades\Log;
 
 
@@ -109,7 +110,7 @@ class StockColorSize extends Component
 
                 $colorSize = ColorSize::findOrFail($keys[$i]);
 
-                $colorSize->updateAlmacen($quantityAdd);
+                $colorSize->agregarStock($quantityAdd);
 
             }else{
                 Log::info('el valor ingresado debe ser mayor a cero');
@@ -128,6 +129,18 @@ class StockColorSize extends Component
         $this->emit('refreshColor');
         //$this->emit('refreshProductEdit');
         //$this->emitTo('user.product.edit-product','render');
+
+    }
+
+    public function eliminarStock(Stock $stock){
+
+        $stock->eliminarColorSize(); //elimina un elemento de la tabla "stocks" y ademas actualiza el campo "quantity" de la tabla color_size
+         // $stock->eliminarColor(); //elimina un elemento de la tabla "stocks" y ademas actualiza el campo "quantity" de la tabla colors
+        // $stock->eliminarSize(); //elimina un elemento de la tabla "stocks" y ademas actualiza el campo "quantity" de la tabla sizes
+
+        $this->color = $this->color->fresh();
+
+        $this->emit('refreshColor');
 
     }
 

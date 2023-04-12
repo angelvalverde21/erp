@@ -89,7 +89,7 @@ class CreateProduct extends Component
 
         if($product->category->has_size){
 
-            $optionSizes = $this->product['optionsize'];
+            $optionSizes = $this->product['optionsize']; //este valor viene de la vista livewire (select)
 
             $newSises = explode(',', $optionSizes);
 

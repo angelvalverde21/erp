@@ -63,6 +63,11 @@ function stockColorSizeId($color_size_id)
     return $stock->quantity;
 }
 
+function getStockColorSize($color_size_id){
+    $colorSize = ColorSize::find($color_size_id);
+    return $colorSize->stocks();
+}
+
 function quantity($product_id, $color_id = null, $size_id = null)
 {
 

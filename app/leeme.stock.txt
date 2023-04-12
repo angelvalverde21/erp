@@ -1,0 +1,37 @@
+************** CREACION DEL STOCK (Model ColorSize) *******************
+
+El stock se maneja de la siguiente manera
+
+Primero se agrega el stock a la tabla "stocks"
+
+luego hacemos una consulta a esta tabla y el resultado lo guardamos en el campo "quantity" de la tabla "color_size"
+
+a la vez actualizamos el valor del campo quantity de la tabla colors
+
+seguidamente actualizamos el valor del campo quantity de la tabla products
+
+Todo este se hace en el modelo ColorSize donde se encuentra la funcion agregarStock($quantity)
+
+
+
+************** ELIMINAR EL STOCK (Model Stock) *******************
+
+Esto se hace en el modelo "stock" con la funcion eliminarColorSize()
+
+
+
+
+************* SEPARAR, ASIGNAR, DEVOLVER (Model Item)  ********************
+
+Esto se hace en el modelo item
+
+Cada ves que separamos, asiganmos o devolvemos
+
+tenemos que actualizar los campos quantity de las tablas "color_size", "colors", "products"
+
+$color_size->quantity = $color_size->stocks()->count();
+$color_size->save();
+
+//actualiza los campos "quantity" de las tablas colors y products respectivamente
+$color_size->color->updateFieldQuantity();
+$color_size->color->product->updateFieldQuantity();

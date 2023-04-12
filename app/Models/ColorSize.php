@@ -28,20 +28,19 @@ class ColorSize extends Model
 
     public function stocks()
     {
-        return $this->morphMany(Stock::class, "stockable")->where('status',Stock::ALMACENADO)->orderBy('id', 'DESC');
+        return $this->morphMany(Stock::class, "stockable")->where('status', Stock::ALMACENADO)->orderBy('id', 'DESC');
+    }
+    
+    public function stockAsignado($itemId){
+        return $this->morphMany(Stock::class, "stockable")->where('status', Stock::SEPARADO)->where('item_id',$itemId)->orderBy('id', 'DESC');
     }
 
-    public function updateAlmacen($quantity) //quantity es quantityAdd
+    public function agregarStock($quantity) //quantity es quantityAdd
     {
 
-
-        $this->update(
-            [
-                'quantity' => $quantity
-            ]
-        );
-
         //quantity es la variable que viene del input, que ha ingresado el usuario, trayendo el stock adicional que se va a ingresar en la base de datos
+
+        //crea una lista en la tabla "stocks"
 
         if ($quantity > 0) {
             for ($j = 0; $j < $quantity; $j++) {
@@ -54,27 +53,33 @@ class ColorSize extends Model
         }
 
         //grabando el stock real en la base de datos
+        //modifica el campo "quantity" de la tabla "color_size"
 
-        $this->update(
-            [
-                'quantity' => $this->stocks()->count()
-            ]
-        );
+        /****************** SETEANDO EL STOCK DE LA TALLA ESPECIFICA ******************/
 
-        //$this->quantity = $this->stocks()->count(); //el stockReal es el stock fisico
-        //$stockReal = $this->stocks()->count(); //Este es el stock fisico actual antes de actualizar
-        Log::info('Stock real');
+        $total_real = $this->stocks()->count();
+        $this->quantity = $total_real;
+        $this->save();
 
-        //Log::info($stockReal);
+        // $this->update([
+        //         'quantity' => $this->stocks()->count()
+        //     ]
+        // );
 
-        //Codigo para agregar registros de stock
-        // for ($k = 0; $k < $this->inputs[$keys[$i]]['quantity']; $k++) {
-        //     # code...
-        //     $colorSize->stocks()->create([
-        //         'barcode' => '124524'
-        //     ]);
-        // }
+        /****************** SETEANDO EL STOCK DEL COLOR ******************/
+        $this->color->updateFieldQuantity();
 
+        /****************** SETEANDO EL STOCK DE TODO EL PRODUCTO ******************/
+
+        //OJOS: Esta funcion tomas los valores del campo quantity de la tabla colors
+        //por lo que siempre tiene que ser ejecutada despues de $this->color->updateFieldQuantity()
+        $this->color->product->updateFieldQuantity();
+
+        /****************** SETEANDO EL STOCK EN LA TABLA "SIZES" ******************/
+        $this->size->quantity = $total_real;
+        $this->size->save();
+
+        // Log::info('Stock real');
     }
 
     // public function getInfotAttribute(){

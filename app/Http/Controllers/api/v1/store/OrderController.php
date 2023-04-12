@@ -150,6 +150,7 @@ class OrderController extends Controller
         Log::info($request);
 
         $store = User::where('nickname', $nickname)->first();
+
         Log::info($store);
 
         //Creando un nuevo usuario
@@ -231,6 +232,7 @@ class OrderController extends Controller
                 $address->phone = $buyer->phone;
                 $address->primary = trim($request->primary);
                 $address->secondary = trim($request->secondary);
+
                 if ($request->references) {
                     $address->references = trim($request->references);
                 }
@@ -248,7 +250,7 @@ class OrderController extends Controller
                     $order = new Order();
 
                     $order->delivery_man_id = 3; //el usuario 3 es magaly vanesa
-                    $order->shipping_cost_buyer = 0; //el usuario 3 es magaly vanesa
+                    $order->shipping_cost_buyer = 0; //por el momento todos los pedidos de internet tienen envio gratis
                     $order->payment_method_id = 1; //simula que el pago lo hico con transferencia deposito
                     $order->delivery_method_id = 1; //quiere decir que se envia via delivery
                     $order->store_id = $store->id;
@@ -269,11 +271,13 @@ class OrderController extends Controller
                         Log::info($request->order);
 
                         $i = 0;
+                        
+                        //recorremos cada item del itemCart
 
                         foreach ($request->order as $itemOrder) {
 
-
-                            for ($j = 0; $j < $itemOrder['qty']; $j++) {
+                            //calculamos cuantos elementos repetidos hay
+                            for ($j = 0; $j < $itemOrder['quantity']; $j++) {
                                 # code...
                                 $array_repetidos[] = $itemOrder['product_id'];
                             }
@@ -377,6 +381,22 @@ class OrderController extends Controller
 
                                     default:
 
+                                        //color_size
+
+                                        //Buscando el color_size_id
+
+                                        // $tallaSolicitada = $itemOrder["talla"];
+
+                                        switch ($product->how_sell) {
+                                            case 'value':
+                                                # code...
+                                                break;
+                                            
+                                            default:
+                                                # code...
+                                                break;
+                                        }
+
                                         $colorSize = ColorSize::find($itemOrder['id']);
 
                                         $id = $colorSize->id;
@@ -386,7 +406,7 @@ class OrderController extends Controller
                                         //Precio normal
                                         $price = $colorSize->color->product->price;
 
-                                        $qty = $itemOrder['qty'];
+                                        // $qty = $itemOrder['quantity'];
 
                                         $description = $colorSize->color->product->name;
 
@@ -394,7 +414,9 @@ class OrderController extends Controller
                                         $price_oferta = $array_prices[$colorSize->color->product->id];
 
                                         //Prapando el json content
-                                        $content =             [
+
+                                        $content = [
+                                            'color_id' => $itemOrder['color_id'], //es el id del item que se agrega ra a la orden, este contiene el color y talla
                                             'color_size_id' => $id, //es el id del item que se agrega ra a la orden, este contiene el color y talla
                                             'talla' => $talla, //name indica la talla
                                             'image' => $imagenColor, //image indica la url de la imagen del colors
@@ -405,7 +427,7 @@ class OrderController extends Controller
                                         //Renombrando la variable
                                         $item = new Item();
 
-                                        $item->quantity = $qty;
+                                        $item->quantity = $itemOrder['quantity'];
 
                                         $item->price = $price;
                                         $item->description = $description;

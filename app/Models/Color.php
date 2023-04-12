@@ -103,6 +103,20 @@ class Color extends Model
         return $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC');
     }
 
+    public function updateFieldQuantity(){ //Actualiza el campo quantity de la tabla "colors" sumando el stock de todas las tallas del color
+
+        $total_size = 0;
+
+        foreach ($this->sizes as $size) {
+            # code...
+            $color_size = ColorSize::where('color_id',$this->id)->where('size_id',$size->id)->first();
+            $total_size = $total_size + $color_size->stocks()->count();
+        }
+
+        $this->quantity = $total_size;
+        $this->save();
+
+    }
 
     // public function getInfoStockAttribute(){
     //     return $this->pivot->foo;

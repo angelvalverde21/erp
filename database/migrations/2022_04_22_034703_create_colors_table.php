@@ -14,14 +14,17 @@ class CreateColorsTable extends Migration
     public function up()
     {
         Schema::create('colors', function (Blueprint $table) {
+            
             $table->id();
             
             $table->string('name');            
-            $table->integer('quantity');
+            $table->string('image');            
+            $table->integer('quantity')->default(0)->nullable();
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
 
             $table->timestamps();
+
         });
     }
 

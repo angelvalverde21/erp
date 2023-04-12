@@ -32,15 +32,18 @@ class Sidebar extends Component
                         [
                             "name"=>"Mis ventas",
                             "slug"=> route('manage.orders',[$this->store->nickname]),
+                            "active"=>"orders",
                             "icon"=>"fa-solid fa-align-justify",
                         ],
                         [
                             "name"=>"Mis productos",
+                            "active"=>"products",
                             "slug"=>route('manage.products',[$this->store->nickname]),
                             "icon"=>"fa-solid fa-box",
                         ],
                         [
                             "name"=>"Mis clientes",
+                            "active"=>"customers",
                             "slug"=>route('manage.customers',[$this->store->nickname]),
                             "icon"=>"fa-solid fa-users",
                         ]
@@ -61,7 +64,7 @@ class Sidebar extends Component
     
                 [
                     "name"=>"Web",
-                    "slug"=>"#",
+                    "slug"=>route('manage.web', [$this->store->nickname]),
                     "icon"=>"fa-solid fa-globe",
                 ],
                 

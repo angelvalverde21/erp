@@ -62,41 +62,73 @@ class Item extends Model
         }
     }
 
-    public function separarStock()
+    public function separarStock($color_size_id = 0) //Separa el stock Stock::SEPARADO
     {
 
-        $color_size = ColorSize::find($this->content->color_size_id);
+        //cuando se quiere vender una talla con otra talla del almacen
+        if ($color_size_id > 0) {
+            $color_size = ColorSize::find($color_size_id);
+        } else {
+            $color_size = ColorSize::find($this->content->color_size_id);
+        }
 
         //se separa el stock segun la cantidad eligida
-        for ($i = 0; $i < $this->quantity; $i++) {
+
+
+        if ($this->quantity_oversale  > 0) {
+            $quantity = $this->quantity_oversale;
+        } else {
+            $quantity = $this->quantity;
+        }
+
+        for ($i = 0; $i < $quantity; $i++) {
 
             $stock = $color_size->stocks()->first();
 
-            Log::info('Mostrando el primer stock disponible');
-            Log::info($stock);
+            if ($stock) {
 
-            $stock->status = Stock::SEPARADO;
-            $stock->item_id = $this->id;
+                Log::info('Mostrando el primer stock disponible');
+                Log::info($stock);
 
-            $stock->save();
+                $stock->status = Stock::SEPARADO;
+                $stock->item_id = $this->id;
 
-            Log::info('Cambiando su estatus a ' . Stock::SEPARADO);
-            Log::info($stock);
+                $stock->save();
+
+                Log::info('Cambiando su estatus a ' . Stock::SEPARADO);
+                Log::info($stock);
+
+            } else {
+                Log::info('No hay suficiente stock');
+            }
         }
 
         //descontamos el stock en la base de datos
         // $color_size->quantity = $color_size->quantity - $this->quantity;
 
         //Guardamos el resultado en la tabla color_size
-        $color_size->quantity = $color_size->stocks()->count();
-
+        $stock_real = $color_size->stocks()->count();
+        $color_size->quantity = $stock_real;
         $color_size->save();
         //return //stock actualizado
 
+
+        //actualiza los campos "quantity" de las tablas colors y products respectivamente
+        $color_size->color->updateFieldQuantity();
+        $color_size->color->product->updateFieldQuantity();
+        $color_size->size->quantity = $stock_real;
+        $color_size->size->save();
     }
 
-    public function asignarStock()
+    //si la orden esta pagada entonces asignamos el stock permanentemente
+    public function asignarStock($color_size_id = 0) //Vende permanentemente el stock Stock::VENDIDO
     {
+
+        if ($color_size_id > 0) {
+            $color_size = ColorSize::find($color_size_id);
+        } else {
+            $color_size = ColorSize::find($this->content->color_size_id);
+        }
 
         $color_size = ColorSize::find($this->content->color_size_id);
 
@@ -115,10 +147,18 @@ class Item extends Model
             $stock->save();
         }
 
-        $color_size->quantity = $color_size->stocks()->count();
+        $stock_real = $color_size->stocks()->count();
+        $color_size->quantity = $stock_real;
 
         $color_size->save();
 
+        //actualiza los campos "quantity" de las tablas colors y products respectivamente
+        $color_size->color->updateFieldQuantity();
+        $color_size->color->product->updateFieldQuantity();
+
+        $color_size->size->quantity = $stock_real;
+
+        $color_size->size->save();
         // $color_size = ColorSize::find($this->content->color_size_id);
 
         // //descontamos el stock en la base de datos
@@ -142,14 +182,14 @@ class Item extends Model
     }
 
 
-    public function devolverItems()
+    public function devolverItems() //Restituye el stock que ha salido de almacen Stock::ALMACENADO
     {
 
         $quantity = $this->quantity;
         $color_size_id = $this->content->color_size_id;
         $color_size = ColorSize::find($color_size_id);
-        $color_size->quantity = $color_size->quantity + $quantity;
-        $color_size->save();
+        // $color_size->quantity = $color_size->quantity + $quantity;
+        // $color_size->save();
 
         $stocks = Stock::where('item_id', $this->id)->get();
 
@@ -165,19 +205,44 @@ class Item extends Model
 
         }
 
-        $color_size->quantity = $color_size->stocks()->count();
+        $stock_real = $color_size->stocks()->count();
+        $color_size->quantity = $stock_real;
 
         $color_size->save();
+
+        //actualiza los campos "quantity" de las tablas colors y products respectivamente
+        $color_size->color->updateFieldQuantity();
+        $color_size->color->product->updateFieldQuantity();
+
+        $color_size->size->quantity =  $stock_real;
+        $color_size->size->save();
 
         //return //stock actualizado
     }
 
     public function getTallaRealAttribute()
     {
-
-
         $colorSize = ColorSize::find($this->content->color_size_id);
         return $colorSize->size->name;
+    }
+
+    public function showStocks()
+    {
+
+        return Stock::where('item_id', $this->id)->get();
+
+        if ($this->content->color_size_id > 0) {
+
+            //si esta definido el color_size_id
+            $color_size = ColorSize::find($this->content->color_size_id);
+            return $color_size->stockAsignado($this->id)->get();
+        } else {
+        }
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
     // public function getImageAttribute(){
     //     $array = json_decode($this->content);

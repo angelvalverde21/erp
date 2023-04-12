@@ -14,7 +14,7 @@
 
                     <thead>
                         <tr>
-                            <th>Id</th>
+                            {{-- <th>Id</th> --}}
                             <th class="text-center">Qty</th>
                             <th class="text-center">x</th>
                             <th class="text-center">Precio</th>
@@ -27,7 +27,7 @@
 
                     @foreach ($prices as $price)
                         <tr>
-                            <td>{{ $price->id }}</td>
+                            {{-- <td>{{ $price->id }}</td> --}}
                             <td class="text-center">{{ $price->quantity }}</td>
                             <td class="text-center">x</td>
                             <td class="text-center">S/. {{ $price->value }}</td>

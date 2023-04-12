@@ -47,7 +47,7 @@ class ProductSeeder extends Seeder
                     'id' => $obj->IDPRODUCTO,
                     'title' => $obj->TITULO,
                     'name' => $obj->TITULO,
-                    'quantity' => null,
+                    'quantity' => 27,
                     'short_link' => substr(md5(bcrypt(Str::slug($obj->TITULO))),0,5),
                     'slug' => Str::slug($obj->TITULO),
                     'description' => $obj->DESCRIPCION,

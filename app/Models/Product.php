@@ -48,6 +48,11 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function owner()
+    {
+        return $this->belongsTo(User::class,'owner_id');
+    }
+
     public function images() //ojo images se llama en las consultas directamente con el metodo ->with('images), no se llama desde appends
     {
         return $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC');
@@ -81,8 +86,6 @@ class Product extends Model
         }
     }
 
-
-
     public function getHasAttribute()
     {
 
@@ -109,6 +112,46 @@ class Product extends Model
                 return "has_none";
             }
         }
+
+    }
+
+    public function getHowSellAttribute()
+    {
+
+        $over_sale = $this->over_sale;
+        $force_size_unique = $this->force_size_unique;
+
+        if ($over_sale && $force_size_unique) { //AND
+            return "OVERSALE_FORCE_SIZE_UNIQUE";
+        }
+
+        if ($over_sale && !$force_size_unique) { //AND
+            return "OVERSALE";
+        }
+
+        if (!$over_sale && $force_size_unique) { //AND
+            return "FORCE_SIZE_UNIQUE";
+        }
+
+        if (!$over_sale && !$force_size_unique) { //AND
+            return "NORMAL";
+        }
+    }
+
+    public function updateFieldQuantity(){
+
+        $total_color = 0;
+
+        foreach ($this->colors as $color) {
+
+            # code...
+            $total_color = $total_color + $color->quantity;
+
+        }
+
+        $this->quantity = $total_color;
+
+        $this->save();
 
     }
 

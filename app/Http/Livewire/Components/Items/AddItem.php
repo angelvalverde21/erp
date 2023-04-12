@@ -29,9 +29,8 @@ class AddItem extends Component
 
     }
 
-    public function addItem($value){
+    public function addItem($color_size_id){
 
-        $color_size_id = $value;
 
         // Log::debug($this->order->id);
         // Log::debug($this->quantity[$value]);
@@ -53,20 +52,23 @@ class AddItem extends Component
         $description = $colorSize->color->product->name;
         $price = $colorSize->color->product->price;
 
-        $content =             [
+        $content =  [
             'color_size_id'=>$color_size_id,
+            'color_id'=>$colorSize->color->id,
             'talla'=>$size_name,
             'image'=>$color_file_name,
-            'price'=>$price
+            'price'=>$price,
+            'product_id' => $colorSize->color->product->id,
         ];
 
         $item = new Item();
 
-        if(isset($this->quantity_oversale[$value])){
+        //si la casilla quantity_oversale esta marcada entonces seteamos el quantity real en 0
+        if(isset($this->quantity_oversale[$color_size_id])){
             $item->quantity = 0;
-            $item->quantity_oversale = $this->quantity_oversale[$value];
+            $item->quantity_oversale = $this->quantity_oversale[$color_size_id];
         }else{
-            $item->quantity = $this->quantity[$value];
+            $item->quantity = $this->quantity[$color_size_id];
             $item->quantity_oversale = 0;
         }
     
@@ -78,13 +80,7 @@ class AddItem extends Component
         $item->save();
 
         //Comprobamos si la orden ha sido pagada 
-        if($this->order->is_pay()){
-            //como esta pagado asignamos Stock::VENDIDO
-            $item->asignarStock();
-        }else{
-            //como no esta pagado cambiamos en la base de datos a Stock::SEPARADO
-            $item->separarStock();
-        }
+
         // actualizarStock($item->id,"separar");
 
         //quantity
@@ -96,9 +92,18 @@ class AddItem extends Component
         //Actualizamos el producto por completo para que en el select desplegable se muestre el stock real
         $this->product = $this->product->fresh();
 
-        $this->quantity[$value] = 0; //seteando nuevamente a 0
-        if(isset($this->quantity_oversale[$value])){
-            $this->quantity_oversale[$value] = 0;
+        $this->quantity[$color_size_id] = 0; //seteando nuevamente a 0
+
+        if(isset($this->quantity_oversale[$color_size_id])){
+            $this->quantity_oversale[$color_size_id] = 0;
+        }else{
+            if($this->order->is_pay()){
+                //como esta pagado asignamos Stock::VENDIDO
+                $item->asignarStock();
+            }else{
+                //como no esta pagado cambiamos en la base de datos a Stock::SEPARADO
+                $item->separarStock();
+            }
         }
 
         //$this->quantity_oversale[$value] = 0;

@@ -29,7 +29,9 @@ class CreateProductsTable extends Migration
             $table->string('slug');
             $table->float('price')->nullable()->default('0.00');
             $table->float('price_seller')->nullable()->default('0.00');
-            $table->integer('quantity')->default()->nullable();
+            $table->integer('quantity')->default(0)->nullable();
+            $table->boolean('over_sale')->default(false);
+            $table->boolean('force_size_unique')->default(false);
 
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')->references('id')->on('users');

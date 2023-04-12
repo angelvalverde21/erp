@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Color;
+use App\Models\ColorSize;
 use App\Models\Size;
 
 class ColorSizeSeeder extends Seeder
@@ -23,7 +24,8 @@ class ColorSizeSeeder extends Seeder
 
             $sizes = Size::where('product_id',$color->product_id)->get();
 
-            foreach ($sizes as $size) {
+            foreach ($sizes as $size){
+
                 $color->sizes()->attach([
                     $size->id => [
                         'quantity' => 3,
@@ -31,7 +33,16 @@ class ColorSizeSeeder extends Seeder
                         'updated_at' => date('Y-m-d H:i:s'),
                     ]
                 ]);
+
+                $colorSize = ColorSize::where('color_id', $color->id)->where('size_id',$size->id)->first();
+
+                $colorSize->agregarStock(3);
+
             }
+
+            $color->quantity = 9;
+
+            $color->save();
 
         }
     }

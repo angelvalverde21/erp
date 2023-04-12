@@ -45,18 +45,17 @@ class ProductApi extends Controller
     {
         //
 
-        if(is_numeric($id)){
+        if (is_numeric($id)) {
 
             $colorSize = ColorSize::findOrFail($id);
 
             return response()->json(['status' => '200', 'stock' => $colorSize->quantity]);
-
-        }else{
+        } else {
 
             //si el usuario manda el formato "color-id" entonces eso no es numerico y lo analizamos aqui
 
             //primero hacemos un explode y buscamos el id del color
-            $colorSize = explode("-",$id);
+            $colorSize = explode("-", $id);
 
             //escogemos el id y lo asociamos a una nueva variable $new_id
             $new_id = $colorSize[1];
@@ -65,14 +64,13 @@ class ProductApi extends Controller
             $color = Color::findOrFail($new_id);
 
             $stock = 0;
-            
+
             //finalmente recorremos las tallas reales y lo sumamos para brindar un solo stock
             foreach ($color->sizes as $size) {
                 $stock = $stock + $size->pivot->quantity;
             }
 
             return response()->json(['status' => '200', 'stock' => $stock]);
-
         }
 
         // Log::info($colorSize);
@@ -129,70 +127,6 @@ class ProductApi extends Controller
 
             $product = Product::where('id', $id)->with('images')->with('prices')->with('colors.sizes')->first();
 
-            // $sizes = [
-            //     "sizes" => [
-            //         "name" => "ESTANDAR",
-            //         "quantity" => 0,
-            //     ]
-            // ];
-
-            $colors = array_map(function ($color) {
-
-                $color["sizes"] = [
-                    [
-                    "id" => $color['id'],
-                    "name" => "ESTANDAR",
-                    "product_id" => 7,
-                    "quantity" => 5,
-                    "pivot" => [
-                        "id" => "color-".$color['id'],
-                        "quantity" => 10
-                    ],
-                ]
-            ];
-
-                return $color;
-
-            }, $product->colors->toArray());
-
-            // return $product->colors;
-
-            Log::info($product);
-            Log::info($product->toArray());
-
-
-            $product = $product->toArray();
-
-            $product["colors"] = $colors;
-
-            // return $colors;
-
-            // $colors = $product->colors->map(function ($color) {
-
-            //     Log::info($color->sizes);
-
-            //     $color['sizes'] = [
-            //         "name" => "ESTANDAR",
-            //         "quantity" => 0,
-            //     ];
-
-            //     return $color;
-            // });
-
-            // return $colors;
-
-            // foreach ($product->colors as $color) {
-            //     # code...
-            //     foreach ($color->sizes as $size) {
-            //         $color->sizes = $sizes;
-            //     }
-            // }
-
-            if ($product) {
-                return $product;
-            } else {
-                return response()->json(['error' => '404', 'message' => 'Pagina no encontradara']);
-            }
         } else {
 
             $product = Product::where('short_link', $id)->with('images')->with('prices')->with('colors.sizes')->first();
@@ -202,19 +136,99 @@ class ProductApi extends Controller
                 return $product;
             } else {
 
-                $product = Product::where('slug', $id)->with('images')->with('prices')->with('colors.sizes')->first();
-
                 //si la url es un slug ------(CASO: 3)
-                if ($product) {
-                    return $product;
-                } else {
-                    // return response()->json(['error' => '404', 'message' => 'Pagina no encontradara'],404);
-                    return response()->json(['error' => '404', 'message' => 'Pagina no encontradara']);
-                }
-                //
+                $product = Product::where('slug', $id)->with('images')->with('prices')->with('colors.sizes')->first();
             }
         }
+
+        //vamos a modificar las tallas originales y cambiarlas por un "ESTANDAR"
+
+        //VENDER UNA SOLA TALLA Y SOBREVENDER EL STOCK
+        if ($product['force_size_unique'] && $product['over_sale']) {
+            # code...
+            $colors = array_map(function ($color) {
+
+                $color["sizes"] = [
+                    [
+                        "id" => $color['id'],
+                        "name" => "ESTANDAR",
+                        "product_id" => 7,
+                        "quantity" => 100,
+                        "pivot" => [
+                            "id" => "color-" . $color['id'],
+                            "color_id" => $color['id'],
+                            "quantity" => 100
+                        ],
+                    ]
+
+                ];
+
+                return $color;
+            }, $product->colors->toArray());
+        }
+
+        //VENDER UNA SOLA TALLA PERO CON EL STOCK REAL
+
+        if ($product['force_size_unique'] && !$product['over_sale']) {
+
+            $colors = array_map(function ($color) {
+
+                $color["sizes"] = [
+                    [
+                        "id" => $color['id'],
+                        "name" => "ESTANDAR",
+                        "product_id" => 7,
+                        "quantity" => 1,
+                        "pivot" => [
+                            "id" => "color-" . $color['id'],
+                            "color_id" => $color['id'],
+                            "quantity" => 1
+                        ],
+                    ]
+
+                ];
+
+                return $color;
+            }, $product->colors->toArray());
+        }
+
+
+        //SOBRE VENDER PERO CON LAS TALLAS ORIGINALES
+
+        if ($product['over_sale'] && !$product['force_size_unique']) {
+
+            //SOBREVENDER Y EN UNA SOLA TALLA
+            $colors = array_map(function ($color) {
+
+                $sizes = array_map(function ($size) {
+
+                    $size["quantity"] = 50;
+
+                    return $size;
+                }, $color["sizes"]);
+
+                Log::info($sizes);
+
+                $color["sizes"] = $sizes;
+
+                return $color;
+            }, $product->colors->toArray());
+        }
+
+        if ($product['over_sale'] || $product['force_size_unique']) {
+            $product = $product->toArray();
+            $product["colors"] = $colors;
+        }
+
+
+
+        if ($product) {
+            return $product;
+        } else {
+            return response()->json(['error' => '404', 'message' => 'Pagina no encontradara']);
+        }
     }
+
 
     /**
      * Show the form for editing the specified resource.

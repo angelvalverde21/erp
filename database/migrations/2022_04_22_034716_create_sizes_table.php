@@ -18,7 +18,7 @@ class CreateSizesTable extends Migration
 
             
             $table->string('name');
-            $table->integer('quantity');
+            $table->integer('quantity')->default(0)->nullable();
 
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');

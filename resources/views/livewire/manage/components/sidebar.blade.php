@@ -68,7 +68,7 @@
                                 @foreach ($menu['sub_menu'] as $sub_menu)
                                     <li class="nav-item">
                                         <a href="{{ $sub_menu['slug'] }}"
-                                            class="nav-link {{ request()->routeIs('manage.orders*', [$store->nickname]) ? 'active' : '' }}">
+                                            class="nav-link {{ request()->routeIs('manage.'.$sub_menu['active'].'*', [$store->nickname]) ? 'active' : '' }}">
                                             <i class="{{ $sub_menu['icon'] }} nav-icon"></i>
                                             <p>{{ $sub_menu['name'] }}</p>
                                         </a>
@@ -91,7 +91,7 @@
 
                 <!-- sub menu -->
 
-                <nav class="mt-2">
+                {{-- <nav class="mt-2">
 
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="" role="menu" data-accordion="">
 
@@ -121,10 +121,10 @@
                         </li>
 
                     </ul>
-                </nav>
+                </nav> --}}
 
                 {{-- herramientas --}}
-
+{{-- 
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="info">
                         <a href="{{ route('manage.profile', [$store->nickname]) }}" class="d-block"><i
@@ -158,12 +158,13 @@
                     </div>
 
 
-                </div>
+                </div> --}}
 
                 {{-- fin de herramientas --}}
 
 
-                <li class="nav-item">
+                {{-- <li class="nav-item"> --}}
+                    
                 @else
                     {{-- fin de else --}}
                     <!-- Sidebar Menu -->

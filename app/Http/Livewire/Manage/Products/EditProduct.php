@@ -21,7 +21,9 @@ class EditProduct extends Component
         'product.name' => 'required',
         'product.slug' => 'required|unique:products,slug',
         'product.price' => 'required',
-        'product.price_seller' => 'required'
+        'product.price_seller' => 'required',
+        'product.over_sale' => 'required',
+        'product.force_size_unique' => 'required',
     ];
 
     public $listeners = [
@@ -72,10 +74,10 @@ class EditProduct extends Component
         
         Log::info('fin de log desde el editProduct.php');
 
-        $this->product->prices()->create([
-            'quantity' => 1,
-            'price' => $this->product->price,
-        ]);
+        // $this->product->prices()->create([
+        //     'quantity' => 1,
+        //     'price' => $this->product->price,
+        // ]);
 
         Log::debug($this->product);
         $this->product->save();

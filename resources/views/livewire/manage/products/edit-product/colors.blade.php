@@ -76,7 +76,7 @@
                                 </td>
                             @endif
 
-                            <td>{{ $color->stock }}</td>
+                            <td>{{ $color->quantity }}</td>
 
                             <td wire:key="color-{{ $color->id }}" class="text-center">
                                 <a class="btn-color" href="#"

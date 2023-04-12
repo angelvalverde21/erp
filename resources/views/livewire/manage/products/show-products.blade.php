@@ -64,7 +64,7 @@
                                 </td>
                                 <td><a href="{{ route('manage.products.edit', [$store->nickname, $product->id]) }}">{{ $product->name }}</a></td>
                                 <td>{{ $product->price }}</td>
-                                <td>{{ $product->stock }}</td>
+                                <td>{{ $product->quantity }}</td>
                                 <td>{{ $product->created_at }}</td>
                                 <td>
                                     <div class="d-flex  justify-content-center">

@@ -90,7 +90,7 @@ class ProductController extends Controller
             [
                 'image' => $url,
                 'name' => $nickname,
-                'quantity' => '1'
+                'quantity' => '0'
             ]);
 
 
