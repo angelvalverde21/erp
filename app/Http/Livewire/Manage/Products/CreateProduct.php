@@ -73,7 +73,7 @@ class CreateProduct extends Component
         
         $product->prices()->create([
             'quantity' => 1,
-            'price' => $this->product['price']
+            'value' => $this->product['price']
         ]);
 
         $product->status = '1';
