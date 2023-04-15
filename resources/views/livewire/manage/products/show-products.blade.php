@@ -50,7 +50,7 @@
 
                                     @if ($product->images->count() or $product->colors->count())
 
-                                    {{ $product->colors->count() }}
+                                    {{-- {{ $product->colors->count() }} --}}
 
                                         <a href="{{ route('manage.products.edit', [$store->nickname, $product->id]) }}">
                                             <img width="75" src="{{ $product->image() }}" alt="">
