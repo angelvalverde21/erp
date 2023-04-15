@@ -35,7 +35,7 @@ class Product extends Model
     //Mucho a muchos
     public function colors()
     {
-        return $this->hasMany(Color::class)->orderBy('id', 'DESC');
+        return $this->hasMany(Color::class)->orderBy('quantity', 'DESC');
     }
 
     public function prices(){
