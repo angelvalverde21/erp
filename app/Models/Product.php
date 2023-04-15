@@ -155,4 +155,19 @@ class Product extends Model
 
     }
 
+    public function image(){
+
+        if($this->images->count() > 0){
+
+            return $this->images->first()->name;
+            
+        }else{
+            
+            $firstColor =  $this->colors->first();
+
+            return $firstColor->image->name;
+
+        }
+    }
+
 }

@@ -47,19 +47,22 @@
                             <tr>
                                 <td>{{ $product->id }}</td>
                                 <td class="text-center">
-                                    @if ($product->images->count())
 
-                                    
-                                        <a
-                                            href="{{ route('manage.products.edit', [$store->nickname, $product->id]) }}"><img
-                                                width="75"
-                                                src="{{ $product->images->first()->name }}"
-                                                alt=""></a>
+                                    @if ($product->images->count() or $product->colors->count())
+
+                                    {{ $product->colors->count() }}
+
+                                        <a href="{{ route('manage.products.edit', [$store->nickname, $product->id]) }}">
+                                            <img width="75" src="{{ $product->image() }}" alt="">
+                                        </a>
+
                                     @else
+
                                         <a style="color: rgb(100, 100, 100);"
                                             href="{{ route('user.products.edit', [$store->nickname, $product->id]) }}"><span
                                                 style="font-size: 50px;"><i
                                                     class="fa-solid fa-image"></i></span></a>
+
                                     @endif
                                 </td>
                                 <td><a href="{{ route('manage.products.edit', [$store->nickname, $product->id]) }}">{{ $product->name }}</a></td>
