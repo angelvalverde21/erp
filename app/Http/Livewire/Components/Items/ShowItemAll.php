@@ -61,7 +61,7 @@ class ShowItemAll extends Component
     public function deleteItem(Item $item)
     {
 
-        $this->order->devolverStock();
+        // $this->order->devolverStock();
 
         Log::debug($item);
 
@@ -72,12 +72,13 @@ class ShowItemAll extends Component
 
         // actualizarStock($item->id,"devolver");
 
+        //primero borramos el item en la base de datos "stocks"
+        $item->devolverItems();
+
+        //luego ya podemos eliminar el $item
         $item->delete();
 
         //setea el stock
-
-
-        $this->order->reservar();
 
         $this->emitTo('user.sales.edit-sale.show-summary', 'render');
         //Each porque eliminara una coleccion de sizes

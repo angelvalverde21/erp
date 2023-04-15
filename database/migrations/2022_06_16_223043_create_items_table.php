@@ -21,6 +21,7 @@ class CreateItemsTable extends Migration
             $table->string('description');
             $table->float('price')->nullable()->default('0');
             $table->json('content')->nullable();
+            $table->json('original')->nullable();
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();

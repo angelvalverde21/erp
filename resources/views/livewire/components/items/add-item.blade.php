@@ -163,7 +163,7 @@
                                                                             </select>
                                                                         @else
                                                                         <input
-                                                                            wire:model="quantity_oversale.{{ $size->pivot->id }}"
+                                                                            wire:model="quantity.{{ $size->pivot->id }}"
                                                                             style="width: 75px;" type="number"
                                                                             class="form-control" placeholder="0">
                                                                         @endif

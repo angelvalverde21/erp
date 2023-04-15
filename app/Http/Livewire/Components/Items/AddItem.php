@@ -47,37 +47,46 @@ class AddItem extends Component
 
         $colorSize = ColorSize::find($color_size_id);
 
-        $size_name = $colorSize->size->name;
-        $color_file_name = $colorSize->color->image;
-        $description = $colorSize->color->product->name;
-        $price = $colorSize->color->product->price;
-
-        $content =  [
-            'color_size_id'=>$color_size_id,
-            'color_id'=>$colorSize->color->id,
-            'talla'=>$size_name,
-            'image'=>$color_file_name,
-            'price'=>$price,
-            'product_id' => $colorSize->color->product->id,
-        ];
-
         $item = new Item();
 
+        // $item->content =  [
+        //     'color_size_id'     =>  $color_size_id,
+        //     'color_id'          =>  $colorSize->color->id,
+        //     'size_name'         =>  $colorSize->size->name,
+        //     'image'             =>  $colorSize->color->image,
+        //     'price'             =>  $colorSize->color->product->price,
+        //     'product_id'        =>  $colorSize->color->product->id,
+        // ];
+
+        $item->content =  [
+
+            'color_size_id'     =>  $colorSize->id,
+            'talla'             =>  $colorSize->size->name,
+            'color_id'          =>  $colorSize->color->id,
+            'image'             =>  $colorSize->color->image->name,
+            'price'             =>  $colorSize->color->product->price,
+            'product_id'        =>  $colorSize->color->product->id,
+            'description'       =>  $colorSize->color->product->name,
+
+        ];
+
         //si la casilla quantity_oversale esta marcada entonces seteamos el quantity real en 0
-        if(isset($this->quantity_oversale[$color_size_id])){
-            $item->quantity = 0;
-            $item->quantity_oversale = $this->quantity_oversale[$color_size_id];
-        }else{
-            $item->quantity = $this->quantity[$color_size_id];
-            $item->quantity_oversale = 0;
-        }
+        // if(isset($this->quantity_oversale[$color_size_id])){
+        //     $item->quantity = 0;
+        //     $item->quantity_oversale = $this->quantity_oversale[$color_size_id];
+        // }else{
+        //     $item->quantity = $this->quantity[$color_size_id];
+        //     $item->quantity_oversale = 0;
+        // }
     
-        $item->price = $price;
-        $item->description = $description;
-        $item->content = $content;
-        $item->order_id = $this->order->id;
+        $item->quantity     = $this->quantity[$color_size_id]; //estos datos vienen de la plantilla blade
+        $item->order_id     = $this->order->id; //este tambien
+        $item->price        = $colorSize->color->product->price;
+        $item->description  = $colorSize->color->product->name;
 
         $item->save();
+
+        $item->separarStock();
 
         //Comprobamos si la orden ha sido pagada 
 
@@ -90,23 +99,18 @@ class AddItem extends Component
         //order_id
 
         //Actualizamos el producto por completo para que en el select desplegable se muestre el stock real
+
         $this->product = $this->product->fresh();
 
-        $this->quantity[$color_size_id] = 0; //seteando nuevamente a 0
+        // if($this->order->is_pay()){
+            //como esta pagado asignamos Stock::VENDIDO
+            // $this->order->confirmarStock();
+        // }else{
+            //como no esta pagado cambiamos en la base de datos a Stock::SEPARADO
+            // $this->order->reservar();
+        // }
 
-        if(isset($this->quantity_oversale[$color_size_id])){
-            $this->quantity_oversale[$color_size_id] = 0;
-        }else{
-            if($this->order->is_pay()){
-                //como esta pagado asignamos Stock::VENDIDO
-                $item->asignarStock();
-            }else{
-                //como no esta pagado cambiamos en la base de datos a Stock::SEPARADO
-                $item->separarStock();
-            }
-        }
-
-        //$this->quantity_oversale[$value] = 0;
+        $this->quantity[$color_size_id] = 0;
       
         $this->emitTo('components.items.show-item-all','render');
         $this->emitTo('manage.orders.edit-order.card-show-summary','render');

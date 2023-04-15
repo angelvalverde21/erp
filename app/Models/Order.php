@@ -476,8 +476,7 @@ class Order extends Model
 
     public function confirmarStock(){
 
-        if ($this->is_pay()) {
-
+  
             Log::info('se confirma que la orden esta pagada');
             
             $items = $this->items()->get(); //consultamos los items de la orden
@@ -502,8 +501,6 @@ class Order extends Model
                 //     Log::info($stock);
                 // }
             }
-
-        }
 
     }
 

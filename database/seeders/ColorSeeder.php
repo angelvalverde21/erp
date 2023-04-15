@@ -48,7 +48,7 @@ class ColorSeeder extends Seeder
 
                         [
                             'id' => $obj->id,
-                            'name' => $this->faker->word(),
+                            // 'name' => $this->faker->word(),
                             'quantity' => '1',
                             'product_id' => $obj->post_id
                         ]

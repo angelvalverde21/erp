@@ -1,11 +1,9 @@
 <div>
     {{-- Success is as dangerous as failure. --}}
 
-
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add-stock-item-{{ $item->id }}">
-        <i class="fa-solid fa fa-square-plus mr-2"></i>Agregar item ({{ $item->content->color_id  }})
+        <i class="fa-solid fa fa-square-plus mr-2"></i>Asignar stock al item
     </button>
-
 
     <!-- Modal -->
     <div wire:ignore.self class="modal fade" id="add-stock-item-{{ $item->id }}" tabindex="-1" role="dialog"
@@ -25,6 +23,7 @@
                     <div class="row">
 
                         <div class="col-lg-12 col">
+
                             <div class="mb-3">
 
                                 <div class="">
@@ -187,3 +186,12 @@
 
     </div>
 </div>
+
+<script>
+    document.addEventListener("livewire:load", function() {
+        Livewire.on("closeModal", function() {
+            $("#add-stock-item-{{ $item->id }}").modal("hide");
+            console.log('se escucho que se quiere cerrar el modal');
+        });
+    });
+</script>

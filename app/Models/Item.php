@@ -38,6 +38,37 @@ class Item extends Model
         // }
         $this->attributes['content'] = json_encode($value);
     }
+
+
+
+    //Luego que sale de la base de datos le aplica un json_decode
+    public function getOriginalAttribute($value)
+    {
+
+        //Subcategoria tiene talla
+        // if($this->subcategory->has_size){
+        //     return ColorSize::whereHas('size.product', function(Builder $query){
+        //         $query->where('id',$this->id);
+        //     })->sum('quantity');
+        // }
+
+        return json_decode($value);
+    }
+
+    //antes que ingrese a la base de datos le aplica un json_enconde
+    public function setOriginalAttribute($value)
+    {
+
+        //Subcategoria tiene talla
+        // if($this->subcategory->has_size){
+        //     return ColorSize::whereHas('size.product', function(Builder $query){
+        //         $query->where('id',$this->id);
+        //     })->sum('quantity');
+        // }
+        $this->attributes['original'] = json_encode($value);
+    }
+
+
     // public function getTallaRealAttribute(){
 
     // }
@@ -134,7 +165,10 @@ class Item extends Model
 
         for ($i = 0; $i < $this->quantity; $i++) {
 
-            $stock = Stock::where('item_id', $this->id)->first();
+            Log::info('stock: '. $i);
+
+            //primero se busca el stock reservado
+            $stock = Stock::where('item_id', $this->id)->where('status',Stock::SEPARADO)->first();
 
             if (!$stock) {
                 # code...
@@ -249,4 +283,14 @@ class Item extends Model
 
     //     return $array->file_name;
     // }
+
+    public function stocks()
+    {
+        
+        // return $this->belongsToMany(Stock::class, 'item_stock', 'item_id', 'stock_id')
+        //             ->withPivot('cantidad');
+
+        return $this->hasMany(Stock::class);
+
+    }
 }

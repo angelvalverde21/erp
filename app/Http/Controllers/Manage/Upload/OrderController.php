@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
-    public function comprobantesEmpaque($nickname, Order $order, Request $request){
+    public function comprobantesEmpaque($nickname, Order $order, Request $request)
+    {
         try {
 
             $request->validate([
@@ -29,17 +30,16 @@ class OrderController extends Controller
                 'usage' => 'comprobante_empaque',
                 'name' => $image,
             ]);
-
         } catch (\Throwable $th) {
 
             Log::info('No se paso la validacion de comprobantes de empaque');
             // Log::info($th);
             Log::info($request);
         }
-
     }
 
-    public function comprobantesEnvio($nickname, Order $order, Request $request){
+    public function comprobantesEnvio($nickname, Order $order, Request $request)
+    {
         try {
 
             $request->validate([
@@ -58,7 +58,6 @@ class OrderController extends Controller
             Log::info('empieza el helper');
             Log::info(uploadImage($request));
             Log::info('Termina el helper');
-
         } catch (\Throwable $th) {
 
             Log::info('No se paso la validacion de comprobantes de envio');
@@ -71,7 +70,7 @@ class OrderController extends Controller
     {
 
         Log::info('se llamo a la funcion uploadFileOrderInvoice');
-        
+
         try {
 
             $request->validate([
@@ -80,7 +79,7 @@ class OrderController extends Controller
 
             Log::info('se paso la validacion de comprobantes de invoice');
             Log::info($request);
-            
+
             $image = Storage::put('orders/comprobantes/payments', $request->file('file'));
             // $image = uploadImage($request,"orders/comprobantes/payments");
 
@@ -93,13 +92,16 @@ class OrderController extends Controller
             ]);
 
             //Si esta pagado buscamos los items en la tabla Stocks y cambiamos su estatus a vendido
-            
-            $order->confirmarStock();
+
+            if ($order->is_pay()) {
+                // como esta pagado asignamos Stock::VENDIDO
+                $order->confirmarStock();
+            }
 
             // Log::info('empieza el helper');
             // Log::info(uploadImage($request));
             // Log::info('Termina el helper');
- 
+
         } catch (\Throwable $th) {
 
             Log::info('No se paso la validacion de comprobantes de pago');

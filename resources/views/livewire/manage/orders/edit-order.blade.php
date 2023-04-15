@@ -7,7 +7,8 @@
     @if (!$order->is_active)
         <x-sectioncontent>
             <div class="activar d-flex justify-content-center mb-3">
-                <button type="button" class="btn btn-success" wire:click="reactivarOrden()"><i class="fa-solid fa-bolt"></i> Reactivar Orden</button>
+                <button type="button" class="btn btn-success" wire:click="reactivarOrden()"><i
+                        class="fa-solid fa-bolt"></i> Reactivar Orden</button>
             </div>
         </x-sectioncontent>
     @endif
@@ -154,3 +155,4 @@
     {{-- Modal para las observaciones --}}
 
 </div>
+
