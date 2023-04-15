@@ -71,10 +71,7 @@ class CreateProduct extends Component
         $product->category_id = $this->product['category_id'];
         $product->price = $this->product['price'];
         
-        $product->prices()->create([
-            'quantity' => 1,
-            'value' => $this->product['price']
-        ]);
+
 
         $product->status = '1';
         $product->owner_id = $this->user->id;
@@ -86,6 +83,11 @@ class CreateProduct extends Component
 
         //Guardo el producto
         $product->save();
+
+        $product->prices()->create([
+            'quantity' => 1,
+            'value' => $this->product['price']
+        ]);
 
         if($product->category->has_size){
 
