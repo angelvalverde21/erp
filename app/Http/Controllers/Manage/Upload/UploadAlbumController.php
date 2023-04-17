@@ -31,13 +31,18 @@ class UploadAlbumController extends Controller
 
             Log::info($file);
 
+            Log::info('imagen redimensionada con INTERVENTION');
+            Log::info('Guardando imagen...');
             $image->save($file);
+            Log::info('Imagen guardad');
 
             //Subiendo el thumbnail, pero antes tenemos que rotarla
 
             $exif = exif_read_data($request->file('file'), 0, true);
 		
             if($exif['IFD0']['Orientation']==8){
+
+                Log::info('La imagen esta rotada 270 grados');
                 
                 //"si es 8, la imagen esta rotada 270";
     
@@ -52,15 +57,19 @@ class UploadAlbumController extends Controller
                 $source = imagecreatefromjpeg($imageNew);
                  
                 //Rotamos la imagen 90 grados
+                Log::info('Rotando imagen');
                 $rotate = imagerotate($source, $degrees, 0);
                  
                 //Creamos el archivo jpg vertical
+
+                Log::info('Creando la imagen con imagenjpg()');
                 imagejpeg($rotate, $file,'90');
 
             }
 
             //fin de rotacion
             
+            Log::info('Guardando la imagen rotada (Thumb) en S3');
             $image = Storage::disk('s3')->put('albums/thumb-'.$request->file('file')->hashName(),file_get_contents($file), 'public');
 
             //Eliminando el archivo creado para que no ocupe espacio en cpanel
@@ -69,6 +78,7 @@ class UploadAlbumController extends Controller
             Storage::delete($file);
 
             //Subiendo la imagen original
+            Log::info('Subiendo la imagen original S3');
             $image = Storage::disk('s3')->put('albums',$request->file('file'), 'public');
             
             $album->images()->create([ //crea un nuevo registro en la tabla images
