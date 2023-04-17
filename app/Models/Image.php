@@ -10,7 +10,7 @@ class Image extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','usage', 'imageable_id', 'imageable_type'];
+    protected $fillable = ['name', 'names3','usage', 'imageable_id', 'imageable_type'];
 
     protected $hidden = [
         'imageable_type',
@@ -23,9 +23,35 @@ class Image extends Model
         return $this->morphTo();
     }
 
-    public function getNameAttribute($value){
-        return url('/') . Storage::url($value);
-    }
+    // public function getNameAttribute($value){
+
+    //     $data = explode('/',$value);
+
+    //     return url('/') . Storage::url($value);
+    // }
+
+    public function getNameS3Attribute(){
+
+        // {{ Storage::disk('s3')->url($value) }}
+
+        return Storage::disk('s3')->url($this->name);
+    }  
+
+    public function getNameS3ThumbAttribute(){
+
+        // {{ Storage::disk('s3')->url($value) }}
+
+        $name = explode('/',$this->name);
+
+        if ($name[0] && isset($name[1])) {
+            # code...
+            return Storage::disk('s3')->url($name[0].'/thumb-'.$name[1]);
+        } else {
+            # code...
+            return 'error';
+        }
+        
+    }   
 
     // public function SetNameAttribute($value){
     //     return url('/') . Storage::url($value);

@@ -205,7 +205,10 @@
                         @livewire('manage.products.edit-product.images', ['product' => $product], key('product-images-' . $product->id))
                     </div>
 
-                    <div class="tab-pane py-3" id="messages" role="tabpanel">Aqui ira el album de fotos</div>
+                    <div class="tab-pane py-3" id="messages" role="tabpanel">
+                        
+                        @livewire('manage.products.edit-product.show-albums', ['product' => $product], key('product-show-albums-' . $product->id))
+                    </div>
 
                 </div>
             </div>

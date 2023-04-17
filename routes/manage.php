@@ -3,6 +3,7 @@
 use App\Http\Controllers\Manage\Print\Order\PdfController;
 use App\Http\Controllers\Manage\ProductController;
 use App\Http\Controllers\Manage\Upload\OrderController;
+use App\Http\Controllers\Manage\Upload\UploadAlbumController;
 use App\Http\Controllers\Manage\Upload\UserImageController;
 use App\Http\Livewire\Manage\Customers\CreateCustomer;
 use App\Http\Livewire\Manage\Customers\EditCustomer;
@@ -15,6 +16,7 @@ use App\Http\Livewire\Manage\Productions\EditProduction;
 use App\Http\Livewire\Manage\Productions\ShowProductions;
 use App\Http\Livewire\Manage\Products\CreateProduct;
 use App\Http\Livewire\Manage\Products\EditProduct;
+use App\Http\Livewire\Manage\Products\EditProduct\Albums\EditAlbum;
 use App\Http\Livewire\Manage\Products\ShowProducts;
 use App\Http\Livewire\Manage\Profile\ShoProfileWeb;
 use App\Http\Livewire\Manage\Profile\ShowProfileStore;
@@ -35,6 +37,9 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::get('/products', ShowProducts::class)->name('products');
    Route::get('/products/{product}/edit', EditProduct::class)->name('products.edit');
    Route::get('/products/create', CreateProduct::class)->name('products.create');
+   Route::get('/albums/{album}/edit', EditAlbum::class)->name('albums.edit');
+   Route::post('/albums/upload/{album}', [UploadAlbumController::class, 'uploadAlbum'])->name('albums.upload');
+   
 
    //ORDERS
    Route::get('/orders', ShowOrders::class)->name('orders');
