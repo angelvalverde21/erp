@@ -55,7 +55,7 @@
                                     {{-- {{ $product->colors->count() }} --}}
 
                                         <a href="{{ route('manage.products.edit', [$store->nickname, $product->id]) }}">
-                                            <img width="75" src="{{ $product->image() }}" alt="">
+                                            <img width="75" src="{{ Storage::url($product->image()) }}" alt="">
                                         </a>
 
                                     @else

@@ -105,14 +105,14 @@
 
                                                                     <td class="text-center"
                                                                         rowspan="{{ $loop->count }}">
-                                                                        <img width="100" src="{{ $color->image }}"
+                                                                        <img width="100" src="{{ Storage::url($color->image) }}"
                                                                             alt="">
                                                                     </td>
 
                                                                     {{-- fin de imagen --}}
 
                                                                     <td rowspan="{{ $loop->count }}">
-                                                                        <img src="{{ $color->image->name }}" height="75px" alt=""></td>
+                                                                        <img src="{{ Storage::url($color->image->name) }}" height="75px" alt=""></td>
                                                                 @endif
 
                                                                 {{-- Precio de venta final --}}

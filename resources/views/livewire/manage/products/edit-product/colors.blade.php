@@ -49,13 +49,13 @@
                                 <td>
                                     {{-- boton para las variantes --}}
                                     <a href="#" data-toggle="modal" data-target="#zoom-{{ $color->id }}">
-                                        <img src="{{ $color->image->name }}" alt="" width="100px"
+                                        <img src="{{ Storage::url($color->image->name) }}" alt="" width="100px"
                                             height="100%">
                                     </a>
 
                                     <x-modal title="Zoom" id="zoom-{{ $color->id }}" size="modal-lg">
 
-                                        <img src="{{ $color->image->name }}" alt="" width="100%" height="100%">
+                                        <img src="{{ Storage::url($color->image->name) }}" alt="" width="100%" height="100%">
 
                                     </x-modal>
                                 </td>

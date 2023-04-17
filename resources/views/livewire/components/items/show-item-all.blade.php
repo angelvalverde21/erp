@@ -36,7 +36,7 @@
                                 </td>
                                 <td class="text-center">{{ $item->quantity }}</td>
                                 <td class="text-center">{{ $item->quantity_oversale }}</td>
-                                <td class="text-center"><img src="{{ $item->content->image }}" height="75px" alt=""></td>
+                                <td class="text-center"><img src="{{ Storage::url($item->content->image) }}" height="75px" alt=""></td>
 
                                 <td>
                                     <a href="{{ route('manage.products.edit', [$store->nickname, $item->content->product_id]) }}">{{ $item->description }}</a>

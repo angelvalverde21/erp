@@ -53,7 +53,7 @@
                 <div class="card">
 
                     <div class="image">
-                        <img src="{{ $image->name }}"
+                        <img src="{{ Storage::url($image->name) }}"
                         alt="" width="100%" height="100%">
 
                     </div>
