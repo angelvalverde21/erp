@@ -332,20 +332,23 @@ class Order extends Model
             $orderStatus->status_id = $status->id;
             $orderStatus->save();
 
-            $data = json_decode($current);
+            // $data = json_decode($current);
 
+            // if($data){
+            //     $orderStatus->coordinates()->create([
+            //         'latitud' => $data->latitud,
+            //         'longitud' => $data->longitud,
+            //         'gps_radio' => $data->gps_radio,
+            //         'url_current' => $data->url_current,
+            //         'screen' => $data->screen,
+            //         'message' => $data->message,
+            //         'tipo_red' => $data->tipo_red,
+            //         'user_agent' => $data->user_agent,
+            //         'vendor' => $data->vendor
+            //     ]);
+            // }
             //$orderStatus->cordenada()->create([json_decode($request->current)]);
-            $orderStatus->coordinates()->create([
-                'latitud' => $data->latitud,
-                'longitud' => $data->longitud,
-                'gps_radio' => $data->gps_radio,
-                'url_current' => $data->url_current,
-                'screen' => $data->screen,
-                'message' => $data->message,
-                'tipo_red' => $data->tipo_red,
-                'user_agent' => $data->user_agent,
-                'vendor' => $data->vendor
-            ]);
+
         }
     }
 
