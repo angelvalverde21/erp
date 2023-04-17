@@ -79,7 +79,7 @@ class UploadAlbumController extends Controller
 
         } catch (\Throwable $th) {
 
-            Log::info('No se paso la validacion de comprobantes de empaque');
+            Log::info('No se paso la validacion para subir la foto');
             // Log::info($th);
             Log::info($request);
         }
