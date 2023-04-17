@@ -27,7 +27,7 @@ class UploadAlbumController extends Controller
 
             $image->resize(1124, 750);
 
-            $file = storage_path(). "\app\public\\temp\\".$request->file('file')->getClientOriginalName();
+            $file = storage_path(). "/app/public/temp/".$request->file('file')->getClientOriginalName();
 
             Log::info($file);
 
