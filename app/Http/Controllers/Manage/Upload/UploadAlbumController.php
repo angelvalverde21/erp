@@ -70,6 +70,7 @@ class UploadAlbumController extends Controller
             //fin de rotacion
             
             Log::info('Guardando la imagen rotada (Thumb) en S3');
+
             $image = Storage::disk('s3')->put('albums/thumb-'.$request->file('file')->hashName(),file_get_contents($file), 'public');
 
             //Eliminando el archivo creado para que no ocupe espacio en cpanel
@@ -79,6 +80,7 @@ class UploadAlbumController extends Controller
 
             //Subiendo la imagen original
             Log::info('Subiendo la imagen original S3');
+
             $image = Storage::disk('s3')->put('albums',$request->file('file'), 'public');
             
             $album->images()->create([ //crea un nuevo registro en la tabla images
@@ -92,6 +94,7 @@ class UploadAlbumController extends Controller
             Log::info('No se paso la validacion para subir la foto');
             // Log::info($th);
             Log::info($request);
+            Log::info($th);
         }
     }
 
