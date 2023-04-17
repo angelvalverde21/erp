@@ -20,7 +20,7 @@ class UploadAlbumController extends Controller
         try {
 
             $request->validate([
-                'file' => 'required|image|max:10240'  //10 megas
+                'file' => 'required|image|max:20480'  //10 megas
             ]);
 
             $image = Image::make($request->file('file'));
