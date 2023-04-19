@@ -140,6 +140,69 @@ function devolverStockSize(Order $order)
     }
 }
 
+//funciones para la migracion de la base de datos antigua
+
+function filterDni($value){
+    return preg_replace('/[^0-8]/', '', $value);
+}
+
+function filterCelular($value){
+    return preg_replace('/[^0-9]/', '', $value);
+}
+
+
+function corregirDni($value){
+
+
+    if ($value == "" ||$value == 0 ) {
+        return NULL;
+    }else{
+        $filter = filterDni($value);
+
+        if(strlen($filter)>0){
+            return filterDni($value);
+        }else{
+            return NULL;
+        }
+
+    }
+
+    
+}
+
+function corregirPhone($value){
+    if ($value == "" || $value == 0 ) {
+        return NULL;
+    }else{
+        $filter = filterCelular($value);
+
+        if(strlen($filter)>0){
+            return filterCelular($value);
+        }else{
+            return NULL;
+        }
+    }
+}
+
+
+function corregirDistrict($value){
+    
+    if ($value == "" || $value == 0 ) {
+        return 150101;
+    }else{
+        return $value;
+    }
+}
+
+function corregirEmail($value){
+    if ($value == "") {
+        return NULL;
+    }else{
+        return $value;
+    }
+}
+
+
 function repartidores()
 {
     return User::repartidores();

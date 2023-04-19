@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Order;
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
+
 use Illuminate\Support\Facades\File;
 
 class OrderSeeder extends Seeder
@@ -17,7 +17,7 @@ class OrderSeeder extends Seeder
     public function run()
     {
         //
-        $this->faker = Faker::create();
+
 
         //DB::table('categories')->delete();
         $json = File::get("database/data/orders.json");

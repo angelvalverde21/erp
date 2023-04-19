@@ -9,6 +9,7 @@ use App\Http\Livewire\Manage\Customers\CreateCustomer;
 use App\Http\Livewire\Manage\Customers\EditCustomer;
 use App\Http\Livewire\Manage\Customers\ShowCustomers;
 use App\Http\Livewire\Manage\Dashboard;
+use App\Http\Livewire\Manage\ImportData;
 use App\Http\Livewire\Manage\Orders\EditOrder;
 use App\Http\Livewire\Manage\Orders\ShowOrders;
 use App\Http\Livewire\Manage\Productions\CreateProduction;
@@ -33,6 +34,8 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
 
    Route::get('/', Dashboard::class)->name('dashboard');
 
+   //IMPORT DATA
+   Route::get('/import', ImportData::class)->name('import');
    //PRODUCTS
    Route::get('/products', ShowProducts::class)->name('products');
    Route::get('/products/{product}/edit', EditProduct::class)->name('products.edit');

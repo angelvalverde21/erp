@@ -28,18 +28,28 @@ class ProductSeeder extends Seeder
         $this->faker = Faker::create();
 
         //DB::table('products')->delete();
-        $json = File::get("database/data/products.json");
+        $json = File::get("C:/xampp/htdocs/erp/database/import_old_db/ayv_productos.json");
+
         $data = json_decode($json);
 
         foreach ($data as $obj) {
 
-            $i = $i + 1;
+            // $i = $i + 1;
 
-            if($i>5){
-                $store_id = 10;
-            }else{
-                $store_id = 11;
+            // if($i>5){
+            //     $store_id = 10;
+            // }else{
+            //     $store_id = 11;
+            // }
+
+
+            if ($obj->PRECIO_NORMAL>0) {
+                # code...
+            } else {
+                # code...
+                $obj->PRECIO_NORMAL = null;
             }
+            
 
             Product::create(
 
@@ -51,9 +61,9 @@ class ProductSeeder extends Seeder
                     'short_link' => substr(md5(bcrypt(Str::slug($obj->TITULO))),0,5),
                     'slug' => Str::slug($obj->TITULO),
                     'description' => $obj->DESCRIPCION,
-                    'price' => '19.75',
+                    'price' => $obj->PRECIO_NORMAL,
                     'status' => '1',
-                    'store_id' => $store_id,
+                    'store_id' => 10,
                     'owner_id' => 1,
                     'category_id' => '2',
                     'excerpt' => $obj->EXCERPT,
@@ -64,17 +74,17 @@ class ProductSeeder extends Seeder
             );
 
 
-            for ($j = 1; $j <= 5; $j++) {
-                Image::create([
-                    'name' => 'products/' . $this->faker->image('public/storage/products', 640, 480, null, false),
-                    'imageable_id' => $obj->IDPRODUCTO,
-                    'imageable_type' => Product::class
-                ]);
-            }
+            // for ($j = 1; $j <= 5; $j++) {
+            //     Image::create([
+            //         'name' => 'products/' . $this->faker->image('public/storage/products', 640, 480, null, false),
+            //         'imageable_id' => $obj->IDPRODUCTO,
+            //         'imageable_type' => Product::class
+            //     ]);
+            // }
 
-            if ($i == 10) {
-                break;
-            }
+            // if ($i == 10) {
+            //     break;
+            // }
 
         }
     }

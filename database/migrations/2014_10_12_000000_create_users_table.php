@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('nickname')->unique()->nullable();
             $table->unsignedBigInteger('dni')->unique()->nullable();
             $table->unsignedBigInteger('ruc')->unique()->nullable();
-            $table->unsignedBigInteger('phone')->unique();
+            $table->unsignedBigInteger('phone')->unique()->nullable();
 
             // $table->unsignedBigInteger('address_id')->nullable();
             // $table->foreign('address_id')->references('id')->on('addresses');

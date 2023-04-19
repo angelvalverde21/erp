@@ -20,8 +20,8 @@ class CreateAddressesTable extends Migration
             $table->string('title')->nullable();
             $table->string('name');
             $table->unsignedBigInteger('dni')->nullable();
-            $table->unsignedBigInteger('phone');
-            $table->string('primary');
+            $table->unsignedBigInteger('phone')->nullable();
+            $table->string('primary')->nullable();
             $table->string('secondary')->nullable();
             $table->string('references')->nullable();
             $table->string('coordenadas')->nullable();
