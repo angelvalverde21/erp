@@ -27,7 +27,7 @@ class CreateCategoriesTable extends Migration
             $table->boolean('has_color')->default(false);
             $table->boolean('has_size')->default(false);
 
-            $table->unsignedBigInteger('owner_id')->default(1);
+            $table->unsignedBigInteger('owner_id')->default(232);
             $table->foreign('owner_id')->references('id')->on('users');
 
             $table->timestamps();

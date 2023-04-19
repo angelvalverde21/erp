@@ -39,7 +39,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('collect_method_id')->default(2);
             $table->foreign('collect_method_id')->references('id')->on('collect_methods');
 
-            $table->unsignedBigInteger('delivery_man_id')->default('3'); //. es Magaly vanesa
+            $table->unsignedBigInteger('delivery_man_id')->default('1707'); //. es Magaly vanesa
             $table->foreign('delivery_man_id')->references('id')->on('users');  
 
             $table->unsignedBigInteger('carrier_address_id')->default('4'); //4 es olva courier

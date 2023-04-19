@@ -64,7 +64,7 @@ class ProductSeeder extends Seeder
                     'price' => $obj->PRECIO_NORMAL,
                     'status' => '1',
                     'store_id' => 10,
-                    'owner_id' => 1,
+                    'owner_id' => 232,
                     'category_id' => '2',
                     'excerpt' => $obj->EXCERPT,
                     'created_at' => $obj->FECHA,

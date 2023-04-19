@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Log;
 
 class UserSeeder extends Seeder
 {
+
+    public $faker;
     /**
      * Run the database seeds.
      *
@@ -20,10 +22,15 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $this->faker = Faker::create();
+
         //DB::table('categories')->delete();
         $json = File::get("C:/xampp/htdocs/erp/database/import_old_db/ayv_usuarios.json");
 
         $old_users = json_decode($json);
+
+        $f = 0;
+        $i = 0;
 
         foreach ($old_users as $old_user) {
 
@@ -43,89 +50,122 @@ class UserSeeder extends Seeder
 
             } else {
 
-                if (($old_user->CELULAR == "" || $old_user->CELULAR == null ) && ($old_user->EMAIL <> "" && $old_user->DNI > 0)) {
-                    # code...
-                    $new_user = User::Where('email',$old_user->EMAIL)->orWhere('dni',$old_user->DNI);
+                // if (($old_user->CELULAR == "" || $old_user->CELULAR == null ) && ($old_user->EMAIL <> "" && $old_user->DNI > 0)) {
+                //     # code...
+                //     $new_user = User::Where('email',$old_user->EMAIL)->orWhere('dni',$old_user->DNI);
 
-                    Log::info(1);
+                //     Log::info(1);
 
-                } elseif (($old_user->EMAIL == "" || $old_user->EMAIL == null ) && ($old_user->CELULAR > 0 && $old_user->DNI > 0)) {
-                    # code...
-                    $new_user = User::where('phone',$old_user->CELULAR)->orWhere('dni',$old_user->DNI);
+                // } elseif (($old_user->EMAIL == "" || $old_user->EMAIL == null ) && ($old_user->CELULAR > 0 && $old_user->DNI > 0)) {
+                //     # code...
+                //     $new_user = User::where('phone',$old_user->CELULAR)->orWhere('dni',$old_user->DNI);
 
-                    Log::info(2);
+                //     Log::info(2);
 
-                } elseif (($old_user->DNI == "" || $old_user->DNI == null ) && ($old_user->EMAIL <> "") && ($old_user->CELULAR > 0)) {
-                    # code...
-                    $new_user = User::where('phone',$old_user->CELULAR)->orWhere('email',$old_user->EMAIL);
-                    Log::info(3);
+                // } elseif (($old_user->DNI == "" || $old_user->DNI == null ) && ($old_user->EMAIL <> "") && ($old_user->CELULAR > 0)) {
+                //     # code...
+                //     $new_user = User::where('phone',$old_user->CELULAR)->orWhere('email',$old_user->EMAIL);
+                //     Log::info(3);
 
-                } elseif ((($old_user->CELULAR == "" || $old_user->CELULAR == null ) && ($old_user->EMAIL == "" || $old_user->EMAIL == null )) && ($old_user->DNI > 0)) {
-                    # code...
-                    $new_user = User::Where('dni',$old_user->DNI);
+                // } elseif ((($old_user->CELULAR == "" || $old_user->CELULAR == null ) && ($old_user->EMAIL == "" || $old_user->EMAIL == null )) && ($old_user->DNI > 0)) {
+                //     # code...
+                //     $new_user = User::Where('dni',$old_user->DNI);
 
-                    Log::info(4);
-                } elseif ((($old_user->CELULAR == "" || $old_user->CELULAR == null ) && ($old_user->DNI == "" || $old_user->DNI == null )) && ($old_user->EMAIL <> "")) {
+                //     Log::info(4);
+                // } elseif ((($old_user->CELULAR == "" || $old_user->CELULAR == null ) && ($old_user->DNI == "" || $old_user->DNI == null )) && ($old_user->EMAIL <> "")) {
 
-                    # code...
-                    $new_user = User::Where('email',$old_user->EMAIL);
+                //     # code...
+                //     $new_user = User::Where('email',$old_user->EMAIL);
 
-                    Log::info(5);
+                //     Log::info(5);
 
-                } elseif ((($old_user->DNI == "" || $old_user->DNI == null ) && ($old_user->EMAIL == "" || $old_user->EMAIL == null )) && ($old_user->CELULAR > 0)) {
+                // } elseif ((($old_user->DNI == "" || $old_user->DNI == null ) && ($old_user->EMAIL == "" || $old_user->EMAIL == null )) && ($old_user->CELULAR > 0)) {
 
-                    # code...
-                    $new_user = User::where('phone',$old_user->CELULAR);
+                //     # code...
+                //     $new_user = User::where('phone',$old_user->CELULAR);
 
-                    Log::info(6);
-                }else{
+                //     Log::info(6);
+                // }else{
 
-                    $new_user = User::where('phone',$old_user->CELULAR)->orWhere('email',$old_user->EMAIL)->orWhere('dni',$old_user->DNI);
+                //     $new_user = User::where('phone',$old_user->CELULAR)->orWhere('email',$old_user->EMAIL)->orWhere('dni',$old_user->DNI);
 
-                    Log::info(7);
-                }
+                //     Log::info(7);
+                // }
+
+                // if ($old_user->CELULAR <> "" || $old_user->CELULAR <> null) {
+
+                //     $user_insertado = User::where('phone',$old_user->CELULAR);
+
+                //     if ($user_insertado->count() > 0) {
+                //         Log::info('el celular ya existe');
+
+                //         $celular = true;
+                //         # code...
+                //     }else {
+
+                //         $celular = false;
+  
+                //     }
+                // }
                 
 
                 // $new_user = User::where('phone',$old_user->CELULAR)->orWhere('email',$old_user->EMAIL)->orWhere('dni',$old_user->DNI);
 
-                if($new_user->count()>0){
+                // if($new_user->count()>0){
 
-                    //no se inserta el registro porque es repetitivo
-                    Log::info('este user esta repetido');
-                    Log::info('celular: '.$old_user->CELULAR);
-                    Log::info('celular: '.$old_user->DNI);
-                    Log::info('celular: '.$old_user->EMAIL);
+                //     //no se inserta el registro porque es repetitivo
+                //     Log::info('este user esta repetido');
+                //     Log::info('celular: '.$old_user->CELULAR);
+                //     Log::info('celular: '.$old_user->DNI);
+                //     Log::info('celular: '.$old_user->EMAIL);
 
-                }else{
+                // }else{
+
+                    try {
+
+                        Log::info('Empezando a insertar el IDUSUARIO: '.$old_user->IDUSUARIO);
+
+                        User::create([
+    
+                            'id' => $old_user->IDUSUARIO,
+                            'name' => $old_user->NOMBRE,
+                            'email' => corregirEmail($old_user->EMAIL),
+                            'phone' => corregirPhone($old_user->CELULAR),
+                            'dni' => corregirDni($old_user->DNI),
+                            'store_id' => '10',
+                            'password' => bcrypt(substr(trim($old_user->NOMBRE), 0, 1) . $old_user->IDUSUARIO),
+                            'owner_id' => '232',
+                            'created_at' => $old_user->FECHA,
+                            'updated_at' => $old_user->ACTUALIZAR,
+        
+                        ])->syncRoles(['name' => 'buyer']);
+    
+                        Log::info('Se ha insertado el registro IDUSUARIO '.$old_user->IDUSUARIO);
+    
+                        //Creando las direcciones de envio
+                        //fin de crear direcciones de envio
+                        // all good
+
+                        $i++;
+
+                    } catch (\Exception $e) {
+
+                        $f++;
+                        Log::info('Ha fallado la insersion de '.$old_user->IDUSUARIO);
+                        // something went wrong
+                    }
                     
 
-                    Log::info('Empezando a insertar el IDUSUARIO: '.$old_user->IDUSUARIO);
 
-                    User::create([
 
-                        'id' => $old_user->IDUSUARIO,
-                        'name' => $old_user->NOMBRE,
-                        'email' => corregirEmail($old_user->EMAIL),
-                        'phone' => corregirPhone($old_user->CELULAR),
-                        'dni' => corregirDni($old_user->DNI),
-                        'store_id' => '10',
-                        'password' => bcrypt(substr(trim($old_user->NOMBRE), 0, 1) . $old_user->IDUSUARIO),
-                        'owner_id' => '232'
-    
-                    ])->syncRoles(['name' => 'buyer']);
-
-                    Log::info('Se ha insertado el registro IDUSUARIO '.$old_user->IDUSUARIO);
-
-                    //Creando las direcciones de envio
-                    //fin de crear direcciones de envio
-
-                }
+                // }
 
             }
         }
 
+        Log::info('Se insertaron correctamente ' .$i. ' registros');
+        Log::info('fallaron en la insercion ' .$f. ' registros');
 
-        $this->faker = Faker::create();
 
         // User::create([
         //     'id' => '3',
@@ -212,7 +252,7 @@ class UserSeeder extends Seeder
 
         RoleStoreUser::create(
             [
-                'user_id' => '1',
+                'user_id' => '232',
                 'role_id' => '12',
                 'store_id' => '10'
             ]
@@ -234,7 +274,7 @@ class UserSeeder extends Seeder
 
         RoleStoreUser::create(
             [
-                'user_id' => '1',
+                'user_id' => '232',
                 'role_id' => '13',
                 'store_id' => '11'
             ]
@@ -245,8 +285,8 @@ class UserSeeder extends Seeder
             'name' => 'Internet',
             'nickname' => 'internet',
             'email' => 'internet@ara.pe',
-            'phone' => '222222',
-            'ruc' => '11111111111111',
+            'phone' => '905700001',
+            'ruc' => '11111111811111',
             'logo' => 'stores/logos/' . $this->faker->image('public/storage/stores/logos', 300, 300, null, false),
             'password' => bcrypt('6yhjentrksmlfdavn9565156fsdfsd')
 
@@ -258,7 +298,7 @@ class UserSeeder extends Seeder
             'name' => 'Juan Perez',
             'email' => 'juanperez21@gmail.com',
             'phone' => '995829199',
-            'dni' => '12345678',
+            'dni' => '12345778',
             'password' => bcrypt('12345678'),
 
         ])->syncRoles(['buyer', 'repartidor']);

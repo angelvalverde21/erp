@@ -35,6 +35,9 @@ class AddressSeeder extends Seeder
         // $key = array_search('John Doe', array_column($addresses_array, 'IDUSUARIO'));
         // $result = $addresses_array[$key];
 
+        $i=0;
+        $f=0;
+
 
         foreach ($users as $user) {
             # code...
@@ -48,22 +51,45 @@ class AddressSeeder extends Seeder
 
             foreach ($result as $address_old) {
 
-                Address::create(
-    
-                    [
-                        'id' => $address_old['IDENVIO'],
-                        'name' => $address_old['CONSIGNATARIO'],
-                        'dni' => corregirDni($address_old['DNI']),
-                        'phone' => corregirPhone($address_old['CELULAR']),
-                        'primary' => $address_old['DIRECCION'],
-                        'secondary' => $address_old['DIRECCION_SECUNDARIA'],
-                        'references' => $address_old['REFERENCIA'],
-                        'user_id' => $address_old['IDUSUARIO'],
-                        'district_id' => corregirDistrict($address_old['IDDISTRITO'])
-                    ]
+                Log::info('Se esta empezando la insersion de IDENVIO: '.$address_old['IDENVIO']);
 
-                );
+                try {
+
+                    Address::create(
+    
+                        [
+                            'id' => $address_old['IDENVIO'],
+                            'name' => $address_old['CONSIGNATARIO'],
+                            'dni' => corregirDni($address_old['DNI']),
+                            'phone' => corregirPhone($address_old['CELULAR']),
+                            'primary' => $address_old['DIRECCION'],
+                            'secondary' => $address_old['DIRECCION_SECUNDARIA'],
+                            'references' => $address_old['REFERENCIA'],
+                            'user_id' => $address_old['IDUSUARIO'],
+                            'district_id' => corregirDistrict($address_old['IDDISTRITO'])
+                        ]
+    
+                    );
+
+                    Log::info('Se ha insertado correctamente IDENVIO: '.$address_old['IDENVIO']);
+
+                    //Creando las direcciones de envio
+                    //fin de crear direcciones de envio
+                    // all good
+
+                    $i++;
+
+                } catch (\Exception $e) {
+
+                    $f++;
+                    Log::info('Ha fallado la insersion de la direccion '.$address_old['IDENVIO']);
+                    // something went wrong
+                }
+
             }
+
+            Log::info('Se insertaron correctamente (addresses) ' .$i. ' registros');
+            Log::info('fallaron en la insercion (addresses) ' .$f. ' registros');
 
 
         }
