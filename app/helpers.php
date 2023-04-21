@@ -203,6 +203,15 @@ function corregirEmail($value){
 }
 
 
+function corregirPrecio($value){
+    if ($value == "") {
+        return NULL;
+    }else{
+        return $value;
+    }
+}
+
+
 function repartidores()
 {
     return User::repartidores();
