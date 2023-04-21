@@ -38,7 +38,7 @@ class ColorSizeSeeder extends Seeder
 
                 $colorSize = ColorSize::where('color_id', $color->id)->where('size_id',$size->id)->first();
 
-                $colorSize->agregarStock(1);
+                $colorSize->quantity = 1;
 
                 $quantityTotal++;
 

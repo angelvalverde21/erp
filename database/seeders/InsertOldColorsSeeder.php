@@ -35,10 +35,12 @@ class InsertOldColorsSeeder extends Seeder
         foreach ($colors as $color) {
 
 
-            Log::info('Se esta empezando la insersion del color: ' . $color->IDMULTIMEDIA);
+
 
             if ($color->TIPO == 'color') {
 
+                Log::info('Se esta empezando la insersion del color: ' . $color->IDMULTIMEDIA);
+                
                 try {
 
                     $new_color = Color::create(
@@ -49,8 +51,8 @@ class InsertOldColorsSeeder extends Seeder
                             'quantity' => '1',
                             'label' => $color->LABEL,
                             'product_id' => $color->IDPRODUCTO,
-                            'created_at' => $color->FECHA,
-                            'updated_at' => $color->ACTUALIZAR
+                            // 'created_at' => $color->FECHA,
+                            // 'updated_at' => $color->ACTUALIZAR,
                         ]
 
                     );
@@ -61,14 +63,16 @@ class InsertOldColorsSeeder extends Seeder
                         'imageable_type' => Color::class,
                         'usage' => 'color'
                     ]);
-                    
+
                 } catch (\Exception $e) {
 
                     $f++;
                     Log::info('Ha fallado la insersion del color:  ' . $color->IDMULTIMEDIA);
                     // something went wrong
-                    // Log::info($e);
+                    Log::info($e);
                 }
+            }else{
+                Log::info('el id: ' . $color->IDMULTIMEDIA . ' no es del tipo color');
             }
         }
 
