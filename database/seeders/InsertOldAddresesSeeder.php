@@ -66,8 +66,8 @@ class InsertOldAddresesSeeder extends Seeder
                             'references' => $address_old['REFERENCIA'],
                             'user_id' => $address_old['IDUSUARIO'],
                             'district_id' => corregirDistrict($address_old['IDDISTRITO']),
-                            'created_at' => $address_old->FECHA,
-                            'updated_at' => $address_old->ACTUALIZAR
+                            'created_at' => corregirFecha($address_old['FECHA']),
+                            'updated_at' => corregirFecha($address_old['ACTUALIZAR'])
                         ]
     
                     );
@@ -85,6 +85,7 @@ class InsertOldAddresesSeeder extends Seeder
                     $f++;
                     Log::info('Ha fallado la insersion de la direccion '.$address_old['IDENVIO']);
                     // something went wrong
+                    Log::info($e);
                 }
 
             }

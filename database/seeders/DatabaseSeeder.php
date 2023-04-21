@@ -65,7 +65,10 @@ class DatabaseSeeder extends Seeder
                 $this->call(DepartmentSeeder::class);
                 $this->call(ProvinceSeeder::class);
                 $this->call(DistrictSeeder::class);
-                $this->call(AddressSeeder::class);
+                
+                // $this->call(AddressSeeder::class);
+                // php artisan db:seed --class=InsertOldAddresesSeeder
+
                 $this->call(PaymentMethodSeeder::class);
                 $this->call(DeliveryMethodSeeder::class);
                 $this->call(PaymentListSeeder::class);

@@ -211,6 +211,15 @@ function corregirPrecio($value){
     }
 }
 
+function corregirFecha($value){
+    
+    if ($value == "0000-00-00 00:00:00") {
+        return "2010-00-00 00:00:00";
+    }else{
+        return $value;
+    }
+}
+
 
 function repartidores()
 {
