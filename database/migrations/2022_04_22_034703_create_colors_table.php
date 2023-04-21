@@ -18,7 +18,7 @@ class CreateColorsTable extends Migration
             $table->id();
             
             // $table->string('name');            
-            // $table->string('image');            
+            $table->string('label')->nullable();            
             $table->integer('quantity')->default(0)->nullable();
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
