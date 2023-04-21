@@ -17,6 +17,9 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
 
+
+    CONST MAIN_ID = 232;
+    
     // use HasApiTokens;
     use HasApiTokens;
     use HasFactory;

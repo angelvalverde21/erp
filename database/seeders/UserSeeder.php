@@ -44,11 +44,11 @@ class UserSeeder extends Seeder
         ])->syncRoles(['admin','seller','buyer']);
 
         User::create([
-            'id'=>'3',
+            'id'=>'1707',
             'name' => 'Magaly Hinostroza',
             'email' => 'magaly_fake_123@gmail.com',
-            'phone' => '945101111',
-            'dni'=> '45631111',
+            'phone' => '945101774',
+            'dni'=> '45631639',
             'password' => bcrypt('12345678')
 
         ])->syncRoles(['repartidor', 'fotografo','buyer']);

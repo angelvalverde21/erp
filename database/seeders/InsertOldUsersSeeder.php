@@ -27,7 +27,7 @@ class InsertOldUsersSeeder extends Seeder
 
             Log::info("\n");
 
-            if ($old_user->IDUSUARIO == 232) {
+            if ($old_user->IDUSUARIO == 232 || $old_user->IDUSUARIO == 1707) {
             } else {
 
                 try {

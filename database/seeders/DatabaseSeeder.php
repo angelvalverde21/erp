@@ -50,11 +50,18 @@ class DatabaseSeeder extends Seeder
                 $this->call(CategorySeeder::class);
 
                 $this->call(SubcategorySeeder::class);
+
                 // $this->call(ProductSeeder::class);
-                $this->call(InsertOldProductsSeeder::class);
-                $this->call(ColorSeeder::class);
-                $this->call(SizeSeeder::class);
-                $this->call(ColorSizeSeeder::class);
+                // $this->call(InsertOldProductsSeeder::class);
+
+                // $this->call(ColorSeeder::class);
+                // $this->call(InsertOldColorsSeeder::class);
+
+                // $this->call(SizeSeeder::class);
+                // $this->call(InsertOldSizesSeeder::class);
+
+                // $this->call(ColorSizeSeeder::class);
+
                 $this->call(DepartmentSeeder::class);
                 $this->call(ProvinceSeeder::class);
                 $this->call(DistrictSeeder::class);
