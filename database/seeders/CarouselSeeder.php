@@ -27,7 +27,11 @@ class CarouselSeeder extends Seeder
 
         $productos = Product::all();
 
+        $i = 0;
+
         foreach ($productos as $product) {
+
+            $i++;
 
                 Carousel::create(
 
@@ -42,8 +46,11 @@ class CarouselSeeder extends Seeder
                     ]
     
                 );
-            
 
+                if ($i==10) {
+                    # code...
+                    break;
+                }
 
         }
     }

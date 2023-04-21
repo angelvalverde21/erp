@@ -50,10 +50,11 @@ class DatabaseSeeder extends Seeder
                 $this->call(CategorySeeder::class);
 
                 $this->call(SubcategorySeeder::class);
-                $this->call(ProductSeeder::class);
-                // $this->call(ColorSeeder::class);
-                // $this->call(SizeSeeder::class);
-                // $this->call(ColorSizeSeeder::class);
+                // $this->call(ProductSeeder::class);
+                $this->call(InsertOldProductsSeeder::class);
+                $this->call(ColorSeeder::class);
+                $this->call(SizeSeeder::class);
+                $this->call(ColorSizeSeeder::class);
                 $this->call(DepartmentSeeder::class);
                 $this->call(ProvinceSeeder::class);
                 $this->call(DistrictSeeder::class);
@@ -69,5 +70,22 @@ class DatabaseSeeder extends Seeder
                 $this->call(PaymentStatusSeeder::class);
                 $this->call(PaymentSeeder::class);
                 $this->call(ProfileStoreSeeder::class);
+
+                // // php artisan db:seed --class=InsertOldUsersSeeder
+                // $this->call(InsertOldUsersSeeder::class);
+
+                // // php artisan db:seed --class=InsertOldAddresesSeeder
+                // $this->call(InsertOldAddresesSeeder::class);
+
+                // // php artisan db:seed --class=InsertOldProductsSeeder
+                // $this->call(InsertOldProductsSeeder::class);
+
+                // // php artisan db:seed --class=InsertOldColorsSeeder
+                // $this->call(InsertOldColorsSeeder::class);
+
+                // php artisan db:seed --class=InsertOldProductsSeeder
+
+                // php artisan db:seed --class=InsertOldSizesSeeder
+                // $this->call(InsertOldSizesSeeder::class);
     }
 }
