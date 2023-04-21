@@ -19,7 +19,7 @@ class ShowCustomers extends Component
 
         $store = $this->store;
 
-        $customers = User::where('store_id',$this->store->id)->get();
+        $customers = User::where('store_id',$this->store->id)->limit(50)->orderBy('id','desc')->get();
 
         return view('livewire.manage.customers.show-customers',compact('store','customers'))->layout('layouts.manage');
 
