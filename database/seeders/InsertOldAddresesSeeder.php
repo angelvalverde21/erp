@@ -25,9 +25,11 @@ class InsertOldAddresesSeeder extends Seeder
 
         $users = User::all();
 
-        $address_json_data = File::get("C:/xampp/htdocs/erp/database/import_old_db/ayv_direcciones_envio.json");
+        // $address_json_data = File::get("C:/xampp/htdocs/erp/database/import_old_db/ayv_direcciones_envio.json");
 
-        $addresses_array = json_decode($address_json_data, true); //true convierte al json en una matriz asociativa, esto quiere decir que los keys son string y estan asociados a su valor
+        // $addresses_array = json_decode($address_json_data, true); //true convierte al json en una matriz asociativa, esto quiere decir que los keys son string y estan asociados a su valor
+
+        $addresses_array = getJson("C:/xampp/htdocs/erp/database/import_old_db/ayv_direcciones_envio.json",true);
 
         Log::info(count($addresses_array));
 

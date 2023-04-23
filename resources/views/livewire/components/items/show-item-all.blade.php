@@ -36,10 +36,25 @@
                                 </td>
                                 <td class="text-center">{{ $item->quantity }}</td>
                                 <td class="text-center">{{ $item->quantity_oversale }}</td>
-                                <td class="text-center"><img src="{{ Storage::url($item->content->image) }}" height="75px" alt=""></td>
+
+                                @if (isset($item->content->image))
+                                    <td class="text-center"><img src="{{ Storage::url($item->content->image) }}"
+                                            height="75px" alt=""></td>
+                                @else
+                                    <td class="text-center">Sin imagen</td>
+                                @endif
+
 
                                 <td>
-                                    <a href="{{ route('manage.products.edit', [$store->nickname, $item->content->product_id]) }}">{{ $item->description }}</a>
+
+                                    @if (isset($item->content->product_id))
+                                    <a
+                                        href="{{ route('manage.products.edit', [$store->nickname, $item->content->product_id]) }}">{{ $item->description }}</a>
+
+                                @else
+                                    <td class="text-center">Sin url</td>
+                                @endif
+
 
                                     <div class="content-stock">
 
@@ -151,6 +166,6 @@
 
     </x-user.modal>
 
-    
+
 
 </div>

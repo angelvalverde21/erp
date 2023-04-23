@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="col-12 col-lg-4">
-                    @livewire('manage.orders.edit-order.card-date-details', ['order' => $order->id], key('card-details'))
+                    @livewire('manage.orders.edit-order.card-date-details', ['order' => $order], key('card-details'))
                 </div>
 
             </div>
@@ -70,7 +70,7 @@
 
         {{-- Item de la orden --}}
 
-        @livewire('components.items.show-item-all', ['order' => $order->id], key('card-show-all-items'))
+        @livewire('components.items.show-item-all', ['order' => $order], key('card-show-all-items'))
 
 
         <div class="row">
@@ -84,7 +84,7 @@
 
             {{-- Detalles del pago --}}
             <div class="col-lg-6 col">
-                @livewire('manage.orders.edit-order.card-show-summary', ['order' => $order->id], key('show-summary'))
+                @livewire('manage.orders.edit-order.card-show-summary', ['order' => $order], key('show-summary'))
             </div>
 
         </div>

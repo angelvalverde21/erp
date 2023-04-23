@@ -19,7 +19,9 @@ class User extends Authenticatable
 
 
     CONST MAIN_ID = 232;
-    
+    CONST VANE_ID = 1707;
+    CONST STORE_ID = 10;
+
     // use HasApiTokens;
     use HasApiTokens;
     use HasFactory;

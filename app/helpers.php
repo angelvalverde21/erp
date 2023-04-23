@@ -11,6 +11,7 @@ use App\Models\PaymentMethod;
 use App\Models\Product;
 use App\Models\Size;
 use App\Models\User;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -204,8 +205,8 @@ function corregirEmail($value){
 
 
 function corregirPrecio($value){
-    if ($value == "") {
-        return NULL;
+    if ($value == "GRATIS" || $value == "" || $value == 0) {
+        return null;
     }else{
         return $value;
     }
@@ -220,6 +221,54 @@ function corregirFecha($value){
     }
 }
 
+function getJson($path, $param = false){
+
+    $json = json_decode(File::get($path), $param);
+    
+    if($param){
+        foreach ($json as $fila) {
+            # code...
+            if($fila['type']=="table"){
+                //aqui esta la data
+                return $fila['data'];
+            }
+        }
+    }else{
+        foreach ($json as $fila) {
+            # code...
+            if($fila->type=="table"){
+                //aqui esta la data
+                return $fila->data;
+            }
+        }
+    }
+
+}
+
+function extraerJsonData($json, $param = false){
+
+    $json = json_decode($json, $param);
+    
+    if($param){
+        foreach ($json as $fila) {
+            # code...
+            if($fila['type']=="table"){
+                //aqui esta la data
+                return $fila['data'];
+            }
+        }
+    }else{
+        foreach ($json as $fila) {
+            # code...
+            if($fila->type=="table"){
+                //aqui esta la data
+                return $fila->data;
+            }
+        }
+    }
+
+
+}
 
 function repartidores()
 {

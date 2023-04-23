@@ -9,9 +9,11 @@ use Livewire\Component;
 class CardWarningAlerts extends Component
 {
 
+    public $order;
+    
     protected $listeners = ['render'=>'render'];
 
-    public function mount(Order $order){
+    public function mount($order){
         $this->order = $order;
     }
 

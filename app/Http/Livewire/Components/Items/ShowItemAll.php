@@ -25,7 +25,7 @@ class ShowItemAll extends Component
         'item.content.price' => 'required',
     ];
 
-    public function mount(Order $order)
+    public function mount($order)
     {
         $this->store = Request::get('store');
         $this->order = $order;
@@ -119,6 +119,8 @@ class ShowItemAll extends Component
     {
 
         $items =  Item::where('order_id', $this->order->id)->get();
+
+        Log::info('show all items');
 
         return view('livewire.components.items.show-item-all', compact('items'));
     }

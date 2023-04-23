@@ -25,17 +25,16 @@ class InsertOldColorsSeeder extends Seeder
         //
         // $this->faker = Faker::create();
 
-        $json_data = File::get("C:/xampp/htdocs/erp/database/import_old_db/ayv_multimedia.json");
+        // $json_data = File::get("C:/xampp/htdocs/erp/database/import_old_db/ayv_multimedia.json");
 
-        $colors = json_decode($json_data); //true convierte al json en una matriz asociativa, esto quiere decir que los keys son string y estan asociados a su valor
+        // $colors = json_decode($json_data); //true convierte al json en una matriz asociativa, esto quiere decir que los keys son string y estan asociados a su valor
+
+        $colors = getJson("C:/xampp/htdocs/erp/database/import_old_db/ayv_multimedia.json");
 
         $i = 0;
         $f = 0;
 
         foreach ($colors as $color) {
-
-
-
 
             if ($color->TIPO == 'color') {
 

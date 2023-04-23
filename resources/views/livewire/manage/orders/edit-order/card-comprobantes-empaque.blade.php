@@ -3,20 +3,6 @@
     <x-user.button-open-modal class="success mb-3" text="Agregar" icon="fa-solid fa-plus"
         target="#agregarComprobantes" />
 
-    {{-- @if ($order->comprobantesEmpaque->count())
-        {{ $order->comprobantesEmpaque->count() }}
-    @else
-        No hay comprobantes
-    @endif --}}
-
-    {{-- {{ $order->is_pay() }} --}}
-
-    {{-- @if ($order->is_send())
-        se ha enviado
-    @else   
-        no se ha enviado
-    @endif --}}
-
     <div class="table-responsive">
         @if ($order->comprobantesEmpaque->count() > 0)
             <table class="table table-striped">
@@ -33,7 +19,7 @@
                     @foreach ($order->comprobantesEmpaque as $comprobante)
                         <tr>
                             <td class="text-center">{{ $comprobante->id }}</td>
-                            <td class="text-center"><img class="imagen-comprobante" src="{{ asset($comprobante->name) }}" height="60px" alt="">
+                            <td class="text-center"><img class="imagen-comprobante" src="{{ Storage::url($comprobante->name) }}" height="60px" alt="">
                             <td>{{ $comprobante->created_at }}</td>
                             </td>
                             <td class="text-center"><button type="button" wire:loading:click

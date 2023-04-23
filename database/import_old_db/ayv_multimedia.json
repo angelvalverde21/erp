@@ -1,5 +1,9 @@
 [
-{"IDMULTIMEDIA":"2","ARCHIVO":"777336_2.jpg","LABEL":"Perla","IDPRODUCTO":"347","DEFECTO":"0","TIPO":"color","IDEMPRESA":"0","ENSTOCK":"1","SHOWONLINE":"0","POSICION":"1","LARGO":"0","ANCHO":"0","HITS":"0","ESTATUS":"VISIBLE","ACTUALIZAR":"2022-05-03 10:26:23","FECHA":"2019-08-01 22:35:32"},
+{"type":"header","version":"4.9.11","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"tresbperu_market"},
+{"type":"table","name":"ayv_multimedia","database":"tresbperu_market","data":
+[
+{"IDMULTIMEDIA":"0","ARCHIVO":"777336_2.jpg","LABEL":"Perla","IDPRODUCTO":"347","DEFECTO":"0","TIPO":"color","IDEMPRESA":"0","ENSTOCK":"1","SHOWONLINE":"0","POSICION":"1","LARGO":"0","ANCHO":"0","HITS":"0","ESTATUS":"VISIBLE","ACTUALIZAR":"2022-05-03 10:26:23","FECHA":"2019-08-01 22:35:32"},
 {"IDMULTIMEDIA":"89","ARCHIVO":"affcf7_polos-blanco-bividi-estampado-diseno-camara.jpg","LABEL":"Blanco - Camara","IDPRODUCTO":"1","DEFECTO":"0","TIPO":"color","IDEMPRESA":"0","ENSTOCK":"0","SHOWONLINE":"0","POSICION":"23","LARGO":"0","ANCHO":"0","HITS":"0","ESTATUS":"VISIBLE","ACTUALIZAR":"2017-11-30 16:39:15","FECHA":"0000-00-00 00:00:00"},
 {"IDMULTIMEDIA":"90","ARCHIVO":"f4294b_polos-blanco-bividi-estampado-diseno-dont-worry-friday-is-coming.jpg","LABEL":"Blanco - Dont worry friday - S","IDPRODUCTO":"1","DEFECTO":"0","TIPO":"color","IDEMPRESA":"0","ENSTOCK":"0","SHOWONLINE":"1","POSICION":"45","LARGO":"0","ANCHO":"0","HITS":"8","ESTATUS":"VISIBLE","ACTUALIZAR":"2018-10-10 00:06:48","FECHA":"0000-00-00 00:00:00"},
 {"IDMULTIMEDIA":"91","ARCHIVO":"3ef67c_polos-blanco-bividi-estampado-diseno-eat-sleep-party-repeat.jpg","LABEL":"Blanco - eat sleep party repeat  - S","IDPRODUCTO":"1","DEFECTO":"0","TIPO":"color","IDEMPRESA":"0","ENSTOCK":"0","SHOWONLINE":"1","POSICION":"46","LARGO":"0","ANCHO":"0","HITS":"2","ESTATUS":"VISIBLE","ACTUALIZAR":"2018-08-08 14:04:46","FECHA":"0000-00-00 00:00:00"},
@@ -3089,4 +3093,6 @@
 {"IDMULTIMEDIA":"3600","ARCHIVO":"a9429f_img-20230417-wa0018.jpg","LABEL":"IMG-20230417-WA0018.jpg","IDPRODUCTO":"493","DEFECTO":"0","TIPO":"color","IDEMPRESA":"0","ENSTOCK":"1","SHOWONLINE":"1","POSICION":"0","LARGO":"0","ANCHO":"0","HITS":"0","ESTATUS":"VISIBLE","ACTUALIZAR":"2023-04-19 21:43:13","FECHA":"2023-04-19 20:43:09"},
 {"IDMULTIMEDIA":"3601","ARCHIVO":"ab6bc1_img-20230417-wa0025.jpg","LABEL":"IMG-20230417-WA0025.jpg","IDPRODUCTO":"493","DEFECTO":"0","TIPO":"color","IDEMPRESA":"0","ENSTOCK":"1","SHOWONLINE":"1","POSICION":"0","LARGO":"0","ANCHO":"0","HITS":"0","ESTATUS":"VISIBLE","ACTUALIZAR":"2023-04-19 21:43:17","FECHA":"2023-04-19 20:43:13"},
 {"IDMULTIMEDIA":"3602","ARCHIVO":"260eeb_img-20230417-wa0017.jpg","LABEL":"IMG-20230417-WA0017.jpg","IDPRODUCTO":"493","DEFECTO":"0","TIPO":"color","IDEMPRESA":"0","ENSTOCK":"1","SHOWONLINE":"1","POSICION":"0","LARGO":"0","ANCHO":"0","HITS":"0","ESTATUS":"VISIBLE","ACTUALIZAR":"2023-04-19 21:43:21","FECHA":"2023-04-19 20:43:17"}
+]
+}
 ]

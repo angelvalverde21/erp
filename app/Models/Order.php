@@ -23,7 +23,7 @@ class Order extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     //incluir accesores a la apis
-    protected $appends = ['total_final','total_amount','pagado','total_products','status_pago'];
+    protected $appends = ['total_final','total_amount','total_products','status_pago'];
 
     //Relacino uno a uno polimorfica
 
@@ -35,9 +35,7 @@ class Order extends Model
         return $this->morphMany(Change::class,"changeable");
     }
 
-    public function payments(){
-        return $this->morphMany(Payment::class,"paymentable")->orderBy('id','DESC'); //paymentable es la funcion que se encuentra en el model Payment
-    }
+
 
     public function cordenada()
     {
@@ -54,8 +52,6 @@ class Order extends Model
     {
         return $this->belongsTo(DeliveryMethod::class);
     }
-
-
 
     public function items()
     {
@@ -393,16 +389,20 @@ class Order extends Model
         }
     }
 
+    public function payments(){
+        return $this->morphMany(Payment::class,"paymentable")->limit(5)->orderBy('id','DESC'); //paymentable es la funcion que se encuentra en el model Payment
+    }
+
     public function comprobantesEmpaque(){
-        return $this->morphMany(Image::class,"imageable")->where('usage','comprobante_empaque')->orderBy('id','DESC');
+        return $this->morphMany(Image::class,"imageable")->where('usage','comprobante_empaque')->limit(5)->orderBy('id','DESC');
     }
 
     public function etiquetasEmpaque(){
-        return $this->morphMany(Change::class,"changeable")->where('name','print_packing_label')->orderBy('id','DESC');
+        return $this->morphMany(Change::class,"changeable")->where('name','print_packing_label')->limit(50)->orderBy('id','DESC');
     }
 
     public function comprobantesEnvio(){
-        return $this->morphMany(Image::class,"imageable")->where('usage','comprobante_envio')->orderBy('id','DESC');
+        return $this->morphMany(Image::class,"imageable")->where('usage','comprobante_envio')->limit(5)->orderBy('id','DESC');
     }
 
     //Relacion uno a muchos polimorfica
@@ -420,7 +420,11 @@ class Order extends Model
 
     //status del pedido
 
-    public function getPagadoAttribute(){
+    // public function getPagadoAttribute(){
+    //     return $this->is_pay();
+    // }
+
+    public function pagado(){
         return $this->is_pay();
     }
 
@@ -435,7 +439,7 @@ class Order extends Model
         
         foreach ($payments as $payment){
 
-            Log::info($payment);
+            // Log::info($payment);
 
             //$payment->amount, estos pagos vienen de la tabla payments y son los pagos parciales del pedido
             //aunque tambien podria ser el pago total

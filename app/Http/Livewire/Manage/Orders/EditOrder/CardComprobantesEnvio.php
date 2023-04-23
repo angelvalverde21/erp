@@ -23,7 +23,7 @@ class CardComprobantesEnvio extends Component
     public $store;
     public $total_amount;
 
-    public function mount(Order $order){
+    public function mount($order){
 
         $this->order = $order;
         $this->store = Request::get('store');

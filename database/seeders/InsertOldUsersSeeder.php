@@ -18,9 +18,11 @@ class InsertOldUsersSeeder extends Seeder
     public function run()
     {
         //
-        $json_old = File::get("C:/xampp/htdocs/erp/database/import_old_db/ayv_usuarios.json");
+        // $json_old = File::get("C:/xampp/htdocs/erp/database/import_old_db/ayv_usuarios.json");
 
-        $array_json_old = json_decode($json_old); //true convierte la matriz en una matriz asociativa
+        // $array_json_old = json_decode($json_old); //true convierte la matriz en una matriz asociativa
+
+        $array_json_old = getJson("C:/xampp/htdocs/erp/database/import_old_db/ayv_usuarios.json");
 
         # code...
         foreach ($array_json_old as $old_user) {

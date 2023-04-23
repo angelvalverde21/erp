@@ -25,7 +25,7 @@ class ShowOrders extends Component
     {
         $user = Auth::user();
 
-        $orders = Order::where('store_id',$this->store->id)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
+        $orders = Order::where('store_id',$this->store->id)->limit(20)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
         // $orders = Order::where('store_id',$this->store->id)->where('is_active','=','0')->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
 
         // $orders2 = Order::whereHas('status', function ($query) {

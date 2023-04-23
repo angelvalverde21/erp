@@ -66,15 +66,16 @@ class DatabaseSeeder extends Seeder
                 $this->call(ProvinceSeeder::class);
                 $this->call(DistrictSeeder::class);
                 
-                // $this->call(AddressSeeder::class);
+                $this->call(AddressSeeder::class); //se debe sembrar las nuevas direcciones de prueba
                 // php artisan db:seed --class=InsertOldAddresesSeeder
+                // php artisan db:seed --class=AddressSeeder
 
                 $this->call(PaymentMethodSeeder::class);
                 $this->call(DeliveryMethodSeeder::class);
                 $this->call(PaymentListSeeder::class);
                 $this->call(PaymentListMethodSeeder::class);
                 $this->call(CollectMethodSeeder::class);
-                $this->call(OrderSeeder::class);
+                // $this->call(OrderSeeder::class);
                 $this->call(StatusSeeder::class);
                 $this->call(CarouselSeeder::class);
                 $this->call(PaymentStatusSeeder::class);

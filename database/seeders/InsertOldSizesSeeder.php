@@ -60,6 +60,97 @@ class InsertOldSizesSeeder extends Seeder
                 ]
 
             );
+
+            
+            Size::create(
+
+                [
+                    'name' => 'ESTANDAR',
+                    'quantity' => 1,
+                    'product_id' => $product->id
+                ]
+
+            );
+            
+            Size::create(
+
+                [
+                    'name' => 'NONE',
+                    'quantity' => 1,
+                    'product_id' => $product->id
+                ]
+
+            );
+            
+            Size::create(
+
+                [
+                    'name' => ' M y L',
+                    'quantity' => 1,
+                    'product_id' => $product->id
+                ]
+
+            );
+            
+            Size::create(
+
+                [
+                    'name' => 'Estándar ',
+                    'quantity' => 1,
+                    'product_id' => $product->id
+                ]
+
+            );
+            
+            Size::create(
+
+                [
+                    'name' => 'M y L',
+                    'quantity' => 1,
+                    'product_id' => $product->id
+                ]
+
+            );
+            
+            Size::create(
+
+                [
+                    'name' => 'm y l',
+                    'quantity' => 1,
+                    'product_id' => $product->id
+                ]
+
+            );
+
+            Size::create(
+
+                [
+                    'name' => 's',
+                    'quantity' => 1,
+                    'product_id' => $product->id
+                ]
+
+            );
+            
+            Size::create(
+
+                [
+                    'name' => 'm',
+                    'quantity' => 1,
+                    'product_id' => $product->id
+                ]
+
+            );
+            
+            Size::create(
+
+                [
+                    'name' => 'l',
+                    'quantity' => 1,
+                    'product_id' => $product->id
+                ]
+
+            );
         }
 
     }

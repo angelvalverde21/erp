@@ -21,10 +21,11 @@ class InsertOldProductsSeeder extends Seeder
     {
         //
 
-        $json_data = File::get("C:/xampp/htdocs/erp/database/import_old_db/ayv_productos.json");
+        // $json_data = File::get("C:/xampp/htdocs/erp/database/import_old_db/ayv_productos.json");
 
-        $products_json = json_decode($json_data); //true convierte al json en una matriz asociativa, esto quiere decir que los keys son string y estan asociados a su valor
+        // $products_json = json_decode($json_data); //true convierte al json en una matriz asociativa, esto quiere decir que los keys son string y estan asociados a su valor
 
+        $products_json = getJson("C:/xampp/htdocs/erp/database/import_old_db/ayv_productos.json");
         // Log::info(count($products_json));
 
         $i=0;

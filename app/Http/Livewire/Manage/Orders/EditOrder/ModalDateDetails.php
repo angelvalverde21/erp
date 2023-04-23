@@ -19,7 +19,7 @@ class ModalDateDetails extends Component
         'order.delivery_time_end' => 'required'
     ];
 
-    public function mount(Order $order){
+    public function mount($order){
 
         $user = new User();
         $this->order = $order;
