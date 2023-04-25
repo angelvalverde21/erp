@@ -33,6 +33,8 @@ class CreateProduct extends Component
         $this->store = Request::get('store');
 
         $this->user = Auth::user();
+
+        Log::info($this->user);
         
         $this->product['category_id'] = 1;
 
@@ -107,7 +109,6 @@ class CreateProduct extends Component
             }
         }
 
-
         return redirect($this->store->nickname.'/manage/products/'. $product->id .'/edit');
 
     }
@@ -127,9 +128,11 @@ class CreateProduct extends Component
     public function render()
     {
 
-
         $user = Auth::user();
+
         $categoriesRecursive = Category::where('owner_id',$this->user->id)->whereNull('category_id')->with('childrenCategories')->orderBy('name','desc')->get();
+
+        Log::info($categoriesRecursive);
 
         return view('livewire.manage.products.create-product', compact('categoriesRecursive'))->layout('layouts.manage');
 

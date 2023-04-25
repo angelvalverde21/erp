@@ -60,7 +60,7 @@ class ProductController extends Controller
             'file' => 'required|image|max:10240'  //10 megas
         ]);
 
-        $color->image = uploadImage($request,"colors");
+        $color->image = uploadImage($request,"products/colors");
 
         $color->save();
         
@@ -80,7 +80,7 @@ class ProductController extends Controller
             'file' => 'required|image|max:10240'  //10 megas
         ]);
 
-        $url = uploadImage($request,"colors");
+        $url = uploadImage($request,"products/colors");
 
         
         Log::info('creando los colores e imagenes');
@@ -131,7 +131,7 @@ class ProductController extends Controller
         ]);
 
         // $url = Storage::put('colors', $request->file('file'));
-        $url = uploadImage($request,"colors");
+        $url = uploadImage($request,"products/colors");
         //Crea el stock en caso no haya tallas
         $color->images()->create(
             [

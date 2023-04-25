@@ -8,6 +8,7 @@ use App\Models\Category;
 
 use Illuminate\Support\Facades\File;
 use App\Models\Image;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Faker\Factory as Faker;
 
@@ -41,7 +42,8 @@ class CategorySeeder extends Seeder
                     'slug' => Str::slug($obj->name),
                     'category_id' => $obj->category_id,
                     'has_size' => $obj->has_size,
-                    'has_color' => $obj->has_color
+                    'has_color' => $obj->has_color,
+                    'owner_id' => User::MAIN_ID
                 ]
 
             );
