@@ -110,7 +110,7 @@
                     <div class="row text-center">
                         <div class="col-lg-4 col-12">
                             @if ($color->image)
-                            <img src="{{ $color->image->name }}" alt="" width="100%" height="100%">
+                            <img src="{{ Storage::url($color->image->name) }}" alt="" width="100%" height="100%">
                             @endif
                         </div>
 
