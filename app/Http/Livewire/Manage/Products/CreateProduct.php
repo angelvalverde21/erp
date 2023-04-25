@@ -25,7 +25,8 @@ class CreateProduct extends Component
         'product.category_id'=>'required',
         'product.name' => 'required',
         'product.slug' => 'required|unique:products,slug',
-        'product.price' => 'required'
+        'product.price' => 'required',
+        'product.costo' => 'required'
     ];
 
     public function mount(){

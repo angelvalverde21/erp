@@ -14,7 +14,7 @@
                         
                         <div class="row p-t-20">
 
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <x-form.input type="text" wirevalue="product.name" debounce="500"
                                     error="Este campo es requerido">
                                     Titulo
@@ -22,14 +22,20 @@
                             </div>
 
                             <!--/span-->
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <x-form.input type="number" wirevalue="product.price"
                                     error="Este campo es requerido">
                                     Precio
                                 </x-form.input>
                             </div>
                             <!--/span-->
-
+                            <div class="col-md-2">
+                                <x-form.input type="number" wirevalue="product.costo"
+                                    error="Este campo es requerido">
+                                    Precio Costo
+                                </x-form.input>
+                            </div>
+                            <!--/span-->
                         </div>
                         <!--/row-->
                         <div class="row">
