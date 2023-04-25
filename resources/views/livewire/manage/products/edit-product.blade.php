@@ -112,19 +112,19 @@
 
                                 <div class="row">
                                     <!--/span-->
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <x-form.input type="number" label="Precio Costo" texticon="S/. "
                                             wirevalue="product.costo" debouce="500" error="Este campo es requerido">
                                             Precio Costo
                                         </x-form.input>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <x-form.input type="number" label="Precio Normal" texticon="S/. "
                                             wirevalue="product.price" debouce="500" error="Este campo es requerido">
                                             Precio Costo
                                         </x-form.input>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <x-form.input type="number" label="Precio Mayor" texticon="S/. "
                                             wirevalue="product.price_seller" debouce="500"
                                             error="Debe indicar el precio por mayor">
