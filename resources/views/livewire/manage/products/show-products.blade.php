@@ -25,23 +25,14 @@
                             <th>Id</th>
                             <th>Imagen</th>
                             <th>Nombre del producto</th>
+                            <th>Costo</th>
                             <th>Precio</th>
                             <th>Stock</th>
                             <th>Publicado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Id</th>
-                            <th>Imagen</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                            <th>Publicado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </tfoot>
+
                     <tbody>
 
 
@@ -71,6 +62,7 @@
                                     @endif
                                 </td>
                                 <td><a href="{{ route('manage.products.edit', [$store->nickname, $product->id]) }}">{{ $product->name }}</a></td>
+                                <td>{{ $product->costo }}</td>
                                 <td>{{ $product->price }}</td>
                                 <td>{{ $product->quantity }}</td>
                                 <td>{{ $product->created_at }}</td>
