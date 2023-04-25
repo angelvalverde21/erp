@@ -29,6 +29,7 @@ class CreateProductsTable extends Migration
             $table->string('name')->nullable();
             $table->string('slug');
             $table->float('price')->nullable()->default('0.00');
+            $table->float('costo')->nullable()->default('0.00');
             $table->float('price_seller')->nullable()->default('0.00');
             $table->integer('quantity')->default(0)->nullable();
             $table->boolean('over_sale')->default(false);

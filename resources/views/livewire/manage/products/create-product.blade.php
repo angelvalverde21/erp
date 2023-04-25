@@ -23,16 +23,16 @@
 
                             <!--/span-->
                             <div class="col-md-2">
-                                <x-form.input type="number" wirevalue="product.price"
+                                <x-form.input type="number" wirevalue="product.costo"
                                     error="Este campo es requerido">
-                                    Precio
+                                    Precio Costo
                                 </x-form.input>
                             </div>
                             <!--/span-->
                             <div class="col-md-2">
-                                <x-form.input type="number" wirevalue="product.costo"
+                                <x-form.input type="number" wirevalue="product.price"
                                     error="Este campo es requerido">
-                                    Precio Costo
+                                    Precio
                                 </x-form.input>
                             </div>
                             <!--/span-->
