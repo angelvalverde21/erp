@@ -14,6 +14,7 @@ class Product extends Model
     const PUBLICADO = 1;
     const BORRADOR = 2;
     const ELIMINADO = 3;
+    const ARCHIVADO = 4;
 
     protected $guarded = ['id', 'created_at', 'image'];
 
@@ -51,6 +52,10 @@ class Product extends Model
     public function owner()
     {
         return $this->belongsTo(User::class,'owner_id');
+    }
+
+    public function medidas(){
+        return $this->morphMany(Image::class,"imageable")->where('usage','medidas_producto')->limit(5)->orderBy('id','DESC');
     }
 
     public function images() //ojo images se llama en las consultas directamente con el metodo ->with('images), no se llama desde appends

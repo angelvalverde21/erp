@@ -35,11 +35,20 @@
 
                                 </td>
                                 <td class="text-center">{{ $item->quantity }}</td>
-                                <td class="text-center">{{ $item->quantity_oversale }}</td>
+                                <td class="text-center">
+                                    {{ extraerImagenOld($item->content->image) }}
+                                    {{ $item->quantity_oversale }}</td>
 
                                 @if (isset($item->content->image))
-                                    <td class="text-center"><img src="{{ Storage::url($item->content->image) }}"
-                                            height="75px" alt=""></td>
+
+                                
+                                {{-- card-show-invoice.blade --}}
+                                    <td class="text-center">
+                                        <a href="{{ Storage::url($item->content->image) }}" data-lightbox="show-images-preview" data-title="Click the right half of the image to move forward.">
+                                            <img src="{{ Storage::url($item->content->image) }}"
+                                            height="75px" alt="">
+                                        </a>
+                                        </td>
                                 @else
                                     <td class="text-center">Sin imagen</td>
                                 @endif
@@ -79,12 +88,13 @@
                                     </div>
 
                                 </td>
-                                <td class="text-center">{{ $item->talla_impresa }}</td>
+                                <td class="text-center">( {{ $item->content->size_name }} ) => {{ $item->content->talla_impresa }}</td>
                                 <td>{{ $item->price }}</td>
                                 <td>{{ $item->precio_final }}</td>
 
                                 {{-- {{ $item->content->file_name }} --}}
                                 <td>
+                                    
                                     @if ($item->quantity > 0)
                                         <a href="#" class="btn btn-success"><i
                                                 class="fa-solid fa-circle-check"></i></a>
@@ -145,7 +155,7 @@
             </div>
 
             <div class="col-lg-6 col-6">
-                <x-user.input type="text" wirevalue="item.content.talla" error="Este campo es requerido">
+                <x-user.input type="text" wirevalue="item.content.talla_impresa" error="Este campo es requerido">
                     Talla Virtual
                 </x-user.input>
             </div>

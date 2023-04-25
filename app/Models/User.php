@@ -17,10 +17,23 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
 
-
     CONST MAIN_ID = 232;
     CONST VANE_ID = 1707;
     CONST STORE_ID = 10;
+
+    CONST DIR_VOUCHER_PACKING = "orders/comprobantes/packing/";
+    CONST DIR_VOUCHER_PAYMENTS = "orders/comprobantes/payments/";
+    CONST DIR_VOUCHER_SHIPPING = "orders/comprobantes/shipping/";
+    
+    // CONST DIR_PRODUCTS = "products/";
+    // CONST DIR_PRODUCTS_MEDIUM = "products/medium";
+    // CONST DIR_PRODUCTS_THUMB = "products/thumb";
+
+    // CONST DIR_COLORS = "products/colors";
+    // CONST DIR_COLORS_THUMB = "products/colors/thumb";
+    // CONST DIR_COLORS_MEDIUM = "products/colors/medium";
+
+
 
     // use HasApiTokens;
     use HasApiTokens;

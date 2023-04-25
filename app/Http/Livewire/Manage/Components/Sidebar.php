@@ -67,11 +67,11 @@ class Sidebar extends Component
                     "slug"=>route('manage.web', [$this->store->nickname]),
                     "icon"=>"fa-solid fa-globe",
                 ],
-                [
-                    "name"=>"Importacion SQL",
-                    "slug"=>route('manage.import', [$this->store->nickname]),
-                    "icon"=>"fa-solid fa-globe",
-                ],
+                // [
+                //     "name"=>"Importacion SQL",
+                //     "slug"=>route('manage.import', [$this->store->nickname]),
+                //     "icon"=>"fa-solid fa-globe",
+                // ],
                 
     
             ];

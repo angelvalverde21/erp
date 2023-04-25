@@ -28,7 +28,7 @@
                                 Orden de compra</a></li>
                         <div class="dropdown-divider"></div>
                         <li><a class="dropdown-item"
-                                href="{{ route('manage.orders.print.packing-label', [$store->nickname, $order->id]) }}"><i
+                                href="{{ route('manage.orders.print.packing-label', [$store->nickname, $order->id]) }}" target="_blank"><i
                                     class="fa-solid fa-box-open mr-1"></i>
                                 Rotulado</a></li>
                         <div class="dropdown-divider"></div>

@@ -58,7 +58,7 @@
                                     {{-- http://erp.test/storage/old_uploads/colors/06dda4_5.jpg --}}
 
                                         <a href="{{ route('manage.products.edit', [$store->nickname, $product->id]) }}">
-                                            <img width="75" src="{{ Storage::url('old_uploads/'.$product->image()) }}" alt="">
+                                            <img width="75" src="{{ Storage::url($product->image()) }}" alt="">
                                         </a>
                                         {{-- {{ Storage::url($color->image->name) }} --}}
                                     @else

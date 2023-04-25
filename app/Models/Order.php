@@ -23,16 +23,18 @@ class Order extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     //incluir accesores a la apis
-    protected $appends = ['total_final','total_amount','total_products','status_pago'];
+    protected $appends = ['total_final', 'total_amount', 'total_products', 'status_pago'];
 
     //Relacino uno a uno polimorfica
 
-    public function actions(){
-        return $this->morphMany(Action::class,"actionable");
+    public function actions()
+    {
+        return $this->morphMany(Action::class, "actionable");
     }
 
-    public function changes(){
-        return $this->morphMany(Change::class,"changeable");
+    public function changes()
+    {
+        return $this->morphMany(Change::class, "changeable");
     }
 
 
@@ -88,7 +90,8 @@ class Order extends Model
         return $this->belongsTo(Address::class);    //en la tabla orders busca el atributo 'carrier_address_id' y le hace un where a la tabla Addresses
     }
 
-    public function cancel(){
+    public function cancel()
+    {
 
         $this->status()->attach([5]); //esto quiere decir que agregamos el id 5 de la tabla status a la tabla internmedia order_status (ORDEN CANCELADA)
         $this->is_active = 0;
@@ -100,7 +103,8 @@ class Order extends Model
         $this->save();
     }
 
-    public function reactivate(){
+    public function reactivate()
+    {
 
         $this->status()->attach([17]); //esto quiere decir que agregamos el id 17 de la tabla status a la tabla internmedia order_status (REACTIVAOD)
         $this->is_active = 1;
@@ -118,7 +122,7 @@ class Order extends Model
         //OJO order_id pertenece al modelo de Order.php y status_id es de la tabla foarenea
     }
 
-    
+
     public function getTotalProductsAttribute()
     {
         $items = Item::where('order_id', $this->id)->sum('quantity');
@@ -188,7 +192,6 @@ class Order extends Model
 
         $paymentListMethod = PaymentListMethod::find($this->payment_list_method_id);
         return PaymentList::find($paymentListMethod->payment_list_id);
-
     }
 
     public function getSubTotalAttribute()
@@ -249,21 +252,23 @@ class Order extends Model
     //     return $this->belongsToMany(Status::class);
     // }
 
-    public function getStatusPagoAttribute(){
+    public function getStatusPagoAttribute()
+    {
         return $this->verify('pago_confirmado');
     }
 
-    public function verify($value = "null"){ //ojo cuando se crea un relacion aqui se debe llamar con el nombre de la funcion y ()
+    public function verify($value = "null")
+    { //ojo cuando se crea un relacion aqui se debe llamar con el nombre de la funcion y ()
 
         //$order_status = OrderStatus::where('order_id',$this->id)->where('status_id','15');
         // $order_status = Order::where('id',$this->id)->with('status')->get();
-        
-        //$order_status = $this->belongsToMany(Status::class, 'order_status', 'order_id', 'status_id')->wherePivot('status_id','15')->get();
-        $order_status = $this->belongsToMany(Status::class, 'order_status', 'order_id', 'status_id')->where('name',$value)->first();
 
-        if($order_status){
+        //$order_status = $this->belongsToMany(Status::class, 'order_status', 'order_id', 'status_id')->wherePivot('status_id','15')->get();
+        $order_status = $this->belongsToMany(Status::class, 'order_status', 'order_id', 'status_id')->where('name', $value)->first();
+
+        if ($order_status) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
 
@@ -281,19 +286,19 @@ class Order extends Model
         // Log::info($this->status);
 
         // $status = $this->belongsToMany(Status::class, 'order_status', 'order_id', 'status_id')->get();
-        
+
         // $pago_confirmado = 2;
 
         // Log::info($status);
-        
+
         // foreach ($status as $fila) {
         //     # code...
         //     Log::info($fila);
-            
+
         //     foreach ($fila as $key => $value) {
         //         # code...
         //         Log::info($value);
-                
+
         //     }
 
         // }
@@ -303,7 +308,7 @@ class Order extends Model
         // foreach ($$his->status as $key => $value) {
         //     # code... 
         // }
-    
+
         // if($order_status->count()==1){
         //     return $order_status->
         // }
@@ -348,19 +353,18 @@ class Order extends Model
         }
     }
 
-    public function removeStatus(string $statusName){
+    public function removeStatus(string $statusName)
+    {
 
         if ($statusName) {
 
             $status = Status::where('name', $statusName)->first();
 
-            $orderStatus = OrderStatus::where('order_id',$this->id)->where('status_id', $status->id);
+            $orderStatus = OrderStatus::where('order_id', $this->id)->where('status_id', $status->id);
 
             $orderStatus->delete();
-
-        }else{
-            Log::info('App/Models/Order: Error al remover el status: '.$statusName);
-            
+        } else {
+            Log::info('App/Models/Order: Error al remover el status: ' . $statusName);
         }
     }
 
@@ -389,20 +393,28 @@ class Order extends Model
         }
     }
 
-    public function payments(){
-        return $this->morphMany(Payment::class,"paymentable")->limit(5)->orderBy('id','DESC'); //paymentable es la funcion que se encuentra en el model Payment
+    //Consulta e inserta campos en la tabla "Payments"
+    public function payments()
+    {
+        return $this->morphMany(Payment::class, "paymentable")->limit(5)->orderBy('id', 'DESC'); //paymentable es la funcion que se encuentra en el model Payment
     }
 
-    public function comprobantesEmpaque(){
-        return $this->morphMany(Image::class,"imageable")->where('usage','comprobante_empaque')->limit(5)->orderBy('id','DESC');
+    //Consulta e inserta campos en la tabla "images"
+    public function comprobantesEmpaque()
+    {
+        return $this->morphMany(Image::class, "imageable")->where('usage', 'comprobante_empaque')->limit(5)->orderBy('id', 'DESC');
     }
 
-    public function etiquetasEmpaque(){
-        return $this->morphMany(Change::class,"changeable")->where('name','print_packing_label')->limit(50)->orderBy('id','DESC');
+    //Consulta e inserta campos en la tabla "images"
+    public function comprobantesEnvio()
+    {
+        return $this->morphMany(Image::class, "imageable")->where('usage', 'comprobante_envio')->limit(5)->orderBy('id', 'DESC');
     }
 
-    public function comprobantesEnvio(){
-        return $this->morphMany(Image::class,"imageable")->where('usage','comprobante_envio')->limit(5)->orderBy('id','DESC');
+    //Inserta un campo en la tabla "changes"
+    public function etiquetasEmpaque()
+    {
+        return $this->morphMany(Change::class, "changeable")->where('name', 'print_packing_label')->limit(50)->orderBy('id', 'DESC');
     }
 
     //Relacion uno a muchos polimorfica
@@ -424,20 +436,22 @@ class Order extends Model
     //     return $this->is_pay();
     // }
 
-    public function pagado(){
+    public function pagado()
+    {
         return $this->is_pay();
     }
 
-    public function is_pay(){
+    public function is_pay()
+    {
 
         $total = 0;
 
-        $payments = $this->payments->where('payment_status_id','4');
+        $payments = $this->payments->where('payment_status_id', '4');
 
         Log::info('se imprime los pagos');
         // Log::info($payments);
-        
-        foreach ($payments as $payment){
+
+        foreach ($payments as $payment) {
 
             // Log::info($payment);
 
@@ -447,90 +461,90 @@ class Order extends Model
             $total += $payment->amount;
         }
 
-        if($total >= $this->total_amount){
+        if ($total >= $this->total_amount) {
             return true;
-        }else{
-            return false;
-        }
-        
-    }
-
-    public function is_delivered(){
-        if($this->comprobantesEnvio->count()>0){
-            return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public function is_ready_delivery(){
-
-        if($this->comprobantesEmpaque->count()>0){
+    public function is_delivered()
+    {
+        if ($this->comprobantesEnvio->count() > 0) {
             return true;
-        }else{
-            return false;
-        }
-
-    }
-
-    public function is_preparing(){
-        if($this->etiquetasEmpaque->count()>0){
-            return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public function confirmarStock(){
+    public function is_ready_delivery()
+    {
 
-  
-            Log::info('se confirma que la orden esta pagada');
-            
-            $items = $this->items()->get(); //consultamos los items de la orden
-    
-            Log::info('imprimiendo items asociados a la orden: '.$this->id );
-    
-            Log::info($items);
-            
-            foreach ($items as $item) { //recorremos todos los items
-    
-                //Puede que un item tenga mas de un stock asignado
-                $item->asignarStock();
-                // $stocks = Stock::where('item_id',$item->id)->get(); //consultamos a la tabla stock cuantos item_id tiene
-    
-                // foreach ($stocks as $stock) {
-                //     # code...
-                //     Log::info('impriendo el stock de la tabla stocks');
-                //     Log::info($stock);
-                //     $stock->status = Stock::VENDIDO;
-                //     $stock->save();
-                //     Log::info('El stock fue cambiado a :');
-                //     Log::info($stock);
-                // }
-            }
-
+        if ($this->comprobantesEmpaque->count() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public function reservar(){
+    public function is_preparing()
+    {
+        if ($this->etiquetasEmpaque->count() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function confirmarStock()
+    {
+
+
+        Log::info('se confirma que la orden esta pagada');
+
+        $items = $this->items()->get(); //consultamos los items de la orden
+
+        Log::info('imprimiendo items asociados a la orden: ' . $this->id);
+
+        Log::info($items);
+
+        foreach ($items as $item) { //recorremos todos los items
+
+            //Puede que un item tenga mas de un stock asignado
+            $item->asignarStock();
+            // $stocks = Stock::where('item_id',$item->id)->get(); //consultamos a la tabla stock cuantos item_id tiene
+
+            // foreach ($stocks as $stock) {
+            //     # code...
+            //     Log::info('impriendo el stock de la tabla stocks');
+            //     Log::info($stock);
+            //     $stock->status = Stock::VENDIDO;
+            //     $stock->save();
+            //     Log::info('El stock fue cambiado a :');
+            //     Log::info($stock);
+            // }
+        }
+    }
+
+    public function reservar()
+    {
 
         $items = $this->items()->get(); //consultamos los items de la orden
 
         foreach ($items as $item) { //recorremos todos los items
 
             $item->separarStock();
-
         }
     }
 
-    public function devolverStock(){
+    public function devolverStock()
+    {
 
         $items = $this->items()->get(); //consultamos los items de la orden
 
         foreach ($items as $item) { //recorremos todos los items
 
             $item->devolverItems();
-
-        }   
-
+        }
     }
 }

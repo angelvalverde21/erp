@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Color;
 use App\Models\Image;
+use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
@@ -29,49 +30,118 @@ class InsertOldColorsSeeder extends Seeder
 
         // $colors = json_decode($json_data); //true convierte al json en una matriz asociativa, esto quiere decir que los keys son string y estan asociados a su valor
 
-        $colors = getJson("C:/xampp/htdocs/erp/database/import_old_db/ayv_multimedia.json");
-
+        $images = getJson("C:/xampp/htdocs/erp/database/import_old_db/ayv_multimedia.json");
+        // fotos_producto
         $i = 0;
         $f = 0;
 
-        foreach ($colors as $color) {
+        foreach ($images as $image) {
 
-            if ($color->TIPO == 'color') {
+            switch ($image->TIPO) {
 
-                Log::info('Se esta empezando la insersion del color: ' . $color->IDMULTIMEDIA);
-                
-                try {
+                case 'color':
 
-                    $new_color = Color::create(
+                    Log::info('Se esta empezando la insersion del color con id multimedia: ' . $image->IDMULTIMEDIA . " del product_id: ".$image->IDPRODUCTO);
 
-                        [
-                            'id' => $color->IDMULTIMEDIA,
-                            // 'name' => $this->faker->word(),
-                            'quantity' => '1',
-                            'label' => $color->LABEL,
-                            'product_id' => $color->IDPRODUCTO,
-                            // 'created_at' => $color->FECHA,
-                            // 'updated_at' => $color->ACTUALIZAR,
-                        ]
+                    try {
 
-                    );
+                        $new_color = Color::create(
 
-                    Image::create([
-                        'name' => 'colors/' . $color->ARCHIVO,
-                        'imageable_id' => $new_color->id,
-                        'imageable_type' => Color::class,
-                        'usage' => 'color'
-                    ]);
+                            [
+                                'id' => $image->IDMULTIMEDIA,
+                                // 'name' => $this->faker->word(),
+                                'quantity' => '1',
+                                'label' => $image->LABEL,
+                                'product_id' => $image->IDPRODUCTO,
+                                // 'created_at' => $images->FECHA,
+                                // 'updated_at' => $images->ACTUALIZAR,
+                            ]
 
-                } catch (\Exception $e) {
+                        );
+                        
 
-                    $f++;
-                    Log::info('Ha fallado la insersion del color:  ' . $color->IDMULTIMEDIA);
-                    // something went wrong
-                    Log::info($e);
-                }
-            }else{
-                Log::info('el id: ' . $color->IDMULTIMEDIA . ' no es del tipo color');
+                        $new_color->images()->create([
+                            'name' => 'products/colors/' . $image->ARCHIVO,
+                            'usage' => 'color'
+                        ]);
+
+                        Log::info('Ha terminado la insersion del color con id multimedia: ' . $image->IDMULTIMEDIA);
+                        Log::info(' ');
+
+                    } catch (\Exception $e) {
+
+                        $f++;
+                        Log::info('Ha fallado la insersion del color con id multimedia:  ' . $image->IDMULTIMEDIA);
+                        Log::info(' ');
+                        // something went wrong
+                        Log::info($e);
+                    }
+
+                    break;
+
+                case 'fotos_producto':
+                    # code...
+
+                    try {
+
+                        $product = Product::find($image->IDPRODUCTO)->limit(1)->first();
+
+                        Log::info('Se esta empezando la insersion de la foto con id multimedia: ' . $image->IDMULTIMEDIA . " del product_id: ".$image->IDPRODUCTO);
+
+                        $product->images()->create([
+                            'name' => 'products/images/' . $image->ARCHIVO,
+                            'usage' => 'images'
+                        ]);
+
+                        Log::info('Ha terminado la insersion de la foto con id multimedia: ' . $image->IDMULTIMEDIA);
+                        Log::info(' ');
+
+
+                    } catch (\Exception $e) { 
+
+                        $f++;
+                        Log::info('Ha fallado la insersion de la foto con id multimedia:  ' . $image->IDMULTIMEDIA);
+                        Log::info(' ');
+                        // something went wrong
+                        Log::info($e);
+                    }
+
+                    break;
+
+                case 'medidas_producto':
+                    # code...
+
+                    try {
+
+                        $product = Product::find($image->IDPRODUCTO)->limit(1)->first();
+
+                        Log::info('Se esta empezando la insersion de la medida con id multimedia: ' . $image->IDMULTIMEDIA . " del product_id: ".$image->IDPRODUCTO);
+
+                        $product->images()->create([
+                            'name' => 'products/medidas/' . $image->ARCHIVO,
+                            'usage' => 'medidas_producto'
+                        ]);
+
+                        Log::info('Ha terminado la insersion de la medida con id multimedia: ' . $image->IDMULTIMEDIA);
+                        Log::info(' ');
+
+
+                    } catch (\Exception $e) { 
+
+                        $f++;
+                        Log::info('Ha fallado la insersion de la medida con id multimedia:  ' . $image->IDMULTIMEDIA);
+                        Log::info(' ');
+                        // something went wrong
+                        Log::info($e);
+                    }
+
+                    break;
+
+                default:
+                    # code...
+                    Log::info('el id: ' . $image->IDMULTIMEDIA . ' no es del tipo color o fotos_producto');
+
+                    break;
             }
         }
 

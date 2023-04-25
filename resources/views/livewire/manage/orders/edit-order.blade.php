@@ -14,6 +14,7 @@
     @endif
 
     <x-sectioncontent>
+        {{-- Botones para impresion print --}}
         @include('livewire.manage.orders.edit-order._navbar-buttons')
     </x-sectioncontent>
 

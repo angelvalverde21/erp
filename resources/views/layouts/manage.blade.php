@@ -15,6 +15,11 @@
     {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}"> --}}
 
 
+    {{-- fancybox --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" /> --}}
+    {{-- fin de fancybox --}}
+
     <!-- Scripts -->
     <script src="{{ asset('js/current.js') }}"></script>
     <script src="{{ mix('js/app.js') }}" defer></script>
@@ -46,6 +51,8 @@
         }
     </style>
 
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -72,6 +79,11 @@
 
     @stack('script-header')
 
+    {{-- <script>
+        $(document).ready(function() {
+            $(".fancybox").fancybox();
+        });
+    </script> --}}
     {{-- <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
 
@@ -101,6 +113,16 @@
             padding: 0 10px !important;
         }
     </style>
+
+    <link rel="stylesheet" href="{{ asset('lightbox2/dist/css/lightbox.min.css') }}">
+
+    <script>
+        lightbox.option({
+
+
+            'fadeDuration': 0,
+        })
+    </script>
 
 </head>
 
@@ -249,6 +271,8 @@
     {{-- datepicker --}}
 
     {{-- fin de date picker --}}
+
+    <script src="{{ asset('lightbox2/dist/js/lightbox-plus-jquery.min.js') }}"></script>
 
     @stack('script')
 

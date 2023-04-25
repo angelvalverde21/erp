@@ -94,29 +94,45 @@ class InsertOldOrdersDetailsCompleteSeeder extends Seeder
                                     $thumb = $image->name;
                                     break;
                                 }else{
-                                    $thumb = "xx";
+                                    $thumb = "sin imagen";
                                 }
                             }
 
+
+                            if($current_old_item['TALLA_VIRTUAL'] == ""){
+                                $current_old_item['TALLA_VIRTUAL'] = $current_part_number['TALLA'];
+                            }
+
+                            //color_size_id es la talla original que escoge el cliente de los listbox que se le proporciona
+                            //Pero se le puede asignar otra, segun el stock
+
                             $content = [
                                 'color_size_id' => $color_size->id,
+                                'size_name' => $current_part_number['TALLA'],
+                                'color_id' =>  $current_part_number['IDMULTIMEDIA'],
+                                'size_name_real' => $current_part_number['TALLA'],
+                                'size_name_virtual' => $current_old_item['TALLA_VIRTUAL'],
                                 'talla' =>  $current_old_item['TALLA_VIRTUAL'], //Es la talla que se envia al cliente
                                 'talla_original' =>  $current_part_number['TALLA'], //es la talla real despachada
                                 'talla_impresa' =>  $current_old_item['TALLA_VIRTUAL'],
-                                'color_id' =>  $current_part_number['IDMULTIMEDIA'],
                                 'image' => $thumb,
                                 'price' => $current_old_item['PRECIO_PROMO'],
                                 'product_id'  => $current_part_number['IDPRODUCTO'],
                                 'description' => $item->DESCRIPCION,
                             ];
+
                             
                             $item->content = $content;
 
                             $item->save();
 
-                            Log::info($content);
+                            //Esta informacion tambien se la tenemos que colocar al payments, para ello primero tenemos que identificar la orden
+
+                            // ojo la linea de abajo tambien podria ser:
+                            // $item->order->payments pero lo hemos puesto com o$item->order->payments()->get()
 
                         }
+                        
                     } catch (\Exception $e) {
 
                         Log::info($e);

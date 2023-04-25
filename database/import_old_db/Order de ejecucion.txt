@@ -28,15 +28,37 @@ $this->call(InsertOldSizesSeeder::class);
 
 //Ahora ejecutamos el comando ColorSizeSeeder del seeder usual
 php artisan db:seed --class=ColorSizeSeeder
-
+$this->call(ColorSizeSeeder::class);
 
 //Creando las ordenes
 php artisan db:seed --class=InsertOldOrdersSeeder
+$this->call(InsertOldOrdersSeeder::class);
 
 //Creando los items
 php artisan db:seed --class=InsertOldOrdersDetailsSeeder
+$this->call(InsertOldOrdersDetailsSeeder::class);
 
-	
 //Creando el content de cada item
-
 php artisan db:seed --class=InsertOldOrdersDetailsCompleteSeeder
+$this->call(InsertOldOrdersDetailsCompleteSeeder::class);
+
+//aplicando los voucher para los pedidos pagados
+
+php artisan db:seed --class=InsertOldAmountPaymentSeeder
+
+---------------------------------------------------------------------
+
+//Moviendo imagenes
+
+php artisan db:seed --class=MoveOldOrderImagesSeeder
+$this->call(MoveOldOrderImagesSeeder::class);
+php artisan db:seed --class=MoveOldProductImagesSeeder
+$this->call(MoveOldProductImagesSeeder::class);
+
+
+------------------------------------------------------------------
+
+Despues del seeder ejecutar passport para instalar las claves
+
+php artisan passport:install
+

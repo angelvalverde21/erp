@@ -28,7 +28,12 @@
                 @foreach ($order->payments as $payment)
                     <tr>
                         <td class="text-center">{{ $payment->id }}</td>
-                        <td class="text-center"><img class="imagen-comprobante" src="{{ asset('storage/' . $payment->image) }}" height="60px" alt="">
+                        <td class="text-center">
+                            
+                            <a href="{{ Storage::url($payment->image) }}" data-lightbox="example-set" data-title="Click the right half of the image to move forward.">
+                                <img class="imagen-comprobante" src="{{ Storage::url($payment->image) }}" height="60px" alt="">
+                            </a>
+
                         </td>
                         <td>{{ $payment->created_at }}</td>
                         <td>

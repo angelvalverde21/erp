@@ -245,6 +245,12 @@ function getJson($path, $param = false){
 
 }
 
+function extraerImagenOld($path){
+    $name = explode('/',$path);
+    // /storage/colors/7ecba4_polos-blanco-bividi-estampado-diseno-i-love-band-boys.jpg
+    return $name[1];
+}
+
 function extraerJsonData($json, $param = false){
 
     $json = json_decode($json, $param);

@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
 
             // $table->enum('publish_status', [Product::PUBLICADO, Product::BORRADOR, Product::ELIMINADO])->default(Product::BORRADOR);
 
-            $table->enum('status', [Product::PUBLICADO, Product::BORRADOR, Product::ELIMINADO])->default(Product::BORRADOR);
+            $table->enum('status', [Product::PUBLICADO, Product::BORRADOR, Product::ELIMINADO, Product::ARCHIVADO])->default(Product::BORRADOR);
 
             $table->string('name')->nullable();
             $table->string('slug');

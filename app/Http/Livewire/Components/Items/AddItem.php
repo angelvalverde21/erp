@@ -62,6 +62,7 @@ class AddItem extends Component
 
             'color_size_id'     =>  $colorSize->id,
             'talla'             =>  $colorSize->size->name,
+            'talla_impresa'     =>  $colorSize->size->name,
             'color_id'          =>  $colorSize->color->id,
             'image'             =>  $colorSize->color->image->name,
             'price'             =>  $colorSize->color->product->price,

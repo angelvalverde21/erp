@@ -21,6 +21,7 @@ class ShowItemAll extends Component
 
     protected $rules = [
         'item.description' => 'required',
+        'item.content.talla_impresa' => 'required',
         'item.content.talla' => 'required',
         'item.content.price' => 'required',
     ];
