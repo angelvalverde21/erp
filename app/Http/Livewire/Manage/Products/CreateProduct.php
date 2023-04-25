@@ -73,6 +73,7 @@ class CreateProduct extends Component
         $product->slug = $this->product['slug'];
         $product->category_id = $this->product['category_id'];
         $product->price = $this->product['price'];
+        $product->costo = $this->product['costo'];
         
 
 
