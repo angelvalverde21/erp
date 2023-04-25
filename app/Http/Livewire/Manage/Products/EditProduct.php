@@ -21,6 +21,7 @@ class EditProduct extends Component
         'product.name' => 'required',
         'product.slug' => 'required|unique:products,slug',
         'product.price' => 'required',
+        'product.costo' => 'required',
         'product.price_seller' => 'required',
         'product.over_sale' => 'required',
         'product.force_size_unique' => 'required',

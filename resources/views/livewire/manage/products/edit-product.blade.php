@@ -114,8 +114,14 @@
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <x-form.input type="number" label="Precio Normal" texticon="S/. "
+                                            wirevalue="product.costo" debouce="500" error="Este campo es requerido">
+                                            Precio Costo
+                                        </x-form.input>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <x-form.input type="number" label="Precio Normal" texticon="S/. "
                                             wirevalue="product.price" debouce="500" error="Este campo es requerido">
-                                            Precio Normal
+                                            Precio Costo
                                         </x-form.input>
                                     </div>
                                     <div class="col-md-6">
