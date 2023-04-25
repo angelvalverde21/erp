@@ -43,7 +43,7 @@ class Colors extends Component
 
         Log::info('Borrando el archivo');
         
-        Storage::delete([$color->name]);
+        Storage::delete([$color->image->name]);
 
         //Borra los registros de la base de datos
 
