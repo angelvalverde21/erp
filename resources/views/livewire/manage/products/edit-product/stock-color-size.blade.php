@@ -1,18 +1,20 @@
 <div>
 
-    <div class="mt-3">
+    {{-- <div class="mt-3">
 
-    </div>
+    </div> --}}
+
     @foreach ($color->sizes as $size)
+
         <div class="content-info d-flex flex-row">
 
-            <ul class="d-flex w-100 justify-content-between align-items-center me-3">
-                <li>{{ $size->pivot->id }}</li>
+            <ul style="padding: 0" class="d-flex w-100 justify-content-between align-items-center me-3">
+                {{-- <li>{{ $size->pivot->id }}</li> --}}
                 <li class="text-center">
-                    <h3>{{ $size->name }}</h3>
+                    <h4>{{ $size->name }}: </h4>
                 </li>
                 <li class="text-center">
-                    <h3>{{ $size->pivot->quantity }}</h3>
+                    <h4>{{ $size->pivot->quantity }}</h4>
                 </li>
                 <li>+</li>
                 <li class="text-center"><input type="number" style="width: 75px; margin: 0 auto" placeholder="0"
