@@ -36,6 +36,7 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Cliente</th>
+                                <th>Productos</th>
                                 <th>Entregar por</th>
                                 <th>Status</th>
                                 <th>Pago</th>
@@ -63,19 +64,34 @@
                             @foreach ($orders as $order)
                                 {{-- {{ $order }} --}}
 
-                                <tr 
-                                @if (!$order->is_active)
-                                    class="bg-danger"
-                                @endif
-                                >
+                                <tr @if (!$order->is_active) class="bg-danger" @endif>
                                     <td class="text-center">{{ $order->id }} </td>
-                                    <td class="text-center">
-                                        {{ $order->buyer->name }}
+
+                                    <td class="">
+                                        <h5>{{ strtoupper($order->buyer->name) }}</h5>
+                                        {{-- {{ $order->address }} --}}
+
+                                        <li>DNI: {{ $order->address->dni }}</li>
+                                        <li>{{ $order->address->primary }}</li>
+                                        <li>{{ $order->address->secondary }}</li>
+                                        <li>References: </li>
+                                        <li>{{ $order->address->references }}</li>
+                                        <li>{{ $order->address->district->name }}</li>
+                                        <li>{{ $order->delivery_time_start }} Hasta {{ $order->delivery_time_end }}</li>
+                                        <li>{{ $order->address->phone }}</li>
+
                                     </td>
+
+                                    <td>
+                                        @foreach ($order->items as $item)
+                                            <img style="height: 125px" src="{{ Storage::url($item->content->image) }}" alt="">
+                                        @endforeach
+                                    </td>
+
                                     <td class="text-center">
                                         {{ $order->delivery_man->name }}
                                     </td>
-                                    <td>En proceso de empaque</td>
+                                    {{-- <td>{{ $order->status->name }}</td> --}}
                                     <td>
                                         @if ($order->is_pay())
                                             <button class="btn btn-success">Pagado</button>
