@@ -16,6 +16,8 @@
 
     {{-- fin de cargar imagen --}}
 
+    <h4>{{ $product->colors->count() }} disenos disponibles</h4>
+
     @if ($product->colors->count())
 
         <div class="table-responsive">
