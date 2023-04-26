@@ -246,22 +246,22 @@ class User extends Authenticatable
         return $this->hasMany(Carousel::class,'store_id')->where('type','mobile');
     }
 
-    public function getQrYapeAttribute($value){
-        if($value){
-            return url('/') . Storage::url($value);
-        }else{
-            return '';
-        }
+    // public function getQrYapeAttribute($value){
+    //     if($value){
+    //         return url('/') . Storage::url($value);
+    //     }else{
+    //         return '';
+    //     }
 
-    }
+    // }
 
-    public function getQrPlinAttribute($value){
-        if($value){
-            return url('/') . Storage::url($value);
-        }else{
-            return '';
-        }
-    }
+    // public function getQrPlinAttribute($value){
+    //     if($value){
+    //         return url('/') . Storage::url($value);
+    //     }else{
+    //         return '';
+    //     }
+    // }
 
     public function profile(){
         return $this->hasOne(ProfileStore::class,'store_id');

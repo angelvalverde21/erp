@@ -40,7 +40,7 @@
                 border: 1px solid #ccc;
                 margin: 0px;
                 font-family: sans-serif;
-                font-size: 9pt;
+                font-size: 0.80rem;
                 position: relative;
             }
 
@@ -117,27 +117,31 @@
                 width: 100%;
                 height: 32mm;
                 position: relative;
-                border: 1px solid #ccc;
+                /* border: 1px solid #ccc; */
                 margin: 10px 0 0;
+                padding: 10px;
                 top: 10px;
             }
 
             .yape {
                 position: absolute;
                 top: 0;
-                left: 5mm;
+                left: 7.5mm;
                 width: 25mm;
                 height: 25mm;
-                border: 1px solid #ccc;
+
+                /* border: 1px solid #ccc; */
             }
 
             .plin {
                 position: absolute;
-                top: ;
-                left: 60mm;
+                top: -3px;
+                left: 57.5mm;
                 width: 25mm;
                 height: 25mm;
-                border: 1px solid #ccc;
+                /* border: 1px solid #ccc; */
+                padding: 10px 5px 5px 5px;
+                /* border-radius: 5px; */
             }
 
             .code {
@@ -195,26 +199,27 @@
     <body>
 
         <div class="label-left">
-            <div class="logo">
-                <img style="width: 50%; height: auto;" src="{{ asset(Storage::url($order->store->upload_logo_general)) }}" alt="">
+            <div class="logo mb-2">
+                <img style="width: 50%; height: auto;" src="{{ asset(Storage::url($order->store->logo)) }}" alt="">
             </div>
             <div class="ship-to py-0">
                 <p>DESTINATARIO: </p>
-                <p class="large">{{ $order->address->name }}</p>
+                <p class="large">{{ strtoupper($order->address->name) }}</p>
             </div>
-
+            
             <div class="ship-details">
-                <ul class="">
+                <ul class="my-2">
                     <li><span class="">DNI:</span> {{ $order->address->dni }}</li>
-                    <li><span class="fw-bold">TELEFONO:</span> {{ $order->address->phone }}</li>
-                    <li><span class="">DIRECCION:</span> {{ $order->address->primary }}</li>
+                    <li><span>CELULAR:</span> {{ $order->address->phone }}</li>
+                    {{-- <li><span class="fw-bold">CELULAR:</span> {{ $order->address->phone }}</li> --}}
+                    <li><span class="">DIRECCION:</span> {{ strtoupper($order->address->primary) }}</li>
                     <li>{{ $order->address->secondary }}</li>
-                    <li class="fw-bold">{{ $order->address->district->name }} -
+                    <li>{{ $order->address->district->name }} -
                         {{ $order->address->district->province->name }} -
                         {{ $order->address->district->province->department->name }}</li>
                     <li>
                         {{-- <span class="">REFERENCIA:</span>  --}}
-                        {{ $order->address->references }}</li>
+                        <span class="fw-bold">REFERENCIA:</span> {{ strtoupper($order->address->references) }}</li>
 
                 </ul>
             </div>
@@ -233,9 +238,13 @@
             </style>
 
             <div class="codigo-barras my-3 text-center">
-                <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG('011136', 'C39+',2,70) }}" alt="barcode"/>
+                <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG('011136', 'C39+',2,50) }}" alt="barcode"/>
                 <p style="font-size: 14pt">#011136</p>
             </div>
+
+            {{-- <div class="registro">
+                N° REGISTRO: 202305594774(1/7)
+            </div> --}}
 
             <div class="carrier-address text-center">
                 <li>{{ $order->carrier_address->title }}</li>
@@ -249,22 +258,24 @@
         <div class="label-right">
 
             <div class="status-pago">
-                <h1>PENDIENTE DE PAGO</h1>
+                <h1>CONTRA ENTREGA</h1>
             </div>
 
             <div class="qr">
                 <div class="yape text-center">
                     {{-- <img src="{{ asset(Storage::url($order->store->upload_qr_yape)) }}"
                         alt="barcode" height="90" width="90" /> --}}
-                        <img src="{{ asset(Storage::url($order->store->upload_qr_yape)) }}"
-                        alt="barcode" height="95" width="95" />
-                    <span>YAPE</span>
+                        <span>YAPE</span>
+                        <img src="{{ asset(Storage::url($order->store->qr_yape)) }}" alt="barcode" height="130" width="130" />
+                    
                 </div>
 
+                {{-- <img src="{{ asset(Storage::url("stores/logos/Ux88DfS1uBjW77dJM266NwajMxqxOYbUcuWKcCzz.png")) }}" alt="barcode" height="95" width="95" /> --}}
                 <div class="plin text-center">
-                    <img src="{{ asset(Storage::url($order->store->upload_qr_plin)) }}"
-                        alt="barcode" height="90" width="90" />
                     <span>PLIN</span>
+                    <img src="{{ asset(Storage::url($order->store->qr_plin)) }}"
+                        alt="barcode" height="125" width="125" />
+                    
                 </div>
             </div>
         </div>
