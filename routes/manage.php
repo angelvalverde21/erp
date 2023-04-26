@@ -79,7 +79,6 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::get('/productions/create', CreateProduction::class)->name('productions.create');
    Route::get('/productions/{production}', EditProduction::class)->name('productions.edit');
 
-
    //GET Imprimir PDF
    Route::get('/orders/{order}/print/voucher', [PdfController::class, 'generateVaucher'])->name('orders.print.voucher');
    Route::get('/orders/{order}/print/packing-label', [PdfController::class, 'generatePackingLabel'])->name('orders.print.packing-label');
