@@ -143,6 +143,8 @@ class CreateOrderModal extends Component
 
         //este emit necesita un listener
         $this->emit('creado');
+
+        return redirect()->route('manage.orders.edit', ['nickname' => $this->store->nickname, 'order' => $order->id]);
     }
 
     public function updatedPhone($value)

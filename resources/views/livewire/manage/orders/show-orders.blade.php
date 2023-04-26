@@ -102,6 +102,8 @@
                                         @endif
                                     </td>
                                     <td>{{ $order->total_amount }}</td>
+                                    
+                                    <td>{{ $order->total_amount }}</td>
                                     <td>{{ $order->seller->name }}</td>
                                     <td>{{ $order->created_at }}</td>
                                     <td>{{ $order->updated_at }}</td>
