@@ -74,7 +74,7 @@
                                                     <table>
                                                         <tr>
                                                             <td>Stock asignado</td>
-                                                            <td>{{ $stock->id }}</td>
+                                                            <td>00000000{{ $stock->id }}</td>
                                                             <td>{{ $stock->stockable->size->name }}</td>
                                                         </tr>
                                                     </table>
