@@ -88,7 +88,7 @@
                                     </div>
 
                                 </td>
-                                <td class="text-center">( {{ $item->content->size_name }} ) => {{ $item->content->talla_impresa }}</td>
+                                <td class="text-center">{{ $item->content->talla_impresa }}</td>
                                 <td>{{ $item->price }}</td>
                                 <td>{{ $item->precio_final }}</td>
 
