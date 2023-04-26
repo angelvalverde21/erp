@@ -29,7 +29,10 @@ class ShowProducts extends Component
     public function render()
     {
 
-        $products = $this->store->products;
+        // $products = $this->store->products;
+
+
+        $products = Product::where('store_id', $this->store->id)->where('status',Product::PUBLICADO)->orderBy('id','desc')->limit(20)->get();
 
 
         return view('livewire.manage.products.show-products',compact('products'))->layout('layouts.manage');

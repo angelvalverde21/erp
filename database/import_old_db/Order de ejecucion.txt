@@ -45,7 +45,7 @@ $this->call(InsertOldOrdersDetailsCompleteSeeder::class);
 //aplicando los voucher para los pedidos pagados
 
 php artisan db:seed --class=InsertOldAmountPaymentSeeder
-
+$this->call(InsertOldAmountPaymentSeeder::class);
 ---------------------------------------------------------------------
 
 //Moviendo imagenes
