@@ -157,5 +157,8 @@ class DatabaseSeeder extends Seeder
         // php artisan db:seed --class=MoveOldProductImagesSeeder
         $this->call(MoveOldProductImagesSeeder::class);
         
+
+        // Qr yape 
+        // 0002010102113932b7c2739fee805fb58e42d0915386432b5204561153036045802PE5906YAPERO6004Lima63048670
     }
 }

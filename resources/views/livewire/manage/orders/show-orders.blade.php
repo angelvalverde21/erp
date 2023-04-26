@@ -65,7 +65,12 @@
                                 {{-- {{ $order }} --}}
 
                                 <tr @if (!$order->is_active) class="bg-danger" @endif>
-                                    <td class="text-center">{{ $order->id }} </td>
+
+                                    <td class="text-center">                                            
+                                        <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
+                                        class="btn btn-success mr-2">Editar</a>
+                                        <p class="mt-1">{{ $order->id }}</p>
+                                    </td>
 
                                     <td class="">
                                         <h6>{{ strtoupper($order->buyer->name) }}</h6>
@@ -83,9 +88,11 @@
                                     </td>
 
                                     <td>
+                                        {{-- Imanges de los productos --}}
+
                                         @foreach ($order->items as $item)
                                             <a href="{{ Storage::url($item->content->image) }}" data-lightbox="show-images-preview-{{ $order->id }}">
-                                                <img style="height: 125px" src="{{ Storage::url($item->content->image) }}" alt="">
+                                                <img style="height: 125px" src="{{ Storage::url($item->content->image) }}" alt=""> ({{ $item->content->talla_impresa }})
                                             </a>
                                         @endforeach
                                     </td>
@@ -102,20 +109,14 @@
                                         @endif
                                     </td>
                                     <td>{{ $order->total_amount }}</td>
-                                    
+
                                     <td>{{ $order->total_amount }}</td>
                                     <td>{{ $order->seller->name }}</td>
                                     <td>{{ $order->created_at }}</td>
                                     <td>{{ $order->updated_at }}</td>
                                     <td>
-                                        <div class="d-flex  justify-content-center">
-
-                                            <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
-                                                class="btn btn-success mr-2">Editar</a>
-
-                                            <a href="#" wire:click="cancelOrder( {{ $order }} )"
+                                        <a href="#" wire:click="cancelOrder( {{ $order }} )"
                                                 class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
-                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

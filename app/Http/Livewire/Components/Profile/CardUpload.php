@@ -11,6 +11,8 @@ class CardUpload extends Component
 
     // public $image, $field;
 
+    public $user, $field;
+
     protected $listeners = [
         'render'=>'render',
         'deleteFileProfile' => 'deleteFileProfile',

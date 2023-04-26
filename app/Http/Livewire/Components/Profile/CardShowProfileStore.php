@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Request;
 class CardShowProfileStore extends Component
 {
 
+    public $user;
+
     //Si los nombres no estan correctamente definidos no se enviara por wire:model
     protected $rules = [
 
@@ -37,6 +39,7 @@ class CardShowProfileStore extends Component
     public function save(){
 
         Log::debug($this->user);
+        
         $rules = $this->rules;
 
         $rules['user.email'] = 'required|unique:users,email,'.$this->user->id;

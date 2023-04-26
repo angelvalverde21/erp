@@ -202,13 +202,13 @@ class User extends Authenticatable
     //     return 'nickname';
     // }
 
-    public function getLogoAttribute($value){
-        if($value){
-            return url('/') . Storage::url($value);
-        }else{
-            return '';
-        }
-    }
+    // public function getLogoAttribute($value){
+    //     if($value){
+    //         return url('/') . Storage::url($value);
+    //     }else{
+    //         return '';
+    //     }
+    // }
     //Productos de los stors ///
 
     public function products(){

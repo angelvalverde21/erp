@@ -155,9 +155,19 @@
             </div>
 
             <div class="col-lg-6 col-6">
-                <x-user.input type="text" wirevalue="item.content.talla_impresa" error="Este campo es requerido">
+
+
+                <x-user.select  wirevalue="item.content.talla_impresa" error="Este campo es requerido">
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                    <option value="ESTANDAR">ESTANDAR</option>
+                </x-user.select>
+
+                {{-- <x-user.input type="text" wirevalue="item.content.talla_impresa" error="Este campo es requerido">
                     Talla Virtual
-                </x-user.input>
+                </x-user.input> --}}
             </div>
 
             <div class="col-lg-6 col-6">

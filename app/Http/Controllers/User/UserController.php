@@ -16,7 +16,7 @@ class UserController extends Controller
         $request->validate([
             'file' => 'required|image|max:10240'  //10 megas
         ]);
-        $url = Storage::put('users', $request->file('file'));
+        $url = Storage::put('stores/logos', $request->file('file'));
         $user[$field] = $url;
         $user->save();
         //Log::debug($url);
