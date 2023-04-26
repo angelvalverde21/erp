@@ -33,6 +33,7 @@
 
             .header {
                 text-align: center;
+                position: relative;
             }
 
             .header h1 {
@@ -113,10 +114,24 @@
                 display: inline-block;
                 border: 0px solid red;
             }
+
+            .pagado{
+                position: absolute;
+                top: 200px;
+                left: 75px;
+                opacity: 0.5;
+            }
         </style>
     </head>
 
     <body>
+
+        <div class="pagado">
+            @if ($order->is_pay())
+            <img class="px-1 pt-1" src="{{ asset(Storage::url("orders/pagado.png")) }}" height="250px"
+            alt="">
+            @endif
+        </div>
         <div class="header">
 
             {{-- OJO EN EL PDF SE DEBE USAR LA RUTA COMPLETA, POR ESO SE USA ASSETS --}}
@@ -176,6 +191,10 @@
 
             <div class="content-header pt-2 pb-3" style="height: 100px;">
 
+                @if ($order->is_pay())
+                <img class="px-1 pt-1" src="{{ asset(Storage::url("orders/paid.png")) }}" height="90px"
+                alt="">
+                @else
                 <div class="qr ps-3 pe-4">
                     {{-- <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('https://erp.3b.pe/summary/imprimir/voucher.php?IDVENTA=10813', 'QRCODE') }}"
                     alt="barcode" height="75" width="75" /> --}}
@@ -188,24 +207,36 @@
                     </div>
 
                 </div>
+                @endif
 
-                <div class="resumen">
+
+
+                <div class="resumen pt-3">
                     <li>SUBTOTAL: S/. {{ $order->sub_total }}</li>
                     @if ($order->descuentos > 0)
                         <li>DESCUENTOS: S/. {{ $order->descuentos }}</li>
                     @endif
 
-                    <li>ENVIO: S/. {{ $order->shipping_cost_buyer }}</li>
+                        @if ($order->shipping_cost_buyer>0)
+                        <li>ENVIO: S/. {{ $order->shipping_cost_buyer }}</li> 
+                        @else
+                        <li>ENVIO: GRATIS (x OLVA)</li>
+                        @endif
+                        <li>------------------------------------</li>
                     <li><strong style="font-size: 14pt">TOTAL: S/. {{ $order->total_amount }}</strong></li>
                 </div>
 
             </div>
+
+            @if (!$order->is_pay())
 
             <hr class="linea-separador my-3">
 
             <div class="status-pago">
                 <h1>PENDIENTE DE PAGO</h1>
             </div>
+
+            @endif
     </body>
 
     </html>
