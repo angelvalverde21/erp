@@ -58,18 +58,34 @@ class AddItem extends Component
         //     'product_id'        =>  $colorSize->color->product->id,
         // ];
 
-        $item->content =  [
+        // $item->content =  [
 
-            'color_size_id'     =>  $colorSize->id,
-            'talla'             =>  $colorSize->size->name,
-            'talla_impresa'     =>  $colorSize->size->name,
+        //     'color_size_id'     =>  $colorSize->id,
+        //     'talla'             =>  $colorSize->size->name,
+        //     'talla_impresa'     =>  $colorSize->size->name,
+        //     'color_id'          =>  $colorSize->color->id,
+        //     'image'             =>  $colorSize->color->image->name,
+        //     'price'             =>  $colorSize->color->product->price,
+        //     'product_id'        =>  $colorSize->color->product->id,
+        //     'description'       =>  $colorSize->color->product->name,
+
+        // ];
+
+        $content = [
+            'color_size_id'     => $colorSize->id,
+            'size_name'         => $colorSize->size->name,
             'color_id'          =>  $colorSize->color->id,
-            'image'             =>  $colorSize->color->image->name,
+            'size_name_real'    => $colorSize->size->name,
+            'size_name_virtual' => $colorSize->size->name,
+            'talla'             => $colorSize->size->name, //Es la talla que se envia al cliente
+            'talla_original'    => $colorSize->size->name, //es la talla real despachada
+            'talla_impresa'     => $colorSize->size->name,
+            'image'             => $colorSize->color->image->name,
             'price'             =>  $colorSize->color->product->price,
             'product_id'        =>  $colorSize->color->product->id,
             'description'       =>  $colorSize->color->product->name,
-
         ];
+
 
         //si la casilla quantity_oversale esta marcada entonces seteamos el quantity real en 0
         // if(isset($this->quantity_oversale[$color_size_id])){
