@@ -25,8 +25,12 @@
             height: 100vh;
         }
 
-        .logo img{
-          width: 200px;
+        .logo img {
+            width: 200px;
+        }
+
+        body {
+            overflow-x: hidden;
         }
     </style>
 
