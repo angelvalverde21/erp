@@ -84,7 +84,9 @@
 
                                     <td>
                                         @foreach ($order->items as $item)
-                                            <img style="height: 125px" src="{{ Storage::url($item->content->image) }}" alt="">
+                                            <a href="{{ Storage::url($item->content->image) }}" data-lightbox="show-images-preview-{{ $order->id }}">
+                                                <img style="height: 125px" src="{{ Storage::url($item->content->image) }}" alt="">
+                                            </a>
                                         @endforeach
                                     </td>
 
