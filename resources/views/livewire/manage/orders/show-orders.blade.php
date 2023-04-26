@@ -68,7 +68,7 @@
                                     <td class="text-center">{{ $order->id }} </td>
 
                                     <td class="">
-                                        <h5>{{ strtoupper($order->buyer->name) }}</h5>
+                                        <h6>{{ strtoupper($order->buyer->name) }}</h6>
                                         {{-- {{ $order->address }} --}}
 
                                         <li>DNI: {{ $order->address->dni }}</li>
