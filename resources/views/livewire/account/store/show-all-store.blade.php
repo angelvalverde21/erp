@@ -25,23 +25,25 @@
                         <tbody>
 
                             @foreach ($stores as $store)
-                            <tr>
-                                <td>{{ $store->id }}</td>
-                                <td>{{ $store->name }}</td>
-                                <td>{{ $store->nickname }}</td>
-                                <td>{{ $store->orders->count() }}</td>
-                                <td>
-                                    <div class="progress progress-xs">
-                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                    </div>
-                                </td>
-                                <td><span class="badge bg-danger">55%</span></td>
-                                
-                                
-                                <td><a href="{{ route('manage.orders', [$store->nickname]) }}" class="btn btn-success">Ir</a>
-                                </td>
-                            </tr>
-                        @endforeach
+                                <tr>
+                                    <td>{{ $store->id }}</td>
+                                    <td>{{ $store->name }}</td>
+                                    <td>{{ $store->nickname }}</td>
+                                    {{-- <td>{{ $store->orders->count() }}</td> --}}
+                                    <td>
+                                        <div class="progress progress-xs">
+                                            <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-danger">55%</span></td>
+
+                                    <td></td>
+
+                                    <td><a href="{{ route('manage.orders', [$store->nickname]) }}"
+                                            class="btn btn-success">Ir</a>
+                                    </td>
+                                </tr>
+                            @endforeach
 
 
 
@@ -51,8 +53,6 @@
                 </div>
                 <!-- /.card-body -->
             </div>
-
-
         @else
             No hay tiendas
         @endif

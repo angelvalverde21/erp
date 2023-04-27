@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -113,6 +114,10 @@ class User extends Authenticatable
         //Pero como la que hemos definido es "role_store_user" le indicamos a laravel esa tabla en el segundo argumento de belongsToMany.
         //Finalmente tambien le decimos a laravel que el id de este modelo (user) es user_id y que el id de los stores (que tambien es la misma tabla user)
         //sera store_id que a su ves es user_id (llave foranea)
+
+        // return 
+        // Log::info(RoleStoreUser::whereHas('user_id',$this->id)->get());
+        // return User::whereHas("roles", function($q){ $q->where("name", "store")->limit(5); })->get();
 
     }
 

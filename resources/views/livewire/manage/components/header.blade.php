@@ -136,7 +136,7 @@
                     @if (isset($store->name))
                         <i class="fa-solid fa-store mr-2"></i> {{ $store->nickname }}
                     @else
-                        <i class="fa-solid fa-store mr-2"></i> Tiendas ({{$user->stores->count()}})
+                        {{-- <i class="fa-solid fa-store mr-2"></i> Tiendas ({{$user->stores->count()}}) --}}
                     @endif
                     
                 </button>

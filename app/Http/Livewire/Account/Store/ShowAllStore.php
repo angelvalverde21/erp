@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Account\Store;
 
+use App\Models\RoleStoreUser;
 use App\Models\Store;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -10,23 +11,24 @@ use Livewire\Component;
 
 class ShowAllStore extends Component
 {
-   
-    public function mount(){
+    public $user, $stores;
+
+    public function mount()
+    {
 
         //$user = Auth::user();
-        $user = Auth::user();
-    
-        $this->stores = $user->stores;
+        $this->user = Auth::user();
 
-        Log::info($this->stores);
-        
+        $this->stores = $this->user->stores;
+
+        // Log::info($this->stores);
     }
 
     public function render()
     {
-        $stores = $this->stores;
 
-        return view('livewire.account.store.show-all-store',compact('stores'))->layout('layouts.adminlte');
+        // $stores = $this->user->stores; //Esto falla cuando se usa el compact, para tenerlo en cuenta
+
+        return view('livewire.account.store.show-all-store')->layout('layouts.adminlte');
     }
-
 }

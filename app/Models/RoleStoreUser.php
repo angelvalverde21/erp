@@ -12,5 +12,9 @@ class RoleStoreUser extends Model
     protected $table = "role_store_user";
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
+
+    public function store(){
+        return $this->belongsToMany(User::class, 'user_id', 'store_id')->limit(10);
+    }
     
 }

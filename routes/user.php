@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Artisan;
 */
 
 //GET
-Route::get('/', Dashboard::class)->name('user');
+// Route::get('/', Dashboard::class)->name('user');
 Route::get('/products', ShowProducts::class)->name('user.products');
 Route::get('/products/{product}/edit', EditProduct::class)->name('user.products.edit');
 Route::get('/products/create', CreateProduct::class)->name('user.products.create');
