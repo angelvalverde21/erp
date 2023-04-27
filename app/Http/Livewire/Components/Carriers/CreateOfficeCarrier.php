@@ -11,6 +11,8 @@ class CreateOfficeCarrier extends Component
 {
     use AddressTrait;
 
+    public $user;
+
     public function mount($user_id){
 
         $this->user =  User::find($user_id);

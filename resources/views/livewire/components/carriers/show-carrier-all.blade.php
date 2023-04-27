@@ -23,12 +23,17 @@
 
     <div class="accordion" id="accordionShowCarrier">
 
-        @foreach ($carriers as $carrier)
+        {{-- Ojo esta linea consulta en la tabla usuarios a los carriers (courier) --}}
+        @foreach ($carriers as $carrier) 
+
             <x-accordion-item id="item-carrier-{{ $carrier->id }}" label="{{ $carrier->name }}"
+
                 accordion_parent_id="accordionShowCarrier">
 
                 <table class="table table-transportista mx-0 my-0">
 
+                    {{-- //Luego de consultar a los usuarios extraemos sus direcciones de envio que seran las oficinas de atencion --}}
+                    
                     @foreach ($carrier->addresses as $office)
                         <tr>
                             <td><a class="btn btn-secondary" href="#" role="button"
@@ -40,7 +45,7 @@
                             <td>{{ $office->references }}</td>
                             <td>{{ $office->district->name }}</td>
                             <td>
-                                <a href="#collapse-edit-carrier-{{ $office->id }}" class=" btn btn-success" data-toggle="collapse"
+                                <a href="#collapse-edit-carrier-{{ $office->id }}" class="btn btn-success" data-toggle="collapse"
                                     role="button" aria-expanded="false" aria-controlxs="collapseExample">Editar                                    
                                 </a>
                             </td>
@@ -48,6 +53,7 @@
 
                         <tr>
                             <td colspan="7">
+
                                 <div class="collapse mt-4" id="collapse-edit-carrier-{{ $office->id }}">
                                     @livewire('components.carriers.edit-office-carrier', ['address' => $office->id], key('edit-office-carrier-' . $office->id))
                                 </div>

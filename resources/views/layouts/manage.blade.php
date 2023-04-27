@@ -14,7 +14,13 @@
     <!-- Styles -->
     {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}"> --}}
 
-
+    <style>
+        ul{
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    </style>
+    
     {{-- fancybox --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" /> --}}
@@ -98,7 +104,7 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
 
-    <style>
+    {{-- <style>
         .resultados {
             box-shadow: -2px 3px 24px 0px rgb(163 163 163);
         }
@@ -112,7 +118,7 @@
             margin: 0 !important;
             padding: 0 10px !important;
         }
-    </style>
+    </style> --}}
 
     <link rel="stylesheet" href="{{ asset('lightbox2/dist/css/lightbox.min.css') }}">
 

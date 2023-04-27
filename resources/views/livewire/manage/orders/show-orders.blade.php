@@ -38,7 +38,8 @@
                                 <th>Cliente</th>
                                 <th>Productos</th>
                                 <th>Entregar por</th>
-                                <th>Status</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Status</th>
                                 <th>Pago</th>
                                 <th>Total</th>
                                 <th>Autor</th>
@@ -100,7 +101,16 @@
                                     <td class="text-center">
                                         {{ $order->delivery_man->name }}
                                     </td>
-                                    {{-- <td>{{ $order->status->name }}</td> --}}
+                                    <td>
+
+                                        @foreach ($order->status as $status)
+                                            {{ $status->title }}
+                                            @php
+                                                break;
+                                            @endphp
+                                        @endforeach
+
+                                    </td>
                                     <td>
                                         @if ($order->is_pay())
                                             <button class="btn btn-success">Pagado</button>

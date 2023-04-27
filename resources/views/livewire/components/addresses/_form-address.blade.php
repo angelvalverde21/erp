@@ -117,15 +117,15 @@
 
 <div class="row">
     <div class="col-lg-12 col-12">
-        <hr>
-        <x-form.textarea label="Ingrese un url de google maps de su local" type="text" wirevalue="address.maps"
+
+        <x-form.textarea label="" type="text" wirevalue="address.maps"
             icon="fa-solid fa-map-location">
-            Ingrese un url de google maps
+            Ingrese un url de google maps (Opcional)
         </x-form.textarea>
 
-        <x-form.input type="text" wirevalue="address.title" icon="fa-regular fa-user"
+        <x-form.input type="text" wirevalue="address.title" icon=""
             error="Este campo es requerido">
-            Agregue un titulo a la direccion Ejemplo: Oficina Principal
+            Agregue un titulo a la direccion Ejemplo: Oficina Principal (Importante)
         </x-form.input>
     </div>
 
@@ -151,7 +151,7 @@
     @endif
 
     <button type="button" wire:loading.class="btn-secondary" wire:loading.attr="disabled" wire.target="save"
-        wire:click="save" class="btn btn-info ml-auto"><i class="fa-solid fa-floppy-disk mr-1"></i> Guardar
+        wire:click="save" class="btn btn-success ml-auto"><i class="fa-solid fa-floppy-disk mr-1"></i> Guardar
         Cambios</button>
 
     <div class="spinner-border" wire:loading.flex wire:target="save" role="status">

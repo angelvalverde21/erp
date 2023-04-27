@@ -1,11 +1,9 @@
 <div>
     {{-- Success is as dangerous as failure. --}}
 
-
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add-item-sale">
         <i class="fa-solid fa fa-square-plus mr-2"></i>Agregar item
     </button>
-
 
     <!-- Modal -->
     <div wire:ignore.self class="modal fade" id="add-item-sale" tabindex="-1" role="dialog"
@@ -22,53 +20,54 @@
 
                 <div class="modal-body">
 
-                    <style>
-                        .resultados ul {
-                            margin: 0 !important;
-                            padding: 0 10px !important;
-                        }
-
-                        .resultados {
-                            box-shadow: -2px 3px 24px 0px rgba(163, 163, 163, 1);
-                            border-radius: 0 0 10px 10px;
-                        }
-
-                        .resultados ul li {
-                            border-bottom: 1px solid #ccc;
-                            padding-bottom: 3px;
-                        }
-                    </style>
-
-
                     <div class="row">
 
                         <div class="col-lg-12 col">
+                            
                             <div class="mb-3">
 
+                                {{-- Barra de busqueda --}}
+
                                 <div class="input-group mb-1">
+
+                                    {{-- icono del cuadro de busqueda --}}
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i
-                                                class="fa-solid fa-magnifying-glass"></i></span></span>
+                                                class="fa-solid fa-magnifying-glass"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" id="inputSearchText" wire:model="search"
-                                        aria-describedby="nameHelp" placeholder="Buscar producto">
+
+                                    {{-- caja de busqueda --}}
+                                    <input type="text" class="form-control" id="inputSearchText"
+                                        wire:model.debounce.500ms="search" aria-describedby="nameHelp"
+                                        placeholder="Buscar producto">
+
+                                    {{-- Boton para borrar --}}
                                     <div class="input-group-append">
-                                        <span class="input-group-text"><a href="#"
-                                                wire:click.prevent="deleteSearchText"><i
-                                                    class="fa-solid fa-trash"></i></a></span></span>
+                                        <span class="input-group-text">
+                                            <a href="#" wire:click.prevent="deleteSearchText">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </span>
+
                                     </div>
                                 </div>
 
-
-
                                 <div class="resultados">
-                                    <ul>
+
+                                    <div class="list-group">
 
                                         @foreach ($items as $item)
-                                            <li><a href="#"
+                                            <li>
+                                                <a href="#" class="list-group-item list-group-item-action"
                                                     wire:click.prevent="selectItem({{ $item->id }})">{{ $item->name }}</a>
                                             </li>
                                         @endforeach
+
+                                    </div>
+
+                                    <ul>
+
+                                        {{-- {{ $product }} --}}
 
                                         @if ($product && $showSelect)
 
@@ -105,14 +104,17 @@
 
                                                                     <td class="text-center"
                                                                         rowspan="{{ $loop->count }}">
-                                                                        <img width="100" src="{{ Storage::url($color->image) }}"
+                                                                        <img width="100"
+                                                                            src="{{ Storage::url($color->image) }}"
                                                                             alt="">
                                                                     </td>
 
                                                                     {{-- fin de imagen --}}
 
                                                                     <td rowspan="{{ $loop->count }}">
-                                                                        <img src="{{ Storage::url($color->image->name) }}" height="75px" alt=""></td>
+                                                                        <img src="{{ Storage::url($color->image->name) }}"
+                                                                            height="75px" alt="">
+                                                                    </td>
                                                                 @endif
 
                                                                 {{-- Precio de venta final --}}
@@ -157,15 +159,17 @@
                                                                                 @for ($i = 1; $i <= $size->pivot->quantity; $i++)
                                                                                     <option
                                                                                         value="{{ $i }}">
-                                                                                        {{ $i }} (Disponibles)</option>
+                                                                                        {{ $i }}
+                                                                                        (Disponibles)
+                                                                                    </option>
                                                                                 @endfor
 
                                                                             </select>
                                                                         @else
-                                                                        <input
-                                                                            wire:model="quantity.{{ $size->pivot->id }}"
-                                                                            style="width: 75px;" type="number"
-                                                                            class="form-control" placeholder="0">
+                                                                            <input
+                                                                                wire:model="quantity.{{ $size->pivot->id }}"
+                                                                                style="width: 75px;" type="number"
+                                                                                class="form-control" placeholder="0">
                                                                         @endif
 
 
@@ -182,10 +186,10 @@
                                                                 {{-- Prevender --}}
 
                                                                 {{-- <td class="text-center"> --}}
-                                                                    {{-- @if (!quantity($product->id, $color->id, $size->id)) --}}
-                                                                    {{-- @if (!$size->pivot->quantity) --}}
+                                                                {{-- @if (!quantity($product->id, $color->id, $size->id)) --}}
+                                                                {{-- @if (!$size->pivot->quantity) --}}
 
-                                                                    {{-- @endif --}}
+                                                                {{-- @endif --}}
                                                                 {{-- </td> --}}
 
                                                                 {{-- fin de Prevender --}}
@@ -219,8 +223,6 @@
 
                                                 </tbody>
                                             </table>
-
-
 
                                         @endif
 
