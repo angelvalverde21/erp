@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-//Route::get('/', HomeAccount::class)->middleware('auth')->name('home');
+Route::get('/', HomeAccount::class)->middleware('auth')->name('home');
 // Route::get('/', function(){
 //     //Seenvia a la seccion account por defecto
 //     // return redirect('/account');
