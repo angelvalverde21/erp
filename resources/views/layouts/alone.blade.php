@@ -38,9 +38,7 @@
 
 <body>
 
-    <div class="logo">
-        <img src="{{ Storage::url('logo.png') }}" alt="">
-    </div>
+  {{ $slot }}
 
 </body>
 
