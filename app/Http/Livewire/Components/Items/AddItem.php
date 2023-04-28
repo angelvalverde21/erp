@@ -20,6 +20,7 @@ class AddItem extends Component
     public $stock, $size_color, $showSelect;
     public $order;
     public $store;
+    private  $items = [];
 
     public function mount(Order $order){
 
@@ -144,7 +145,7 @@ class AddItem extends Component
 
     public function deleteSearchText(){
         $this->search = "";
-        // $this->product = [];
+        $this->product = [];
         // $this->showSelect = false;
     }
 
@@ -177,7 +178,7 @@ class AddItem extends Component
                                             ->with(['colors.sizes'])
                                             ->where('store_id',$this->store->id)
                                             ->first();
-                $this->showSelect = true;
+                // $this->showSelect = true;
                 Log::info("el producto se ha encontrado y se muestra el showSelect");
 
             }
@@ -190,7 +191,6 @@ class AddItem extends Component
             Log::info("Solo el producto se ha encontrado ");
 
         }
-
 
         //Vaciamos los items
         // $this->items = [];
@@ -272,7 +272,7 @@ class AddItem extends Component
 
         if ($this->search <> "") {
 
-            $items = Product::where('title', 'like', '%' . $this->search . '%')
+            $this->items = Product::where('title', 'like', '%' . $this->search . '%')
                 ->where('status', Product::PUBLICADO)
                 ->where('store_id', $this->store->id)
                 ->orderBy('id', 'desc')
@@ -280,18 +280,20 @@ class AddItem extends Component
 
                 Log::info($this->search);
 
-                Log::info($items);
+                Log::info($this->items);
 
-            $this->showSelect = false;
+            // $this->showSelect = false;
 
         } else {
             //Muestra todos los post
             //$posts = Photography::all();
             //Tambien Muestra todos los post pero filtrado
-            $items = [];
+            $this->items = [];
 
             // $this->showSelect = false;
         }
+
+        $items = $this->items;
 
         return view('livewire.components.items.add-item', compact('items'));
     }

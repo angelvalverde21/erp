@@ -12,6 +12,7 @@ use App\Http\Livewire\Manage\Dashboard;
 use App\Http\Livewire\Manage\ImportData;
 use App\Http\Livewire\Manage\Orders\EditOrder;
 use App\Http\Livewire\Manage\Orders\ShowOrders;
+use App\Http\Livewire\Manage\Orders\ShowOrdersToday;
 use App\Http\Livewire\Manage\Productions\CreateProduction;
 use App\Http\Livewire\Manage\Productions\EditProduction;
 use App\Http\Livewire\Manage\Productions\ShowProductions;
@@ -46,6 +47,7 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
 
    //ORDERS
    Route::get('/orders', ShowOrders::class)->name('orders');
+   Route::get('/orders/today', ShowOrdersToday::class)->name('orders.today');
    Route::get('/orders/{order}/edit', EditOrder::class)->name('orders.edit');
 
    //PROFILE
