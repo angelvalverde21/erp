@@ -57,19 +57,19 @@ class AddItem extends Component
 
         // ];
 
-        $content = [
+        $item->content =  [
             'color_size_id'     => $colorSize->id,
             'size_name'         => $colorSize->size->name,
-            'color_id'          =>  $colorSize->color->id,
+            'color_id'          => $colorSize->color->id,
             'size_name_real'    => $colorSize->size->name,
             'size_name_virtual' => $colorSize->size->name,
             'talla'             => $colorSize->size->name, //Es la talla que se envia al cliente
             'talla_original'    => $colorSize->size->name, //es la talla real despachada
             'talla_impresa'     => $colorSize->size->name,
             'image'             => $colorSize->color->image->name,
-            'price'             =>  $colorSize->color->product->price,
-            'product_id'        =>  $colorSize->color->product->id,
-            'description'       =>  $colorSize->color->product->name,
+            'price'             => $colorSize->color->product->price,
+            'product_id'        => $colorSize->color->product->id,
+            'description'       => $colorSize->color->product->name,
         ];
 
 

@@ -60,6 +60,7 @@
                                                     class="fa-solid fa-image"></i></span></a>
 
                                     @endif
+                                    
                                 </td>
                                 <td><a href="{{ route('manage.products.edit', [$store->nickname, $product->id]) }}">{{ $product->name }}</a></td>
                                 <td>{{ $product->costo }}</td>

@@ -69,7 +69,7 @@
 
                                         {{-- {{ $product }} --}}
 
-                                        @if ($product && $showSelect)
+                                        @if ($product)
 
                                             <table class="table">
 
