@@ -84,7 +84,7 @@ class Colors extends Component
     public function render()
     {
 
-        $colors = Color::where('product_id', $this->product->id)->with('images')->get();
+        $colors = Color::where('product_id', $this->product->id)->orderBy('quantity','desc')->with('images')->get();
 
         return view('livewire.manage.products.edit-product.colors', compact('colors'));
     }
