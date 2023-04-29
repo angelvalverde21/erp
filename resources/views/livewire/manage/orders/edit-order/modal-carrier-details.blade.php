@@ -20,13 +20,14 @@
             </x-form.select>
         </div> --}}
 
-        <div class="col-lg-6 col">
+        <div class="col-lg-6 col-12">
             <x-form.input-number wirevalue="order.shipping_cost_to_carrier" label="Costo de traslado hasta el courier"
                 icon="fa-solid fa-truck" error="Este campo es requerido">
                 0.00
             </x-form.input-number>
         </div>
-        <div class="col-lg-6 col">
+
+        <div class="col-lg-6 col-12">
 
             <x-form.input-number wirevalue="order.shipping_cost_carrier" label="Costo cobrado por el courier"
                 icon="fa-solid fa-truck" error="Este campo es requerido">
@@ -34,7 +35,7 @@
             </x-form.input-number>
 
         </div>
-        <div class="col-lg-12 col">
+        <div class="col-lg-12 col-12">
 
             <x-form.input-number wirevalue="order.shipping_cost_buyer" label="Costo cobrado al cliente"
                 icon="fa-solid fa-user" error="Este campo es requerido">
