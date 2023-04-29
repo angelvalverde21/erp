@@ -65,9 +65,9 @@
                             @foreach ($orders as $order)
                                 {{-- {{ $order }} --}}
                                 {{-- Ojo is_active es un campo de la base de datos, pero is_pay es una instancia --}}
-                                <tr @if (!$order->is_active) class="bg-danger" @endif   @if ($order->is_pay()) stye="background: #E2FBDF;" @endif>
+                                <tr @if (!$order->is_active) class="bg-danger" @endif>
 
-                                    <td class="text-center">                                            
+                                    <td class="text-center" @if ($order->is_pay()) style="background: #E2FBDF;" @endif>                                            
                                         <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
                                         class="btn btn-success mr-2">Editar</a>
                                         <p class="mt-1">{{ $order->id }}</p>
@@ -82,7 +82,7 @@
                                         <li>{{ $order->address->secondary }}</li>
                                         <li>References: </li>
                                         <li>{{ $order->address->references }}</li>
-                                        <li>{{ $order->address->district->name }}</li>
+                                        <li><strong>{{ $order->address->district->name }}</strong></li>
                                         <li>{{ $order->delivery_time_start }} Hasta {{ $order->delivery_time_end }}</li>
                                         <li>{{ $order->address->phone }}</li>
 

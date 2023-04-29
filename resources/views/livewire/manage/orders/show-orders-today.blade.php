@@ -67,7 +67,7 @@
 
                                 <tr @if (!$order->is_active) class="bg-danger" @endif>
 
-                                    <td class="text-center">                                            
+                                    <td class="text-center" @if ($order->is_pay()) style="background: #E2FBDF;" @endif>                                            
                                         <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
                                         class="btn btn-success mr-2">Editar</a>
                                         <p class="mt-1">{{ $order->id }}</p>
