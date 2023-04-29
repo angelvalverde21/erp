@@ -31,7 +31,6 @@
                         <td class="text-center">Agregar Stock</td>
                         <td class="text-center">Colores</td>
                         <td class="text-center">Variantes</td>
-                        <td class="text-center">Stock</td>
                         <td class="text-center">Eliminar</td>
                     </tr>
                 </thead>
@@ -51,10 +50,13 @@
                                 <td>
                                     {{-- boton para las variantes --}}
 
-                                    <a href="{{ Storage::url($color->image->name) }}" data-lightbox="colors" data-title="Stock: {{ $color->quantity }}">
+                                    <a href="{{ Storage::url($color->image->name) }}" data-lightbox="colors"
+                                        data-title="Stock: {{ $color->quantity }}">
                                         <img src="{{ Storage::url($color->image->name) }}" alt="" width="100px"
                                             height="100%">
                                     </a>
+                                    ({{ $color->quantity }})
+                                    {{-- <a href="#" class="btn btn-secondary">Agregar info</a> --}}
 
                                     {{-- Mostrar como modal de bootstrap --}}
 
@@ -75,7 +77,7 @@
                                 <td>
                                     <a class="btn btn-primary" href="#" data-toggle="modal"
                                         data-target="#addImagesColor{{ $color->id }}">
-                                        Agregar Variantes
+                                        Editar Color
                                     </a>
                                     <p>Agregue fotos del mismo color pero actuales</p>
                                 </td>
@@ -88,8 +90,6 @@
 
                                 </td>
                             @endif
-
-                            <td>{{ $color->quantity }}</td>
 
                             <td wire:key="color-{{ $color->id }}" class="text-center">
                                 <a class="btn-color" href="#"
@@ -112,7 +112,8 @@
                     <div class="row text-center">
                         <div class="col-lg-4 col-12">
                             @if ($color->image)
-                            <img src="{{ Storage::url($color->image->name) }}" alt="" width="100%" height="100%">
+                                <img src="{{ Storage::url($color->image->name) }}" alt="" width="100%"
+                                    height="100%">
                             @endif
                         </div>
 
@@ -126,6 +127,7 @@
                 {{-- modal para agregar variantes de la imagen --}}
 
                 <x-modal title="Agregar variantes" id="addImagesColor{{ $color->id }}" size="modal-lg">
+
                     <div class="zoom-color">
                         <div wire:ignore class="drop-zoom" wire:key="color-variants-form-upload-{{ $color->id }}">
 
@@ -136,6 +138,21 @@
 
                         </div>
                     </div>
+
+                    <div class="input-group mb-3 mt-3">
+                        <input type="text" class="form-control" wire:model.debounce.500ms="color.name"
+                            placeholder="Color" aria-label="Color" aria-describedby="basic-addon1">
+                    </div>
+
+                    <button type="button" wire:loading.class="btn-secondary" wire:loading.attr="disabled"
+                        wire.target="save" wire:click="save" class="btn btn-success ml-auto"><i
+                            class="fa-solid fa-floppy-disk mr-1"></i> Guardar
+                        Cambios</button>
+
+                    <div class="spinner-border" wire:loading.flex wire:target="save" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+
 
                     <table class="table table-striped mt-3">
                         <tr>
@@ -149,7 +166,8 @@
                             @foreach ($color->images as $image)
                                 <tr>
                                     <td>{{ $image->id }}</td>
-                                    <td><img src="{{ Storage::url($image->name) }}" width="100px" height="100%" alt="">
+                                    <td><img src="{{ Storage::url($image->name) }}" width="100px" height="100%"
+                                            alt="">
                                     </td>
                                     <td>{{ $image->created_at }}</td>
                                     <td wire:key="color-variante-{{ $image->id }}" class="text-center">
@@ -161,7 +179,8 @@
                             @foreach ($color->images as $image)
                                 <tr>
                                     <td>{{ $image->id }}</td>
-                                    <td><img src="{{ Storage::url($image->name) }}" width="100px" height="100%" alt="">
+                                    <td><img src="{{ Storage::url($image->name) }}" width="100px" height="100%"
+                                            alt="">
                                     </td>
                                     <td>{{ $image->created_at }}</td>
                                     <td wire:key="color-variante-{{ $image->id }}" class="text-center">
