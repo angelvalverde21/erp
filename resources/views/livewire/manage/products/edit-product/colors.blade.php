@@ -56,6 +56,7 @@
                                             height="100%">
                                     </a>
                                     ({{ $color->quantity }})
+                                    <p>({{ $color->label }})</p>
                                     {{-- <a href="#" class="btn btn-secondary">Agregar info</a> --}}
 
                                     {{-- Mostrar como modal de bootstrap --}}
