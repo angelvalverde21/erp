@@ -1,6 +1,6 @@
 <div>
     {{-- Because she competes with no one, no one can compete with her. --}}
-    <h4><i class="fa-solid fa-cart-flatbed mr-2"></i>( {{ $product->stock }} ) Productos en almacen</h4>
+    <h4><i class="fa-solid fa-cart-flatbed mr-2"></i>( {{ $product->quantity }} ) Productos en almacen</h4>
 
     {{-- cargar imagen --}}
 
@@ -16,9 +16,9 @@
 
     {{-- fin de cargar imagen --}}
 
-    <h4>{{ $product->colors->count() }} disenos disponibles</h4>
+    <h4>{{ $colors->count() }} disenos disponibles</h4>
 
-    @if ($product->colors->count())
+    @if ($colors->count())
 
         <div class="table-responsive">
 
@@ -36,7 +36,7 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($product->colors as $color)
+                    @foreach ($colors as $color)
                         <tr class="text-center">
                             <td class="text-center">{{ $color->id }}</td>
                             <td>
@@ -75,11 +75,15 @@
                                 </td>
 
                                 <td>
-                                    <a class="btn btn-primary" href="#" data-toggle="modal"
+
+                                    @livewire('manage.products.edit-product.colors.edit-color-modal', ['color' => $color, 'store' => $store], key('edit-color-' . $color->id))
+
+                                    {{-- <a class="btn btn-primary" href="#" data-toggle="modal"
                                         data-target="#addImagesColor{{ $color->id }}">
                                         Editar Color
                                     </a>
-                                    <p>Agregue fotos del mismo color pero actuales</p>
+                                    <p>Agregue fotos del mismo color pero actuales</p> --}}
+
                                 </td>
                             @else
                                 <td>
@@ -102,9 +106,10 @@
                 </tbody>
             </table>
         </div>
+
         <div class="contenedor">
 
-            @foreach ($product->colors as $color)
+            @foreach ($colors as $color)
                 {{-- modal para agregar el stock --}}
 
                 <x-modal title="Editar Stock" id="editarStock-{{ $color->id }}" size="modal-lg">
@@ -126,7 +131,7 @@
 
                 {{-- modal para agregar variantes de la imagen --}}
 
-                <x-modal title="Agregar variantes" id="addImagesColor{{ $color->id }}" size="modal-lg">
+                {{-- <x-modal title="Agregar variantes" id="addImagesColor{{ $color->id }}" size="modal-lg">
 
                     <div class="zoom-color">
                         <div wire:ignore class="drop-zoom" wire:key="color-variants-form-upload-{{ $color->id }}">
@@ -193,7 +198,8 @@
                         @endif
 
                     </table>
-                </x-modal>
+                </x-modal> --}}
+
             @endforeach
 
         </div>
@@ -222,7 +228,7 @@
             queuecomplete: function() {
                 Livewire.emit('render');
                 //OJO REFRESCAMOS LA PAGINA PARA QUE DROPZONE VUELVA A LEER LOS NUEVOS FORMULARIOS AGREGADOS DINAMICAMENTE
-                window.location.reload()
+                // window.location.reload()
             },
             accept: function(file, done) {
                 if (file.name == "justinbieber.jpg") {
@@ -234,7 +240,7 @@
         };
     </script>
 
-    <script>
+    {{-- <script>
         Dropzone.options.myAwesomeDropzoneVariantsColorsEdit = {
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -271,5 +277,5 @@
                 }
             }
         };
-    </script>
+    </script> --}}
 @endpush
