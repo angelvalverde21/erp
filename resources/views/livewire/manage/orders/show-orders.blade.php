@@ -64,8 +64,8 @@
 
                             @foreach ($orders as $order)
                                 {{-- {{ $order }} --}}
-
-                                <tr @if (!$order->is_active) class="bg-danger" @endif>
+                                
+                                <tr @if (!$order->is_active) class="bg-danger" @endif   @if ($order->is_pay) stye="background: #E2FBDF;" @endif>
 
                                     <td class="text-center">                                            
                                         <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
