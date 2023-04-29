@@ -7,6 +7,24 @@
     <x-breadcrumbs title="Productos" icon="fa-solid fa-barcode"/>
 
     <x-sectioncontent>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Buscar" wire:model.debounce.500ms="search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <select class="form-select" id="inputGroupSelect01">
+
+                <option selected>Escoja una categoria</option>
+                @foreach ($categories as $category)
+                    
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+
+                @endforeach
+\
+              </select>
+            <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-magnifying-glass"></i></span>
+          </div>
+    </x-sectioncontent>
+
+    <x-sectioncontent>
         <div class="card">
             <div class="card-header">
                 <a href="{{ route('manage.products.create', [$store->nickname]) }}"
