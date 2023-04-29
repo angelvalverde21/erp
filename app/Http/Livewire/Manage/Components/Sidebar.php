@@ -32,7 +32,7 @@ class Sidebar extends Component
                         [
                             "name"=>"Mis entregas Hoy",
                             "slug"=> route('manage.orders.today',[$this->store->nickname]),
-                            "active"=>"orders/today",
+                            "active"=>"orders.today",
                             "icon"=>"fa-solid fa-align-justify",
                         ],
                         [

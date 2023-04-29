@@ -68,7 +68,8 @@
                                 @foreach ($menu['sub_menu'] as $sub_menu)
                                     <li class="nav-item">
                                         <a href="{{ $sub_menu['slug'] }}"
-                                            class="nav-link {{ request()->routeIs('manage.'.$sub_menu['active'].'*', [$store->nickname]) ? 'active' : '' }}">
+                                            class="nav-link {{ request()->routeIs('manage.'.$sub_menu['active'], [$store->nickname]) ? 'active' : '' }}">
+                                            {{-- class="nav-link {{ request()->routeIs('manage.'.$sub_menu['active'].'*', [$store->nickname]) ? 'active' : '' }}"> --}}
                                             <i class="{{ $sub_menu['icon'] }} nav-icon"></i>
                                             <p>{{ $sub_menu['name'] }}</p>
                                         </a>
