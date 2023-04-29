@@ -228,7 +228,7 @@
             queuecomplete: function() {
                 Livewire.emit('render');
                 //OJO REFRESCAMOS LA PAGINA PARA QUE DROPZONE VUELVA A LEER LOS NUEVOS FORMULARIOS AGREGADOS DINAMICAMENTE
-                // window.location.reload()
+                window.location.reload()
             },
             accept: function(file, done) {
                 if (file.name == "justinbieber.jpg") {

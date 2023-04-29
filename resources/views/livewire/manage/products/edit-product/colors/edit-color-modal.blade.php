@@ -26,9 +26,7 @@
         </div>
 
 
-        @error('color.label')
-            <span class="error">Debe especificar el color</span>
-        @enderror
+
 
         <button type="button" wire:loading.class="btn-secondary" wire:loading.attr="disabled" wire.target="save"
             wire:click="save" class="btn btn-success ml-auto"><i class="fa-solid fa-floppy-disk mr-1"></i> Guardar
