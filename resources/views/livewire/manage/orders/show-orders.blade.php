@@ -64,8 +64,8 @@
 
                             @foreach ($orders as $order)
                                 {{-- {{ $order }} --}}
-                                
-                                <tr @if (!$order->is_active) class="bg-danger" @endif   @if ($order->is_pay) stye="background: #E2FBDF;" @endif>
+                                {{-- Ojo is_active es un campo de la base de datos, pero is_pay es una instancia --}}
+                                <tr @if (!$order->is_active) class="bg-danger" @endif   @if ($order->is_pay()) stye="background: #E2FBDF;" @endif>
 
                                     <td class="text-center">                                            
                                         <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
