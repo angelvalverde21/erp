@@ -27,7 +27,6 @@
                             <th>Nombre del producto</th>
                             <th>Costo</th>
                             <th>Precio</th>
-                            <th>Stock</th>
                             <th>Publicado</th>
                             <th>Acciones</th>
                         </tr>
@@ -60,12 +59,11 @@
                                                     class="fa-solid fa-image"></i></span></a>
 
                                     @endif
-                                    
+                                    ({{ $product->quantity }})
                                 </td>
                                 <td><a href="{{ route('manage.products.edit', [$store->nickname, $product->id]) }}">{{ $product->name }}</a></td>
-                                <td>{{ $product->costo }}</td>
-                                <td>{{ $product->price }}</td>
-                                <td>{{ $product->quantity }}</td>
+                                <td>S/. {{ $product->costo }}</td>
+                                <td>S/. {{ $product->price }}</td>
                                 <td>{{ $product->created_at }}</td>
                                 <td>
                                     <div class="d-flex  justify-content-center">
