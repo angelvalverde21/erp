@@ -55,7 +55,7 @@
                                         <img src="{{ Storage::url($color->image->name) }}" alt="" width="100px"
                                             height="100%">
                                     </a>
-                                    ({{ $color->quantity }})
+                                    <p>({{ $color->quantity }})</p>
                                     <p>({{ $color->label }})</p>
                                     {{-- <a href="#" class="btn btn-secondary">Agregar info</a> --}}
 
