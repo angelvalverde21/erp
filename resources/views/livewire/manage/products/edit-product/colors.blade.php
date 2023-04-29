@@ -55,8 +55,8 @@
                                         <img src="{{ Storage::url($color->image->name) }}" alt="" width="100px"
                                             height="100%">
                                     </a>
-                                    <p>({{ $color->quantity }})</p>
-                                    <p>({{ $color->label }})</p>
+                                    <div>({{ $color->quantity }})</div>
+                                    <div>({{ $color->label }})</div>
                                     {{-- <a href="#" class="btn btn-secondary">Agregar info</a> --}}
 
                                     {{-- Mostrar como modal de bootstrap --}}
