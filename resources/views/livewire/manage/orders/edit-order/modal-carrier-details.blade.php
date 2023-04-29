@@ -20,7 +20,7 @@
             </x-form.select>
         </div> --}}
 
-        <div class="col-lg-6 col-6">
+        <div class="col-lg-6 col">
             <x-form.input-number wirevalue="order.shipping_cost_to_carrier" label="Costo de traslado hasta el courier"
                 icon="fa-solid fa-truck" error="Este campo es requerido">
                 0.00
