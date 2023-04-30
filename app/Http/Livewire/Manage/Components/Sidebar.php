@@ -30,9 +30,15 @@ class Sidebar extends Component
                     "icon"=>"fa-solid fa-store",
                     "sub_menu"=>[
                         [
-                            "name"=>"Mis entregas Hoy",
+                            "name"=>"Entregas Hoy",
                             "slug"=> route('manage.orders.today',[$this->store->nickname]),
                             "active"=>"orders.today",
+                            "icon"=>"fa-solid fa-align-justify",
+                        ],
+                        [
+                            "name"=>"Entregas pendientes",
+                            "slug"=> route('manage.orders.pending',[$this->store->nickname]),
+                            "active"=>"orders.pending",
                             "icon"=>"fa-solid fa-align-justify",
                         ],
                         [

@@ -441,6 +441,58 @@ class Order extends Model
         return $this->is_pay();
     }
 
+    public function confirmarStock()
+    {
+
+
+        Log::info('se confirma que la orden esta pagada');
+
+        $items = $this->items()->get(); //consultamos los items de la orden
+
+        Log::info('imprimiendo items asociados a la orden: ' . $this->id);
+
+        Log::info($items);
+
+        foreach ($items as $item) { //recorremos todos los items
+
+            //Puede que un item tenga mas de un stock asignado
+            $item->asignarStock();
+            // $stocks = Stock::where('item_id',$item->id)->get(); //consultamos a la tabla stock cuantos item_id tiene
+
+            // foreach ($stocks as $stock) {
+            //     # code...
+            //     Log::info('impriendo el stock de la tabla stocks');
+            //     Log::info($stock);
+            //     $stock->status = Stock::VENDIDO;
+            //     $stock->save();
+            //     Log::info('El stock fue cambiado a :');
+            //     Log::info($stock);
+            // }
+        }
+    }
+
+    public function reservar()
+    {
+
+        $items = $this->items()->get(); //consultamos los items de la orden
+
+        foreach ($items as $item) { //recorremos todos los items
+
+            $item->separarStock();
+        }
+    }
+
+    public function devolverStock()
+    {
+
+        $items = $this->items()->get(); //consultamos los items de la orden
+
+        foreach ($items as $item) { //recorremos todos los items
+
+            $item->devolverItems();
+        }
+    }
+
     public function is_pay()
     {
 
@@ -496,55 +548,76 @@ class Order extends Model
         }
     }
 
-    public function confirmarStock()
+    public function is_contra_entrega()
     {
-
-
-        Log::info('se confirma que la orden esta pagada');
-
-        $items = $this->items()->get(); //consultamos los items de la orden
-
-        Log::info('imprimiendo items asociados a la orden: ' . $this->id);
-
-        Log::info($items);
-
-        foreach ($items as $item) { //recorremos todos los items
-
-            //Puede que un item tenga mas de un stock asignado
-            $item->asignarStock();
-            // $stocks = Stock::where('item_id',$item->id)->get(); //consultamos a la tabla stock cuantos item_id tiene
-
-            // foreach ($stocks as $stock) {
-            //     # code...
-            //     Log::info('impriendo el stock de la tabla stocks');
-            //     Log::info($stock);
-            //     $stock->status = Stock::VENDIDO;
-            //     $stock->save();
-            //     Log::info('El stock fue cambiado a :');
-            //     Log::info($stock);
-            // }
+        if ($this->collect_method_id == 1) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public function reservar()
+    public function print_status()
     {
 
-        $items = $this->items()->get(); //consultamos los items de la orden
+        if ($this->is_delivered() > 0) {
+            return "Paquete entregado";
 
-        foreach ($items as $item) { //recorremos todos los items
+        } else {
 
-            $item->separarStock();
+            if ($this->is_ready_delivery() > 0) {
+                return "Listo para envio";
+                
+            } else {
+
+                if ($this->is_preparing() > 0) {
+                    return "En proceso de Empaque";
+                } else {
+
+                    if ($this->is_contra_entrega()) {
+                        return "Preparar el envio (Contra entrega)";
+                    } else {
+
+                        if ($this->is_pay()) {
+                            return "Preparar el envio (Pagado)";
+                        }else{
+                            return "Esperando Pago";
+                        }
+                    }
+                }
+            }
         }
-    }
 
-    public function devolverStock()
-    {
+        // if ($this->is_contra_entrega()) {
 
-        $items = $this->items()->get(); //consultamos los items de la orden
+        //     $message[0] = "Preparar el envio";
 
-        foreach ($items as $item) { //recorremos todos los items
+        //     if ($this->is_ready_delivery() > 0) {
+        //         $message[1] = "Listo para envio";
 
-            $item->devolverItems();
-        }
+        //         if ($this->is_delivered() > 0) {
+        //             $message[2] = "Paquete entregado";
+        //         }
+        //     }
+        // } else {
+        //     # code...
+        //     $message[0] = "Esperando el pago";
+
+        //     if ($this->is_pay()) {
+        //         $message[0] = "Preparar el envio";
+
+        //         if ($this->is_preparing() > 0) {
+        //             $message[1] = "Preparando el envio";
+
+        //             if ($this->is_ready_delivery() > 0) {
+        //                 $message[2] = "Listo para envio";
+
+        //                 if ($this->is_delivered() > 0) {
+        //                     $message[3] = "Paquete entregado";
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
     }
 }

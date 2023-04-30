@@ -4,14 +4,12 @@ namespace App\Http\Livewire\Manage\Orders;
 
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 
-class ShowOrdersToday extends Component
+class ShowOrdersPending extends Component
 {
-
-    public $store;
-
     protected $listeners = ['render' => 'render'];
 
     public function mount(){
@@ -24,9 +22,12 @@ class ShowOrdersToday extends Component
 
     public function render()
     {
+
         $user = Auth::user();
 
-        $orders = Order::where('store_id',$this->store->id)->limit(20)->where('delivery_date',date('Y-m-d'))->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
+        Log::info('pending');
+
+        $orders = Order::where('store_id',$this->store->id)->limit(20)->limit(5)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
         // $orders = Order::where('store_id',$this->store->id)->where('is_active','=','0')->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
 
         // $orders2 = Order::whereHas('status', function ($query) {
@@ -34,8 +35,5 @@ class ShowOrdersToday extends Component
         // })->get();
 
         return view('livewire.manage.orders.show-orders',compact('orders'))->layout('layouts.manage');
-
     }
-
-
 }

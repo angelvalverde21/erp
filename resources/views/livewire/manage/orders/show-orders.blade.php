@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="{{ asset('admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     @endpush
 
-    <x-breadcrumbs title="Ventas" />
+    <x-breadcrumbs title="Ventas x" />
 
     <x-sectioncontent>
 
@@ -65,7 +65,10 @@
                             @foreach ($orders as $order)
                                 {{-- {{ $order }} --}}
                                 {{-- Ojo is_active es un campo de la base de datos, pero is_pay es una instancia --}}
-                                <tr @if (!$order->is_active) class="bg-danger" @endif>
+                                <tr 
+                                    @if (!$order->is_active) class="bg-danger" @endif 
+                                    @if ($order->is_delivered()) style="background: #E2FBDF;" @endif
+                                >
 
                                     <td class="text-center" @if ($order->is_pay()) style="background: #E2FBDF;" @endif>                                            
                                         <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
@@ -103,12 +106,14 @@
                                     </td>
                                     <td>
 
-                                        @foreach ($order->status as $status)
+                                        {{ $order->print_status() }}
+
+                                        {{-- @foreach ($order->status as $status)
                                             {{ $status->title }}
                                             @php
                                                 break;
                                             @endphp
-                                        @endforeach
+                                        @endforeach --}}
 
                                     </td>
                                     <td>
