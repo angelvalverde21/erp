@@ -18,14 +18,17 @@
 
     <h4>{{ $colors->count() }} disenos disponibles</h4>
 
-    <div class="input-group mb-3">
-        <input type="text" class="form-control buscar_table" placeholder="Buscar Color" aria-label="Recipient's username" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-          <span class="input-group-text" id="basic-addon2"><li class="material-icons">search</li></span>
-        </div>
-      </div>
-
     @if ($colors->count())
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control buscar_table" placeholder="Buscar Color"
+                aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">
+                    <li class="material-icons">search</li>
+                </span>
+            </div>
+        </div>
 
         <div class="table-responsive">
 
@@ -220,7 +223,6 @@
 </div>
 
 @push('script')
-
     <script>
         $(".buscar_table").on("keyup", function() {
             var value = $(this).val().toLowerCase();
@@ -230,7 +232,7 @@
             });
         });
     </script>
-    
+
     <script>
         Dropzone.options.myAwesomeDropzoneColors = {
             headers: {
