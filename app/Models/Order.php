@@ -571,7 +571,7 @@ class Order extends Model
             } else {
 
                 if ($this->is_preparing() > 0) {
-                    return "En proceso de Empaque";
+                    return "En proceso de Empaque (Etiqueta de envio impresa)";
                 } else {
 
                     if ($this->is_contra_entrega()) {

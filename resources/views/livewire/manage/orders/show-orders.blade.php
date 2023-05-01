@@ -39,7 +39,6 @@
                                 <th>Productos</th>
                                 <th>Entregar por</th>
                                 <th class="text-center">Status</th>
-                                <th class="text-center">Status</th>
                                 <th>Pago</th>
                                 <th>Total</th>
                                 <th>Autor</th>
@@ -104,10 +103,12 @@
                                     <td class="text-center">
                                         {{ $order->delivery_man->name }}
                                     </td>
-                                    <td>
+                                    <td class="text-center">
 
-                                        {{ $order->print_status() }}
-
+                                        <p>{{ $order->print_status() }}</p>
+                                        @if ($order->is_pay())
+                                            <button class="btn btn-success">Pagado</button>
+                                        @endif
                                         {{-- @foreach ($order->status as $status)
                                             {{ $status->title }}
                                             @php
@@ -116,13 +117,7 @@
                                         @endforeach --}}
 
                                     </td>
-                                    <td>
-                                        @if ($order->is_pay())
-                                            <button class="btn btn-success">Pagado</button>
-                                        @else
-                                            <button class="btn btn-warning">Pendiente</button>
-                                        @endif
-                                    </td>
+
                                     <td>{{ $order->total_amount }}</td>
 
                                     <td>{{ $order->total_amount }}</td>

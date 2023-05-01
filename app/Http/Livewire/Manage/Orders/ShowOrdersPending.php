@@ -27,7 +27,8 @@ class ShowOrdersPending extends Component
 
         Log::info('pending');
 
-        $orders = Order::where('store_id',$this->store->id)->limit(20)->limit(5)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
+        $orders = Order::where('store_id',$this->store->id)->doesntHave('comprobantesEnvio')->limit(20)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
+        //$orders = Order::where('store_id',$this->store->id)->limit(20)->limit(20)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
         // $orders = Order::where('store_id',$this->store->id)->where('is_active','=','0')->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
 
         // $orders2 = Order::whereHas('status', function ($query) {
