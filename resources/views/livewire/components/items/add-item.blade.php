@@ -48,7 +48,6 @@
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>
                                         </span>
-
                                     </div>
                                 </div>
 
@@ -104,16 +103,20 @@
 
                                                                     <td class="text-center"
                                                                         rowspan="{{ $loop->count }}">
-                                                                        <img width="100"
+                                                                        <a href="#">
+                                                                            <img width="100"
                                                                             src="{{ Storage::url($color->image) }}"
                                                                             alt="">
+                                                                        </a>
                                                                     </td>
 
                                                                     {{-- fin de imagen --}}
 
                                                                     <td rowspan="{{ $loop->count }}">
+                                                                        <a href="{{ Storage::url($color->image->name) }}" data-lightbox="show-images-preview" data-title="Click the right half of the image to move forward.">
                                                                         <img src="{{ Storage::url($color->image->name) }}"
                                                                             height="75px" alt="">
+                                                                        </a>
                                                                     </td>
                                                                 @endif
 
