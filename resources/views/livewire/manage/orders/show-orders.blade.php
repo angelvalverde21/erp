@@ -4,7 +4,46 @@
         <link rel="stylesheet" href="{{ asset('admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     @endpush
 
-    <x-breadcrumbs title="Ventas x" />
+    <x-breadcrumbs title="Ventas" />
+
+    <x-sectioncontent>
+
+        <div class="buscador d-flex justify-content-between">
+
+
+            <div class="input-group mb-3 me-2">
+                <input type="text" class="form-control" placeholder="Buscar" wire:model.debounce.500ms="search"
+                    aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-magnifying-glass"></i></span>
+            </div>
+
+            <div class="input-group mb-3 me-2">
+                <input id="fecha" type="date" class="form-control" placeholder="Buscar por fecha">
+            </div>
+
+            <div class="input-group mb-3 w-25">
+                <a id="enviarfecha" href="{{ route('manage.orders', [$store->nickname]) }}"
+                    class="btn btn-success w-100">Buscar</a>
+            </div>
+
+        </div>
+
+        <script>
+            var fecha = document.getElementById('fecha');
+            var enlace = document.getElementById('enviarfecha');
+
+            fecha.addEventListener('change', () => {
+                console.log('El valor ha cambiado:', fecha.value); // Acción a realizar cuando cambia el valor
+                enlace.href = enlace.href + '/date/' + fecha.value;
+            });
+
+            
+
+            
+
+        </script>
+
+    </x-sectioncontent>
 
     <x-sectioncontent>
 
@@ -37,6 +76,7 @@
                                 <th>Id</th>
                                 <th>Cliente</th>
                                 <th>Productos</th>
+                                <th>Status</th>
                                 <th>Entregar por</th>
                                 <th class="text-center">Status</th>
                                 <th>Pago</th>
@@ -64,15 +104,15 @@
                             @foreach ($orders as $order)
                                 {{-- {{ $order }} --}}
                                 {{-- Ojo is_active es un campo de la base de datos, pero is_pay es una instancia --}}
-                                <tr 
-                                    @if (!$order->is_active) class="bg-danger" @endif 
-                                    @if ($order->is_delivered()) style="background: #E2FBDF;" @endif
-                                >
+                                <tr @if (!$order->is_active) class="bg-danger" @endif
+                                    @if ($order->is_delivered()) style="background: #E2FBDF;" @endif>
 
-                                    <td class="text-center" @if ($order->is_pay()) style="background: #E2FBDF;" @endif>                                            
+                                    <td class="text-center"
+                                        @if ($order->is_pay()) style="background: #E2FBDF;" @endif>
                                         <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
-                                        class="btn btn-success mr-2">Editar</a>
-                                        <p class="mt-1">{{ $order->id }}</p>
+                                            class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <p class="mt-1">#{{ $order->id }}</p>
+
                                     </td>
 
                                     <td class="">
@@ -84,19 +124,39 @@
                                         <li>{{ $order->address->secondary }}</li>
                                         <li>References: </li>
                                         <li>{{ $order->address->references }}</li>
-                                        <li><strong>{{ $order->address->district->name }}</strong></li>
-                                        <li>{{ $order->delivery_time_start }} Hasta {{ $order->delivery_time_end }}</li>
+                                        <li><strong>{{ $order->address->district->name }}</strong> -
+                                            {{ $order->address->district->province->name }} -
+                                            {{ $order->address->district->province->department->name }}</li>
+                                        <li>{{ $order->delivery_time_start }} Hasta {{ $order->delivery_time_end }}
+                                        </li>
                                         <li>{{ $order->address->phone }}</li>
 
+                                    </td>
+
+                                    <td class="text-center">
+                                        @if ($order->is_pay())
+                                            <span class="text-success" style="font-size: 1.5rem"><i
+                                                    class="fa-solid fa-sack-dollar"></i></span>
+                                        @else
+                                            <span class="text-secondary" style="font-size: 1.5rem"><i
+                                                    class="fa-solid fa-sack-dollar"></i></span>
+                                        @endif
                                     </td>
 
                                     <td>
                                         {{-- Imanges de los productos --}}
 
                                         @foreach ($order->items as $item)
-                                            <a href="{{ Storage::url($item->content->image) }}" data-lightbox="show-images-preview-{{ $order->id }}">
-                                                <img style="height: 125px" src="{{ Storage::url($item->content->image) }}" alt=""> ({{ $item->content->talla_impresa }})
-                                            </a>
+                                            @if (isset($item->content->image))
+                                                <a href="{{ Storage::url($item->content->image) }}"
+                                                    data-lightbox="show-images-preview-{{ $order->id }}">
+                                                    <img style="height: 125px"
+                                                        src="{{ Storage::url($item->content->image) }}" alt="">
+                                                    ({{ $item->content->talla_impresa }})
+                                                </a>
+                                            @else
+                                                Sin imagen
+                                            @endif
                                         @endforeach
                                     </td>
 
@@ -106,9 +166,9 @@
                                     <td class="text-center">
 
                                         <p>{{ $order->print_status() }}</p>
-                                        @if ($order->is_pay())
+                                        {{-- @if ($order->is_pay())
                                             <button class="btn btn-success">Pagado</button>
-                                        @endif
+                                        @endif --}}
                                         {{-- @foreach ($order->status as $status)
                                             {{ $status->title }}
                                             @php
@@ -126,7 +186,7 @@
                                     <td>{{ $order->updated_at }}</td>
                                     <td>
                                         <a href="#" wire:click="cancelOrder( {{ $order }} )"
-                                                class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                            class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

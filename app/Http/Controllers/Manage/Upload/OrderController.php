@@ -55,9 +55,17 @@ class OrderController extends Controller
                 'name' => $image,
             ]);
 
+            if ($order->is_pay()) {
+                # code...
+            } else {
+                $order->confirmarStock();
+            }
+            
+
             Log::info('empieza el helper');
             Log::info(uploadImage($request));
             Log::info('Termina el helper');
+
         } catch (\Throwable $th) {
 
             Log::info('No se paso la validacion de comprobantes de envio');

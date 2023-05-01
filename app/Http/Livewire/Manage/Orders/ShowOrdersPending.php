@@ -11,7 +11,8 @@ use Livewire\Component;
 class ShowOrdersPending extends Component
 {
     protected $listeners = ['render' => 'render'];
-
+    public $search;
+    
     public function mount(){
         $this->store = Request::get('store');
     }
@@ -23,11 +24,14 @@ class ShowOrdersPending extends Component
     public function render()
     {
 
-        $user = Auth::user();
+        if($this->search <> ""){
+            $orders = Order::search($this->search);
 
-        Log::info('pending');
+        }else{
+            $orders = Order::where('store_id',$this->store->id)->doesntHave('comprobantesEnvio')->limit(20)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
+        
+        }
 
-        $orders = Order::where('store_id',$this->store->id)->doesntHave('comprobantesEnvio')->limit(20)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
         //$orders = Order::where('store_id',$this->store->id)->limit(20)->limit(20)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
         // $orders = Order::where('store_id',$this->store->id)->where('is_active','=','0')->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
 

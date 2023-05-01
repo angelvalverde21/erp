@@ -12,6 +12,7 @@ use App\Http\Livewire\Manage\Dashboard;
 use App\Http\Livewire\Manage\ImportData;
 use App\Http\Livewire\Manage\Orders\EditOrder;
 use App\Http\Livewire\Manage\Orders\ShowOrders;
+use App\Http\Livewire\Manage\Orders\ShowOrdersDate;
 use App\Http\Livewire\Manage\Orders\ShowOrdersPending;
 use App\Http\Livewire\Manage\Orders\ShowOrdersToday;
 use App\Http\Livewire\Manage\Productions\CreateProduction;
@@ -34,7 +35,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::name('manage.')->middleware('StoreExist')->group(function () {
 
-   Route::get('/', Dashboard::class)->name('dashboard');
+   // Route::get('/', Dashboard::class)->name('dashboard');
+   Route::get('/', ShowOrdersToday::class)->name('dashboard');
+
+   //Redireccion desde el Dashboard
+   // Route::get('/', function () {
+   //    return redirect()->route('manage.orders.today');
+   // });
 
    //IMPORT DATA
    Route::get('/import', ImportData::class)->name('import');
@@ -44,12 +51,13 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::get('/products/create', CreateProduct::class)->name('products.create');
    Route::get('/albums/{album}/edit', EditAlbum::class)->name('albums.edit');
    Route::post('/albums/upload/{album}', [UploadAlbumController::class, 'uploadAlbum'])->name('albums.upload');
-   
+
 
    //ORDERS
    Route::get('/orders', ShowOrders::class)->name('orders');
    Route::get('/orders/today', ShowOrdersToday::class)->name('orders.today');
    Route::get('/orders/pending', ShowOrdersPending::class)->name('orders.pending');
+   Route::get('/orders/date/{date}', ShowOrdersDate::class)->name('orders.date');
    Route::get('/orders/{order}/edit', EditOrder::class)->name('orders.edit');
 
    //PROFILE
@@ -99,7 +107,6 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    //Post upload home carousel
 
    Route::post('/post/profile/carousel', [UserImageController::class, 'uploadCarousel'])->name('post.profile.carousel');
-
 });
 
 // Route::bind('',function(User $nickname){

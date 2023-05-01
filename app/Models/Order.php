@@ -620,4 +620,16 @@ class Order extends Model
         //     }
         // }
     }
+
+    static function search($value){
+        
+        return Order::whereHas('address', function($query) use ($value){
+            $query->where('name','LIKE','%'. $value .'%')
+                    ->orWhereHas('district', function($query) use ($value){
+                        $query->where('name','LIKE','%'. $value .'%');
+                    });
+        })->limit(25)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
+
+        // Log::info($this->search);
+    }
 }
