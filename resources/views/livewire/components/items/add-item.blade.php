@@ -75,7 +75,7 @@
                                                 <thead>
                                                     <tr class="fw-bold">
                                                         <td class="text-center">#ID</td>
-                                                        <td class="text-center">Imagen</td>
+                                                        {{-- <td class="text-center">Imagen</td> --}}
                                                         <td class="text-center">Color</td>
                                                         <td></td>
                                                         <td>Qty</td>
@@ -101,14 +101,14 @@
 
                                                                     {{-- Imagen --}}
 
-                                                                    <td class="text-center"
+                                                                    {{-- <td class="text-center"
                                                                         rowspan="{{ $loop->count }}">
                                                                         <a href="#">
                                                                             <img width="100"
                                                                             src="{{ Storage::url($color->image) }}"
                                                                             alt="">
                                                                         </a>
-                                                                    </td>
+                                                                    </td> --}}
 
                                                                     {{-- fin de imagen --}}
 
