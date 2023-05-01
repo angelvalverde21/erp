@@ -55,13 +55,15 @@ class OrderController extends Controller
                 'name' => $image,
             ]);
 
-            if ($order->is_pay()) {
-                # code...
-            } else {
-                $order->confirmarStock();
+            //hay veces que la orden no esta pagada porque es contra entrega
+            if ($order->is_contra_entrega()) {
+                if ($order->is_pay()) {
+                    # code...
+                } else {
+                    $order->confirmarStock();
+                }
             }
             
-
             Log::info('empieza el helper');
             Log::info(uploadImage($request));
             Log::info('Termina el helper');
