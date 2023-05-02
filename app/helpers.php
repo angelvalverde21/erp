@@ -304,3 +304,11 @@ function paymentMethods() // 03
     //Como se pagar el cliente: efectivo, tarjeta, etc
     return PaymentMethod::whereNull('payment_method_id')->get();
 }
+
+function calcularStockInicial($color_id, $size_id){
+    
+    $color_size = ColorSize::where('color_id',$color_id)->where('size_id', $size_id)->first();
+
+    return $color_size->stocksBruto()->get()->count();
+
+}

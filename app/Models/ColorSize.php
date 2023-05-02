@@ -33,6 +33,13 @@ class ColorSize extends Model
         return $this->morphMany(Stock::class, "stockable")->whereIn('status', [Stock::ALMACENADO, Stock::SEPARADO])->orderBy('id', 'DESC');
 
     }
+
+    public function stocksBruto()
+    {
+        // return $this->morphMany(Stock::class, "stockable")->where('status', Stock::ALMACENADO)->orderBy('id', 'DESC');
+        // return $this->morphMany(Stock::class, "stockable")->where('status', Stock::ALMACENADO)->orWhere('status', Stock::SEPARADO)->orderBy('id', 'DESC');
+        return $this->morphMany(Stock::class, "stockable")->orderBy('id', 'DESC');
+    }
     
     public function stockAsignado($itemId){
         return $this->morphMany(Stock::class, "stockable")->where('status', Stock::SEPARADO)->where('item_id',$itemId)->orderBy('id', 'DESC');

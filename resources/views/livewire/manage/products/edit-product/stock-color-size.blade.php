@@ -10,23 +10,31 @@
 
             <ul style="padding: 0" class="d-flex w-100 justify-content-between align-items-center me-3">
                 {{-- <li>{{ $size->pivot->id }}</li> --}}
+
                 <li class="text-center">
                     <h4>{{ $size->name }}: </h4>
                 </li>
+
                 <li class="text-center">
-                    <h4>{{ $size->pivot->quantity }}</h4>
+                    <h4>{{ $size->pivot->quantity }}</h4> 
+                    (Stock inicial: {{ calcularStockInicial($color->id, $size->id) }})
                 </li>
+
                 <li>+</li>
+
                 <li class="text-center"><input type="number" style="width: 75px; margin: 0 auto" placeholder="0"
                         class="form-control" min="1"
                         wire:model.debounce.500ms="inputsAdd.{{ $size->pivot->id }}.quantity">
                 </li>
+
                 <li>=</li>
+
                 <li class="text-center"><input type="number" style="width: 75px; margin: 0 auto" placeholder="0"
                         class="form-control" min="1"
                         wire:model.debounce.500ms="inputsTotal.{{ $size->pivot->id }}.quantity">
                     {{-- <td><input type="number" placeholder="0" class="form-control" wire:model="inputs.{{ $size->pivot->id }}.quantity"> --}}
                 </li>
+
             </ul>
             <p class="">
                 <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
