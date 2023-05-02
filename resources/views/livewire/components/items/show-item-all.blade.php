@@ -8,7 +8,6 @@
                         <tr>
                             <td class="text-center">ID</td>
                             <td class="text-center">QTY</td>
-                            <td class="text-center">QTY OVER</td>
                             <td class="text-center">Imagen</td>
                             <td>Descripcion</td>
                             <td>Talla solicitada</td>
@@ -35,9 +34,9 @@
 
                                 </td>
                                 <td class="text-center">{{ $item->quantity }}</td>
-                                <td class="text-center">
+                                {{-- <td class="text-center">
                                     {{ extraerImagenOld($item->content->image) }}
-                                    {{ $item->quantity_oversale }}</td>
+                                    {{ $item->quantity_oversale }}</td> --}}
 
                                 @if (isset($item->content->image))
 
