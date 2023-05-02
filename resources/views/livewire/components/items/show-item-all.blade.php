@@ -75,6 +75,7 @@
                                                         <tr>
                                                             <td>Stock asignado</td>
                                                             <td>00000000{{ $stock->id }}</td>
+                                                            <td>STATUS : {{ $stock->status }}</td>
                                                             <td>{{ $stock->stockable->size->name }}</td>
                                                         </tr>
                                                     </table>
