@@ -45,7 +45,7 @@ class ShowOrders extends Component
 
         }else{
             
-            $orders = Order::where('store_id',$this->store->id)->limit(20)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
+            $orders = Order::where('store_id',$this->store->id)->limit(40)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
         
         }
 
