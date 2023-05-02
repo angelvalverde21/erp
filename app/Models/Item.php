@@ -138,17 +138,19 @@ class Item extends Model
         // $color_size->quantity = $color_size->quantity - $this->quantity;
 
         //Guardamos el resultado en la tabla color_size
-        $stock_real = $color_size->stocks()->count();
-        $color_size->quantity = $stock_real;
-        $color_size->save();
-        //return //stock actualizado
+        // $stock_real = $color_size->stocks()->count();
+        // $color_size->quantity = $stock_real;
+        // $color_size->save();
+        // //return //stock actualizado
 
 
-        //actualiza los campos "quantity" de las tablas colors y products respectivamente
-        $color_size->color->updateFieldQuantity();
-        $color_size->color->product->updateFieldQuantity();
-        $color_size->size->quantity = $stock_real;
-        $color_size->size->save();
+        // //actualiza los campos "quantity" de las tablas colors y products respectivamente
+        // $color_size->color->updateFieldQuantity();
+        // $color_size->color->product->updateFieldQuantity();
+        // $color_size->size->quantity = $stock_real;
+        // $color_size->size->save();
+
+        $color_size->recalcularStock();
     }
 
     //si la orden esta pagada entonces asignamos el stock permanentemente
@@ -170,9 +172,12 @@ class Item extends Model
             //primero se busca el stock reservado
             $stock = Stock::where('item_id', $this->id)->where('status',Stock::SEPARADO)->first();
 
+            //sino se encuentra el stock que se le separo originalemente
             if (!$stock) {
                 # code...
-                $stock = $color_size->stocks()->first();
+                //Buscara entre un ALMACENADO o un SEPARADO asi perteneesca a otra orden, porque si se asigna es porque e
+                //pedido ya esta pagado o entregado asi que se le da prioridad al item de la orden respectiva
+                $stock = $color_size->stocks()->first(); 
             }
 
             $stock->status = Stock::VENDIDO;
@@ -181,18 +186,26 @@ class Item extends Model
             $stock->save();
         }
 
-        $stock_real = $color_size->stocks()->count();
-        $color_size->quantity = $stock_real;
 
-        $color_size->save();
+        $color_size->recalcularStock();
 
-        //actualiza los campos "quantity" de las tablas colors y products respectivamente
-        $color_size->color->updateFieldQuantity();
-        $color_size->color->product->updateFieldQuantity();
+        // $stock_real = $color_size->stocks()->count();
+        // $color_size->quantity = $stock_real;
 
-        $color_size->size->quantity = $stock_real;
+        // $color_size->save();
 
-        $color_size->size->save();
+        // //actualiza los campos "quantity" de las tablas colors y products respectivamente
+        // $color_size->color->updateFieldQuantity();
+        // $color_size->color->product->updateFieldQuantity();
+
+
+        // //Este caso la tabla size y la tabla color_size tiene el mismo quantity
+        // $color_size->size->quantity = $stock_real;
+
+        // $color_size->size->save();
+
+
+
         // $color_size = ColorSize::find($this->content->color_size_id);
 
         // //descontamos el stock en la base de datos
@@ -219,12 +232,14 @@ class Item extends Model
     public function devolverItems() //Restituye el stock que ha salido de almacen Stock::ALMACENADO
     {
 
-        $quantity = $this->quantity;
+        // $quantity = $this->quantity;
+
         $color_size_id = $this->content->color_size_id;
         $color_size = ColorSize::find($color_size_id);
         // $color_size->quantity = $color_size->quantity + $quantity;
         // $color_size->save();
 
+        //Busca en la tabla stock cuantos item_id hay, ese numero es la cantidad pedida por el usuario y hay que retornarlo
         $stocks = Stock::where('item_id', $this->id)->get();
 
         foreach ($stocks as $stock) {
@@ -239,17 +254,18 @@ class Item extends Model
 
         }
 
-        $stock_real = $color_size->stocks()->count();
-        $color_size->quantity = $stock_real;
+        $color_size->recalcularStock();
+        // $stock_real = $color_size->stocks()->count();
+        // $color_size->quantity = $stock_real;
 
-        $color_size->save();
+        // $color_size->save();
 
-        //actualiza los campos "quantity" de las tablas colors y products respectivamente
-        $color_size->color->updateFieldQuantity();
-        $color_size->color->product->updateFieldQuantity();
+        // //actualiza los campos "quantity" de las tablas colors y products respectivamente
+        // $color_size->color->updateFieldQuantity();
+        // $color_size->color->product->updateFieldQuantity();
 
-        $color_size->size->quantity =  $stock_real;
-        $color_size->size->save();
+        // $color_size->size->quantity =  $stock_real;
+        // $color_size->size->save();
 
         //return //stock actualizado
     }

@@ -28,7 +28,10 @@ class ColorSize extends Model
 
     public function stocks()
     {
-        return $this->morphMany(Stock::class, "stockable")->where('status', Stock::ALMACENADO)->orderBy('id', 'DESC');
+        // return $this->morphMany(Stock::class, "stockable")->where('status', Stock::ALMACENADO)->orderBy('id', 'DESC');
+        // return $this->morphMany(Stock::class, "stockable")->where('status', Stock::ALMACENADO)->orWhere('status', Stock::SEPARADO)->orderBy('id', 'DESC');
+        return $this->morphMany(Stock::class, "stockable")->whereIn('status', [Stock::ALMACENADO, Stock::SEPARADO])->orderBy('id', 'DESC');
+
     }
     
     public function stockAsignado($itemId){
@@ -92,5 +95,24 @@ class ColorSize extends Model
     //     }
 
     // }
+
+    public function recalcularStock(){
+
+        $stock_real = $this->stocks()->count();
+
+        $this->quantity = $stock_real;
+        $this->save();
+        //return //stock actualizado
+
+
+        //actualiza los campos "quantity" de las tablas colors y products respectivamente
+        $this->color->updateFieldQuantity();
+        $this->color->product->updateFieldQuantity();
+
+        //Este caso la tabla size y la tabla color_size tiene el mismo quantity
+        $this->size->quantity = $stock_real;
+        $this->size->save();
+
+    }
 
 }

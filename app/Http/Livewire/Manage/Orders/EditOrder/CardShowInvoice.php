@@ -47,9 +47,18 @@ class CardShowInvoice extends Component
     }
 
     public function deletePayment( $id ){
+        
         $payment = Payment::findOrFail($id);
         $payment->delete();
+
+        //Primero devolvemos el stock reservado
+        $this->order->devolverStock();
+
+        //Luego lo volvemos a asignar
+        $this->order->reservarStock();
+        
         $this->order = $this->order->fresh();
+
         $this->emit('render');
         $this->emit('eliminado');
 

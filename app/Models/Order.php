@@ -97,7 +97,7 @@ class Order extends Model
         $this->is_active = 0;
 
         foreach ($this->items as $item) {
-            $item->devolverStock();
+            $item->devolverItems();
         }
 
         $this->save();
@@ -482,10 +482,22 @@ class Order extends Model
         }
     }
 
+    public function reservarStock()
+    {
+
+        $items = $this->items()->get(); //consultamos los items de la orden
+
+        foreach ($items as $item) { //recorremos todos los items
+
+            $item->separarStock();
+        }
+    }
+
     public function devolverStock()
     {
 
         $items = $this->items()->get(); //consultamos los items de la orden
+        //recuerda que tambien podria ser simplemente $this->items
 
         foreach ($items as $item) { //recorremos todos los items
 

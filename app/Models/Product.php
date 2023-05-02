@@ -89,6 +89,7 @@ class Product extends Model
                 $query->where('id', $this->id);
             })->sum('quantity');
         }
+        
     }
 
     public function getHasAttribute()

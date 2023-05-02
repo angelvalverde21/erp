@@ -24,7 +24,6 @@ class Stock extends Model
     {
         return $this->morphTo();
     }
-
     
     public function eliminarColorSize()
     {

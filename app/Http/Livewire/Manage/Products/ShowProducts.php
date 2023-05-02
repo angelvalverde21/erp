@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Manage\Products;
 
 use App\Models\Category;
+use App\Models\ColorSize;
 use App\Models\Product;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
@@ -18,6 +19,10 @@ class ShowProducts extends Component
 
     public function mount(){
         $this->store = Request::get('store');
+
+        //recalcular el stock
+
+
     }
 
     public function deleteProduct(Product $product){
@@ -43,6 +48,10 @@ class ShowProducts extends Component
         }else{
             
             $products = Product::where('store_id', $this->store->id)->where('status',Product::PUBLICADO)->orderBy('quantity','desc')->limit(30)->get();
+
+            //recalcular el stock de todos los productos
+
+
 
         }
 

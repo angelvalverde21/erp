@@ -14,12 +14,14 @@ class ShowOrders extends Component
 
     protected $listeners = ['render' => 'render'];
     public $search;
+    public $store;
 
     public function mount(){
         $this->store = Request::get('store');
     }
 
     public function cancelOrder(Order $order){
+        // $order->devolverStock();
         $order->cancel();
     }
 

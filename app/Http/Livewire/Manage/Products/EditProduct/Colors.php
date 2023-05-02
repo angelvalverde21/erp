@@ -57,6 +57,7 @@ class Colors extends Component
 
         Log::debug($sizes);
 
+        //Borrabdo tallas asociadas
         foreach ($sizes as $size) {
             $color->sizes()->detach($size->id);
         }
