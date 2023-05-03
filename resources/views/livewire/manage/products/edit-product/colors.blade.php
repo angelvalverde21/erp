@@ -21,17 +21,15 @@
     @if ($colors->count())
 
         <div class="input-group mb-3">
-            <input type="text" class="form-control buscar_table" placeholder="Buscar Color"
-                aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <input type="text" class="form-control buscar_table" placeholder="Buscar Color">
             <div class="input-group-append">
-                <span class="input-group-text" id="basic-addon2">
+                <span class="input-group-text">
                     <li class="material-icons">search</li>
                 </span>
             </div>
         </div>
 
         <div class="table-responsive">
-
 
             <table class="table">
 
@@ -67,10 +65,8 @@
                                     </a>
                                     <div>({{ $color->quantity }})</div>
 
-                                    @if ($color->label <> "")
-                                    
-                                    <div>({{ $color->label }})</div>
-
+                                    @if ($color->label != '')
+                                        <div>({{ $color->label }})</div>
                                     @endif
                                     {{-- <a href="#" class="btn btn-secondary">Agregar info</a> --}}
 
@@ -228,16 +224,6 @@
 </div>
 
 @push('script')
-    <script>
-        $(".buscar_table").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $(".table tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                //console.log($(this).text().toLowerCase().indexOf(value));
-            });
-        });
-    </script>
-
     <script>
         Dropzone.options.myAwesomeDropzoneColors = {
             headers: {

@@ -23,7 +23,7 @@
                     <div class="row">
 
                         <div class="col-lg-12 col">
-                            
+
                             <div class="mb-3">
 
                                 {{-- Barra de busqueda --}}
@@ -70,6 +70,10 @@
 
                                         @if ($product)
 
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control buscar_table">
+                                            </div>
+
                                             <table class="table">
 
                                                 <thead>
@@ -112,14 +116,17 @@
 
                                                                     {{-- fin de imagen --}}
 
-                                                                    <td  class="text-center" rowspan="{{ $loop->count }}">
+                                                                    <td class="text-center"
+                                                                        rowspan="{{ $loop->count }}">
 
-                                                                        <a href="{{ Storage::url($color->image->name) }}" data-lightbox="show-images-preview" data-title="Click the right half of the image to move forward.">
-                                                                        
+                                                                        <a href="{{ Storage::url($color->image->name) }}"
+                                                                            data-lightbox="show-images-preview"
+                                                                            data-title="Click the right half of the image to move forward.">
+
                                                                             <img src="{{ Storage::url($color->image->name) }}"
-                                                                            height="75px" alt="">
+                                                                                height="75px" alt="">
 
-                                                                            
+
                                                                         </a>
 
                                                                         <div class="name mt-2">
@@ -127,7 +134,6 @@
                                                                         </div>
 
                                                                     </td>
-                                                                    
                                                                 @endif
 
                                                                 {{-- Precio de venta final --}}
@@ -253,4 +259,17 @@
         </div>
 
     </div>
+
+    @push('script')
+        <script>
+            $(".buscar_table").on("keyup", function() {
+                console.log('teclado');
+                var value = $(this).val().toLowerCase();
+                $(".table tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    //console.log($(this).text().toLowerCase().indexOf(value));
+                });
+            });
+        </script>
+    @endpush
 </div>

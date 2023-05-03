@@ -272,6 +272,7 @@
             )
         });
     </script>
+    
     @livewireStyles
 
     {{-- datepicker --}}
@@ -281,6 +282,16 @@
     <script src="{{ asset('lightbox2/dist/js/lightbox-plus-jquery.min.js') }}"></script>
 
     @stack('script')
+
+    <script>
+        $(".buscar_table").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $(".table tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                //console.log($(this).text().toLowerCase().indexOf(value));
+            });
+        });
+    </script>
 
     {{-- Js font-awesome --}}
 
