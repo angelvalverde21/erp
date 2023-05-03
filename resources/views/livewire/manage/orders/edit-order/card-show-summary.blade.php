@@ -13,6 +13,8 @@
 
     <div class="card-body">
 
+        <div class="message mb-3"><h5>Costos cobrado al cliente</h5></div>
+
         <table class="table">
 
             <tbody>

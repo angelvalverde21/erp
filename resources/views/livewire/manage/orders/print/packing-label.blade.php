@@ -278,6 +278,14 @@
                     
                 </div>
             </div>
+
+            <div class="messages mx-3">
+                <div class="card">
+                    <div class="card-body">
+                        Entregar antes de la 1pm
+                    </div>
+                </div>
+            </div>
         </div>
 
         {{-- <div class="header">
