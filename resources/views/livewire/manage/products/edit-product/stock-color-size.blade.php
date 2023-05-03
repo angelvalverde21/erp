@@ -17,7 +17,7 @@
 
                 <li class="text-center">
                     <h4>{{ $size->pivot->quantity }}</h4> 
-                    (Stock inicial: {{ calcularStockInicial($color->id, $size->id) }})
+                    {{-- (Stock inicial: {{ calcularStockInicial($color->id, $size->id) }}) --}}
                 </li>
 
                 <li>+</li>
