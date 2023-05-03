@@ -198,6 +198,12 @@
                 bottom: 15px;
                 left: 0px;
             }
+
+            .total-ammount {
+                position: absolute;
+                top: 250px;
+                left: 0px;
+            }
         </style>
     </head>
 
@@ -288,6 +294,12 @@
 
 
             @if ($order->is_contra_entrega())
+                <div class="total-ammount text-center w-100">
+                    <h1>Total: S/. {{ $order->total_amount }}</h1>
+                </div>
+            @endif
+
+            @if ($order->is_contra_entrega())
                 <div class="qr">
                     <div class="yape text-center">
                         {{-- <img src="{{ asset(Storage::url($order->store->upload_qr_yape)) }}"
@@ -310,11 +322,6 @@
             @endif
 
 
-            @if ($order->is_contra_entrega())
-                <div class="status-pago">
-                    <h1>Total: S/. {{ $order->total_amount }}</h1>
-                </div>
-            @endif
 
         </div>
 
