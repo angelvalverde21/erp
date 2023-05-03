@@ -192,6 +192,11 @@
                 display: block;
             }
 
+            .messages{
+                position: absolute;
+                bottom: 15px;
+            }
+
   
         </style>
     </head>
