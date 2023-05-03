@@ -274,18 +274,14 @@
                 <div class="status-pago">
                     <h1>CONTRA ENTREGA</h1>
                 </div>
-            @else
-                @if ($order->is_pay())
-                    <div class="status-pago">
-                        <h1 class="mt-3">PAGADO</h1>
-                        <hr>
-                    </div>
-                @endif
             @endif
-
-
-
-
+            
+            @if ($order->is_pay())
+                <div class="status-pago">
+                    <h1 class="mt-3">PAGADO</h1>
+                    <hr>
+                </div>
+            @endif
 
             <div class="messages w-100">
                 <div class="card mx-3">
