@@ -119,10 +119,13 @@
                                                                             <img src="{{ Storage::url($color->image->name) }}"
                                                                             height="75px" alt="">
 
-                                                                            <div class="name">
-                                                                                {{ $color->label }}
-                                                                            </div>
+                                                                            
                                                                         </a>
+
+                                                                        <div class="name mt-2">
+                                                                            {{ $color->label }}
+                                                                        </div>
+
                                                                     </td>
                                                                     
                                                                 @endif
