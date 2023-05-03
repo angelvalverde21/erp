@@ -195,6 +195,7 @@
             .messages{
                 position: absolute;
                 bottom: 15px;
+                left: 0px;
             }
 
   
@@ -284,10 +285,10 @@
                 </div>
             </div>
 
-            <div class="messages mx-3">
+            <div class="messages w-100">
                 <div class="card">
-                    <div class="card-body">
-                        Entregar antes de la 1pm
+                    <div class="card-body text-center">
+                        {{ Str::upper($order->observations_time) }}
                     </div>
                 </div>
             </div>
