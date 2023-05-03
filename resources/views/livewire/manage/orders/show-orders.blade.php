@@ -168,7 +168,7 @@
                                         @foreach ($order->items as $item)
                                             @if (isset($item->content->image))
                                                 <a href="{{ Storage::url($item->content->image) }}"
-                                                    data-lightbox="show-images-preview-{{ $order->id }}" data-title="{{ $item->content->talla_impresa }}">
+                                                    data-lightbox="show-images-preview-{{ $order->id }}" data-title="TALLA: {{ $item->content->talla_impresa }}">
                                                     <img style="height: 125px"
                                                         src="{{ Storage::url($item->content->image) }}" alt="">
                                                     ({{ $item->content->talla_impresa }})
