@@ -2,7 +2,7 @@
     <!DOCTYPE html>
     <html lang="en" dir="ltr">
 
-        {{-- CASOS DE ENVIO
+    {{-- CASOS DE ENVIO
 
         ENVIO CONTRA ENTREGA
             
@@ -33,7 +33,8 @@
     <head>
         <meta charset="utf-8">
         <title>Label Packing</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
         <style>
             body {
@@ -84,7 +85,7 @@
                 background-color: #E1E1E1;
             }
 
-            
+
 
             .ship-to .large {
                 font-weight: bold;
@@ -94,7 +95,7 @@
             }
 
 
-            .ship-to p{
+            .ship-to p {
                 margin: 0px;
                 padding: 0px;
                 border: 0px solid #000;
@@ -192,13 +193,11 @@
                 display: block;
             }
 
-            .messages{
+            .messages {
                 position: absolute;
                 bottom: 15px;
                 left: 0px;
             }
-
-  
         </style>
     </head>
 
@@ -206,13 +205,14 @@
 
         <div class="label-left">
             <div class="logo mb-2">
-                <img style="width: 50%; height: auto;" src="{{ asset(Storage::url($order->store->logo)) }}" alt="">
+                <img style="width: 50%; height: auto;" src="{{ asset(Storage::url($order->store->logo)) }}"
+                    alt="">
             </div>
             <div class="ship-to py-0">
                 <p>DESTINATARIO: </p>
                 <p class="large">{{ strtoupper($order->address->name) }}</p>
             </div>
-            
+
             <div class="ship-details">
                 <ul class="my-2">
                     <li><span class="">DNI:</span> {{ $order->address->dni }}</li>
@@ -225,7 +225,8 @@
                         {{ $order->address->district->province->department->name }}</li>
                     <li>
                         {{-- <span class="">REFERENCIA:</span>  --}}
-                        <span class="fw-bold">REFERENCIA:</span> {{ strtoupper($order->address->references) }}</li>
+                        <span class="fw-bold">REFERENCIA:</span> {{ strtoupper($order->address->references) }}
+                    </li>
 
                 </ul>
             </div>
@@ -238,13 +239,11 @@
             </div>
 
             <style>
-                .codigo-barras{
-
-                }
+                .codigo-barras {}
             </style>
 
             <div class="codigo-barras my-3 text-center">
-                <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG('011136', 'C39+',2,50) }}" alt="barcode"/>
+                <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG('011136', 'C39+', 2, 50) }}" alt="barcode" />
                 <p style="font-size: 14pt">#011136</p>
             </div>
 
@@ -254,7 +253,9 @@
 
             <div class="carrier-address text-center">
                 <li>{{ $order->carrier_address->title }}</li>
-                <li>{{ $order->carrier_address->primary }}, {{ $order->carrier_address->district->name }} - {{ $order->carrier_address->district->province->name }} - {{ $order->carrier_address->district->province->department->name }}</li>
+                <li>{{ $order->carrier_address->primary }}, {{ $order->carrier_address->district->name }} -
+                    {{ $order->carrier_address->district->province->name }} -
+                    {{ $order->carrier_address->district->province->department->name }}</li>
             </div>
 
 
@@ -263,9 +264,19 @@
 
         <div class="label-right">
 
-            <div class="status-pago">
-                <h1>CONTRA ENTREGA</h1>
-            </div>
+            @if ($order->is_pay())
+                <div class="status-pago">
+                    <h1 class="mt-3">PAGADO</h1>
+                    <hr>
+                </div>
+            @else
+                @if ($order->is_contra_entrega())
+                    <div class="status-pago">
+                        <h1>CONTRA ENTREGA</h1>
+                    </div>
+                @endif
+            @endif
+
 
             <div class="messages w-100">
                 <div class="card mx-3">
@@ -275,26 +286,29 @@
                 </div>
             </div>
 
-            <div class="qr">
-                <div class="yape text-center">
-                    {{-- <img src="{{ asset(Storage::url($order->store->upload_qr_yape)) }}"
+
+            @if (!$order->is_pay())
+                <div class="qr">
+                    <div class="yape text-center">
+                        {{-- <img src="{{ asset(Storage::url($order->store->upload_qr_yape)) }}"
                         alt="barcode" height="90" width="90" /> --}}
                         <span>YAPE</span>
-                        <img src="{{ asset(Storage::url($order->store->qr_yape)) }}" alt="barcode" height="130" width="130" />
-                    
+                        <img src="{{ asset(Storage::url($order->store->qr_yape)) }}" alt="barcode" height="130"
+                            width="130" />
+
+                    </div>
+
+                    {{-- <img src="{{ asset(Storage::url("stores/logos/Ux88DfS1uBjW77dJM266NwajMxqxOYbUcuWKcCzz.png")) }}" alt="barcode" height="95" width="95" /> --}}
+                    <div class="plin text-center">
+                        <span>PLIN</span>
+                        <img src="{{ asset(Storage::url($order->store->qr_plin)) }}" alt="barcode" height="125"
+                            width="125" />
+
+                    </div>
+
                 </div>
+            @endif
 
-                {{-- <img src="{{ asset(Storage::url("stores/logos/Ux88DfS1uBjW77dJM266NwajMxqxOYbUcuWKcCzz.png")) }}" alt="barcode" height="95" width="95" /> --}}
-                <div class="plin text-center">
-                    <span>PLIN</span>
-                    <img src="{{ asset(Storage::url($order->store->qr_plin)) }}"
-                        alt="barcode" height="125" width="125" />
-                    
-                </div>
-
-            </div>
-
- 
         </div>
 
         {{-- <div class="header">
@@ -337,7 +351,7 @@
 
         </div> --}}
 
-        
+
     </body>
 
     </html>
