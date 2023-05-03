@@ -267,6 +267,14 @@
                 <h1>CONTRA ENTREGA</h1>
             </div>
 
+            <div class="messages w-100">
+                <div class="card mx-3">
+                    <div class="card-body text-center">
+                        <h5>{{ Str::upper($order->observations_time) }}</h5>
+                    </div>
+                </div>
+            </div>
+
             <div class="qr">
                 <div class="yape text-center">
                     {{-- <img src="{{ asset(Storage::url($order->store->upload_qr_yape)) }}"
@@ -283,15 +291,10 @@
                         alt="barcode" height="125" width="125" />
                     
                 </div>
+
             </div>
 
-            <div class="messages w-100">
-                <div class="card">
-                    <div class="card-body text-center">
-                        {{ Str::upper($order->observations_time) }}
-                    </div>
-                </div>
-            </div>
+ 
         </div>
 
         {{-- <div class="header">
