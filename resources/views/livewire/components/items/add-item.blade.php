@@ -112,12 +112,19 @@
 
                                                                     {{-- fin de imagen --}}
 
-                                                                    <td rowspan="{{ $loop->count }}">
+                                                                    <td  class="text-center" rowspan="{{ $loop->count }}">
+
                                                                         <a href="{{ Storage::url($color->image->name) }}" data-lightbox="show-images-preview" data-title="Click the right half of the image to move forward.">
-                                                                        <img src="{{ Storage::url($color->image->name) }}"
+                                                                        
+                                                                            <img src="{{ Storage::url($color->image->name) }}"
                                                                             height="75px" alt="">
+
+                                                                            <div class="name">
+                                                                                {{ $color->label }}
+                                                                            </div>
                                                                         </a>
                                                                     </td>
+                                                                    
                                                                 @endif
 
                                                                 {{-- Precio de venta final --}}
