@@ -111,7 +111,7 @@
                                     <td class="text-center"
                                         @if ($order->is_pay()) style="background: #E2FBDF;" @endif>
                                         <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
-                                            class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            class="btn btn-secondary"><i class="fa-solid fa-pen-to-square"></i></a>
                                         <p class="mt-1">#{{ $order->id }}</p>
 
                                     </td>
