@@ -229,7 +229,7 @@ class Order extends Model
     //Este es el costo total que pagara el cliente incluido los costos de envio
     public function getTotalAmountAttribute()
     {
-        return number_format((int)$this->total_final + (int)$this->shipping_cost_buyer, 2, '.', '');
+        return number_format($this->total_final + $this->shipping_cost_buyer, 2, '.', '');
     }
 
     // public function getRepartidoresAttribute(){
