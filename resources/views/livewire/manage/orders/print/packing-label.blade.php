@@ -251,14 +251,14 @@
                 N° REGISTRO: 202305594774(1/7)
             </div> --}}
 
-            <div class="carrier-address text-center">
-                <li>{{ $order->carrier_address->title }}</li>
-                <li>{{ $order->carrier_address->primary }}, {{ $order->carrier_address->district->name }} -
-                    {{ $order->carrier_address->district->province->name }} -
-                    {{ $order->carrier_address->district->province->department->name }}</li>
-            </div>
-
-
+            @if (!$order->is_contra_entrega())
+                <div class="carrier-address text-center">
+                    <li>{{ $order->carrier_address->title }}</li>
+                    <li>{{ $order->carrier_address->primary }}, {{ $order->carrier_address->district->name }} -
+                        {{ $order->carrier_address->district->province->name }} -
+                        {{ $order->carrier_address->district->province->department->name }}</li>
+                </div>
+            @endif
 
         </div>
 
@@ -288,7 +288,6 @@
 
 
             @if ($order->is_contra_entrega())
-
                 <div class="qr">
                     <div class="yape text-center">
                         {{-- <img src="{{ asset(Storage::url($order->store->upload_qr_yape)) }}"
@@ -308,7 +307,13 @@
                     </div>
 
                 </div>
-                
+            @endif
+
+
+            @if ($order->is_contra_entrega())
+                <div class="status-pago">
+                    <h1>Total: S/. {{ $order->total_amount }}</h1>
+                </div>
             @endif
 
         </div>

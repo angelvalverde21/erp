@@ -20,7 +20,7 @@
         </div>
         @endif
 
-        <input type="number" step="{{ $step }}" class="form-control" wire:model="{{ $wirevalue }}"
+        <input onclick="this.select();" pattern="[0-9]+([\.,][0-9]+)?" type="number" step="{{ $step }}" class="form-control" wire:model="{{ $wirevalue }}"
             aria-describedby="nameHelp" placeholder="{{ $slot }}">
     </div>
 

@@ -218,7 +218,7 @@
                     @endif
 
                         @if ($order->shipping_cost_buyer>0)
-                        <li>ENVIO: S/. {{ $order->shipping_cost_buyer }}</li> 
+                        <li>ENVIO @if ($order->is_contra_entrega()) (Motorizado) @endif: S/. {{ $order->shipping_cost_buyer }}</li> 
                         @else
                         <li>ENVIO: GRATIS (x OLVA)</li>
                         @endif
@@ -234,6 +234,10 @@
 
             <div class="status-pago">
                 <h1>PENDIENTE DE PAGO</h1>
+                @if ($order->is_contra_entrega())
+                <h2>(CONTRA ENTREGA)</h2>
+                @endif
+                
             </div>
 
             @endif
