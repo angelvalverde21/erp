@@ -270,18 +270,21 @@
 
         <div class="label-right">
 
-            @if ($order->is_pay())
+            @if ($order->is_contra_entrega())
                 <div class="status-pago">
-                    <h1 class="mt-3">PAGADO</h1>
-                    <hr>
+                    <h1>CONTRA ENTREGA</h1>
                 </div>
             @else
-                @if ($order->is_contra_entrega())
+                @if ($order->is_pay())
                     <div class="status-pago">
-                        <h1>CONTRA ENTREGA</h1>
+                        <h1 class="mt-3">PAGADO</h1>
+                        <hr>
                     </div>
                 @endif
             @endif
+
+
+
 
 
             <div class="messages w-100">
