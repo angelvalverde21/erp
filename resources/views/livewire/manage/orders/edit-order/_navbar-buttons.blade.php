@@ -85,7 +85,7 @@
     
     <li class="nav-item d-flex justify-content-between w-100 mb-3">
         <div class="registrado">Registrado: {{ $order->created_at }}</div>
-        <div class="actualizado">Actualizado: {{ $order->updated_at }}</div>
+        <div class="actualizado">Ultima Actualizacion: {{ $order->updated_at }}</div>
     </li>
     
 </nav>
@@ -107,8 +107,6 @@
                 icon="fa-solid fa-lock">
                 Observaciones Internas
             </x-form.textarea>
-
-
         </div>
         <div class="col-lg-12"></div>
     </div>
