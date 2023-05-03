@@ -287,7 +287,8 @@
             </div>
 
 
-            @if (!$order->is_pay())
+            @if ($order->is_contra_entrega())
+
                 <div class="qr">
                     <div class="yape text-center">
                         {{-- <img src="{{ asset(Storage::url($order->store->upload_qr_yape)) }}"
@@ -307,6 +308,7 @@
                     </div>
 
                 </div>
+                
             @endif
 
         </div>
