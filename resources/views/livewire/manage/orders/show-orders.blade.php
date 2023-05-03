@@ -36,11 +36,6 @@
                 console.log('El valor ha cambiado:', fecha.value); // Acción a realizar cuando cambia el valor
                 enlace.href = enlace.href + '/date/' + fecha.value;
             });
-
-            
-
-            
-
         </script>
 
     </x-sectioncontent>
@@ -105,8 +100,24 @@
                                 {{-- {{ $order }} --}}
                                 {{-- Ojo is_active es un campo de la base de datos, pero is_pay es una instancia --}}
                                 <tr @if (!$order->is_active) class="bg-danger" @endif
-
                                     @if ($order->is_delivered()) style="background: #E2FBDF;" @endif>
+
+
+                                    @if ($order->is_pay())
+                                        <td class="text-center" style="background: #E2FBDF;">
+                                            <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
+                                                class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <p class="mt-1">#{{ $order->id }}</p>
+
+                                        </td>
+                                    @else
+                                        <td class="text-center">
+                                            <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
+                                                class="btn btn-secondary"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <p class="mt-1">#{{ $order->id }}</p>
+
+                                        </td>
+                                    @endif
 
                                     <td class="text-center"
                                         @if ($order->is_pay()) style="background: #E2FBDF;" @endif>
