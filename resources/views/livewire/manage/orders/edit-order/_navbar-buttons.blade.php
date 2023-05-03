@@ -7,11 +7,6 @@
             {{ $order->buyer->name }} ({{ $order->buyer->totalOrders() }})</a>
     </li>
 
-    <li class="nav-item d-flex justify-content-between w-100 px-3">
-        <div class="registrado">Registrado: {{ $order->created_at }}</div>
-        <div class="actualizado">Actualizado: {{ $order->updated_at }}</div>
-    </li>
-
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -83,8 +78,17 @@
 
         </ul>
     </div>
+
 </nav>
 
+<nav>
+    
+    <li class="nav-item d-flex justify-content-between w-100 mb-3">
+        <div class="registrado">Registrado: {{ $order->created_at }}</div>
+        <div class="actualizado">Actualizado: {{ $order->updated_at }}</div>
+    </li>
+    
+</nav>
 
 <x-modal title="Observaciones" id="observations-modal">
 
