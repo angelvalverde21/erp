@@ -201,7 +201,7 @@
 
             .total-ammount {
                 position: absolute;
-                top: 250px;
+                top: 225px;
                 left: 0px;
             }
         </style>
