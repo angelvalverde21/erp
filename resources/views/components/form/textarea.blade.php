@@ -5,7 +5,7 @@
         <label for="{{ $id }}" class="form-label"><i class="{{ $icon }} mr-1"></i> {{ $label }}</label>
     @endif
 
-    <textarea wire:model:debounce.1000ms="{{ $wirevalue }}" class="form-control" id="{{ $id }}" rows="{{ $rows }}" placeholder="{{ $slot }}"></textarea>
+    <textarea wire:model:debounce.500ms="{{ $wirevalue }}" class="form-control" id="{{ $id }}" rows="{{ $rows }}" placeholder="{{ $slot }}"></textarea>
 
     @if ($error != '')
         @error($wirevalue)
