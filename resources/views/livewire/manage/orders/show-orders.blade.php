@@ -135,6 +135,21 @@
                                         </li>
                                         <li>{{ $order->address->phone }}</li>
 
+                                        <li class="d-flex flex-row">
+                                            <a class="btn btn-secondary d-flex align-items-center"
+                                                style="font-size: 10pt;" href="tel:+51{{ $order->address->phone }}">
+                                                <i class="fa-solid fa-square-phone"></i>
+                                                 <span class="mx-1">{{ $order->address->phone }}</span>
+                                            </a>
+                                            <a class="btn btn-success mx-2" style="font-size: 10pt;" target="_blank"
+                                                href="https://api.whatsapp.com/send?phone=51{{ $order->address->phone }}&text={{ urlencode('Hola buen dia, Somos ARA Express Courier, te informamos que tu pedido sera entregado hoy, en el horario cordinado, tu codigo de pedido es: #') }}{{ $order->id }}">Whatsp</a>
+
+                                            <a class="btn btn-primary" style="font-size: 10pt;" target="_blank"
+                                                href="https://www.google.com/maps/search/{{ $order->address->primary }},{{ $order->address->district->province->name }}"><i
+                                                    class="fa-solid fa-diamond-turn-right"></i><span
+                                                    class="mx-1">Ruta</span></a>
+                                        </li>
+
                                     </td>
 
                                     <td class="text-center">
