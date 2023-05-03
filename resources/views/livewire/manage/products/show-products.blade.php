@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="{{ asset('admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     @endpush
 
-    <x-breadcrumbs title="Productos" icon="fa-solid fa-barcode"/>
+    <x-breadcrumbs title="Productos" icon=""/>
 
     <x-sectioncontent>
 
