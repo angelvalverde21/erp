@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
 
             $table->string('title')->nullable();
             $table->text('description')->nullable();
+            $table->text('tags')->nullable();
             $table->string('excerpt')->nullable();
             $table->string('short_link')->nullable();
 

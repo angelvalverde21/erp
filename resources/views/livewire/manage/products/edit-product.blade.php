@@ -1,3 +1,4 @@
+{{-- @extends('layouts.manage') --}}
 <div>
     {{-- The whole world belongs to you. --}}
     {{-- {{$product->id}} --}}
@@ -107,6 +108,22 @@
                                             error="este producto ya existe">
                                             Url del producto
                                         </x-form.input>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <x-form.textarea wirevalue="product.description" rows="5">
+                                            Describa al producto
+                                        </x-form.textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <x-form.textarea wirevalue="product.tags" rows="3">
+                                            Etiquetas del producto
+                                        </x-form.textarea>
                                     </div>
                                 </div>
 

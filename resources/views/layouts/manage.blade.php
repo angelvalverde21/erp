@@ -7,7 +7,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- Este titulo esta definido en el archivo .env --}}
-    <title>{{ config('app.name', 'Laravel') }}</title> 
+    @if (isset($title))
+        <title>{{ $title }} {{ config('app.name', 'Laravel') }}</title>
+    @else
+        <title>{{ config('app.name', 'Laravel') }}</title>
+    @endif
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -16,12 +20,12 @@
     {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}"> --}}
 
     <style>
-        ul{
+        ul {
             margin: 0 !important;
             padding: 0 !important;
         }
     </style>
-    
+
     {{-- fancybox --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" /> --}}
@@ -273,7 +277,7 @@
             )
         });
     </script>
-    
+
     @livewireStyles
 
     {{-- datepicker --}}

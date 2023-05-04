@@ -22,6 +22,8 @@ class EditProduct extends Component
         'product.slug' => 'required|unique:products,slug',
         'product.price' => 'required',
         'product.costo' => 'required',
+        'product.description' => '',
+        'product.tags' => '',
         'product.price_seller' => 'required',
         'product.over_sale' => 'required',
         'product.force_size_unique' => 'required',
@@ -94,9 +96,18 @@ class EditProduct extends Component
     public function render()
     {
         $product = $this->product;
+        $title = $product->name;
 
-        return view('livewire.manage.products.edit-product',compact('product'))->layout('layouts.manage');
+        return view('livewire.manage.products.edit-product',compact('product'))->layout('layouts.manage', ['title' => $title]);
     }
 
+    // public function layout()
+    // {
+    //     $pageTitle = 'Página de inicio';
+    
+    //     return view('layouts.manage', [
+    //         'pageTitle' => $pageTitle,
+    //     ]);
+    // }
 
 }
