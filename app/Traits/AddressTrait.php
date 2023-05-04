@@ -15,7 +15,7 @@ trait AddressTrait{
         'address.phone' => 'required',
         'address.primary' => 'required',
         'address.district_id' => 'required',
-        'address.title' => 'required',
+        'address.title' => '',
         'address.user_id' => '',
         'address.dni' => '',
         'address.secondary' => '',

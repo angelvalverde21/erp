@@ -70,7 +70,8 @@
                 <div class="mb-3">
         @endif
 
-        <input type="text" class="form-control" wire:model.debounce.250ms="namedistrict" aria-describedby="nameHelp"
+        {{-- Input para seleccionar el distrito, pero ojo el verdadero id lo envian los campos de abajo --}}
+        <input onclick="this.select();"  type="text" class="form-control" wire:model.debounce.250ms="namedistrict" aria-describedby="nameHelp"
             placeholder="Distrito">
 
         {{-- Elemento para fijar el valor del district_ id y activar el error por si el cliente no selecciona distrito --}}

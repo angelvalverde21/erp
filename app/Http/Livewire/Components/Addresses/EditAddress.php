@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 class EditAddress extends Component
 {
 
+    //Aqui estan los validores del address
     use AddressTrait;
 
     public $address, $namedistrict;

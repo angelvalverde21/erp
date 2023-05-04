@@ -142,7 +142,7 @@
                                                  <span class="mx-1">{{ $order->address->phone }}</span>
                                             </a>
                                             <a class="btn btn-success mx-2" style="font-size: 10pt;" target="_blank"
-                                                href="https://api.whatsapp.com/send?phone=51{{ $order->address->phone }}&text={{ urlencode('Hola buen dia, Somos ARA Express Courier, te informamos que tu pedido sera entregado hoy, en el horario cordinado, tu codigo de pedido es: #') }}{{ $order->id }}">Whatsp</a>
+                                                href="https://api.whatsapp.com/send?phone=51{{ $order->address->phone }}&text={{ urlencode('Hola buen dia, Somos ' . Str::upper($store->nickname) .' Express Courier, te informamos que tu pedido sera entregado hoy, en el horario cordinado, tu codigo de pedido es: #') }}{{ $order->id }}">Whatsp</a>
 
                                             <a class="btn btn-primary" style="font-size: 10pt;" target="_blank"
                                                 href="https://www.google.com/maps/search/{{ $order->address->primary }},{{ $order->address->district->province->name }}"><i
