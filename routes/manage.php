@@ -94,6 +94,7 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    //GET Imprimir PDF
    Route::get('/orders/{order}/print/voucher', [PdfController::class, 'generateVaucher'])->name('orders.print.voucher');
    Route::get('/orders/{order}/print/packing-label', [PdfController::class, 'generatePackingLabel'])->name('orders.print.packing-label');
+   Route::get('/orders/{order}/print/invoice', [PdfController::class, 'generateInvoice'])->name('orders.print.invoice');
 
    //POST orders (comprobantes)
    // Route::post('/orders/{order}/photo-payment', [OrderController::class, 'photoPayment'])->name('orders.photo-payment');

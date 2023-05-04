@@ -78,4 +78,19 @@ class PdfController extends Controller
         return $pdf->stream('packing.pdf');
         
     }
+
+    public function generateInvoice($store, Order $order){
+
+
+        $pdf = app('dompdf.wrapper');
+   
+        $pdf->set_paper('A4', 'portrait'); // 283.465  puntos equivale a 10 cms y 510.236 equivale a 18cms
+
+        $pdf = $pdf->loadview('livewire.manage.orders.print.invoice', compact('order'));
+
+        // return $pdf->stream('packing.pdf');
+        // Devuelve la vista en Html
+        return view('livewire.manage.orders.print.invoice', compact('order'))->layout('layouts.manage');
+
+    }
 }

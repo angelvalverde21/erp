@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
+use App\NumberToString;
 
 class Order extends Model
 {
@@ -232,6 +233,14 @@ class Order extends Model
         return number_format((float)$this->total_final + (float)$this->shipping_cost_buyer, 2, '.', '');
     }
 
+
+    public function amountToString(){
+
+        $numberToString = New NumberToString();
+
+        return $numberToString->convert($this->total_amount, "Soles");
+
+    }
     // public function getRepartidoresAttribute(){
     //     return User::repartidores();
     // }
