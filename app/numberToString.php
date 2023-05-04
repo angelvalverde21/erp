@@ -2,6 +2,7 @@
 
 namespace App;
 
+
 class NumberToString
 {
 	var $Void = "";
