@@ -24,15 +24,15 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start dropdown-menu-right"
                         aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-clipboard-list mr-1"></i>
+                        <li><a class="dropdown-item" target="_blank" href="{{ route('manage.orders.print.invoice', [$store->nickname, $order->id]) }}"><i class="fa-solid fa-clipboard-list mr-1"></i>
                                 Orden de compra</a></li>
                         <div class="dropdown-divider"></div>
-                        <li><a class="dropdown-item"
+                        <li><a class="dropdown-item" target="_blank"
                                 href="{{ route('manage.orders.print.packing-label', [$store->nickname, $order->id]) }}" target="_blank"><i
                                     class="fa-solid fa-box-open mr-1"></i>
                                 Rotulado</a></li>
                         <div class="dropdown-divider"></div>
-                        <li><a class="dropdown-item"
+                        <li><a class="dropdown-item" target="_blank"
                                 href="{{ route('manage.orders.print.voucher', [$store->nickname, $order->id]) }}"><i
                                     class="fa-solid fa-receipt mr-2 pt-1"></i> Voucher</a></li>
                     </ul>
