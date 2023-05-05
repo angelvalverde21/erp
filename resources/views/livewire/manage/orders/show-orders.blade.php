@@ -91,6 +91,26 @@
 
             </div>
 
+            
+            <div class="accordion-item">
+
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Pagados
+                    </button>
+                </h2>
+
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        @include('livewire.manage.orders._show-orders-table', ['orders' => $ordersPagados])
+                    </div>
+                </div>
+
+            </div>
+
+            
             <div class="accordion-item">
 
                 <h2 class="accordion-header" id="headingThree">
@@ -108,6 +128,8 @@
                 </div>
 
             </div>
+
+
         </div>
 
 

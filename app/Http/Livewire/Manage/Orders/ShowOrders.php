@@ -51,6 +51,8 @@ class ShowOrders extends Component
             $ordersToday = Order::where('store_id',$this->store->id)->limit(20)->where('delivery_date',date('Y-m-d'))->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
        
             $ordersPendientesPago = Order::where('store_id',$this->store->id)->doesntHave('payments')->doesntHave('comprobantesEnvio')->limit(20)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
+            
+            $ordersPagados = Order::where('store_id',$this->store->id)->Has('payments')->limit(20)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
         }
 
 
@@ -60,7 +62,7 @@ class ShowOrders extends Component
         //     $query->where('status.id', '=', 5);
         // })->get();
 
-        return view('livewire.manage.orders.show-orders',compact('ordersAll', 'ordersToday', 'ordersPendientesPago'))->layout('layouts.manage');
+        return view('livewire.manage.orders.show-orders',compact('ordersAll', 'ordersToday', 'ordersPendientesPago','ordersPagados'))->layout('layouts.manage');
     }
 
 

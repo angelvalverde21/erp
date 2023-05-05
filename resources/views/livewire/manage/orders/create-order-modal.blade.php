@@ -61,7 +61,8 @@
 
                     </div>
 
-                    @if ($user->addresses->count())
+                    @if ($user->addresses->count()
+                    )
                         <div class="modal-footer">
 
                             <button type="button" wire:loading.class="btn-secondary" wire:loading.attr="disabled"
