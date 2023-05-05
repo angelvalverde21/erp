@@ -214,7 +214,7 @@
                                 class="hidden-xs-down">Fotos</span></a> </li>
                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><span
                                 class="hidden-sm-up"><i class="ti-gallery"></i></span> <span
-                                class="hidden-xs-down">Album</span></a> </li>
+                                class="hidden-xs-down">Sessiones</span></a> </li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">

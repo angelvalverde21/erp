@@ -24,7 +24,9 @@ class ShowAlbums extends Component
 
     public function render()
     {
+        
         $albums = Album::all();
+
         return view('livewire.manage.products.edit-product.show-albums',compact('albums'));
     }
 }

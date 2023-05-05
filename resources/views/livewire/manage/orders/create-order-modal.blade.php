@@ -244,6 +244,8 @@
                                 <x-form.select id="payment_method_id" label="Cliente indica que pagara con"
                                     wirevalue="payment_method_id" icon="fa-solid fa-money-bill-1-wave">
 
+                                    <option value="">Escoger</option>
+                                    
                                     @foreach (paymentMethods() as $paymentMethod)
                                         <option value="{{ $paymentMethod->id }}"> {{ $paymentMethod->name }}</option>
 

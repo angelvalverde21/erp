@@ -18,6 +18,7 @@
             <div class="card-body table-responsive">
 
                 <table id="example" class="table table-striped">
+
                     <thead>
                         <tr>
                             <th>Id</th>
@@ -29,8 +30,8 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
 
+                    <tbody>
 
                         @foreach ($albums as $album)
                             <tr>
