@@ -18,7 +18,7 @@ class CreateOrderModal extends Component
     public $observations_public, $observations_private, $current, $delivery_method_id, $user, $existe_usuario;
     public $owner;
     public $address_id;
-    public $this->show_address;
+    public $show_address;
 
     // public $sales = [];
 
@@ -207,8 +207,6 @@ class CreateOrderModal extends Component
 
         if($user->addresses->count()>0){
 
-
-
             foreach ($user->addresses as $address) {
                 # code...
                 $address_id = $address->id;
@@ -235,15 +233,7 @@ class CreateOrderModal extends Component
                 //throw $th;
             }
     
-        }else{
-
-
-
         }
-
-
-
-
 
         return redirect()->route('manage.orders.edit', ['nickname' => $this->store->nickname, 'order' => $order->id]);
 
