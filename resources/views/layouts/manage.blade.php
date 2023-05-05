@@ -242,6 +242,34 @@
 
             })
         });
+
+
+        $(document).ready(function() {
+            Livewire.on('Error', function() {
+
+                // $('.modal').modal('hidden');
+
+                Swal.fire(
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ha ocurrido un error interno',
+                    // footer: '<a href="">Why do I have this issue?</a>'
+                ).then(function() {
+                    //$(".modal-backdrop").hide();
+                    // //$(".modal").hide();
+                    // $('.modal').removeClass('show');
+                    // $('body').removeClass('modal-open');
+                    // $('.modal').hide();
+                    // $('body').remove('modal-backdrop');
+
+                    // $(".modal").each(function() {
+                    //     $(this).toggle();
+                    // });
+                    console.log('Creado: se ha pulsado ok en sweetalert2');
+                });
+
+            })
+        });
     </script>
 
     <script>

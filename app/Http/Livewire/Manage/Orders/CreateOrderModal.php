@@ -15,10 +15,12 @@ class CreateOrderModal extends Component
 {
 
     public $namedistrict, $name, $dni, $phone, $primary, $secondary, $references, $district_id, $delivery_date, $payment_method_id, $delivery_man_id;
-    public $observations_public, $observations_private, $current, $delivery_method_id;
+    public $observations_public, $observations_private, $current, $delivery_method_id, $user, $existe_usuario;
+    public $owner;
+    public $address_id;
+    public $show_address;
 
-
-    public $sales = [];
+    // public $sales = [];
 
     protected $listeners = ['districtAdded' => 'districtAdded'];
 
@@ -43,8 +45,9 @@ class CreateOrderModal extends Component
     public function mount()
     {
         $this->namedistrict = '';
-
+        $this->existe_usuario = false;
         $this->store = Request::get('store');
+        $this->owner = Auth::user();
     }
 
 
@@ -72,7 +75,7 @@ class CreateOrderModal extends Component
     public function save()
     {
 
-        $owner = Auth::user();
+        $this->owner = Auth::user();
 
         //Primero buscamos si existe el cliente por el numero de celular o por dni o por nombre
 
@@ -91,7 +94,7 @@ class CreateOrderModal extends Component
         $buyer->password = bcrypt(substr(trim($this->name), 0, 1) . $this->phone); //genera un password con la primera letra de su nombre + un telefono
         
         $buyer->store_id = $this->store->id; //genera un password con la primera letra de su nombre + un telefono
-        $buyer->owner_id = $owner->id; //genera un password con la primera letra de su nombre + un telefono
+        $buyer->owner_id = $this->owner->id; //genera un password con la primera letra de su nombre + un telefono
 
         $buyer->save();
 
@@ -129,7 +132,7 @@ class CreateOrderModal extends Component
         $order->payment_method_id = $this->payment_method_id;
         $order->delivery_method_id = $this->delivery_method_id;
         $order->store_id = $this->store->id;
-        $order->seller_id = $owner->id;
+        $order->seller_id = $this->owner->id;
         $order->buyer_id = $buyer->id;
         $order->address_id = $address->id; //el id de la direccion recien creada
 
@@ -151,14 +154,16 @@ class CreateOrderModal extends Component
     {
 
         if (strlen($value) >= 6 && strlen($value) <= 9) {
-            $user = User::where('phone', $value)->get();
+            $this->user = User::where('phone', $value)->limit(1)->first();
 
-            Log::debug($user);
+            Log::debug($this->user);
 
-            if (count($user) == 1) {
+            if ($this->user) {
 
-                $this->name = $user[0]->name;
-                $this->dni = $user[0]->dni;
+                $this->name = $this->user->name;
+                $this->dni = $this->user->dni;
+
+                $this->existe_usuario = true;
             }
         }
     }
@@ -166,13 +171,72 @@ class CreateOrderModal extends Component
     public function updatedDni($value)
     {
         if (strlen($value) == 8) {
-            $user = User::where('dni', $value)->get();
 
-            if (count($user) == 1) {
-                $this->name = $user[0]->name;
-                $this->phone = $user[0]->phone;
+            $this->user = User::where('dni', $value)->limit(1)->first();
+
+            if ($this->user) {
+                $this->name = $this->user->name;
+                $this->phone = $this->user->phone;
+                $this->existe_usuario = true;
             }
         }
+    }
+
+    public function crearVentaUsuarioExistente(User $user){
+
+        $order = new Order();
+
+        $order->delivery_man_id = 1707;
+        $order->payment_method_id = 5; //yape
+        $order->delivery_method_id = 1; //delivery
+        $order->store_id = $this->store->id;
+        $order->seller_id = $this->owner->id;
+        $order->buyer_id = $user->id;
+        
+        $user->addresses;
+
+        if($user->addresses->count()>0){
+
+            $show_address = true;
+
+            foreach ($user->addresses as $address) {
+                # code...
+                $address_id = $address->id;
+    
+                break;
+            }
+
+            $order->address_id = $address_id; //el id de la direccion recien creada
+
+            try {
+    
+                $order->saveOrFail();
+    
+                $order->Addstatus('creado',$this->current);
+    
+                Log::debug('Orden creada :' . $order);
+        
+                $this->emitTo('manage.orders.show-orders', 'render');
+        
+                //este emit necesita un listener
+                $this->emit('creado');
+    
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+    
+        }else{
+
+            $show_address = false;
+
+        }
+
+
+
+
+
+        return redirect()->route('manage.orders.edit', ['nickname' => $this->store->nickname, 'order' => $order->id]);
+
     }
 
     // public function updatedName($value)
