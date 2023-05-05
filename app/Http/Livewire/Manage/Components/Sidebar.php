@@ -29,18 +29,18 @@ class Sidebar extends Component
                     "slug"=>"profile",
                     "icon"=>"fa-solid fa-store",
                     "sub_menu"=>[
-                        [
-                            "name"=>"Entregas Hoy",
-                            "slug"=> route('manage.orders.today',[$this->store->nickname]),
-                            "active"=>"orders.today",
-                            "icon"=>"fa-solid fa-align-justify",
-                        ],
-                        [
-                            "name"=>"Entregas pendientes",
-                            "slug"=> route('manage.orders.pending',[$this->store->nickname]),
-                            "active"=>"orders.pending",
-                            "icon"=>"fa-solid fa-align-justify",
-                        ],
+                        // [
+                        //     "name"=>"Entregas Hoy",
+                        //     "slug"=> route('manage.orders.today',[$this->store->nickname]),
+                        //     "active"=>"orders.today",
+                        //     "icon"=>"fa-solid fa-align-justify",
+                        // ],
+                        // [
+                        //     "name"=>"Entregas pendientes",
+                        //     "slug"=> route('manage.orders.pending',[$this->store->nickname]),
+                        //     "active"=>"orders.pending",
+                        //     "icon"=>"fa-solid fa-align-justify",
+                        // ],
                         [
                             "name"=>"Mis ventas",
                             "slug"=> route('manage.orders',[$this->store->nickname]),
