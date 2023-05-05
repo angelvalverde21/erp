@@ -50,7 +50,7 @@ class ShowOrders extends Component
             
             $ordersToday = Order::where('store_id',$this->store->id)->limit(20)->where('delivery_date',date('Y-m-d'))->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
        
-            $ordersPendientesPago = Order::where('store_id',$this->store->id)->doesntHave('payments')->limit(20)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
+            $ordersPendientesPago = Order::where('store_id',$this->store->id)->doesntHave('payments')->doesntHave('comprobantesEnvio')->limit(20)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
         }
 
 
