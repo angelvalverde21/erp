@@ -72,7 +72,7 @@
                                 <th>Cliente</th>
                                 <th>Productos</th>
                                 <th>Status</th>
-                                <th>Entregar por</th>
+                                <th>Asignado</th>
                                 <th class="text-center">Status</th>
                                 <th>Pago</th>
                                 <th>Total</th>

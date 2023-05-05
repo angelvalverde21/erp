@@ -145,7 +145,7 @@
         }
 
         body {
-            font-size: 10pt;
+            font-size: 9pt;
         }
 
         .btn {
