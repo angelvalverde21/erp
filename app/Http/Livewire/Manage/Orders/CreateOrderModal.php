@@ -18,7 +18,7 @@ class CreateOrderModal extends Component
     public $observations_public, $observations_private, $current, $delivery_method_id, $user, $existe_usuario;
     public $owner;
     public $address_id;
-    public $show_address;
+    public $this->show_address;
 
     // public $sales = [];
 
@@ -162,8 +162,12 @@ class CreateOrderModal extends Component
 
                 $this->name = $this->user->name;
                 $this->dni = $this->user->dni;
-
                 $this->existe_usuario = true;
+                if($this->user->addresses->count()>0){
+                    $this->show_address = true;
+                }else{
+                    $this->show_address = false;
+                }
             }
         }
     }
@@ -178,6 +182,12 @@ class CreateOrderModal extends Component
                 $this->name = $this->user->name;
                 $this->phone = $this->user->phone;
                 $this->existe_usuario = true;
+
+                if($this->user->addresses->count()>0){
+                    $this->show_address = true;
+                }else{
+                    $this->show_address = false;
+                }
             }
         }
     }
@@ -197,7 +207,7 @@ class CreateOrderModal extends Component
 
         if($user->addresses->count()>0){
 
-            $show_address = true;
+
 
             foreach ($user->addresses as $address) {
                 # code...
@@ -227,7 +237,7 @@ class CreateOrderModal extends Component
     
         }else{
 
-            $show_address = false;
+
 
         }
 
