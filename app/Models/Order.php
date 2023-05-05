@@ -535,7 +535,7 @@ class Order extends Model
             $total += $payment->amount;
         }
 
-        if ($total >= $this->total_amount) {
+        if ($total > 0 && $total >= $this->total_amount) {
             return true;
         } else {
             return false;
