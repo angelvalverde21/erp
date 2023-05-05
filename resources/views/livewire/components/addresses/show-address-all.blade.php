@@ -38,7 +38,7 @@
 
 
             <div class="collapse" id="add-new-address">
-                @livewire('components.addresses.create-address', ['user_id' => $user->id], key('create-addresses-' . $user->id))
+                @livewire('components.addresses.create-address', ['user_id' => $user->id, 'render'=> $render], key('create-addresses-' . $user->id))
             </div>
 
         </div>

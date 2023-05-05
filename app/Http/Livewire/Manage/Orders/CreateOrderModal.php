@@ -18,11 +18,15 @@ class CreateOrderModal extends Component
     public $observations_public, $observations_private, $current, $delivery_method_id, $user, $existe_usuario;
     public $owner;
     public $address_id;
-    public $show_address;
+    public $have_address, $render, $store;
 
     // public $sales = [];
 
-    protected $listeners = ['districtAdded' => 'districtAdded'];
+    protected $listeners = [
+        'districtAdded' => 'districtAdded',
+        'actualizarUsuario'=>'actualizarUsuario',
+        // 'actualizarUsuario'=>'actualizarUsuario',
+    ];
 
     protected $rules = [
 
@@ -48,6 +52,7 @@ class CreateOrderModal extends Component
         $this->existe_usuario = false;
         $this->store = Request::get('store');
         $this->owner = Auth::user();
+
     }
 
 
@@ -122,6 +127,13 @@ class CreateOrderModal extends Component
         $address->district_id  = $this->district_id; //el usuario al cual le pertenece la direccion
 
         $address->save();
+
+        //agregar el address_id a la tabla user (que sera la direccion por defecto que tomen las aplicaciones)
+
+        $address->user->address_id = $address->id;
+        $address->user->save();
+
+
         Log::debug('Direccion de envio creado :' . $address);
 
         //crear id de venta
@@ -144,6 +156,7 @@ class CreateOrderModal extends Component
 
         $this->emitTo('manage.orders.show-orders', 'render');
 
+
         //este emit necesita un listener
         $this->emit('creado');
 
@@ -164,9 +177,9 @@ class CreateOrderModal extends Component
                 $this->dni = $this->user->dni;
                 $this->existe_usuario = true;
                 if($this->user->addresses->count()>0){
-                    $this->show_address = true;
+                    $this->have_address = true;
                 }else{
-                    $this->show_address = false;
+                    $this->have_address = false;
                 }
             }
         }
@@ -184,9 +197,9 @@ class CreateOrderModal extends Component
                 $this->existe_usuario = true;
 
                 if($this->user->addresses->count()>0){
-                    $this->show_address = true;
+                    $this->have_address = true;
                 }else{
-                    $this->show_address = false;
+                    $this->have_address = false;
                 }
             }
         }
@@ -249,6 +262,11 @@ class CreateOrderModal extends Component
     //     }
     // }
 
+    public function actualizarUsuario(){
+        Log::info('se renderizo actualizarUsuario');
+        $this->user = $this->user->fresh();
+    }
+
     public function render()
     {
 
@@ -265,5 +283,6 @@ class CreateOrderModal extends Component
         }
 
         return view('livewire.manage.orders.create-order-modal', compact('districts'));
+
     }
 }

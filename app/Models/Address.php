@@ -21,6 +21,10 @@ class Address extends Model
         return $this->belongsTo(District::class);
     }
 
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
     public static function showAll($user_id){
         return Address::where('user_id', $user_id)->where('status', Address::PUBLICADO)->orderBy('updated_at', 'desc')->get();
     }

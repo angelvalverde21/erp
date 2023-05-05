@@ -31,7 +31,11 @@
                 {{-- Crear Orden con nuevo usuario --}}
 
                 @if ($existe_usuario)
+
+                    {{-- si existe usuario --}}
+
                     <div class="modal-body">
+
                         <div class="alert alert-warning" role="alert">
                             El usuario ya existe
                         </div>
@@ -46,37 +50,40 @@
                             </div>
                         </div>
 
-                        @if ($show_address)
-                            
+                        {{-- @if ($have_address)
+                            @livewire('components.addresses.show-address', ['address' => $user->address_id, 'model_refer' => 'User', 'model_refer_id' => $user->id], key('show-address-' . $user->id))
                         @else
+                            @livewire('components.addresses.show-address-all', ['user' => $user->id, 'model_refer' => 'User', 'model_refer_id' => $user->id], key('show-addresses-all-' . $user->id))
+                        @endif --}}
 
-                        <div class="alert alert-danger" role="alert">
-                            Pero el usuario no tiene direccion de envio, agreguelo aqui
-                        </div>
+                        @livewire('components.addresses.show-address-all', ['user' => $user->id, 'model_refer' => 'User', 'model_refer_id' => $user->id, 'render' => 'actualizarUsuario'], key('show-addresses-all-' . $user->id))
 
-                        <div class="card">
-                            <div class="card-body">
-                                @livewire('components.addresses.create-address', ['user_id' => $user->id], key('create-addresses-' . $user->id))
+
+                    </div>
+
+                    @if ($user->addresses->count())
+                        <div class="modal-footer">
+
+                            <button type="button" wire:loading.class="btn-secondary" wire:loading.attr="disabled"
+                                wire.target="crearVentaUsuarioExistente"
+                                wire:click="crearVentaUsuarioExistente({{ $user->id }})"
+                                class="btn btn-success ml-auto"><i class="fa-solid fa-floppy-disk mr-1"></i>Crear Nueva
+                                Venta ({{ $user->name }})</button>
+
+                            <div class="spinner-border" wire:loading.flex wire:target="crearVentaUsuarioExistente"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
                             </div>
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
                         </div>
-                            
-                        @endif
+                    @endif
 
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" wire:loading.class="btn-secondary" wire:loading.attr="disabled"
-                            wire.target="crearVentaUsuarioExistente" wire:click="crearVentaUsuarioExistente({{ $user->id }})" class="btn btn-success ml-auto"><i
-                                class="fa-solid fa-floppy-disk mr-1"></i>Crear Nueva Venta</button>
-
-                        <div class="spinner-border" wire:loading.flex wire:target="save" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    </div>
-
+                    {{-- si existe usuario FIN --}}
                 @else
+                    {{-- si NO existe usuario --}}
+
                     <div class="modal-body">
 
                         <div class="row">
@@ -273,6 +280,7 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
 
+                    {{-- si NO existe usuario --}}
 
                 @endif
 
