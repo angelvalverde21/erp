@@ -4,9 +4,16 @@
         <link rel="stylesheet" href="{{ asset('admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     @endpush
 
-    <x-breadcrumbs title="Ventas" />
+
+
+    {{-- <x-breadcrumbs title="Ventas" /> --}}
 
     <x-sectioncontent>
+
+        <div class="create-order my-3">
+            @livewire('manage.orders.create-order-modal', key('create-order-modal'))
+
+        </div>
 
         <div class="buscador d-flex justify-content-between">
 
@@ -23,7 +30,7 @@
 
             <div class="input-group mb-3 w-25">
                 <a id="enviarfecha" href="{{ route('manage.orders', [$store->nickname]) }}"
-                    class="btn btn-success w-100">Buscar</a>
+                    class="btn btn-secondary w-100">Buscar</a>
             </div>
 
         </div>
@@ -42,187 +49,73 @@
 
     <x-sectioncontent>
 
-        <div class="card">
 
-            <div class="card-header">
-                @livewire('manage.orders.create-order-modal', ['user' => $orders], key('create-order-modal'))
+        <div  wire:ignore.self class="accordion" id="accordionExample">
+            <div class="accordion-item">
+
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Entregas para Hoy
+                    </button>
+                </h2>
+
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+
+                        @include('livewire.manage.orders._show-orders-table', ['orders' => $ordersToday])
+
+                    </div>
+                </div>
+
             </div>
 
-            <div class="card-body table-responsive">
-                {{-- <h4 class="card-title">Productos</h4>
-            <h6 class="card-subtitle">Productos actualmente en almacen</h6> --}}
+            <div class="accordion-item">
 
-                {{-- {{ count($orders) }}
-                <hr>
-                {{ count($orders2) }}
-                <hr> --}}
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                        aria-controls="collapseTwo">
+                        Pendientes de pago
+                    </button>
+                </h2>
 
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
 
-                {{-- @foreach ($orders2 as $order)
-                    {{ $order->id }}
-                @endforeach --}}
+                        @include('livewire.manage.orders._show-orders-table', ['orders' => $ordersPendientesPago])
+                    </div>
+                </div>
 
-                @if (count($orders) > 0)
+            </div>
 
-                    <table id="example1" class="table table-striped">
+            <div class="accordion-item">
 
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Cliente</th>
-                                <th>Productos</th>
-                                <th>Status</th>
-                                <th>Asignado</th>
-                                <th class="text-center">Status</th>
-                                <th>Pago</th>
-                                <th>Total</th>
-                                <th>Autor</th>
-                                <th>Creado</th>
-                                <th>Actualizado</th>
-                                <th>Editar</th>
-                            </tr>
-                        </thead>
-                        {{-- <tfoot>
-                            <tr>
-                                <th>Id</th>
-                                <th>Cliente</th>
-                                <th>Entregar por</th>
-                                <th>Status</th>
-                                <th>Total</th>
-                                <th>Creado</th>
-                                <th>Actualizado</th>
-                                <th>Editar</th>
-                            </tr>
-                        </tfoot> --}}
-                        <tbody>
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Pendientes de envio (Todos)
+                    </button>
+                </h2>
 
-                            @foreach ($orders as $order)
-                                {{-- {{ $order }} --}}
-                                {{-- Ojo is_active es un campo de la base de datos, pero is_pay es una instancia --}}
-                                <tr @if (!$order->is_active) class="bg-danger" @endif
-                                    @if ($order->is_delivered()) style="background: #E2FBDF;" @endif>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        @include('livewire.manage.orders._show-orders-table', ['orders' => $ordersAll])
+                    </div>
+                </div>
 
-
-                                    @if ($order->is_pay())
-                                        <td class="text-center" style="background: #E2FBDF;">
-                                            <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
-                                                class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></a>
-                                            <p class="mt-1">#{{ $order->id }}</p>
-
-                                        </td>
-                                    @else
-                                        <td class="text-center">
-                                            <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
-                                                class="btn btn-secondary"><i class="fa-solid fa-pen-to-square"></i></a>
-                                            <p class="mt-1">#{{ $order->id }}</p>
-
-                                        </td>
-                                    @endif
-
-                                    <td class="">
-                                        <h6>{{ strtoupper($order->buyer->name) }}</h6>
-                                        {{-- {{ $order->address }} --}}
-
-                                        <li>DNI: {{ $order->address->dni }}</li>
-                                        <li>{{ $order->address->primary }}</li>
-                                        <li>{{ $order->address->secondary }}</li>
-                                        <li>References: </li>
-                                        <li>{{ $order->address->references }}</li>
-                                        <li><strong>{{ $order->address->district->name }}</strong> -
-                                            {{ $order->address->district->province->name }} -
-                                            {{ $order->address->district->province->department->name }}</li>
-                                        <li>{{ $order->delivery_time_start }} Hasta {{ $order->delivery_time_end }}
-                                        </li>
-                                        <li>{{ $order->address->phone }}</li>
-
-                                        <li class="d-flex flex-row">
-                                            <a class="btn btn-secondary d-flex align-items-center"
-                                                style="font-size: 10pt;" href="tel:+51{{ $order->address->phone }}">
-                                                <i class="fa-solid fa-square-phone"></i>
-                                                 <span class="mx-1">{{ $order->address->phone }}</span>
-                                            </a>
-                                            <a class="btn btn-success mx-2" style="font-size: 10pt;" target="_blank"
-                                                href="https://api.whatsapp.com/send?phone=51{{ $order->address->phone }}&text={{ urlencode('Hola buen dia, Somos ' . Str::upper($store->nickname) .' Express Courier, te informamos que tu pedido sera entregado hoy, en el horario cordinado, tu codigo de pedido es: #') }}{{ $order->id }}">Whatsp</a>
-
-                                            <a class="btn btn-primary" style="font-size: 10pt;" target="_blank"
-                                                href="https://www.google.com/maps/search/{{ $order->address->primary }},{{ $order->address->district->province->name }}"><i
-                                                    class="fa-solid fa-diamond-turn-right"></i><span
-                                                    class="mx-1">Ruta</span></a>
-                                        </li>
-
-                                    </td>
-
-                                    <td class="text-center">
-                                        @if ($order->is_pay())
-                                            <span class="text-success" style="font-size: 1.5rem"><i
-                                                    class="fa-solid fa-sack-dollar"></i></span>
-                                        @else
-                                            <span class="text-secondary" style="font-size: 1.5rem"><i
-                                                    class="fa-solid fa-sack-dollar"></i></span>
-                                        @endif
-                                    </td>
-
-                                    <td>
-                                        {{-- Imanges de los productos --}}
-
-                                        @foreach ($order->items as $item)
-                                            @if (isset($item->content->image))
-                                                <a href="{{ Storage::url($item->content->image) }}"
-                                                    data-lightbox="show-images-preview-{{ $order->id }}" data-title="TALLA: {{ $item->content->talla_impresa }}">
-                                                    <img style="height: 125px"
-                                                        src="{{ Storage::url($item->content->image) }}" alt="">
-                                                    ({{ $item->content->talla_impresa }})
-                                                </a>
-                                            @else
-                                                Sin imagen
-                                            @endif
-                                        @endforeach
-                                    </td>
-
-                                    <td class="text-center">
-                                        {{ $order->delivery_man->name }}
-                                    </td>
-                                    <td class="text-center">
-
-                                        <p>{{ $order->print_status() }}</p>
-                                        {{-- @if ($order->is_pay())
-                                            <button class="btn btn-success">Pagado</button>
-                                        @endif --}}
-                                        {{-- @foreach ($order->status as $status)
-                                            {{ $status->title }}
-                                            @php
-                                                break;
-                                            @endphp
-                                        @endforeach --}}
-
-                                    </td>
-
-                                    <td>{{ $order->total_amount }}</td>
-
-                                    <td>{{ $order->total_amount }}</td>
-                                    <td>{{ $order->seller->name }}</td>
-                                    <td>{{ $order->created_at }}</td>
-                                    <td>{{ $order->updated_at }}</td>
-                                    <td>
-                                        <a href="#" wire:click="cancelOrder( {{ $order }} )"
-                                            class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                            @endforeach
-
-
-                        </tbody>
-                    </table>
-                @else
-                    No hay registros disponibles
-                @endif
             </div>
         </div>
+
+
     </x-sectioncontent>
 
     @push('script-footer')
         <!-- DataTables  & Plugins -->
-        <script src="{{ asset('admin-lte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+        {{-- <script src="{{ asset('admin-lte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
         <script src="{{ asset('admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
@@ -245,7 +138,7 @@
                 }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
             });
-        </script>
+        </script> --}}
     @endpush
 
 

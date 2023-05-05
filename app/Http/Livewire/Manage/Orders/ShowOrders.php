@@ -15,6 +15,7 @@ class ShowOrders extends Component
     protected $listeners = ['render' => 'render'];
     public $search;
     public $store;
+    // public $ordersPendientesToday, $ordersPendientesPago;
 
     public function mount(){
         $this->store = Request::get('store');
@@ -45,8 +46,11 @@ class ShowOrders extends Component
 
         }else{
             
-            $orders = Order::where('store_id',$this->store->id)->limit(15)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
-        
+            $ordersAll = Order::where('store_id',$this->store->id)->limit(15)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
+            
+            $ordersToday = Order::where('store_id',$this->store->id)->limit(20)->where('delivery_date',date('Y-m-d'))->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
+       
+            $ordersPendientesPago = Order::where('store_id',$this->store->id)->doesntHave('payments')->limit(20)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
         }
 
 
@@ -56,7 +60,7 @@ class ShowOrders extends Component
         //     $query->where('status.id', '=', 5);
         // })->get();
 
-        return view('livewire.manage.orders.show-orders',compact('orders'))->layout('layouts.manage');
+        return view('livewire.manage.orders.show-orders',compact('ordersAll', 'ordersToday', 'ordersPendientesPago'))->layout('layouts.manage');
     }
 
 
