@@ -22,8 +22,6 @@
                     <form action="#">
                         <div class="form-body">
     
-                            <hr>
-                            
                             <div class="row p-t-20">
     
                                 <div class="col-md-12">
