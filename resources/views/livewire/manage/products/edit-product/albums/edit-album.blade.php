@@ -1,21 +1,25 @@
 <div>
     {{-- In work, do what you enjoy. --}}
 
-    <x-breadcrumbs title="Album" />
+    <style>
+        .dz-preview{
+            margin: 10px !important
+        }
+    </style>
+
+    <x-breadcrumbs title="Album: {{ $album->name }}" />
 
     <x-sectioncontent>
-
 
         <div class="row pb-3" wire:ignore>
 
             <div class="col position-relative">
                 <form method="POST" action="{{ route('manage.albums.upload', [$store->nickname, $album]) }}"
-                    class="dropzone" id="my-awesome-dropzone-albums">
+                    class="dropzone d-flex flex-wrap justify-content-around p-3" id="my-awesome-dropzone-albums" >
                 </form>
             </div>
 
         </div>
-
 
     </x-sectioncontent>
 
@@ -29,9 +33,13 @@
 
             <br /> --}}
 
-
                 <div class="card" style="width: 360px">
-                    <img src="{{ $image->nameS3Thumb }}" class="card-img-top" alt="...">
+                    
+                    <a href="{{ $image->nameS3 }}" data-lightbox="show-images-preview"
+                        data-title="{{ $image->name }}">
+                    
+                        <img src="{{ $image->nameS3Thumb }}" class="card-img-top" alt="...">
+                    </a>
                     {{-- <div class="card-body">
                       <h5 class="card-title">Card title</h5>
                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -39,12 +47,9 @@
                     </div> --}}
                 </div>
 
-
-
                 {{-- <br />
 
             <br /> --}}
-
 
                 {{-- {{ Storage::disk('s3')->url($image->nameS3);  }} --}}
 

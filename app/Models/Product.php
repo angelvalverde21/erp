@@ -33,6 +33,11 @@ class Product extends Model
         return $this->hasMany(Size::class);
     }
 
+    public function albums()
+    {
+        return $this->hasMany(Album::class);
+    }
+
     //Mucho a muchos
     public function colors()
     {

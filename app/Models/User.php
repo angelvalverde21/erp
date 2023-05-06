@@ -146,6 +146,16 @@ class User extends Authenticatable
         )->get();
     }
 
+    public static function modelos()
+    {
+        return User::whereHas(
+            'roles',
+            function ($q) {
+                $q->where('name', 'modelo');
+            }
+        )->get();
+    }
+
     //Cuando sale de la base de datos
     public function getContactAttribute($value)
     {

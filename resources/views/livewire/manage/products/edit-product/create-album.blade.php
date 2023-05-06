@@ -32,6 +32,21 @@
                                         Nombre de Album
                                     </x-form.input>
                                 </div>
+
+                                
+                                <x-form.select wirevalue="album.modelo_id" icon="fa-solid fa-user">
+
+                                    <option value="">Escoger</option>
+                                    
+                                    @foreach ($modelos as $modelo)
+
+                                    <option value="{{ $modelo->id }}">{{ $modelo->name }}</option>
+
+                                    @endforeach
+
+                                </x-form.select>
+                                
+                                    
     
                                 <!--/span-->
                                 <div class="col-md-12">

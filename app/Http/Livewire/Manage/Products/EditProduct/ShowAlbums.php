@@ -11,11 +11,13 @@ class ShowAlbums extends Component
 
     
     public $store;
+    public $product;
     
-    public function mount(){
+    public function mount($product){
 
         $this->store = Request::get('store');
 
+        $this->product = $product;
         //$this->user = Auth::user();
         
         // $this->category_id = $album->subcategory->category->id;
@@ -24,9 +26,11 @@ class ShowAlbums extends Component
 
     public function render()
     {
-        
-        $albums = Album::all();
 
-        return view('livewire.manage.products.edit-product.show-albums',compact('albums'));
+        // $albums = $this->product->albums;
+        $product = $this->product;
+
+        return view('livewire.manage.products.edit-product.show-albums',compact('product'));
+
     }
 }

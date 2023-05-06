@@ -16,4 +16,15 @@ class Album extends Model
         return $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC');
     }
 
+    public function albumable(){
+
+        return $this->morphTo();
+        
+    }
+
+    public function modelo(){
+        return $this->belongsTo(User::class);
+    }
+
+
 }

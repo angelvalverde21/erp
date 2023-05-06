@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('albums', function (Blueprint $table) {
+            
             $table->id();
 
             // $table->unsignedBigInteger('address_id');
@@ -25,6 +26,10 @@ return new class extends Migration
 
             $table->unsignedBigInteger('store_id');
             $table->foreign('store_id')->references('id')->on('users');
+
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products');
+            
             // $table->unsignedBigInteger('model_id');
             // $table->foreign('model_id')->references('id')->on('users');
 
@@ -32,6 +37,7 @@ return new class extends Migration
             // $table->foreign('address_id')->references('id')->on('addresses');
 
             $table->timestamps();
+
         });
     }
 
