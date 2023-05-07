@@ -21,4 +21,9 @@ class Location extends Model
         return $this->belongsToMany(Album::class);
     }
 
+    public function district(){
+        return $this->belongsTo(District::class);
+    }
+
+
 }

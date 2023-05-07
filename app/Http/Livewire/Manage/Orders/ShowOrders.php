@@ -42,7 +42,7 @@ class ShowOrders extends Component
             // Log::info($this->search);
             
 
-            $orders = Order::search($this->search);
+            $ordersAll = Order::search($this->search);
 
         }else{
             

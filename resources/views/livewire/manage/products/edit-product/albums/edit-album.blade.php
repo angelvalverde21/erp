@@ -53,6 +53,10 @@
                     label="{{ $location->name }} ({{ albumLocation($album->id, $location->id)->images->count() }})" accordion_parent_id="accordionAlbum">
                     <div class="row pb-3" wire:ignore>
 
+                        <div class="title">
+                            <h3>{{ $location->name }}, {{ $location->district->name }}</h3>
+                        </div>
+
                         <div class="col position-relative">
                             <form method="POST"
                                 action="{{ route('manage.albums.upload', [$store->nickname, $album, $location]) }}"
@@ -124,7 +128,7 @@
             queuecomplete: function() {
                 Livewire.emit('render');
                 //OJO REFRESCAMOS LA PAGINA PARA QUE DROPZONE VUELVA A LEER LOS NUEVOS FORMULARIOS AGREGADOS DINAMICAMENTE
-                // window.location.reload()
+                window.location.reload()
             },
             accept: function(file, done) {
                 if (file.name == "justinbieber.jpg") {
