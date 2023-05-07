@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\AlbumLocation;
 use App\Models\CollectMethod;
 use App\Models\Color;
 use App\Models\ColorSize;
@@ -311,4 +312,11 @@ function calcularStockInicial($color_id, $size_id){
 
     return $color_size->stocksBruto()->get()->count();
 
+}
+
+function albumLocation($album_id, $location_id){
+
+    $album_location = AlbumLocation::where('album_id',$album_id)->where('location_id', $location_id)->first();
+
+    return $album_location;
 }

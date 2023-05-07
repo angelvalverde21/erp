@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Manage\Products\EditProduct;
 
 use App\Models\Album;
 use App\Models\User;
+use App\Traits\AddressTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
@@ -12,6 +13,8 @@ use Livewire\Component;
 class CreateAlbum extends Component
 {
     
+    // use AddressTrait;
+
     public $listeners = [
         'render' => 'render'
     ];
@@ -61,7 +64,7 @@ class CreateAlbum extends Component
 
         $this->emit('creado');
 
-        return redirect()->route('manage.albums.edit', ['nickname' => $this->store->nickname, 'album' => $album->id]);
+        return redirect()->route('manage.products.albums.edit', ['nickname' => $this->store->nickname, 'product' => $this->product->id, 'album' => $album->id]);
         
         Log::info('se creo el album');
 
@@ -69,8 +72,10 @@ class CreateAlbum extends Component
 
     public function render()
     {
-        $modelos = User::modelos();
 
-        return view('livewire.manage.products.edit-product.create-album', compact('modelos'));
+        $modelos = User::modelos();
+        // $districts = $this->showDistricts($this->namedistrict);
+        return view('livewire.manage.products.edit-product.create-album', compact('modelos'))->layout('layouts.manage', ['title' => 'Crear Album']);
+
     }
 }

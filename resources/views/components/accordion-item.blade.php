@@ -1,4 +1,4 @@
-@props(['id','accordionParentId','label'])
+@props(['id', 'accordionParentId', 'label', 'show' => false])
 
 {{-- <div class="card">
     <div class="card-header" id="{{ $id }}">
@@ -24,16 +24,26 @@
 <div class="accordion-item">
 
     <h2 class="accordion-header" id="{{ $id }}">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $id }}"
-            aria-expanded="true" aria-controls="collapse-{{ $id }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapse-{{ $id }}" aria-expanded="true"
+            aria-controls="collapse-{{ $id }}">
             {{ $label }}
         </button>
     </h2>
 
-    <div id="collapse-{{ $id }}" class="accordion-collapse collapse" aria-labelledby="{{ $id }}"
-        data-bs-parent="#{{ $accordionParentId }}">
-        <div class="accordion-body">
-            {{ $slot }}
+    @if ($show)
+        <div id="collapse-{{ $id }}" class="accordion-collapse collapse show" aria-labelledby="{{ $id }}"
+            data-bs-parent="#{{ $accordionParentId }}">
+            <div class="accordion-body">
+                {{ $slot }}
+            </div>
         </div>
-    </div>
+    @else
+        <div id="collapse-{{ $id }}" class="accordion-collapse collapse" aria-labelledby="{{ $id }}"
+            data-bs-parent="#{{ $accordionParentId }}">
+            <div class="accordion-body">
+                {{ $slot }}
+            </div>
+        </div>
+    @endif
 </div>

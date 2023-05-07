@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Manage\Upload;
 
 use App\Http\Controllers\Controller;
 use App\Models\Album;
+use App\Models\AlbumLocation;
+use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
@@ -15,9 +17,11 @@ use Intervention\Image\Facades\Image;
 class UploadAlbumController extends Controller
 {
     //
-    public function uploadAlbum($nickname, Album $album, Request $request)
+    public function uploadAlbum($nickname, Album $album, Location $location, Request $request)
     {
         try {
+
+            $album_location = AlbumLocation::where('album_id',$album->id)->where('location_id', $location->id)->first();
 
             $request->validate([
                 'file' => 'required|image|max:20480'  //10 megas
@@ -103,7 +107,7 @@ class UploadAlbumController extends Controller
 
             Log::info($value);
 
-            $album->images()->create($value);
+            $album_location->images()->create($value);
 
             // Storage::delete($file);
 

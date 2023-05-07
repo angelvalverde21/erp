@@ -130,4 +130,3 @@ class CreateAddress extends Component
     }
 
 }
-

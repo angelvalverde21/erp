@@ -21,6 +21,7 @@ use App\Http\Livewire\Manage\Productions\ShowProductions;
 use App\Http\Livewire\Manage\Products\CreateProduct;
 use App\Http\Livewire\Manage\Products\EditProduct;
 use App\Http\Livewire\Manage\Products\EditProduct\Albums\EditAlbum;
+use App\Http\Livewire\Manage\Products\EditProduct\CreateAlbum;
 use App\Http\Livewire\Manage\Products\ShowProducts;
 use App\Http\Livewire\Manage\Profile\ShoProfileWeb;
 use App\Http\Livewire\Manage\Profile\ShowProfileStore;
@@ -49,8 +50,11 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::get('/products', ShowProducts::class)->name('products');
    Route::get('/products/{product}/edit', EditProduct::class)->name('products.edit');
    Route::get('/products/create', CreateProduct::class)->name('products.create');
-   Route::get('/albums/{album}/edit', EditAlbum::class)->name('albums.edit');
-   Route::post('/albums/upload/{album}', [UploadAlbumController::class, 'uploadAlbum'])->name('albums.upload');
+
+   //Albums
+   Route::get('/products/{product}/albums/create', CreateAlbum::class)->name('albums.create');
+   Route::get('products/{product}/albums/{album}/edit', EditAlbum::class)->name('products.albums.edit');
+   Route::post('/albums/upload/{album}/{location}', [UploadAlbumController::class, 'uploadAlbum'])->name('albums.upload');
 
 
    //ORDERS

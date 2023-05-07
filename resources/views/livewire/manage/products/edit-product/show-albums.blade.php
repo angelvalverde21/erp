@@ -50,7 +50,7 @@
                         <td>{{ $album->modelo->name }}</td>
                         <td>
                             <div class="d-flex justify-content-center">
-                                <a href="{{ route('manage.albums.edit', [$store->nickname, $album->id]) }}"
+                                <a href="{{ route('manage.products.albums.edit', [$store->nickname, $product->id, $album->id]) }}"
                                     class="btn btn-success mr-2"><i class="fa-solid fa-pen-to-square"></i></a>
                                 {{-- <a href="#" wire:click.prevent="deletealbum({{ $album->id }})" class="btn btn-secondary"><i
                                         class="fa-solid fa-trash"></i></a> --}}
