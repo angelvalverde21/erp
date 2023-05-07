@@ -50,7 +50,7 @@
     
     <x-sectioncontent>
 
-        @if ($ordersResult)
+        @if (isset($ordersResult))
             @include('livewire.manage.orders._show-orders-table', ['orders' => $ordersResult])
         @endif
 
