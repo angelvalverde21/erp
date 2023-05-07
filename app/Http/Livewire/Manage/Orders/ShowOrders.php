@@ -55,6 +55,7 @@ class ShowOrders extends Component
             $ordersResult = Order::search($this->search);
 
             return view('livewire.manage.orders.show-orders', compact('ordersAll', 'ordersToday', 'ordersPendientesPago', 'ordersPagados', 'ordersResult'))->layout('layouts.manage');
+            
         } else {
 
             // $orders = Order::where('store_id',$this->store->id)->where('is_active','=','0')->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
