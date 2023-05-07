@@ -8,11 +8,11 @@
 
     {{-- <x-breadcrumbs title="Ventas" /> --}}
 
+
     <x-sectioncontent>
 
         <div class="create-order my-3">
             @livewire('manage.orders.create-order-modal', key('create-order-modal'))
-
         </div>
 
         <div class="buscador d-flex justify-content-between">
@@ -47,10 +47,19 @@
 
     </x-sectioncontent>
 
+    
+    <x-sectioncontent>
+
+        @if ($ordersResult->count() > 0)
+            @include('livewire.manage.orders._show-orders-table', ['orders' => $ordersResult])
+        @endif
+
+    </x-sectioncontent>
+
     <x-sectioncontent>
 
 
-        <div  wire:ignore.self class="accordion" id="accordionExample">
+        <div wire:ignore.self class="accordion" id="accordionExample">
             <div class="accordion-item">
 
                 <h2 class="accordion-header" id="headingOne">
@@ -74,9 +83,8 @@
             <div class="accordion-item">
 
                 <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed"
-                        type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
-                        aria-controls="collapseTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         Pendientes de pago
                     </button>
                 </h2>
@@ -85,13 +93,15 @@
                     data-bs-parent="#accordionExample">
                     <div class="accordion-body">
 
-                        @include('livewire.manage.orders._show-orders-table', ['orders' => $ordersPendientesPago])
+                        @include('livewire.manage.orders._show-orders-table', [
+                            'orders' => $ordersPendientesPago,
+                        ])
                     </div>
                 </div>
 
             </div>
 
-            
+
             <div class="accordion-item">
 
                 <h2 class="accordion-header" id="headingFour">
@@ -110,7 +120,7 @@
 
             </div>
 
-            
+
             <div class="accordion-item">
 
                 <h2 class="accordion-header" id="headingThree">
