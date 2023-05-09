@@ -12,6 +12,7 @@ class AlbumLocation extends Model
     protected $table = "album_location";
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
+    
 
     public function images() //ojo images se llama en las consultas directamente con el metodo ->with('images), no se llama desde appends
     {

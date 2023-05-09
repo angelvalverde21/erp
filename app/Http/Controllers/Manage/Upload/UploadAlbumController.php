@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 use Intervention\Image\Facades\Image;
 
@@ -21,52 +22,88 @@ class UploadAlbumController extends Controller
     {
         try {
 
-            $album_location = AlbumLocation::where('album_id',$album->id)->where('location_id', $location->id)->first();
+            $album_location = AlbumLocation::where('album_id', $album->id)->where('location_id', $location->id)->first();
 
             $request->validate([
                 'file' => 'required|image|max:20480'  //10 megas
             ]);
 
+            $name_thumb = md5(time() . 'thumb' . Str::random(10)).".jpg";  
+            $name_medium = md5(time() . 'medium' . Str::random(10)).".jpg";  
+            $name_large = md5(time() . 'large' . Str::random(10)).".jpg";  
+
+            //crea los directorios respectivos
+
+            // mkdir(Storage::path('albums'), 0755);
+            // mkdir(Storage::path('albums/thumb'), 0755);
+            // mkdir(Storage::path('albums/medium'), 0755);
+            // mkdir(Storage::path('albums/large'), 0755);
+
+            $file_path_thumb = Storage::path('albums/thumb/' . $name_thumb);
+            // $file_path_medium = Storage::path('albums/medium/' . $name_medium);
+            // $file_path_large = Storage::path('albums/large/' . $name_large);
+
+            $original_name = $request->file('file')->getClientOriginalName();
+            
+            $file_path = Storage::path('albums/' . $original_name);
+
             //Recibo la imagen
             $image = Image::make($request->file('file'));
 
-            //la redimenciono
+            //Redimenciono a Thumbnail
             $image->resize(750, 500);
 
-            $original_name = $request->file('file')->getClientOriginalName();
+            //finalmente guardo la imagen
+            $image->save($file_path_thumb);
 
-            //Preparo la url donde lo voy a guardar
-            $file = storage_path() . "/app/public/temp/" . $original_name;
+            // //Redimenciono a Medium
+            // $image->resize(1125, 750);
 
-            //Dejo un registro en el servidor porsiaca
-            Log::info($file);
+            // //finalmente guardo la imagen
+            // $image->save($file_path_medium);
 
-            Log::info('imagen redimensionada con INTERVENTION');
-            Log::info('Guardando imagen...');
+            // //Redimenciono a Large
+            // $image->resize(1500, 1000);
+
+            // //finalmente guardo la imagen
+            // $image->save($file_path_large);
+
+
+
+            //Preparo la direccion donde lo voy a guardar
+            // $file_path = Storage::path('albums/' . $original_name);
+            // // $file_path = storage_path() . "/app/public/temp/" . $original_name;
+
+            // //Dejo un registro en el servidor porsiaca
+            // Log::info($file_path);
+
+            // Log::info('imagen redimensionada con INTERVENTION');
+            // Log::info('Guardando imagen...');
 
             //finalmente guardo la imagen
-            $image->save($file);
-            Log::info('Imagen guarda');
+            // $image->save(Storage::path('albums/' . $original_name));
+            Log::info('Imagen guardada');
 
             //Subiendo el thumbnail, pero antes tenemos que rotarla
-
+            //rotando el thumbnail
+            
             $exif = exif_read_data($request->file('file'), 0, true);
 
-            if ($exif['IFD0']['Orientation'] == 8) {
+            if (isset($exif) && $exif['IFD0']['Orientation'] == 8) {
 
                 Log::info('La imagen esta rotada 270 grados');
 
                 //"si es 8, la imagen esta rotada 270";
 
                 //Imagen inicial horizontal
-                $imageNew = $file;
+                // $imageNew = $file_path;
                 //Destino de la nueva imagen vertical
 
                 //Definimos los grados de rotacion
                 $degrees = 90;
 
                 //Creamos una nueva imagen a partir del fichero inicial
-                $source = imagecreatefromjpeg($imageNew);
+                $source = imagecreatefromjpeg($file_path_thumb);
 
                 //Rotamos la imagen 90 grados
                 Log::info('Rotando imagen');
@@ -75,41 +112,51 @@ class UploadAlbumController extends Controller
                 //Creamos el archivo jpg vertical
 
                 Log::info('Creando la imagen con imagenjpg()');
-                imagejpeg($rotate, $file, '90');
+                imagejpeg($rotate, $file_path_thumb, '90');
             }
 
             //fin de rotacion
 
             Log::info('Guardando la imagen rotada (Thumb) en S3');
 
-            $image = Storage::disk('s3')->put('albums/thumb-' . $request->file('file')->hashName(), file_get_contents($file), 'public');
+            // $image = Storage::disk('s3')->put('albums/thumb-' . $request->file('file')->hashName(), file_get_contents($file_path_thumb), 'public');
+            //Ojo, aqui le indicamos a amazon el nombre del archivo, por lo que nos devolvera 1 si todo es correcto
+            $imageThumb = Storage::disk('s3')->put('albums/thumb/' . $name_thumb, file_get_contents($file_path_thumb), 'public');
+
+            // $image = Storage::disk('s3')->put('albums/thumb-' . $request->file('file')->hashName(), file_get_contents($file), 'public');
 
             //Eliminando el archivo creado para que no ocupe espacio en cpanel
             Log::info('Eliminando el archivo con Storage::delete');
-            Log::info($file);
+            Log::info($file_path);
 
-            // Storage::delete($file);
+            // Storage::delete($file_path);
 
             //Subiendo la imagen original
             Log::info('Subiendo la imagen original S3');
             //Subiendo la imagen original a amazon web services
-            $image = Storage::disk('s3')->put('albums', $request->file('file'), 'public');
+            //como aqui no le damos el nombre del archivo, amazon lo crea solo y regresa el nombre si todo es correcto
+            $imageFull = Storage::disk('s3')->put('albums', $request->file('file'), 'standard_ia');
 
             //crea un nuevo registro en la tabla images
 
-            $value = [
-                'usage' => 'album',
-                'name' => $image,
-                'label' => $original_name,
-            ];
+            if($imageThumb){
 
-            Log::info('Valor del vector a insertar');
+                $value = [
+                    'usage' => 'album',
+                    'thumbnail' => 'albums/thumb/' . $name_thumb,
+                    'name' => $imageFull,
+                    'label' => $original_name,
+                ];
+    
+                Log::info('Valor del vector a insertar');
+    
+                Log::info($value);
+    
+                $album_location->images()->create($value);
+            }
 
-            Log::info($value);
 
-            $album_location->images()->create($value);
-
-            // Storage::delete($file);
+            // Storage::delete($file_path);
 
         } catch (\Throwable $th) {
 
@@ -117,7 +164,6 @@ class UploadAlbumController extends Controller
             // Log::info($th);
             Log::info($request);
             Log::info($th);
-
         }
     }
 }

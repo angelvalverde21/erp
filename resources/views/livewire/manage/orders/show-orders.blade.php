@@ -50,8 +50,13 @@
     
     <x-sectioncontent>
 
+        {{-- Resultados de busqueda --}}
         @if (isset($ordersResult))
-            @include('livewire.manage.orders._show-orders-table', ['orders' => $ordersResult])
+            <div class="card">
+                <div class="card-body">
+                    @include('livewire.manage.orders._show-orders-table', ['orders' => $ordersResult])
+                </div>
+            </div>
         @endif
 
     </x-sectioncontent>

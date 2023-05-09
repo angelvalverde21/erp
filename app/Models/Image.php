@@ -38,19 +38,29 @@ class Image extends Model
         return Storage::disk('s3')->url($this->name);
     }  
 
+    // public function getNameS3ThumbAttribute(){
+
+    //     // {{ Storage::disk('s3')->url($value) }}
+
+    //     $name = explode('/',$this->name);
+
+    //     if ($name[0] && isset($name[1])) {
+    //         # code...
+    //         return Storage::disk('s3')->url($name[0].'/thumb-'.$name[1]);
+    //     } else {
+    //         # code...
+    //         return 'error';
+    //     }
+        
+    // }   
     public function getNameS3ThumbAttribute(){
 
-        // {{ Storage::disk('s3')->url($value) }}
+        if(strlen($this->thumbnail)>1){
+            
+            return Storage::disk('s3')->url($this->thumbnail);
 
-        $name = explode('/',$this->name);
-
-        if ($name[0] && isset($name[1])) {
-            # code...
-            return Storage::disk('s3')->url($name[0].'/thumb-'.$name[1]);
-        } else {
-            # code...
-            return 'error';
         }
+
         
     }   
 

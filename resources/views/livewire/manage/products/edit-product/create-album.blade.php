@@ -5,6 +5,7 @@
 
     <x-modal title="Crear Album" id="agregarAlbum" size="modal-lg">
         <form action="#">
+
             <div class="form-body">
 
                 <div class="row p-t-20">
@@ -54,8 +55,8 @@
 
         <div class="botones">
             <div class="form-actions">
-                <button type="button" wire:loading.attr="disabled" wire.target="save"
-                    wire:click="save" class="btn btn-success"> <i class="fa fa-check"></i> Crear
+                <button type="button" wire:loading.attr="disabled" wire.target="save" wire:click="save"
+                    class="btn btn-success"> <i class="fa fa-check"></i> Crear
                     Album</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>

@@ -15,7 +15,7 @@ class Album extends Model
     
     public function locations()
     {
-        return $this->belongsToMany(Location::class);
+        return $this->belongsToMany(Location::class)->withPivot('id')->orderBy('album_location.id', 'DESC');
     }
 
     public function images() //ojo images se llama en las consultas directamente con el metodo ->with('images), no se llama desde appends
@@ -24,9 +24,7 @@ class Album extends Model
     }
 
     public function albumable(){
-
         return $this->morphTo();
-        
     }
 
     public function modelo(){
