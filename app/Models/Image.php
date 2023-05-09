@@ -56,12 +56,11 @@ class Image extends Model
     public function getNameS3ThumbAttribute(){
 
         if(strlen($this->thumbnail)>1){
-            
+
             return Storage::disk('s3')->url($this->thumbnail);
 
         }
 
-        
     }   
 
     // public function SetNameAttribute($value){

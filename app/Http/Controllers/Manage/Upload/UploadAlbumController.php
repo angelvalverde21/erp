@@ -121,7 +121,9 @@ class UploadAlbumController extends Controller
 
             // $image = Storage::disk('s3')->put('albums/thumb-' . $request->file('file')->hashName(), file_get_contents($file_path_thumb), 'public');
             //Ojo, aqui le indicamos a amazon el nombre del archivo, por lo que nos devolvera 1 si todo es correcto
-            $imageThumb = Storage::disk('s3')->put('albums/thumb/' . $name_thumb, file_get_contents($file_path_thumb), 'public');
+            // $imageThumb = Storage::disk('s3')->put('albums/thumb/' . $name_thumb, file_get_contents($file_path_thumb), 'public');
+
+            $imageThumb = Storage::disk('spaces')->put('albums/thumb/' . $name_thumb, file_get_contents($file_path_thumb), 'public');
 
             // $image = Storage::disk('s3')->put('albums/thumb-' . $request->file('file')->hashName(), file_get_contents($file), 'public');
 
@@ -135,7 +137,8 @@ class UploadAlbumController extends Controller
             Log::info('Subiendo la imagen original S3');
             //Subiendo la imagen original a amazon web services
             //como aqui no le damos el nombre del archivo, amazon lo crea solo y regresa el nombre si todo es correcto
-            $imageFull = Storage::disk('s3')->put('albums', $request->file('file'), 'standard_ia');
+            // $imageFull = Storage::disk('s3')->put('albums', $request->file('file'), 'standard_ia');
+            $imageFull = Storage::disk('spaces')->putFile('albums', $request->file('file'), 'public');
 
             //crea un nuevo registro en la tabla images
 

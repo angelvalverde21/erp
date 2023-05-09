@@ -77,10 +77,10 @@
 
                                     <div class="card" style="width: 360px">
 
-                                        <a href="{{ $image->nameS3Thumb }}" data-lightbox="show-images-preview"
+                                        <a href="{{  Storage::disk('spaces')->url($image->name) }}" data-lightbox="show-images-preview"
                                             data-title="{{ $image->name }}">
 
-                                            <img src="{{ $image->nameS3Thumb }}" class="card-img-top" alt="...">
+                                            <img src="{{  Storage::disk('spaces')->url($image->thumbnail) }}" class="card-img-top" alt="...">
                                         </a>
                                         {{-- <div class="card-body">
                                       <h5 class="card-title">Card title</h5>
