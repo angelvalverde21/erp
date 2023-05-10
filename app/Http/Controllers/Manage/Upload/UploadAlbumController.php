@@ -156,7 +156,7 @@ class UploadAlbumController extends Controller
             //Subiendo la imagen original a amazon web services
             //como aqui no le damos el nombre del archivo, amazon lo crea solo y regresa el nombre si todo es correcto
             // $imageFull = Storage::disk('s3')->put('albums', $request->file('file'), 'standard_ia');
-            $imageFull = Storage::disk('spaces')->putFile('albums', $request->file('file'), 'public');
+            $imageFull = Storage::disk('spaces')->putFile('albums/large', $request->file('file'), 'public');
 
             //crea un nuevo registro en la tabla images
 
