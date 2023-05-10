@@ -148,7 +148,7 @@ class UploadAlbumController extends Controller
             Log::info('Eliminando el archivo con Storage::delete');
             Log::info($file_path);
 
-            Storage::delete('albums/medium/' . $name_thumb);
+            Storage::delete('albums/thumb/' . $name_thumb);
             Storage::delete('albums/medium/' . $name_medium);
 
             //Subiendo la imagen original
