@@ -23,6 +23,11 @@ class Album extends Model
         return $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC');
     }
 
+    public function photos() //ojo images se llama en las consultas directamente con el metodo ->with('images), no se llama desde appends
+    {
+        return $this->morphMany(Photo::class, "photoable")->orderBy('id', 'DESC');
+    }
+
     public function albumable(){
         return $this->morphTo();
     }

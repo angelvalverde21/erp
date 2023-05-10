@@ -102,7 +102,7 @@ class UploadAlbumController extends Controller
             if (isset($exif) && $exif['IFD0']['Orientation'] == 8) {
 
                 Log::info('La imagen esta rotada 270 grados');
-
+                
                 //"si es 8, la imagen esta rotada 270";
 
                 //Imagen inicial horizontal
@@ -163,18 +163,21 @@ class UploadAlbumController extends Controller
             if ($imageThumb) {
 
                 $value = [
-                    'usage' => 'album',
                     'thumbnail' => 'albums/thumb/' . $name_thumb,
                     'medium' => 'albums/medium/' . $name_medium,
-                    'name' => $imageFull,
-                    'label' => $original_name,
+                    'large' => $imageFull,
+                    'name' => $original_name,
+                    'exif' => $exif,
+                    'capture_date' => $exif['IFD0']['DateTime'],
+                    'brand' => $exif['IFD0']['Make'],
+                    'model' => $exif['IFD0']['Model'],
                 ];
 
                 Log::info('Valor del vector a insertar');
 
                 Log::info($value);
 
-                $album_location->images()->create($value);
+                $album_location->photos()->create($value);
             }
 
 

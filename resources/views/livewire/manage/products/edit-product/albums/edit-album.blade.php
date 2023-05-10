@@ -69,7 +69,7 @@
 
                             <div class="mt-3 album d-flex flex-wrap justify-content-around">
 
-                                @foreach (albumLocation($album->id, $location->id)->images as $image)
+                                @foreach (albumLocation($album->id, $location->id)->photos as $photo)
                                     {{-- 
                             Image->name: {{ $image->name }}
                 
@@ -77,15 +77,15 @@
 
                                     <div class="card text-center" style="width: 155px">
 
-                                        <a href="{{  Storage::disk('spaces')->url($image->medium) }}" data-lightbox="show-images-preview"
-                                            data-title="{{ $image->label }}">
+                                        <a href="{{  Storage::disk('spaces')->url($photo->medium) }}" data-lightbox="show-images-preview"
+                                            data-title="{{ $photo->name }}">
 
-                                            <img src="{{  Storage::disk('spaces')->url($image->thumbnail) }}" class="card-img-top" alt="...">
+                                            <img src="{{  Storage::disk('spaces')->url($photo->thumbnail) }}" class="card-img-top" height="" alt="...">
                                         </a>
 
-                                        <span>{{ $image->label }}</span>
+                                        <span>{{ $photo->name }}</span>
 
-                                        <a target="_blank" href="{{  Storage::disk('spaces')->url($image->name) }}" class="btn btn-primary"><i class="fa-solid fa-download"></i></a>
+                                        <a target="_blank" href="{{  Storage::disk('spaces')->url($photo->large) }}" class="btn btn-primary"><i class="fa-solid fa-download"></i></a>
    
                                         {{-- <div class="card-body">
                                       <h5 class="card-title">Card title</h5>
