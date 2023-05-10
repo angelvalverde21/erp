@@ -75,7 +75,7 @@
                 
                             <br /> --}}
 
-                                    <div class="card text-center" style="width: 140px">
+                                    <div class="card text-center" style="width: 160px">
 
                                         <a href="{{  Storage::disk('spaces')->url($image->medium) }}" data-lightbox="show-images-preview"
                                             data-title="{{ $image->label }}">
