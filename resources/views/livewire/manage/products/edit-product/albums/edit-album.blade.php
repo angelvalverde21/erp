@@ -75,13 +75,15 @@
                 
                             <br /> --}}
 
-                                    <div class="card" style="width: 360px">
+                                    <div class="card" style="width: 240px">
 
                                         <a href="{{  Storage::disk('spaces')->url($image->name) }}" data-lightbox="show-images-preview"
-                                            data-title="{{ $image->name }}">
+                                            data-title="{{ $image->label }}">
 
                                             <img src="{{  Storage::disk('spaces')->url($image->thumbnail) }}" class="card-img-top" alt="...">
                                         </a>
+
+                                        <span>{{ $image->label }}</span>
                                         {{-- <div class="card-body">
                                       <h5 class="card-title">Card title</h5>
                                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
