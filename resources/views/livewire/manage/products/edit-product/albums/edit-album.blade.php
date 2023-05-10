@@ -77,7 +77,7 @@
 
                                     <div class="card text-center" style="width: 240px">
 
-                                        <a href="{{  Storage::disk('spaces')->url($image->thumbnail) }}" data-lightbox="show-images-preview"
+                                        <a href="{{  Storage::disk('spaces')->url($image->medium) }}" data-lightbox="show-images-preview"
                                             data-title="{{ $image->label }}">
 
                                             <img src="{{  Storage::disk('spaces')->url($image->thumbnail) }}" class="card-img-top" alt="...">
