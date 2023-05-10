@@ -30,9 +30,13 @@ class UploadAlbumController extends Controller
 
             $name_thumb = md5(time() . 'thumb' . Str::random(10)).".jpg";  
             $name_medium = md5(time() . 'medium' . Str::random(10)).".jpg";  
-            $name_large = md5(time() . 'large' . Str::random(10)).".jpg";  
+            // $name_large = md5(time() . 'large' . Str::random(10)).".jpg";  
 
             //crea los directorios respectivos
+
+            if (!file_exists(Storage::path('albums/medium'))) {
+                mkdir(Storage::path('albums/medium'), 0755, true);
+            }
 
             // mkdir(Storage::path('albums'), 0755);
             // mkdir(Storage::path('albums/thumb'), 0755);
@@ -40,7 +44,8 @@ class UploadAlbumController extends Controller
             // mkdir(Storage::path('albums/large'), 0755);
 
             $file_path_thumb = Storage::path('albums/thumb/' . $name_thumb);
-            // $file_path_medium = Storage::path('albums/medium/' . $name_medium);
+
+            $file_path_medium = Storage::path('albums/medium/' . $name_medium);
             // $file_path_large = Storage::path('albums/large/' . $name_large);
 
             $original_name = $request->file('file')->getClientOriginalName();
@@ -51,16 +56,16 @@ class UploadAlbumController extends Controller
             $image = Image::make($request->file('file'));
 
             //Redimenciono a Thumbnail
-            $image->resize(750, 500);
-
+            $image->resize(300, 200);
+            
             //finalmente guardo la imagen
             $image->save($file_path_thumb);
 
-            // //Redimenciono a Medium
-            // $image->resize(1125, 750);
+            //Redimenciono a Medium
+            $image->resize(750, 500);
 
-            // //finalmente guardo la imagen
-            // $image->save($file_path_medium);
+            //finalmente guardo la imagen
+            $image->save($file_path_medium);
 
             // //Redimenciono a Large
             // $image->resize(1500, 1000);
@@ -147,6 +152,7 @@ class UploadAlbumController extends Controller
                 $value = [
                     'usage' => 'album',
                     'thumbnail' => 'albums/thumb/' . $name_thumb,
+                    'thumbnail' => 'albums/medium/' . $name_medium,
                     'name' => $imageFull,
                     'label' => $original_name,
                 ];

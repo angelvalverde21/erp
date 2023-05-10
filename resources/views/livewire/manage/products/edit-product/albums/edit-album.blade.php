@@ -85,7 +85,7 @@
 
                                         <span>{{ $image->label }}</span>
 
-                                        <a href="{{  Storage::disk('spaces')->url($image->name) }}" class="btn btn-primary"><i class="fa-solid fa-download"></i></a>
+                                        <a target="_blank" href="{{  Storage::disk('spaces')->url($image->name) }}" class="btn btn-primary"><i class="fa-solid fa-download"></i></a>
    
                                         {{-- <div class="card-body">
                                       <h5 class="card-title">Card title</h5>
