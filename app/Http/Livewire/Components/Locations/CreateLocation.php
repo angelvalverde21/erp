@@ -28,10 +28,12 @@ class CreateLocation extends Component
     public $album;
     public $reloadUrl;
     public $location_existe = false;
+    public $newLocation = false;
 
     public function mount(Album $album, $reloadUrl = false){
         $this->album = $album;
         $this->reloadUrl = $reloadUrl;
+        Log::info('renderizando2...');
     }
 
     public function districtAdd($value){
@@ -79,6 +81,10 @@ class CreateLocation extends Component
         
     }
 
+    public function new(){
+        $this->newLocation = true;
+    }
+
     public function locationAdd($location_id){
 
         $album_location = AlbumLocation::where('album_id',$this->album->id)->where('location_id',$location_id)->get();
@@ -110,6 +116,8 @@ class CreateLocation extends Component
     public function render()
     {
 
+        Log::info('renderizando1...');
+
         if ($this->namedistrict <> "") {
             
             $districts = District::with(['province.department'])->where('name', 'like', '%' . $this->namedistrict . '%')
@@ -124,6 +132,8 @@ class CreateLocation extends Component
         }
 
         if ($this->namelocation <> "") {
+
+            $this->newLocation = false;
             
             $locations = Location::with(['district.province.department'])->where('name', 'like', '%' . $this->namelocation . '%')
             ->orWhereHas('district', function($query){

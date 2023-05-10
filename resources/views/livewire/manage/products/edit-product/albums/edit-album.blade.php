@@ -9,7 +9,7 @@
 
     <x-sectioncontent>
 
-        @livewire('components.locations.create-location', ['album' => $album, 'reloadUrl' => true], 'album-' . $album->id)
+        @livewire('components.locations.create-location', ['album' => $album, 'reloadUrl' => true], 'location-album-' . $album->id)
 
 
     </x-sectioncontent>
