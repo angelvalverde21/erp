@@ -35,7 +35,7 @@ class ShowOrdersDate extends Component
        
         }
 
-        return view('livewire.manage.orders.show-orders',compact('orders'))->layout('layouts.manage');
+        return view('livewire.manage.orders.show-orders',compact('ordersToday'))->layout('layouts.manage');
 
     }
 
