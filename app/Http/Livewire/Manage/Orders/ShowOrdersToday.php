@@ -39,7 +39,7 @@ class ShowOrdersToday extends Component
         //     $query->where('status.id', '=', 5);
         // })->get();
 
-        return view('livewire.manage.orders.show-orders',compact('orders'))->layout('layouts.manage');
+        return view('livewire.manage.orders.show-orders',compact('ordersToday'))->layout('layouts.manage');
 
     }
 
