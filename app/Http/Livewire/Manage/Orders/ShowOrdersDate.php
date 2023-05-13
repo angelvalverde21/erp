@@ -28,10 +28,10 @@ class ShowOrdersDate extends Component
     {
 
         if($this->search <> ""){
-            $orders = Order::search($this->search);
+            $ordersToday = Order::search($this->search);
 
         }else{
-            $orders = Order::where('store_id',$this->store->id)->limit(50)->where('delivery_date',$this->date)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
+            $ordersToday = Order::where('store_id',$this->store->id)->limit(50)->where('delivery_date',$this->date)->orderBy('id','desc')->with(['buyer','seller','delivery_man'])->get();
        
         }
 
