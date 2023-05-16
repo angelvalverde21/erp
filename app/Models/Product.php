@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ColorSize;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -80,13 +81,14 @@ class Product extends Model
         } else {
             // $colors = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
 
+            //SE COLOCA ASI PORQUE "$this->colors" genera un bucle infinito
             $product = Product::find($this->id);
 
             foreach ($product->colors as $color) {
                 # code...
                 foreach ($color->images as $image) {
                     # code...
-                    return $image->name;
+                    return asset(Storage::url($image->name));
                 }
             }
 
