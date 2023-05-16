@@ -646,7 +646,7 @@ class Order extends Model
     static function search($value){
         
         return Order::whereHas('address', function($query) use ($value){
-            $query->where('name','LIKE','%'. $value .'%')
+            $query->where('name','LIKE','%'. $value .'%')->orWhere('phone', $value)
                     ->orWhereHas('district', function($query) use ($value){
                         $query->where('name','LIKE','%'. $value .'%');
                     });
