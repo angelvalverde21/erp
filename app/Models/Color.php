@@ -92,7 +92,7 @@ class Color extends Model
         }
     }
 
-    public function getImageAttribute($value)
+    public function getImageAttribute()
     {
         return $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
         //return url('/') . Storage::url($value);

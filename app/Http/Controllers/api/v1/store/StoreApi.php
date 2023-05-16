@@ -4,8 +4,10 @@ namespace App\Http\Controllers\api\v1\store;
 
 use App\Http\Controllers\Controller;
 use App\Models\District;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class StoreApi extends Controller
 {
@@ -75,15 +77,72 @@ class StoreApi extends Controller
 
         //Api para el Home
 
+        //OJO SI SE USA SELECT CON WITH se debe seleccionar si o si las llaves foraneas
+        // $store = User::where('nickname', $nickname)
+        //     ->with(
+        //         [
+        //             'products:id,name,title,owner_id,store_id,category_id'=>
+        //                 [
+        //                     'colors:id,product_id'
+        //                 ]
+        //         ]
+        //     )->first();
+
+
         $store = User::where('nickname', $nickname)
             ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
-            ->with('products')
+            ->with('products') 
             ->with('carousel')
             ->with('carouselMobile')
             ->with('profile')
             ->with('offices')
             ->first();
-        return $store;
+
+
+        //buscando imagenes
+
+        // foreach ($store->products as $product) {
+        //     # code...
+        //     if($product->image == null){
+        //         foreach ($product->colors as $color) {
+        //             # code...
+        //             if($color->image){
+        //                 return $color->image->name;
+        //                 break;
+        //             }
+        //         }
+        //     }
+
+        // }
+
+        //Seteando imagen, en caso el producto no tenga
+
+        $storeArray = $store->toArray();
+
+        $productsArray = array_map(function ($productArray) {
+
+            if($productArray['image'] == null || $productArray['image'] == false){
+                //creamos la variable que 
+                $product = Product::find($productArray['id']);
+
+                foreach ($product->colors as $color) {
+                    # code...
+                    if($color->image){
+                        $productArray['image'] =  asset(Storage::url($color->image->name));
+                        // break;
+                    }
+                }
+            }
+
+            return $productArray;
+
+        }, $storeArray['products']);
+        // return $store;
+
+
+        $storeArray['products'] = $productsArray; //asignamos los nuevos productos al array
+
+        return $storeArray;
         
     }
 

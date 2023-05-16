@@ -16,10 +16,12 @@ class Product extends Model
     const ELIMINADO = 3;
     const ARCHIVADO = 4;
 
-    protected $guarded = ['id', 'created_at', 'image'];
+    protected $guarded = ['id', 'created_at'];
+    // protected $guarded = ['id', 'created_at', 'image'];
+    // protected $fillable = ['title'];
 
     //incluir accesores a la api
-    protected $appends = ['image','has'];
+    protected $appends = ['has','image'];
 
     //Uno a muchos inverso (singlular)
     public function brand()
@@ -70,14 +72,19 @@ class Product extends Model
 
     public function getImageAttribute()
     {
+
         $image = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
 
         if ($image) {
             return $image->name;
         } else {
+            // $colors = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
             return false;
         }
+
     }
+
+
 
     // public function setImageMainAttribute($value){
     //     return $value;
@@ -149,7 +156,8 @@ class Product extends Model
         }
     }
 
-    public function updateFieldQuantity(){
+    public function updateFieldQuantity()
+    {
 
         $total_color = 0;
 
@@ -166,7 +174,8 @@ class Product extends Model
 
     }
 
-    public function image(){
+    public function image()
+    {
 
         if($this->images->count() > 0){
 
@@ -179,6 +188,27 @@ class Product extends Model
             return $firstColor->image->name;
 
         }
+
+    }
+
+    public function thumb()
+    {
+
+        // return $this->with('colors')->count(); 
+
+
+        if($this->images->count() > 0){
+
+            return $this->images->first()->name;
+            
+        }else{
+            
+            $firstColor =  $this->colors->first();
+
+            return $firstColor->image->name;
+
+        }
+
     }
 
 }
