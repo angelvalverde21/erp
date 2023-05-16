@@ -140,7 +140,7 @@ class StoreApi extends Controller
         // return $store;
 
 
-        $storeArray['products'] = $productsArray; //asignamos los nuevos productos al array
+        $storeArray['products'] = array_reverse($productsArray); //asignamos los nuevos productos al array
 
         return $storeArray;
         
