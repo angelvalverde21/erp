@@ -22,7 +22,7 @@ class Product extends Model
     // protected $fillable = ['title'];
 
     //incluir accesores a la api
-    protected $appends = ['has','image'];
+    protected $appends = ['has','image','thumb'];
 
     //Uno a muchos inverso (singlular)
     public function brand()
@@ -97,7 +97,31 @@ class Product extends Model
 
     }
 
+    public function getThumbAttribute()
+    {
 
+        $image = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
+
+        if ($image) {
+            return $image->name;
+        } else {
+            // $colors = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
+
+            //SE COLOCA ASI PORQUE "$this->colors" genera un bucle infinito
+            $product = Product::find($this->id);
+
+            foreach ($product->colors as $color) {
+                # code...
+                foreach ($color->images as $image) {
+                    # code...
+                    return asset(Storage::url($image->name));
+                }
+            }
+
+            return false;
+        }
+
+    }
 
     // public function setImageMainAttribute($value){
     //     return $value;

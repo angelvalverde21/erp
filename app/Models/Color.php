@@ -14,7 +14,7 @@ class Color extends Model
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
-    protected $appends = ['image', 'stock_total'];
+    protected $appends = ['image', 'stock_total', 'thumb'];
     //Relacion muchos a muchos
 
     public function product()
@@ -95,6 +95,12 @@ class Color extends Model
     public function getImageAttribute()
     {
         return $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
+        //return url('/') . Storage::url($value);
+    }
+
+    public function getThumbAttribute()
+    {
+        return asset(Storage::url($this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first()->name));
         //return url('/') . Storage::url($value);
     }
 
