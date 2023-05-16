@@ -117,32 +117,32 @@ class StoreApi extends Controller
 
         //Seteando imagen, en caso el producto no tenga
 
-        $storeArray = $store->toArray();
+        // $storeArray = $store->toArray();
 
-        $productsArray = array_map(function ($productArray) {
+        // $productsArray = array_map(function ($productArray) {
 
-            if($productArray['image'] == null || $productArray['image'] == false){
-                //creamos la variable que 
-                $product = Product::find($productArray['id']);
+        //     if($productArray['image'] == null || $productArray['image'] == false){
+        //         //creamos la variable que 
+        //         $product = Product::find($productArray['id']);
 
-                foreach ($product->colors as $color) {
-                    # code...
-                    if($color->image){
-                        $productArray['image'] =  asset(Storage::url($color->image->name));
-                        // break;
-                    }
-                }
-            }
+        //         foreach ($product->colors as $color) {
+        //             # code...
+        //             if($color->image){
+        //                 $productArray['image'] =  asset(Storage::url($color->image->name));
+        //                 // break;
+        //             }
+        //         }
+        //     }
 
-            return $productArray;
+        //     return $productArray;
 
-        }, $storeArray['products']);
-        // return $store;
+        // }, $storeArray['products']);
+        // // return $store;
 
 
-        $storeArray['products'] = array_reverse($productsArray); //asignamos los nuevos productos al array
+        // $storeArray['products'] = array_reverse($productsArray); //asignamos los nuevos productos al array
 
-        return $storeArray;
+        return $store;
         
     }
 

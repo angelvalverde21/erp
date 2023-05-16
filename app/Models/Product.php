@@ -79,6 +79,17 @@ class Product extends Model
             return $image->name;
         } else {
             // $colors = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
+
+            $product = Product::find($this->id);
+
+            foreach ($product->colors as $color) {
+                # code...
+                foreach ($color->images as $image) {
+                    # code...
+                    return $image->name;
+                }
+            }
+
             return false;
         }
 

@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ProductApi extends Controller
 {
@@ -129,13 +130,27 @@ class ProductApi extends Controller
 
         } else {
 
+            //si la url es un short_link ------(CASO: 2)
             $product = Product::where('short_link', $id)->with('images')->with('prices')->with('colors.sizes')->first();
 
-            //si la url es un short_link ------(CASO: 2)
+            //comprobamos si el producto existe
             if ($product) {
+
+                // $colorsArray = $product->colors->toArray();
+
+                // $colorsArray = array_map(function ($colorArray) {
+        
+                //     $colorArray['image'] =  asset(Storage::url($colorArray[]));
+        
+                //     return $productArray;
+        
+                // }, $colorsArray);
+
                 return $product;
             } else {
 
+
+                // return $store;
                 //si la url es un slug ------(CASO: 3)
                 $product = Product::where('slug', $id)->with('images')->with('prices')->with('colors.sizes')->first();
             }
