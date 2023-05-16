@@ -35,6 +35,14 @@
 
         </div>
 
+        <div class="text-buscando">
+            <div wire:loading>
+                <div class="spinner-grow" role="status">
+                    <span class="sr-only">Buscando...</span>
+                  </div>
+            </div>
+        </div>
+
         <script>
             var fecha = document.getElementById('fecha');
             var enlace = document.getElementById('enviarfecha');
