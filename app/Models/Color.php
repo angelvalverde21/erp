@@ -14,7 +14,7 @@ class Color extends Model
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
-    protected $appends = ['image', 'stock_total', 'thumb'];
+    protected $appends = ['image', 'thumb'];
     //Relacion muchos a muchos
 
     public function product()
