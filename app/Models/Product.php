@@ -22,7 +22,7 @@ class Product extends Model
     // protected $fillable = ['title'];
 
     //incluir accesores a la api
-    protected $appends = ['has','image','thumb'];
+    protected $appends = ['has','thumb'];
 
     //Uno a muchos inverso (singlular)
     public function brand()
