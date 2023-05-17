@@ -39,15 +39,15 @@
                                     {{ $item->quantity_oversale }}</td> --}}
 
                                 @if (isset($item->content->image))
-
-                                
-                                {{-- card-show-invoice.blade --}}
+                                    {{-- card-show-invoice.blade --}}
                                     <td class="text-center">
-                                        <a href="{{ Storage::url($item->content->image) }}" data-lightbox="show-images-preview" data-title="Click the right half of the image to move forward.">
-                                            <img src="{{ Storage::url($item->content->image) }}"
-                                            height="75px" alt="">
+                                        <a href="{{ Storage::url($item->content->image) }}"
+                                            data-lightbox="show-images-preview"
+                                            data-title="Click the right half of the image to move forward.">
+                                            <img src="{{ Storage::url($item->content->image) }}" height="75px"
+                                                alt="">
                                         </a>
-                                        </td>
+                                    </td>
                                 @else
                                     <td class="text-center">Sin imagen</td>
                                 @endif
@@ -56,78 +56,81 @@
                                 <td>
 
                                     @if (isset($item->content->product_id))
-                                    <a
-                                        href="{{ route('manage.products.edit', [$store->nickname, $item->content->product_id]) }}">{{ $item->description }}</a>
+                                        <a
+                                            href="{{ route('manage.products.edit', [$store->nickname, $item->content->product_id]) }}">{{ $item->description }}</a>
+                                    @else
+                                <td class="text-center">Sin url</td>
+                        @endif
 
+
+                        <div class="content-stock">
+
+                            <div class="display-stock">
+
+                                {{-- //Si ya se le asigno stock entonces muestro el stock asignado --}}
+                                @if ($item->stocks->count())
+                                    @foreach ($item->stocks as $stock)
+                                        <table>
+                                            <tr>
+                                                <td>Stock asignado</td>
+                                                <td>00000{{ $stock->id }}</td>
+                                                <td>STATUS : {{ $stock->status }}</td>
+                                                <td>{{ $stock->stockable->size->name }}</td>
+                                            </tr>
+                                        </table>
+                                    @endforeach
                                 @else
-                                    <td class="text-center">Sin url</td>
+                                    {{-- sino se le asigno el stock entonces muestro el boton para asignar el stock correspondiente --}}
+                                    @livewire('components.items.add-stock-item', ['item' => $item], key('add-stock-item-' . $item))
                                 @endif
 
+                            </div>
 
-                                    <div class="content-stock">
+                        </div>
 
-                                        <div class="display-stock">
+                        </td>
+                        <td class="text-center">{{ $item->content->talla_impresa }}</td>
+                        <td>{{ $item->price }}</td>
+                        <td>{{ $item->precio_final }}</td>
 
-                                            @if ($item->stocks->count())
-                                                @foreach ($item->stocks as $stock)
-                                                    <table>
-                                                        <tr>
-                                                            <td>Stock asignado</td>
-                                                            <td>00000{{ $stock->id }}</td>
-                                                            <td>STATUS : {{ $stock->status }}</td>
-                                                            <td>{{ $stock->stockable->size->name }}</td>
-                                                        </tr>
-                                                    </table>
-                                                @endforeach
-                                            @else
-                                                @livewire('components.items.add-stock-item', ['item' => $item], key('add-stock-item-' . $item))
-                                            @endif
+                        {{-- {{ $item->content->file_name }} --}}
+                        <td>
 
-                                        </div>
+                            @if ($item->quantity > 0)
+                                <a href="#" class="btn btn-success"><i class="fa-solid fa-circle-check"></i></a>
+                            @elseif($item->quantity_oversale > 0)
+                                <a href="#" class="btn btn-danger"><i
+                                        class="fa-solid fa-triangle-exclamation"></i></a>
+                                <span class="badge bg-secondary">Sin stock</span>
+                            @endif
 
-                                    </div>
+                        </td>
 
-                                </td>
-                                <td class="text-center">{{ $item->content->talla_impresa }}</td>
-                                <td>{{ $item->price }}</td>
-                                <td>{{ $item->precio_final }}</td>
+                        <td>
+                            @if ($item->quantity_oversale > 0 && stockColorSizeId($item->content->color_size_id) >= $item->quantity_oversale)
+                                <a href="#" class="btn btn-light"
+                                    wire:click="corregirStock({{ $item->id }})">Corregir</a>
+                            @else
+                                @if (isset($item->content->color_size_id))
+                                    Quedan {{ stockColorSizeId($item->content->color_size_id) }}
+                                @else
+                                    Aun se ha asignado talla
+                                @endif
+                            @endif
+                        </td>
 
-                                {{-- {{ $item->content->file_name }} --}}
-                                <td>
-                                    
-                                    @if ($item->quantity > 0)
-                                        <a href="#" class="btn btn-success"><i
-                                                class="fa-solid fa-circle-check"></i></a>
-                                    @elseif($item->quantity_oversale > 0)
-                                        <a href="#" class="btn btn-danger"><i
-                                                class="fa-solid fa-triangle-exclamation"></i></a>
-                                        <span class="badge bg-secondary">Sin stock</span>
-                                    @endif
+                        <td class="text-center">
 
-                                </td>
+                            @if ($order->is_active)
+                                <div class="" wire:key="item-{{ $item->id }}">
+                                    <a href="#" wire:click.prevent="deleteItem({{ $item->id }})"
+                                        wire:loading.attr="disabled" wire:target="deleteItem({{ $item->id }})"
+                                        style="font-size: 20pt;"><i class="fa-solid fa-trash"></i></a>
+                                </div>
+                            @endif
 
-                                <td>
-                                    @if ($item->quantity_oversale > 0 && stockColorSizeId($item->content->color_size_id) >= $item->quantity_oversale)
-                                        <a href="#" class="btn btn-light"
-                                            wire:click="corregirStock({{ $item->id }})">Corregir</a>
-                                    @else
-                                        Quedan {{ stockColorSizeId($item->content->color_size_id) }}
-                                    @endif
-                                </td>
-
-                                <td class="text-center">
-
-                                    @if ($order->is_active)
-                                        <div class="" wire:key="item-{{ $item->id }}">
-                                            <a href="#" wire:click.prevent="deleteItem({{ $item->id }})"
-                                                wire:loading.attr="disabled"
-                                                wire:target="deleteItem({{ $item->id }})"
-                                                style="font-size: 20pt;"><i class="fa-solid fa-trash"></i></a>
-                                        </div>
-                                    @endif
-
-                                </td>
-                            </tr>
+                        </td>
+                        </tr>
                         @endforeach
 
                     </tbody>
@@ -157,7 +160,7 @@
             <div class="col-lg-6 col-6">
 
 
-                <x-user.select  wirevalue="item.content.talla_impresa" error="Este campo es requerido">
+                <x-user.select wirevalue="item.content.talla_impresa" error="Este campo es requerido">
                     <option value="S">S</option>
                     <option value="M">M</option>
                     <option value="L">L</option>

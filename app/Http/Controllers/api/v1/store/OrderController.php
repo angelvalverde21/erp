@@ -250,12 +250,12 @@ class OrderController extends Controller
 
                     $order = new Order();
 
-                    $order->delivery_man_id = 3; //el usuario 3 es magaly vanesa
+                    $order->delivery_man_id = 1707; //el usuario 1707 es magaly vanesa
                     $order->shipping_cost_buyer = 0; //por el momento todos los pedidos de internet tienen envio gratis
                     $order->payment_method_id = 1; //simula que el pago lo hico con transferencia deposito
                     $order->delivery_method_id = 1; //quiere decir que se envia via delivery
                     $order->store_id = $store->id;
-                    $order->seller_id = 12; //el usuario 12 es que el pedido vino desde internet
+                    $order->seller_id = 1; //el usuario 1 es que el pedido vino desde internet
                     $order->buyer_id = $buyer->id;
                     $order->address_id = $address->id; //el id de la direccion recien creada
 
@@ -411,7 +411,7 @@ class OrderController extends Controller
                                             'product_id' => $itemOrder['product_id'], //es el id del item que se agrega ra a la orden, este contiene el color y talla
                                             'quantity' => $itemOrder['quantity'], //es el id del item que se agrega ra a la orden, este contiene el color y talla
                                             'color_id' => $itemOrder['color_id'], //es el id del item que se agrega ra a la orden, este contiene el color y talla
-                                            'talla' => $itemOrder['talla'], //name indica la talla
+                                            'talla_impresa' => $itemOrder['talla'], //name indica la talla
                                             'id' => null,
                                             'image' => $itemOrder['image'], //image indica la url de la imagen del colors
                                             'price' => $price_oferta, //Este sera el precio real que se le cobrara al cliente, por eso que se pone en el json
@@ -481,12 +481,17 @@ class OrderController extends Controller
                         );
                     }
                 } catch (\Exception $error) {
+
+                    Log::info($error->getMessage());
+
                     return response()->json(
                         $data = [
                             "error" => "500",
                             "msg" => "Error al crear la orden",
                             "message_api" => $error->getMessage(),
                         ],
+
+                        
                         // $status = 500
                     );
                 }
