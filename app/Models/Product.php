@@ -22,9 +22,9 @@ class Product extends Model
     // protected $fillable = ['title'];
 
     //incluir accesores a la api
-    protected $appends = ['has','thumb'];
+    protected $appends = ['has','image'];
 
-    //Uno a muchos inverso (singlular))
+    //Uno a muchos inverso (singlular)
     public function brand()
     {
         return $this->belongsTo(Brand::class);
