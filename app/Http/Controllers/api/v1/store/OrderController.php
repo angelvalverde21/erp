@@ -8,6 +8,7 @@ use App\Models\ColorSize;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Size;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -271,7 +272,7 @@ class OrderController extends Controller
                         Log::info($request->order);
 
                         $i = 0;
-                        
+
                         //recorremos cada item del itemCart
 
                         foreach ($request->order as $itemOrder) {
@@ -333,7 +334,7 @@ class OrderController extends Controller
                                     # code...
                                     $array_prices[$product_id] = $precio['value'];
                                     break;
-                                }else{
+                                } else {
                                     $array_prices[$product_id] = $product->price;
                                 }
                             }
@@ -344,6 +345,8 @@ class OrderController extends Controller
                         // Log::info($array_prices);
 
                         foreach ($request->order as $itemOrder) {
+
+                            $product = Product::find($itemOrder['product_id']);
 
                             //ojo $itemOrder->color_size_id no funciona en el foreach
                             //se tiene que usar $itemOrder['color_size_id']
@@ -387,56 +390,64 @@ class OrderController extends Controller
 
                                         // $tallaSolicitada = $itemOrder["talla"];
 
-                                        switch ($product->how_sell) {
-                                            case 'value':
-                                                # code...
-                                                break;
-                                            
-                                            default:
-                                                # code...
-                                                break;
-                                        }
+                                        // switch ($product->how_sell) {
+                                        //     case 'value':
+                                        //         # code...
+                                        //         break;
 
-                                        $colorSize = ColorSize::find($itemOrder['id']);
+                                        //     default:
+                                        //         # code...
+                                        //         break;
+                                        // }
 
-                                        $id = $colorSize->id;
-                                        $talla = $colorSize->size->name;
-                                        $imagenColor = $colorSize->color->image;
+                                        //Obtener el colorSize
 
-                                        //Precio normal
-                                        $price = $colorSize->color->product->price;
+                                        //Obtencion del size_id apartir del nombre
+                                        $price_oferta = $array_prices[$itemOrder['product_id']];
 
-                                        // $qty = $itemOrder['quantity'];
-
-                                        $description = $colorSize->color->product->name;
-
-                                        //Precio oferta
-                                        $price_oferta = $array_prices[$colorSize->color->product->id];
-
-                                        //Prapando el json content
+                                        $size = Size::where('product_id', $itemOrder['product_id'])->where('name',$itemOrder['talla'])->first();
 
                                         $content = [
+                                            'product_id' => $itemOrder['product_id'], //es el id del item que se agrega ra a la orden, este contiene el color y talla
+                                            'quantity' => $itemOrder['quantity'], //es el id del item que se agrega ra a la orden, este contiene el color y talla
                                             'color_id' => $itemOrder['color_id'], //es el id del item que se agrega ra a la orden, este contiene el color y talla
-                                            'color_size_id' => $id, //es el id del item que se agrega ra a la orden, este contiene el color y talla
-                                            'talla' => $talla, //name indica la talla
-                                            'image' => $imagenColor, //image indica la url de la imagen del colors
+                                            'talla' => $itemOrder['talla'], //name indica la talla
+                                            'id' => null,
+                                            'image' => $itemOrder['image'], //image indica la url de la imagen del colors
                                             'price' => $price_oferta, //Este sera el precio real que se le cobrara al cliente, por eso que se pone en el json
                                             // Asi lo podremos variarar sin malograr la base de datos
                                         ];
+
+                                        if ($size) {
+
+                                            $colorSize = ColorSize::where('color_id', $itemOrder['color_id'])->where('size_id', $size->id)->first();
+
+                                            // $colorSize = ColorSize::find($itemOrder['id']);
+
+                                            if($colorSize){
+                                                $content['id'] = $colorSize->id;
+                                            }
+
+                                            //$item->asignar_stock(); //Asignar quiere decir que descuente de la base de datos el pedido porque este es seguro para entrega
+
+                                        } 
+
+                                        //Precio oferta
+                                        //$price_oferta = $array_prices[$colorSize->color->product->id];
+                                        
+                                        //Prapando el json content
 
                                         //Renombrando la variable
                                         $item = new Item();
 
                                         $item->quantity = $itemOrder['quantity'];
 
-                                        $item->price = $price;
-                                        $item->description = $description;
+                                        $item->price = $product->price;
+                                        $item->description = $product->name;
                                         $item->content = $content;
                                         $item->order_id = $order->id;
 
                                         $item->saveOrFail();
-
-                                        $item->asignar_stock(); //Asignar quiere decir que descuente de la base de datos el pedido porque este es seguro para entrega
 
                                         break;
                                 }
