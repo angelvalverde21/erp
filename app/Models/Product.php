@@ -248,4 +248,29 @@ class Product extends Model
 
     }
 
+    public function price_oferta(){
+
+        $i = 0;
+
+        $prices = $this->prices;
+
+        $string = '';
+
+        foreach ($prices as $price) {
+
+            $i++;
+
+            if($i==count($prices)){
+                $string = $string . 'y ' . $price->quantity. 'x' . $price->value_total ; 
+            }else {
+                if($price->quantity > 1){
+                    $string = $string . $price->quantity. 'x' . $price->value_total . ', '; 
+                }
+            }
+            # code...
+        }
+
+        return $string;
+    }
+
 }

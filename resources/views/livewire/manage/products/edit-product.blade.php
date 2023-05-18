@@ -121,6 +121,32 @@
 
                                 <div class="row">
                                     <div class="col-md-12">
+
+                                        <div class="alert alert-light" role="alert">
+                                            <ul>
+                                                <li>{{ $product->name }}</li>
+                                                <li>Por solo: S/. {{ $product->prices->first()->value }}</li>
+                                                <li>Tambien: {{ $product->price_oferta() }}</li>
+                                                <li>Envio GRATIS a todo el Peru</li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                                {{-- 
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <x-form.textarea wirevalue="product.description_redes" rows="5">
+                                            Descripcion redes
+                                        </x-form.textarea>
+                                    </div>
+                                </div> --}}
+
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <x-form.textarea wirevalue="product.tags" rows="3">
                                             Etiquetas del producto
                                         </x-form.textarea>
@@ -155,15 +181,21 @@
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" wire:model.debounce.500ms="product.over_sale" type="checkbox" role="switch" id="flexSwitchCheckDefault1">
-                                            <label class="form-check-label" for="flexSwitchCheckDefault">Sobre Vender</label>
-                                          </div>
+                                            <input class="form-check-input"
+                                                wire:model.debounce.500ms="product.over_sale" type="checkbox"
+                                                role="switch" id="flexSwitchCheckDefault1">
+                                            <label class="form-check-label" for="flexSwitchCheckDefault">Sobre
+                                                Vender</label>
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" wire:model.debounce.500ms="product.force_size_unique" type="checkbox" role="switch" id="flexSwitchCheckDefault2">
-                                            <label class="form-check-label" for="flexSwitchCheckDefault">Vender como una sola talla (ESTANDAR)</label>
-                                          </div>
+                                            <input class="form-check-input"
+                                                wire:model.debounce.500ms="product.force_size_unique" type="checkbox"
+                                                role="switch" id="flexSwitchCheckDefault2">
+                                            <label class="form-check-label" for="flexSwitchCheckDefault">Vender como una
+                                                sola talla (ESTANDAR)</label>
+                                        </div>
                                     </div>
                                     <!--/span-->
                                 </div>
@@ -209,11 +241,11 @@
                     <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home"
                             role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span
                                 class="hidden-xs-down">Inventario</span></a> </li>
-                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab"><span
-                                class="hidden-sm-up"><i class="ti-image"></i></span> <span
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile"
+                            role="tab"><span class="hidden-sm-up"><i class="ti-image"></i></span> <span
                                 class="hidden-xs-down">Fotos</span></a> </li>
-                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><span
-                                class="hidden-sm-up"><i class="ti-gallery"></i></span> <span
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages"
+                            role="tab"><span class="hidden-sm-up"><i class="ti-gallery"></i></span> <span
                                 class="hidden-xs-down">Sessiones ({{ $product->albums->count() }})</span></a> </li>
                 </ul>
                 <!-- Tab panes -->
@@ -229,7 +261,7 @@
                     </div>
 
                     <div class="tab-pane py-3" id="messages" role="tabpanel">
-                        
+
                         @livewire('manage.products.edit-product.show-albums', ['product' => $product], key('product-show-albums-' . $product->id))
                     </div>
 

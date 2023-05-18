@@ -91,9 +91,9 @@ class StoreApi extends Controller
 
         $store = User::where('nickname', $nickname)
             ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
-            ->with('products', function($query){ //ojo whereHas no funciona
+            ->with('products', function ($query) { //ojo whereHas no funciona
                 $query->where('quantity', '>', 0)
-                ->orderBy('quantity', 'desc');;
+                    ->orderBy('quantity', 'desc');
             })
             ->with('carousel')
             ->with('carouselMobile')
@@ -146,21 +146,21 @@ class StoreApi extends Controller
         // $storeArray['products'] = array_reverse($productsArray); //asignamos los nuevos productos al array
 
         return $store;
-        
     }
 
-    public function buscarDistritos(Request $request){
+    public function buscarDistritos(Request $request)
+    {
 
         // $distritos = District::where('name', 'like','%'.$request->cadena.'%')->get();
 
         $districts = District::with(['province.department'])
-                        ->where('name', 'like', '%' . $request->cadena . '%')
-                        ->orderBy('name', 'asc')
-                        ->limit(20)
-                        ->get();
+            ->where('name', 'like', '%' . $request->cadena . '%')
+            ->orderBy('name', 'asc')
+            ->limit(20)
+            ->get();
 
         $data = [
-            "message" => "buscando el distrito: ".$request->cadena,
+            "message" => "buscando el distrito: " . $request->cadena,
             "districts" => $districts
         ];
 

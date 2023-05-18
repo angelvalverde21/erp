@@ -32,7 +32,7 @@
                             <td class="text-center">x</td>
                             <td class="text-center">S/. {{ $price->value }}</td>
                             <td class="text-center">=</td>
-                            <td class="text-center">S/. {{ $price->quantity*$price->value }}</td>
+                            <td class="text-center">S/. {{ $price->value_total }}</td>
                             <td class="text-center">{{ $price->created_at }}</td>
                             <td class="text-center">
                                 <a href="#" wire:click.prevent="deletePrice({{ $price->id }})" class="btn btn-danger"><i
