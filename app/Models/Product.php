@@ -77,7 +77,7 @@ class Product extends Model
         $image = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
 
         if ($image) {
-            return $image->name;
+            return $image->thumbnail;
         } else {
             // $colors = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
 
@@ -88,7 +88,7 @@ class Product extends Model
                 # code...
                 foreach ($color->images as $image) {
                     # code...
-                    return asset(Storage::url($image->name));
+                    return asset(Storage::url($image->thumbnail));
                 }
             }
 

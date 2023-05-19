@@ -26,38 +26,130 @@ function helperTotalPagar()
 {
 }
 
-function uploadImage($request, $dir = "")
+function uploadImage($request, $dir = "", $size = 0)
 {
-
-    // Log::info('up-1');
-
     $originalName = $request->file('file')->getClientOriginalName();
-    // Log::info('up-2');
-    $extension = pathinfo($originalName, PATHINFO_EXTENSION);
-    // Log::info('up-3');
-    $nameEncrypt = md5(
-        bcrypt(
-            $originalName . bcrypt(time())
-        )
-    );
-    
-    // Log::info('up-4');
-    $guardarEn = storage_path(). "/app/public/" .$dir . "/" . $nameEncrypt . "." . $extension;
-    $returnName = $dir . "/" . $nameEncrypt . "." . $extension;
-    Log::info($guardarEn);
-    
-    // Log::info('up-5');
 
-    Image::make($request->file('file'))
-        ->resize(750, null, function($constraint) {
+    //extraemos la extencio
+    $extension = pathinfo($originalName, PATHINFO_EXTENSION);
+
+    //Creando un nombre
+    $name = md5(time() . $originalName . $dir . Str::random(10)) . '.' . $extension;
+
+    //Estableciendo el directorio donde se guardara la imagen
+    $path = Storage::path($dir);
+
+    //sino existe el directorio entonces lo creamos
+    if (!file_exists($path)) {
+        mkdir($path, 0755, true);
+    }
+
+    //establecemos la ruta del nuevo archivo
+    $file_path = Storage::path($dir . '/' . $name);
+
+
+    // // Log::info('up-1');
+
+    // // Log::info('up-3');
+    // $nameEncrypt = md5(
+    //     bcrypt(
+    //         $originalName . bcrypt(time())
+    //     )
+    // );
+
+    // // Log::info('up-4');
+    // $guardarEn = storage_path(). "/app/public/" .$dir . "/" . $nameEncrypt . "." . $extension;
+    // $returnName = $dir . "/" . $nameEncrypt . "." . $extension;
+    // Log::info($guardarEn);
+
+    // // Log::info('up-5');
+
+    // $image = Image::make($request->file('file'));
+
+    // $image->resize(750, null, function($constraint) {
+    //     $constraint->aspectRatio();
+    // });
+
+    $image = Image::make($request->file('file'));
+
+    if ($size > 0) {
+        //Creamos la imagen segun el tamano deseado
+        $image->resize($size, null, function ($constraint) {
             $constraint->aspectRatio();
-        })
-        ->save($guardarEn);
+        });
+    } else {
+        //Creamos la imagen original
+        $image->resize('100%', '100%');
+    }
+
+    $image->save($file_path);
+
+    // $image->resize(350, null, function($constraint) {
+    //     $constraint->aspectRatio();
+    // });
+
+    // //finalmente guardo la imagen
+    // $image->save($file_path_thumb);
 
     // Log::info('up-6');
 
-    return $returnName;
+    // //Recibo la imagen
+    // $image = Image::make($request->file('file'));
+
+    // //Redimenciono a Medium
+    // $image->resize(750, 500);
+
+    // //finalmente guardo la imagen
+    // $image->save($file_path_medium);
+
+    // //Redimenciono a Thumbnail
+    // $image->resize(300, 200);
+
+    // //finalmente guardo la imagen
+    // $image->save($file_path_thumb);
+
+
+    return $dir . '/' . $name;
 }
+
+function uploadSeeder($imageSeeder, $dir = "", $size = 0)
+{
+    // $originalName = $request->file('file')->getClientOriginalName();
+
+    //extraemos la extencio
+    $extension = pathinfo($imageSeeder, PATHINFO_EXTENSION);
+
+    //Creando un nombre
+    $name = md5(time() . $imageSeeder . $dir . Str::random(10)) . '.' . $extension;
+
+    //Estableciendo el directorio donde se guardara la imagen
+    $path = Storage::path($dir);
+
+    //sino existe el directorio entonces lo creamos
+    if (!file_exists($path)) {
+        mkdir($path, 0755, true);
+    }
+
+    //establecemos la ruta del nuevo archivo
+    $file_path = Storage::path($dir . '/' . $name);
+
+    $image = Image::make($imageSeeder);
+
+    if ($size > 0) {
+        //Creamos la imagen segun el tamano deseado
+        $image->resize($size, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+    } else {
+        //Creamos la imagen original
+        $image->resize('100%', '100%');
+    }
+
+    $image->save($file_path);
+
+    return $dir . '/' . $name;
+}
+
 
 function stockColorSizeId($color_size_id)
 {
@@ -65,7 +157,8 @@ function stockColorSizeId($color_size_id)
     return $stock->quantity;
 }
 
-function getStockColorSize($color_size_id){
+function getStockColorSize($color_size_id)
+{
     $colorSize = ColorSize::find($color_size_id);
     return $colorSize->stocks();
 }
@@ -144,137 +237,142 @@ function devolverStockSize(Order $order)
 
 //funciones para la migracion de la base de datos antigua
 
-function filterDni($value){
+function filterDni($value)
+{
     return preg_replace('/[^0-8]/', '', $value);
 }
 
-function filterCelular($value){
+function filterCelular($value)
+{
     return preg_replace('/[^0-9]/', '', $value);
 }
 
 
-function corregirDni($value){
+function corregirDni($value)
+{
 
 
-    if ($value == "" ||$value == 0 ) {
+    if ($value == "" || $value == 0) {
         return NULL;
-    }else{
+    } else {
         $filter = filterDni($value);
 
-        if(strlen($filter)>0){
+        if (strlen($filter) > 0) {
             return filterDni($value);
-        }else{
+        } else {
             return NULL;
         }
-
     }
-
-    
 }
 
-function corregirPhone($value){
-    if ($value == "" || $value == 0 ) {
+function corregirPhone($value)
+{
+    if ($value == "" || $value == 0) {
         return NULL;
-    }else{
+    } else {
         $filter = filterCelular($value);
 
-        if(strlen($filter)>0){
+        if (strlen($filter) > 0) {
             return filterCelular($value);
-        }else{
+        } else {
             return NULL;
         }
     }
 }
 
 
-function corregirDistrict($value){
-    
-    if ($value == "" || $value == 0 ) {
+function corregirDistrict($value)
+{
+
+    if ($value == "" || $value == 0) {
         return 150101;
-    }else{
+    } else {
         return $value;
     }
 }
 
-function corregirEmail($value){
+function corregirEmail($value)
+{
     if ($value == "") {
         return NULL;
-    }else{
+    } else {
         return $value;
     }
 }
 
 
-function corregirPrecio($value){
+function corregirPrecio($value)
+{
     if ($value == "GRATIS" || $value == "" || $value == 0) {
         return null;
-    }else{
+    } else {
         return $value;
     }
 }
 
-function corregirFecha($value){
-    
+function corregirFecha($value)
+{
+
     if ($value == "0000-00-00 00:00:00") {
         return "2010-00-00 00:00:00";
-    }else{
+    } else {
         return $value;
     }
 }
 
-function getJson($path, $param = false){
+function getJson($path, $param = false)
+{
 
     $json = json_decode(File::get($path), $param);
-    
-    if($param){
+
+    if ($param) {
         foreach ($json as $fila) {
             # code...
-            if($fila['type']=="table"){
+            if ($fila['type'] == "table") {
                 //aqui esta la data
                 return $fila['data'];
             }
         }
-    }else{
+    } else {
         foreach ($json as $fila) {
             # code...
-            if($fila->type=="table"){
+            if ($fila->type == "table") {
                 //aqui esta la data
                 return $fila->data;
             }
         }
     }
-
 }
 
-function extraerImagenOld($path){
-    $name = explode('/',$path);
+function extraerImagenOld($path)
+{
+    $name = explode('/', $path);
     // /storage/colors/7ecba4_polos-blanco-bividi-estampado-diseno-i-love-band-boys.jpg
     return $name[1];
 }
 
-function extraerJsonData($json, $param = false){
+function extraerJsonData($json, $param = false)
+{
 
     $json = json_decode($json, $param);
-    
-    if($param){
+
+    if ($param) {
         foreach ($json as $fila) {
             # code...
-            if($fila['type']=="table"){
+            if ($fila['type'] == "table") {
                 //aqui esta la data
                 return $fila['data'];
             }
         }
-    }else{
+    } else {
         foreach ($json as $fila) {
             # code...
-            if($fila->type=="table"){
+            if ($fila->type == "table") {
                 //aqui esta la data
                 return $fila->data;
             }
         }
     }
-
-
 }
 
 function repartidores()
@@ -306,22 +404,24 @@ function paymentMethods() // 03
     return PaymentMethod::whereNull('payment_method_id')->get();
 }
 
-function calcularStockInicial($color_id, $size_id){
-    
-    $color_size = ColorSize::where('color_id',$color_id)->where('size_id', $size_id)->first();
+function calcularStockInicial($color_id, $size_id)
+{
+
+    $color_size = ColorSize::where('color_id', $color_id)->where('size_id', $size_id)->first();
 
     return $color_size->stocksBruto()->get()->count();
-
 }
 
-function albumLocation($album_id, $location_id){
+function albumLocation($album_id, $location_id)
+{
 
-    $album_location = AlbumLocation::where('album_id',$album_id)->where('location_id', $location_id)->first();
+    $album_location = AlbumLocation::where('album_id', $album_id)->where('location_id', $location_id)->first();
 
     return $album_location;
 }
 
-function createItemsOrder($items, $order_id){
+function createItemsOrder($items, $order_id)
+{
 
     // $items = $items->toArray();
 
@@ -468,7 +568,7 @@ function createItemsOrder($items, $order_id){
                         //Obtencion del size_id apartir del nombre
                         $price_oferta = $array_prices[$item['product_id']];
 
-                        $size = Size::where('product_id', $item['product_id'])->where('name',$item['talla'])->first();
+                        $size = Size::where('product_id', $item['product_id'])->where('name', $item['talla'])->first();
 
                         $content = [
                             'product_id' => $item['product_id'], //es el id del item que se agrega ra a la orden, este contiene el color y talla
@@ -487,17 +587,17 @@ function createItemsOrder($items, $order_id){
 
                             // $colorSize = ColorSize::find($item['id']);
 
-                            if($colorSize){
+                            if ($colorSize) {
                                 $content['id'] = $colorSize->id;
                             }
 
                             //$item->asignar_stock(); //Asignar quiere decir que descuente de la base de datos el pedido porque este es seguro para entrega
 
-                        } 
+                        }
 
                         //Precio oferta
                         //$price_oferta = $array_prices[$colorSize->color->product->id];
-                        
+
                         //Prapando el json content
 
                         //Renombrando la variable

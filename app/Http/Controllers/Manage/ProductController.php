@@ -12,41 +12,48 @@ use App\Models\Product;
 use App\Models\Size;
 use Illuminate\Support\Facades\Log;
 
+
 class ProductController extends Controller
 {
     //Funcion para cargar las imagenes de los productis (ojo NO los colores)
     public function uploadImages($nickname, Product $product, Request $request)
     {
 
-
         $request->validate([
             'file' => 'required|image|max:10240'  //10 megas
         ]);
 
         // $url = Storage::put('products', $request->file('file'));
-        $url = uploadImage($request,"products");
-        Log::info('inicio de imagen');
-        
-        Log::info($url);
-        
-        Log::info('fin de imagen');
-        
+        $url = uploadImage($request, "products");
+        $urlThumb = uploadImage($request, "products/thumb", 360);
+        $urlMedium = uploadImage($request, "products/medium", 750);
+        $urlLarge = uploadImage($request, "products/large", 1080);
+        // Log::info('inicio de imagen');
+
+        // Log::info($url);
+
+        // Log::info('fin de imagen');
 
         $product->images()->create([
-            'name' => $url
+            'name' => $url,
+            'thumbnail' => $urlThumb,
+            'medium' => $urlMedium,
+            'large' => $urlLarge,
         ]);
+
 
         //Ojo ya no es necesario ingresar la relacion imageable_id e imageable_type
     }
 
-    public function editImage($nickname, Image $image, Request $request){
-        
+    public function editImage($nickname, Image $image, Request $request)
+    {
+
         $request->validate([
             'file' => 'required|image|max:10240'  //10 megas
         ]);
 
         // $image->name = Storage::put('products', $request->file('file'));
-        $image->name = uploadImage($request,"products");
+        $image->name = uploadImage($request, "products");
 
         $image->save();
 
@@ -54,16 +61,17 @@ class ProductController extends Controller
         Log::debug($request);
     }
 
-    public function editColor($nickname, Color $color, Request $request){
-        
+    public function editColor($nickname, Color $color, Request $request)
+    {
+
         $request->validate([
             'file' => 'required|image|max:10240'  //10 megas
         ]);
 
-        $color->image = uploadImage($request,"products/colors");
+        $color->image = uploadImage($request, "products/colors");
 
         $color->save();
-        
+
         Log::debug($color);
         Log::debug($request);
     }
@@ -72,17 +80,19 @@ class ProductController extends Controller
     {
 
         Log::info('el producto recibido es: ');
-        
+
         Log::info($product);
-        
+
 
         $request->validate([
             'file' => 'required|image|max:10240'  //10 megas
         ]);
 
-        $url = uploadImage($request,"products/colors");
+        $url = uploadImage($request, "products/colors");
+        $urlThumb = uploadImage($request, "products/colors/thumb", 360);
+        $urlMedium = uploadImage($request, "products/colors/medium", 750);
+        $urlLarge = uploadImage($request, "products/colors/large", 1080);
 
-        
         Log::info('creando los colores e imagenes');
 
         //Crea el color
@@ -91,18 +101,20 @@ class ProductController extends Controller
                 'image' => $url,
                 'name' => $nickname,
                 'quantity' => '0'
-            ]);
-
+            ]
+        );
 
         //Crea la primera imagen para el color
         $color->images()->create(
             [
                 'name' => $url,
-                'usage' => 'color'
+                'thumbnail' => $urlThumb,
+                'medium' => $urlMedium,
+                'large' => $urlLarge,
             ]
-            );
+        );
 
-        
+
         //Crea las tallas para el color creado
 
         $sizes = Size::where('product_id', $color->product_id)->get();
@@ -119,7 +131,7 @@ class ProductController extends Controller
             );
         }
 
-        Log::info('se creo la sizes para el color->product_id: '. $color->product_id);
+        Log::info('se creo la sizes para el color->product_id: ' . $color->product_id);
     }
 
     //Variantes del color
@@ -131,7 +143,7 @@ class ProductController extends Controller
         ]);
 
         // $url = Storage::put('colors', $request->file('file'));
-        $url = uploadImage($request,"products/colors");
+        $url = uploadImage($request, "products/colors");
         //Crea el stock en caso no haya tallas
         $color->images()->create(
             [
@@ -154,5 +166,4 @@ class ProductController extends Controller
         //     );
         // }
     }
-
 }
