@@ -320,3 +320,210 @@ function albumLocation($album_id, $location_id){
 
     return $album_location;
 }
+
+function createItemsOrder($items, $order_id){
+
+    // $items = $items->toArray();
+
+    Log::info('imprimiendo datos del carrito de compras');
+    Log::info($items);
+
+    if ($items) {
+
+        Log::info('imprimiendo todo el objeto');
+
+        Log::info($items);
+
+        $i = 0;
+
+        //recorremos cada item del itemCart
+
+        foreach ($items as $item) {
+
+            //calculamos cuantos elementos repetidos hay
+            for ($j = 0; $j < $item['quantity']; $j++) {
+                # code...
+                $array_repetidos[] = $item['product_id'];
+            }
+
+            $i++;
+        }
+
+        Log::info('Products ids');
+
+        Log::info($array_repetidos);
+
+
+        $repetidos = array_count_values($array_repetidos);
+
+        Log::info('Product_id con el total de repeticiones');
+
+        Log::info($repetidos);
+
+
+        // foreach ($repetidos as $product_id) {
+        //     # code...
+        // }
+
+        $array_prices = [];
+
+        foreach ($repetidos as $product_id => $cantidad) {
+
+            // Log::info('Imprimiendo el product_id');
+
+            // Log::info($product_id);
+
+            // Log::info('Imprimiendo la cantidad');
+
+            // Log::info($cantidad);
+
+            # code...
+            $product = Product::find($product_id);
+
+            // Log::info('Imprimiendo el producto');
+            // Log::info($product);
+
+            $precios = $product->prices;
+
+            // Log::info('Imprimiendo los precios');
+            // Log::info($precios);
+
+            foreach ($precios as $precio) {
+
+                Log::info('ingreso al foreach');
+                Log::info($precio['quantity']);
+
+                if ($cantidad == $precio['quantity']) {
+                    # code...
+                    $array_prices[$product_id] = $precio['value'];
+                    break;
+                } else {
+                    $array_prices[$product_id] = $product->price;
+                }
+            }
+        }
+
+        // Log::info('Array Precios');
+
+        // Log::info($array_prices);
+
+        foreach ($items as $item) {
+
+            $product = Product::find($item['product_id']);
+
+            //ojo $item->color_size_id no funciona en el foreach
+            //se tiene que usar $item['color_size_id']
+
+            // Log::info('imprimiendo el item del obejto');
+
+            // Log::info($item);
+
+            // Log::info('imprimiendo el id');
+
+            // Log::info($item['color_size_id']);
+
+            // Log::info('imprimiendo el qty');
+
+            // Log::info($item->qty);
+
+            try {
+                # code...
+                //Recibiendo los parametros del formulario uno por uno
+
+                //fin de recibiendo los parametros del formulario
+
+                switch ($item['type']) {
+                    case 'color_id':
+                        # code...
+                        break;
+
+                    case 'size_id':
+                        # code...
+                        break;
+
+                    case 'none':
+                        # code...
+                        break;
+
+                    default:
+
+                        //color_size
+
+                        //Buscando el color_size_id
+
+                        // $tallaSolicitada = $item["talla"];
+
+                        // switch ($product->how_sell) {
+                        //     case 'value':
+                        //         # code...
+                        //         break;
+
+                        //     default:
+                        //         # code...
+                        //         break;
+                        // }
+
+                        //Obtener el colorSize
+
+                        //Obtencion del size_id apartir del nombre
+                        $price_oferta = $array_prices[$item['product_id']];
+
+                        $size = Size::where('product_id', $item['product_id'])->where('name',$item['talla'])->first();
+
+                        $content = [
+                            'product_id' => $item['product_id'], //es el id del item que se agrega ra a la orden, este contiene el color y talla
+                            'quantity' => $item['quantity'], //es el id del item que se agrega ra a la orden, este contiene el color y talla
+                            'color_id' => $item['color_id'], //es el id del item que se agrega ra a la orden, este contiene el color y talla
+                            'talla_impresa' => $item['talla'], //name indica la talla
+                            'id' => null,
+                            'image' => $item['image'], //image indica la url de la imagen del colors
+                            'price' => $price_oferta, //Este sera el precio real que se le cobrara al cliente, por eso que se pone en el json
+                            // Asi lo podremos variarar sin malograr la base de datos
+                        ];
+
+                        if ($size) {
+
+                            $colorSize = ColorSize::where('color_id', $item['color_id'])->where('size_id', $size->id)->first();
+
+                            // $colorSize = ColorSize::find($item['id']);
+
+                            if($colorSize){
+                                $content['id'] = $colorSize->id;
+                            }
+
+                            //$item->asignar_stock(); //Asignar quiere decir que descuente de la base de datos el pedido porque este es seguro para entrega
+
+                        } 
+
+                        //Precio oferta
+                        //$price_oferta = $array_prices[$colorSize->color->product->id];
+                        
+                        //Prapando el json content
+
+                        //Renombrando la variable
+                        $newItem = new Item();
+
+                        $newItem->quantity = $item['quantity'];
+
+                        $newItem->price = $product->price;
+                        $newItem->description = $product->name;
+                        $newItem->content = $content;
+                        $newItem->order_id = $order_id;
+
+                        $newItem->saveOrFail();
+
+                        break;
+                }
+            } catch (\Exception $error) {
+                return response()->json(
+                    $data = [
+                        "error" => "500",
+                        "msg" => "Error al insertar los items de la orden",
+                        "message_api" => $error->getMessage(),
+                    ],
+                    // $status = 500
+                );
+            }
+        }
+    }
+}

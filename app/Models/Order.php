@@ -654,4 +654,5 @@ class Order extends Model
 
         // Log::info($this->search);
     }
+    
 }

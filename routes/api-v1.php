@@ -50,6 +50,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/orders/create-one-step', [OrderController::class, 'createOneStep']);
+Route::post('/orders/create-with-login', [OrderController::class, 'createOrderWithLogin']);
 Route::post('/orders/create-order', [OrderController::class, 'createOrder']);
 Route::get('/orders', [OrderController::class, 'showAll']);
 Route::get('/orders/{order}', [OrderController::class, 'show']);
