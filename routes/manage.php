@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::name('manage.')->middleware('StoreExist')->group(function () {
-
+ 
    // Route::get('/', Dashboard::class)->name('dashboard');
    Route::get('/', ShowOrdersToday::class)->name('dashboard');
 

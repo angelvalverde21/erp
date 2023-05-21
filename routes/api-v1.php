@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 
 //url de la pagina de inicial 
 
-Route::get('/', [StoreApi::class, 'show']);
+Route::get('/', [StoreApi::class, 'show'])->middleware('RegisterVisit');
 Route::post('/buscar/distritos', [StoreApi::class, 'buscarDistritos']);
 
 // info del producto o catalogo
@@ -60,6 +60,7 @@ Route::post('/register/verify-phone', [RegisterController::class, 'verifyPhone']
 Route::post('/register/verify-dni', [RegisterController::class, 'verifyDni']);
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/user', [AuthController::class, 'user']);
 
 //Obtener token de pasarelas de pago
 

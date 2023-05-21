@@ -15,6 +15,25 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except(['login']);
+        // $this->middleware('auth:api')->except(['user']);
+    }
+
+    public function user()
+    {
+        $user = Auth::user();
+
+        return response(
+            [
+                'data' => $user,
+                'status' => 200
+            ]
+        );
+    }
+
     public function login($nickname, Request $request)
     {
         //
