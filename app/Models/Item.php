@@ -112,27 +112,56 @@ class Item extends Model
             $quantity = $this->quantity;
         }
 
-        for ($i = 0; $i < $quantity; $i++) {
+        $stocks = $color_size->stocks()->get();
 
-            $stock = $color_size->stocks()->first();
+        $i = 0;
 
-            if ($stock) {
+        foreach ($stocks as $stock) {
+            # code...
+            $i++;
+
+            //solo procesaremos la cantidad que ha pedido el cliente
+            if ($i <= $quantity) {
+                # code...
 
                 Log::info('Mostrando el primer stock disponible');
                 Log::info($stock);
-
+    
                 $stock->status = Stock::SEPARADO;
                 $stock->item_id = $this->id;
-
+    
                 $stock->save();
-
+    
                 Log::info('Cambiando su estatus a ' . Stock::SEPARADO);
                 Log::info($stock);
-
-            } else {
-                Log::info('No hay suficiente stock');
+            }else{
+                break;
             }
+
         }
+
+
+        // for ($i = 0; $i < $quantity; $i++) {
+
+        //     $stock = $color_size->stocks()->first();
+
+        //     if ($stock) {   
+
+        //         Log::info('Mostrando el primer stock disponible');
+        //         Log::info($stock);
+
+        //         $stock->status = Stock::SEPARADO;
+        //         $stock->item_id = $this->id;
+
+        //         $stock->save();
+
+        //         Log::info('Cambiando su estatus a ' . Stock::SEPARADO);
+        //         Log::info($stock);
+
+        //     } else {
+        //         Log::info('No hay suficiente stock');
+        //     }
+        // }
 
         //descontamos el stock en la base de datos
         // $color_size->quantity = $color_size->quantity - $this->quantity;

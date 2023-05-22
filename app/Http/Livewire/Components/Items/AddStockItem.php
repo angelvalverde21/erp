@@ -26,7 +26,7 @@ class AddStockItem extends Component
         Log::info($color_size_id);
         // Log::debug($this->order->id);
         // Log::debug($this->quantity[$value]);
-
+        // $quantity = $this->quantity[$color_size_id];
         // $arrayValue = explode('-',$this->quantity[$value]);
         // $color_size_id = $arrayValue[0];
         // $qty = $arrayValue[1];
