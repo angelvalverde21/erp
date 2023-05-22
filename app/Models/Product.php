@@ -83,12 +83,14 @@ class Product extends Model
 
             //SE COLOCA ASI PORQUE "$this->colors" genera un bucle infinito
             $product = Product::find($this->id);
-
-            foreach ($product->colors as $color) {
-                # code...
-                foreach ($color->images as $image) {
+            
+            if($product){
+                foreach ($product->colors as $color) {
                     # code...
-                    return asset(Storage::url($image->thumbnail));
+                    foreach ($color->images as $image) {
+                        # code...
+                        return asset(Storage::url($image->thumbnail));
+                    }
                 }
             }
 

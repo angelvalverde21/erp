@@ -61,12 +61,15 @@ class CreateProduct extends Component
 
         //$rules = $this->rules;
 
+        Log::info('se pulso el boton crear producto');
         Log::info($this->product);
        
         //
         $this->validate($this->rules);
-        
+        Log::info('se ha validado correctamente los datos');
+
         $product = new Product();
+        Log::info('se ha creando la instancia para crear un producto');
 
         $product->name = $this->product['name'];
         $product->title = $this->product['name'];
@@ -75,23 +78,27 @@ class CreateProduct extends Component
         $product->price = $this->product['price'];
         $product->costo = $this->product['costo'];
         
-
-
         $product->status = '1';
         $product->owner_id = $this->user->id;
         $product->store_id = $this->store->id;
+        Log::info('se han asignado correctamente los datos para guardarlos');
 
         $product->short_link = substr(base64_encode(bcrypt(Str::slug($this->product['name']))),0,5);
+        Log::info('se han asignado el shortLink');
 
+        Log::info('se imprime los datos del producto');
         Log::info($product);
 
         //Guardo el producto
         $product->save();
+        Log::info('se ha guardo el producto');
 
         $product->prices()->create([
             'quantity' => 1,
             'value' => $this->product['price']
         ]);
+
+        Log::info('se ha insertado un precio');
 
         if($product->category->has_size){
 
@@ -110,6 +117,8 @@ class CreateProduct extends Component
                 );
             }
         }
+
+        Log::info('se ha terminado de crear las tallas');
 
         return redirect($this->store->nickname.'/manage/products/'. $product->id .'/edit');
 
