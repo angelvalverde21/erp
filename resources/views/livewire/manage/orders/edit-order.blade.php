@@ -1,7 +1,7 @@
 <div>
 
     <x-sectioncontent>
-        @livewire('manage.orders.edit-order.card-status-iconos', ['order' => $order], key('card-status-iconos'))
+        {{-- @livewire('manage.orders.edit-order.card-status-iconos', ['order' => $order], key('card-status-iconos')) --}}
     </x-sectioncontent>
 
     @if (!$order->is_active)

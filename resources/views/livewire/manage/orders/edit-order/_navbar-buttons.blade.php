@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg">
 
     <li class="nav-item active mr-2 mt-2">
         <a class="btn btn-outline-success"
@@ -18,7 +18,7 @@
 
             <li class="nav-item active">
                 <div class="dropdown ">
-                    <button class="btn btn-outline-info mx-1 my-1 dropdown-toggle" type="button"
+                    <button class="btn btn-outline-info w-100 my-1 dropdown-toggle" type="button"
                         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-print mr-2 pt-1"></i> Imprimir
                     </button>
@@ -46,7 +46,7 @@
             </li> --}}
 
             <li class="nav-item active">
-                <a class="btn btn-outline-info d-flex mx-1 my-1" data-toggle="modal" data-target="#observations-modal"
+                <a class="btn btn-outline-info d-flex my-1" data-toggle="modal" data-target="#observations-modal"
                     href="#"><i class="fa-solid fa-message mr-2 pt-1"></i>
                     Observaciones</a>
             </li>
