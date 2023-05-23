@@ -33,8 +33,8 @@ Route::post('/buscar/distritos', [StoreApi::class, 'buscarDistritos']);
 
 // info del producto o catalogo
 
-Route::get('/products', [ProductApi::class, 'index']);
-Route::get('/products/{id}', [ProductApi::class, 'show']);
+Route::get('/products', [ProductApi::class, 'index'])->middleware('RegisterVisit');;
+Route::get('/products/{id}', [ProductApi::class, 'show'])->middleware('RegisterVisit');;
 Route::get('/products/{id}/colors', [ProductColorApi::class, 'index']);
 Route::get('/products/color/size/stock/{colorSize}', [ProductApi::class, 'showStockColorSizeId']);
 

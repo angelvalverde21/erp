@@ -83,7 +83,10 @@ class CreateProduct extends Component
         $product->store_id = $this->store->id;
         Log::info('se han asignado correctamente los datos para guardarlos');
 
-        $product->short_link = substr(base64_encode(bcrypt(Str::slug($this->product['name']))),0,5);
+        $product->short_link = substr(md5(bcrypt(Str::slug($this->product['name']))),0,5);
+        Log::info('short_link');
+        Log::info($this->product['name']);
+        Log::info(substr(md5(bcrypt(Str::slug($this->product['name']))),0,6));
         Log::info('se han asignado el shortLink');
 
         Log::info('se imprime los datos del producto');

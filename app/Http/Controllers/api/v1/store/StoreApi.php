@@ -88,7 +88,6 @@ class StoreApi extends Controller
         //         ]
         //     )->first();
 
-
         $store = User::where('nickname', $nickname)
             ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
             ->with('products', function ($query) { //ojo whereHas no funciona
@@ -101,8 +100,18 @@ class StoreApi extends Controller
             ->with('offices')
             ->first();
 
-
         //buscando imagenes
+
+        $products_category = Product::where('category_id',8)->get();
+
+        //convirtiendo a array
+
+        $storeArray = $store->toArray();
+        $products_category_array = $products_category->toArray();
+
+        $storeArray['poleras'] = $products_category_array;
+
+
 
         // foreach ($store->products as $product) {
         //     # code...
@@ -145,7 +154,7 @@ class StoreApi extends Controller
 
         // $storeArray['products'] = array_reverse($productsArray); //asignamos los nuevos productos al array
 
-        return $store;
+        return $storeArray;
     }
 
     public function buscarDistritos(Request $request)

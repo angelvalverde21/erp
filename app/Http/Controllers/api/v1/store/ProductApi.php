@@ -146,7 +146,8 @@ class ProductApi extends Controller
         
                 // }, $colorsArray);
 
-                return $product;
+                // return $product;
+                
             } else {
 
 
@@ -155,6 +156,8 @@ class ProductApi extends Controller
                 $product = Product::where('slug', $id)->with('images')->with('prices')->with('colors.sizes')->first();
             }
         }
+
+        // $product = $product->toArray();
 
         //vamos a modificar las tallas originales y cambiarlas por un "ESTANDAR"
 
