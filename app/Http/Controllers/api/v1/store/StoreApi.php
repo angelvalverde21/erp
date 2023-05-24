@@ -96,8 +96,6 @@ class StoreApi extends Controller
             })
             ->with('carousel')
             ->with('carouselMobile')
-            ->with('profile')
-            ->with('offices')
             ->first();
 
         //buscando imagenes
