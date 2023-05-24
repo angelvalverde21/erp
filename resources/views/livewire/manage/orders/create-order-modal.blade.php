@@ -42,6 +42,13 @@
 
                         <div class="card">
                             <div class="card-body">
+                                <a href="{{ route('manage.customers.edit', [$store->nickname, $user->id]) }}" class="btn btn-secondary">Ver Pedidos</a>
+                                
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
                                 <ul>
                                     <li>Nombre: {{ $user->name }} {{ $user->lastname }}</li>
                                     <li>DNI: {{ $user->dni }}</li>
@@ -61,8 +68,7 @@
 
                     </div>
 
-                    @if ($user->addresses->count()
-                    )
+                    @if ($user->addresses->count())
                         <div class="modal-footer">
 
                             <button type="button" wire:loading.class="btn-secondary" wire:loading.attr="disabled"

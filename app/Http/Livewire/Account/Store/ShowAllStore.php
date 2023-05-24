@@ -29,6 +29,6 @@ class ShowAllStore extends Component
 
         // $stores = $this->user->stores; //Esto falla cuando se usa el compact, para tenerlo en cuenta
 
-        return view('livewire.account.store.show-all-store')->layout('layouts.adminlte');
+        return view('livewire.account.store.show-all-store')->layout('layouts.account');
     }
 }

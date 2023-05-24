@@ -22,7 +22,11 @@
                         alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="{{ route('home') }}" class="d-block">{{ $user->name }}</a>
+                    @if ($user->hasRole('admin'))
+                        <a href="{{ route('home') }}" class="d-block">{{ $user->name }} (admin)</a>
+                    @else
+                        <a href="{{ route('home') }}" class="d-block">{{ $user->name }} </a>
+                    @endif
                 </div>
             </div>
 
@@ -47,11 +51,10 @@
 
 
                 @foreach ($menus as $menu)
-
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="info">
-                            <a href="{{ $menu['slug'] }}" class="d-block"><i
-                                    class="{{ $menu['icon'] }} mr-2"></i> {{ $menu['name'] }}</a>
+                            <a href="{{ $menu['slug'] }}" class="d-block"><i class="{{ $menu['icon'] }} mr-2"></i>
+                                {{ $menu['name'] }}</a>
                         </div>
                     </div>
 
@@ -64,23 +67,20 @@
                             data-accordion="">
 
                             @if (isset($menu['sub_menu']))
-
                                 @foreach ($menu['sub_menu'] as $sub_menu)
                                     <li class="nav-item">
                                         <a href="{{ $sub_menu['slug'] }}"
-                                            class="nav-link {{ request()->routeIs('manage.'.$sub_menu['active'], [$store->nickname]) ? 'active' : '' }}">
+                                            class="nav-link {{ request()->routeIs('manage.' . $sub_menu['active'], [$store->nickname]) ? 'active' : '' }}">
                                             {{-- class="nav-link {{ request()->routeIs('manage.'.$sub_menu['active'].'*', [$store->nickname]) ? 'active' : '' }}"> --}}
                                             <i class="{{ $sub_menu['icon'] }} nav-icon"></i>
                                             <p>{{ $sub_menu['name'] }}</p>
                                         </a>
                                     </li>
                                 @endforeach
-
                             @endif
 
                         </ul>
                     </nav>
-
                 @endforeach
 
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -125,7 +125,7 @@
                 </nav> --}}
 
                 {{-- herramientas --}}
-{{-- 
+                {{-- 
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="info">
                         <a href="{{ route('manage.profile', [$store->nickname]) }}" class="d-block"><i
@@ -165,27 +165,25 @@
 
 
                 {{-- <li class="nav-item"> --}}
-                    
-                @else
-                    {{-- fin de else --}}
-                    <!-- Sidebar Menu -->
+            @else
+                {{-- fin de else --}}
+                <!-- Sidebar Menu -->
 
-                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div class="info">
-                            <a href="{{ route('account') }}" class="d-block"><i
-                                    class="fa-solid fa-store mr-2"></i>Paginas</a>
-                        </div>
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="info">
+                        <a href="{{ route('account') }}" class="d-block"><i
+                                class="fa-solid fa-store mr-2"></i>Paginas</a>
                     </div>
+                </div>
 
-                    <nav class="mt-2">
+                <nav class="mt-2">
 
-                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="" role="menu"
-                            data-accordion="">
-                            <!-- Add icons to the links using the .nav-icon class
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="" role="menu" data-accordion="">
+                        <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
 
-                            {{-- <li class="nav-item">
+                        {{-- <li class="nav-item">
                                 <a href="" class="nav-link">
                                     <i class="fa-solid fa-align-justify nav-icon"></i>
                                     <p>Mis ventas</p>
@@ -201,15 +199,15 @@
                             </li>
 
                             <hr class="separador-sidebar"> --}}
-                            <li class="nav-item">
+                        <li class="nav-item">
 
-                                <a href="{{ route('account.store.create') }}" class="nav-link"><i
-                                        class="fa-solid fa-box nav-icon"></i>Crear nueva pagina</a>
+                            <a href="{{ route('account.store.create') }}" class="nav-link"><i
+                                    class="fa-solid fa-box nav-icon"></i>Crear nueva pagina</a>
 
-                            </li>
+                        </li>
 
-                        </ul>
-                    </nav>
+                    </ul>
+                </nav>
             @endif
 
 
