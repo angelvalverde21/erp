@@ -109,14 +109,14 @@ class StoreApi extends Controller
 
         //buscando imagenes
 
-        $products_category = Product::where('category_id',8)->get();
+        // $products_category = Product::where('category_id',8)->get();
 
-        //convirtiendo a array
+        // //convirtiendo a array
 
-        $storeArray = $store->toArray();
-        $products_category_array = $products_category->toArray();
+        // $storeArray = $store->toArray();
+        // $products_category_array = $products_category->toArray();
 
-        $storeArray['poleras'] = $products_category_array;
+        // $storeArray['poleras'] = $products_category_array;
 
 
 
@@ -161,7 +161,7 @@ class StoreApi extends Controller
 
         // $storeArray['products'] = array_reverse($productsArray); //asignamos los nuevos productos al array
 
-        return $storeArray;
+        return $store;
     }
 
     public function buscarDistritos(Request $request)
