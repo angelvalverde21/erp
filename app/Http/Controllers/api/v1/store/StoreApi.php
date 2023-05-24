@@ -90,13 +90,20 @@ class StoreApi extends Controller
 
         $store = User::where('nickname', $nickname)
             ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
-            ->with('products', function ($query) { //ojo whereHas no funciona
-                $query->where('quantity', '>', 0)
-                    ->orderBy('quantity', 'desc');
-            })
+            ->with('products')
             ->with('carousel')
             ->with('carouselMobile')
             ->first();
+
+        // $store = User::where('nickname', $nickname)
+        //     ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
+        //     ->with('products', function ($query) { //ojo whereHas no funciona
+        //         $query->where('quantity', '>', 0)
+        //             ->orderBy('quantity', 'desc');
+        //     })
+        //     ->with('carousel')
+        //     ->with('carouselMobile')
+        //     ->first();
 
         //buscando imagenes
 
