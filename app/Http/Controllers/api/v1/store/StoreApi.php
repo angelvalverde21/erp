@@ -88,14 +88,27 @@ class StoreApi extends Controller
         //         ]
         //     )->first();
 
-        $store = User::where('nickname', $nickname)
+        // $store = User::where('nickname', $nickname)
+        //     ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
+        //     ->with('products', function ($query) { //ojo whereHas no funciona
+        //         $query->select(['id', 'name'])->where('quantity', '>', 0);
+        //     })
+        //     ->with('carousel')
+        //     ->with('carouselMobile')
+        //     ->first();
+
+
+            $store = User::where('nickname', $nickname)
             ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
-            ->with('products', function ($query) { //ojo whereHas no funciona
-                $query->where('quantity', '>', 0);
-            })
+            ->with(['products' => function ($query) {
+                $query->select('id', 'name','owner_id','store_id','category_id','price','slug')
+                      ->where('quantity', '>', 0)
+                      ->limit(9);
+            }])
             ->with('carousel')
             ->with('carouselMobile')
             ->first();
+            return $store;
 
         // $store = User::where('nickname', $nickname)
         //     ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
@@ -161,7 +174,7 @@ class StoreApi extends Controller
 
         // $storeArray['products'] = array_reverse($productsArray); //asignamos los nuevos productos al array
 
-        return $store;
+
     }
 
     public function buscarDistritos(Request $request)

@@ -32,6 +32,7 @@
                 <a id="enviarfecha" href="{{ route('manage.orders', [$store->nickname]) }}"
                     class="btn btn-secondary w-100">Buscar</a>
             </div>
+            
 
         </div>
 
@@ -44,6 +45,7 @@
         </div>
 
         <script>
+
             var fecha = document.getElementById('fecha');
             var enlace = document.getElementById('enviarfecha');
 
@@ -51,11 +53,11 @@
                 console.log('El valor ha cambiado:', fecha.value); // Acción a realizar cuando cambia el valor
                 enlace.href = enlace.href + '/date/' + fecha.value;
             });
+            
         </script>
 
     </x-sectioncontent>
 
-    
     <x-sectioncontent>
 
         {{-- Resultados de busqueda --}}
