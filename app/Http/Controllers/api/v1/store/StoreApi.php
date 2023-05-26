@@ -102,8 +102,7 @@ class StoreApi extends Controller
             ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
             ->with(['products' => function ($query) {
                 $query->select('id', 'name','owner_id','store_id','category_id','price','slug')
-                      ->where('quantity', '>', 0)
-                      ->limit(6);
+                      ->where('quantity', '>', 0)->orderBy('quantity','desc');
             }])
             ->with('carousel')
             ->with('carouselMobile')
