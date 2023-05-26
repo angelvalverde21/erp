@@ -8,6 +8,7 @@ use App\Models\ColorSize;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -127,7 +128,6 @@ class ProductApi extends Controller
         if (is_numeric($id)) {
 
             $product = Product::where('id', $id)->with('images')->with('prices')->with('colors.sizes')->first();
-
         } else {
 
             //si la url es un short_link ------(CASO: 2)
@@ -139,21 +139,68 @@ class ProductApi extends Controller
                 // $colorsArray = $product->colors->toArray();
 
                 // $colorsArray = array_map(function ($colorArray) {
-        
+
                 //     $colorArray['image'] =  asset(Storage::url($colorArray[]));
-        
+
                 //     return $productArray;
-        
+
                 // }, $colorsArray);
 
                 // return $product;
-                
+
             } else {
 
 
                 // return $store;
                 //si la url es un slug ------(CASO: 3)
-                $product = Product::where('slug', $id)->with('images')->with('prices')->with('colors.sizes')->first();
+                //Importante cuando se usa select se tiene que colocar los id o llaves de la tabla sino no funciona
+                // $user = Auth::user();
+
+                
+
+                //si esta autenticado
+                if (Auth::check()) {
+
+                    $product = Product::where('slug', $id)
+                        ->select(
+                            [
+                                'id',
+                                'name',
+                                'owner_id',
+                                'store_id',
+                                'category_id',
+                                'name',
+                                'title',
+                                'description',
+                                'over_sale',
+                                'price'
+                            ]
+                        )
+                        ->with('images')->with('prices')
+                        ->with('colors.sizes')
+                        ->first();
+
+                } else {
+
+                    $product = Product::where('slug', $id)
+                        ->select(
+                            [
+                                'id',
+                                'name',
+                                'owner_id',
+                                'store_id',
+                                'category_id',
+                                'name',
+                                'title',
+                                'description',
+                                'quantity',
+                                'price'
+                            ]
+                        )
+                        ->with('images')->with('prices')
+                        ->with('colors.sizes')
+                        ->first();
+                }
             }
         }
 

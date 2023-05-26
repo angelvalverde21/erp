@@ -85,7 +85,12 @@ class User extends Authenticatable
 
     protected $appends = [
         'profile_photo_url',
+        'roles'
     ];
+
+    public function getRolesAttribute(){
+        return $this->roles()->get();
+    }
 
     //Relacion uno a muchos
     public function addresses()

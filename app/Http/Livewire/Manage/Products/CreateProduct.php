@@ -98,7 +98,8 @@ class CreateProduct extends Component
 
         $product->prices()->create([
             'quantity' => 1,
-            'value' => $this->product['price']
+            'value' => $this->product['price'],
+            'value_total' => $this->product['price']
         ]);
 
         Log::info('se ha insertado un precio');

@@ -10,16 +10,23 @@ use Livewire\Component;
 
 class EditAlbum extends Component
 {
-    public $album, $store;
+    public $album, $store, $perPage;
 
-    protected $listeners = ['render'=>'render'];
+    protected $listeners = ['render' => 'render'];
 
-    public function mount(Album $album){
+    public function mount(Album $album)
+    {
 
         $this->album = $album;
-
+        $this->perPage = 20;
         $this->store = Request::get('store');
-        
+    }
+
+    public function loadImages()
+    {
+        // Lógica para cargar las imágenes de acuerdo a la página actual y la cantidad por página
+        // $offset = ($this->currentPage - 1) * $this->perPage;
+        // $this->images = Image::skip($offset)->take($this->perPage)->get();
     }
 
     public function render()
@@ -37,6 +44,6 @@ class EditAlbum extends Component
         // })
         // ->get();
 
-        return view('livewire.manage.products.edit-product.albums.edit-album',compact('album'))->layout('layouts.manage');
+        return view('livewire.manage.products.edit-product.albums.edit-album', compact('album'))->layout('layouts.manage');
     }
 }
