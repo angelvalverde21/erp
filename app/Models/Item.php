@@ -263,40 +263,44 @@ class Item extends Model
 
         // $quantity = $this->quantity;
 
-        $color_size_id = $this->content->color_size_id;
-        $color_size = ColorSize::find($color_size_id);
-        // $color_size->quantity = $color_size->quantity + $quantity;
-        // $color_size->save();
-
-        //Busca en la tabla stock cuantos item_id hay, ese numero es la cantidad pedida por el usuario y hay que retornarlo
-        $stocks = Stock::where('item_id', $this->id)->get();
-
-        foreach ($stocks as $stock) {
-
-            $stock->status = Stock::ALMACENADO;
-            $stock->item_id = null;
-
-            $stock->save();
-
-            // Log::info('Cambiando su estatus a ' . Stock::ALMACENADO);
-            // Log::info($stock);
-
+        if(isset($this->content->color_size_id)){
+            $color_size_id = $this->content->color_size_id;
+            $color_size = ColorSize::find($color_size_id);
+            // $color_size->quantity = $color_size->quantity + $quantity;
+            // $color_size->save();
+    
+            //Busca en la tabla stock cuantos item_id hay, ese numero es la cantidad pedida por el usuario y hay que retornarlo
+            $stocks = Stock::where('item_id', $this->id)->get();
+    
+            foreach ($stocks as $stock) {
+    
+                $stock->status = Stock::ALMACENADO;
+                $stock->item_id = null;
+    
+                $stock->save();
+    
+                // Log::info('Cambiando su estatus a ' . Stock::ALMACENADO);
+                // Log::info($stock);
+    
+            }
+    
+            $color_size->recalcularStock();
+            // $stock_real = $color_size->stocks()->count();
+            // $color_size->quantity = $stock_real;
+    
+            // $color_size->save();
+    
+            // //actualiza los campos "quantity" de las tablas colors y products respectivamente
+            // $color_size->color->updateFieldQuantity();
+            // $color_size->color->product->updateFieldQuantity();
+    
+            // $color_size->size->quantity =  $stock_real;
+            // $color_size->size->save();
+    
+            //return //stock actualizado
         }
 
-        $color_size->recalcularStock();
-        // $stock_real = $color_size->stocks()->count();
-        // $color_size->quantity = $stock_real;
 
-        // $color_size->save();
-
-        // //actualiza los campos "quantity" de las tablas colors y products respectivamente
-        // $color_size->color->updateFieldQuantity();
-        // $color_size->color->product->updateFieldQuantity();
-
-        // $color_size->size->quantity =  $stock_real;
-        // $color_size->size->save();
-
-        //return //stock actualizado
     }
 
     public function getTallaRealAttribute()

@@ -20,7 +20,7 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-header">
-              Roles
+              <h1>Roles</h1>
             </div>
             <div class="card-body">
               @livewire('manage.roles.show-roles', ['user' => $user], key($user->id))
