@@ -33,8 +33,8 @@ Route::post('/buscar/distritos', [StoreApi::class, 'buscarDistritos']);
 
 // info del producto o catalogo
 
-Route::get('/products', [ProductApi::class, 'index'])->middleware('RegisterVisit');;
-Route::get('/products/{id}', [ProductApi::class, 'show'])->middleware('RegisterVisit');;
+Route::get('/products', [ProductApi::class, 'index'])->middleware('RegisterVisit');
+Route::get('/products/{id}', [ProductApi::class, 'show'])->middleware('RegisterVisit');
 Route::get('/products/{id}/colors', [ProductColorApi::class, 'index']);
 Route::get('/products/color/size/stock/{colorSize}', [ProductApi::class, 'showStockColorSizeId']);
 
@@ -54,7 +54,6 @@ Route::post('/orders/create-with-login', [OrderController::class, 'createOrderWi
 Route::post('/orders/create-order', [OrderController::class, 'createOrder']);
 Route::get('/orders', [OrderController::class, 'showAll']);
 Route::get('/orders/{order}', [OrderController::class, 'show']);
-
 
 Route::post('/register/verify-phone', [RegisterController::class, 'verifyPhone']);
 Route::post('/register/verify-dni', [RegisterController::class, 'verifyDni']);

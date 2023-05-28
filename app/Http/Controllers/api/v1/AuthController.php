@@ -16,6 +16,8 @@ class AuthController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+
+
     public function __construct()
     {
         $this->middleware('auth:api')->except(['login']);
@@ -24,7 +26,14 @@ class AuthController extends Controller
 
     public function user()
     {
+
         $user = Auth::user();
+
+        $data['name'] = $user->name;
+        $data['email'] = $user->email;
+        $data['dni'] = $user->dni;
+        $data['phone'] = $user->phone;
+        $data['roles'] = $user->roles;
 
         return response(
             [
@@ -101,9 +110,19 @@ class AuthController extends Controller
 
         //finalmente enviamos el json al navegador con las respuestas correctas 
 
+        $user = auth()->user();
+
+        $data['name'] = $user->name;
+        $data['email'] = $user->email;
+        $data['dni'] = $user->dni;
+        $data['phone'] = $user->phone;
+        $data['roles'] = $user->roles;
+
+
+
         return response()->json(
             $data = [
-                "user" => auth()->user(),
+                "user" => $data,
                 'access_token' => $accessToken,
                 'valid' => true
             ],

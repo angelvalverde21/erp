@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Manage\Products\EditProduct;
 
 use App\Models\Album;
+use App\Models\Location;
 use App\Models\User;
 use App\Traits\AddressTrait;
 use Illuminate\Support\Facades\Auth;
@@ -74,6 +75,8 @@ class CreateAlbum extends Component
     {
 
         $modelos = User::modelos();
+
+        // $locations = Location::all();
         // $districts = $this->showDistricts($this->namedistrict);
         return view('livewire.manage.products.edit-product.create-album', compact('modelos'))->layout('layouts.manage', ['title' => 'Crear Album']);
 

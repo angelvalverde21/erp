@@ -6,6 +6,9 @@
 
                 <select class="form-control custom-select mb-3 mr-2">
                     <option value="2">Escoger Locacion</option>
+                    @foreach ($locations as $location)
+                        <option value="{{ $location->id }}">{{ $location->name }}</option>
+                    @endforeach
                 </select>
 
                 <a href="#" class="btn btn-secondary mb-3" data-toggle="modal" data-target="#newlocation">Nuevo</a>

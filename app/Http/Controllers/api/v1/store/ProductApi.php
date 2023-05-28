@@ -10,7 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Storage;
 
 class ProductApi extends Controller
 {
@@ -50,8 +50,8 @@ class ProductApi extends Controller
         if (is_numeric($id)) {
 
             $colorSize = ColorSize::findOrFail($id);
-
             return response()->json(['status' => '200', 'stock' => $colorSize->quantity]);
+
         } else {
 
             //si el usuario manda el formato "color-id" entonces eso no es numerico y lo analizamos aqui
@@ -137,29 +137,24 @@ class ProductApi extends Controller
             if ($product) {
 
                 // $colorsArray = $product->colors->toArray();
-
                 // $colorsArray = array_map(function ($colorArray) {
-
                 //     $colorArray['image'] =  asset(Storage::url($colorArray[]));
-
                 //     return $productArray;
-
                 // }, $colorsArray);
 
                 // return $product;
 
             } else {
 
-
                 // return $store;
                 //si la url es un slug ------(CASO: 3)
                 //Importante cuando se usa select se tiene que colocar los id o llaves de la tabla sino no funciona
                 // $user = Auth::user();
 
-                
-
                 //si esta autenticado
-                if (Auth::check()) {
+
+                if (Auth::guard('api')->check()) { //se usa esto para comprobar si el usuario esta siempre logeado, ya que hemos programado a angular con un interceptor 
+                // para que cada ves que user HttpCliente se envie el AuthToken bearer
 
                     $product = Product::where('slug', $id)
                         ->select(
@@ -172,13 +167,18 @@ class ProductApi extends Controller
                                 'name',
                                 'title',
                                 'description',
-                                'over_sale',
-                                'price'
+                                'price',
+                                'price_seller'
                             ]
                         )
+                        
                         ->with('images')->with('prices')
                         ->with('colors.sizes')
                         ->first();
+
+
+                        $product->price = $product->price_seller;
+                        $product->price_seller = 0.00;
 
                 } else {
 
