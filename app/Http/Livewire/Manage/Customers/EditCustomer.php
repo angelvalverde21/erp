@@ -11,6 +11,8 @@ use Livewire\Component;
 class EditCustomer extends Component
 {
 
+    protected $listeners = ['render' => 'render'];
+
     public function mount(User $customer){
         $this->store = Request::get('store');
         Log::info('user: ' . $customer);

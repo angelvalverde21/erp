@@ -75,7 +75,7 @@ class ShowAddressAll extends Component
         $this->emitTo('components.addresses.show-address', 'refreshCard');
         //$this->emitSelf('render');
         
-        $this->emit('actualizado');
+        $this->emit('address-selected');
     }
 
     public function render()

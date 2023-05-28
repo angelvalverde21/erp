@@ -306,6 +306,16 @@
         });
     </script>
 
+    <script>
+        Livewire.on('address-selected', function() {
+            Swal.fire(
+                'Seleccionado',
+                'Se ha establecido la direccion por defecto',
+                'success'
+            )
+        });
+    </script>
+
     @livewireStyles
 
     {{-- datepicker --}}

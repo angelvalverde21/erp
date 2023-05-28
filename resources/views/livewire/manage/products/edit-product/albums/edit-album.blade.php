@@ -8,10 +8,7 @@
     </style>
 
     <x-sectioncontent>
-
         @livewire('components.locations.create-location', ['album' => $album, 'reloadUrl' => true], 'location-album-' . $album->id)
-
-
     </x-sectioncontent>
 
     {{-- <x-sectioncontent>
@@ -49,14 +46,12 @@
             @if ($album->locations->count() > 0)
 
                 @foreach ($album->locations as $location)
+
                     <x-accordion-item id="item-album-location-{{ $location->pivot->id }}" show="{{ $loop->first }}"
                         label="{{ $location->name }} ({{ albumLocation($album->id, $location->id)->images->count() }})"
                         accordion_parent_id="accordionAlbum">
-                        <div class="row pb-3" wire:ignore>
 
-                            <div class="title">
-                                <h3>{{ $location->name }}, {{ $location->district->name }}</h3>
-                            </div>
+                        <div class="row pb-3" wire:ignore>
 
                             <div class="col position-relative">
 
@@ -65,6 +60,7 @@
                                     class="dropzone d-flex flex-wrap justify-content-around p-3"
                                     id="my-awesome-dropzone-albums">
                                 </form>
+
                             </div>
 
                             <div class="mt-3 album d-flex flex-wrap justify-content-around">
@@ -75,18 +71,20 @@
                 
                             <br /> --}}
 
-                                    <div class="card text-center" style="width: 250px">
+                                    <div class="card text-center" style="width: 500px">
 
-                                        <a href="{{  Storage::disk('spaces')->url($photo->medium) }}" data-lightbox="show-images-preview"
-                                            data-title="{{ $photo->name }}">
+                                        <a href="{{ Storage::disk('spaces')->url($photo->medium) }}"
+                                            data-lightbox="show-images-preview" data-title="{{ $photo->name }}">
 
-                                            <img src="{{  Storage::disk('spaces')->url($photo->thumbnail) }}" class="card-img-top" height="" alt="...">
+                                            <img src="{{ Storage::disk('spaces')->url($photo->medium) }}"
+                                                class="card-img-top" height="" alt="...">
                                         </a>
 
                                         <span>{{ $photo->name }}</span>
 
-                                        <a target="_blank" href="{{  Storage::disk('spaces')->url($photo->large) }}" class="btn btn-primary"><i class="fa-solid fa-download"></i></a>
-   
+                                        <a target="_blank" href="{{ Storage::disk('spaces')->url($photo->large) }}"
+                                            class="btn btn-primary"><i class="fa-solid fa-download"></i></a>
+
                                         {{-- <div class="card-body">
                                       <h5 class="card-title">Card title</h5>
                                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -116,13 +114,20 @@
     </x-sectioncontent>
 
 </div>
+
+<style>
+    .dropzone{
+        width: 150px !important;
+    }
+</style>
+
 @push('script')
     <script>
         Dropzone.options.myAwesomeDropzoneAlbums = {
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
-            dictDefaultMessage: "<div>Agregar colores</div> <i class=\"fas fa-camera mt-5\" style=\"font-size: 18pt;\"></i>",
+            dictDefaultMessage: "<div class='add-photos'>Agregar x colores</div> <i class=\"fas fa-camera mt-5\" style=\"font-size: 18pt;\"></i>",
             acceptedFiles: "image/*",
             paramName: "file", // The name that will be used to transfer the file
             maxFilesize: 10, //10MB max, Tambien hemos agregado un validador en el servidor

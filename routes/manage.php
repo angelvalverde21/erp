@@ -8,6 +8,7 @@ use App\Http\Controllers\Manage\Upload\UserImageController;
 use App\Http\Livewire\Manage\Customers\CreateCustomer;
 use App\Http\Livewire\Manage\Customers\EditCustomer;
 use App\Http\Livewire\Manage\Customers\ShowCustomers;
+use App\Http\Livewire\Manage\Customers\ShowOrdersCustomers;
 use App\Http\Livewire\Manage\Dashboard;
 use App\Http\Livewire\Manage\ImportData;
 use App\Http\Livewire\Manage\Orders\EditOrder;
@@ -88,6 +89,7 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::get('/customers', ShowCustomers::class)->name('customers');
    Route::get('/customers/create', CreateCustomer::class)->name('customers.create');
    Route::get('/customers/{customer}/edit', EditCustomer::class)->name('customers.edit');
+   Route::get('/customers/{customer}/orders', ShowOrdersCustomers::class)->name('customers.orders');
 
    //GET Producciones
 
