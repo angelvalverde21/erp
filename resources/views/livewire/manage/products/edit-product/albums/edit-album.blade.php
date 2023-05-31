@@ -76,7 +76,7 @@
                                         <a href="{{ Storage::disk('spaces')->url($photo->medium) }}"
                                             data-lightbox="show-images-preview" data-title="{{ $photo->name }}">
 
-                                            <img src="{{ Storage::disk('spaces')->url($photo->medium) }}"
+                                            <img loading="lazy" src="{{ Storage::disk('spaces')->url($photo->medium) }}"
                                                 class="card-img-top" height="" alt="...">
                                         </a>
 

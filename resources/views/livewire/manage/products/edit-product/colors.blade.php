@@ -60,7 +60,7 @@
 
                                     <a href="{{ Storage::url($color->image->name) }}" data-lightbox="colors"
                                         data-title="Stock: {{ $color->quantity }}">
-                                        <img src="{{ Storage::url($color->image->name) }}" alt="" width="100px"
+                                        <img loading="lazy" src="{{ Storage::url($color->image->name) }}" alt="" width="100px"
                                             height="100%">
                                     </a>
                                     <div>({{ $color->quantity }})</div>

@@ -125,13 +125,18 @@ class ProductApi extends Controller
     public function show($nickname, $id)
     {
 
+        //OJO SI EL NUMERO TIENE LA FORMA xxxeyyyy php podria pensar que es un numero xxx elevado a la yyyy
         if (is_numeric($id)) {
 
             $product = Product::where('id', $id)->with('images')->with('prices')->with('colors.sizes')->first();
+            Log::info('es id');
         } else {
 
             //si la url es un short_link ------(CASO: 2)
             $product = Product::where('short_link', $id)->with('images')->with('prices')->with('colors.sizes')->first();
+
+            Log::info('es short link');
+            Log::info($product);
 
             //comprobamos si el producto existe
             if ($product) {
@@ -153,6 +158,8 @@ class ProductApi extends Controller
 
                 //si esta autenticado
 
+                Log::info('es slug');
+
                 if (Auth::guard('api')->check()) { //se usa esto para comprobar si el usuario esta siempre logeado, ya que hemos programado a angular con un interceptor 
                 // para que cada ves que user HttpCliente se envie el AuthToken bearer
 
@@ -172,7 +179,7 @@ class ProductApi extends Controller
                             ]
                         )
                         
-                        ->with('images')->with('prices')
+                        ->with('images')
                         ->with('colors.sizes')
                         ->first();
 
