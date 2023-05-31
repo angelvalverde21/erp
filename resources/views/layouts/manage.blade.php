@@ -36,6 +36,8 @@
     <script src="{{ mix('js/app.js') }}" defer></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script> --}}
+
     <style>
         .dropzone {
             border: 1.5px dashed #ccc !important;
@@ -335,6 +337,14 @@
             });
         });
     </script>
+
+    {{-- <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script> --}}
 
     {{-- Js font-awesome --}}
 

@@ -104,52 +104,33 @@
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <x-form.input type="text" disabled="disabled" wirevalue="product.slug"
+                                        <x-form.input type="hidden" disabled="disabled" wirevalue="product.slug"
                                             error="este producto ya existe">
                                             Url del producto
                                         </x-form.input>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <x-form.textarea wirevalue="product.description" rows="5">
-                                            Describa al producto
-                                        </x-form.textarea>
-                                    </div>
-                                </div>
+                                <div class="accordion-content" wire:ignore>
+                                    <div class="accordion mb-3" id="accordionExample">
 
-                                <div class="row">
-                                    <div class="col-md-12">
-
-                                        <div class="alert alert-light" role="alert">
-                                            <ul>
-                                                <li>{{ $product->name }}</li>
-                                                <li>Por solo: S/. {{ $product->prices->first()->value }}</li>
-                                                <li>Tambien: {{ $product->price_oferta() }}</li>
-                                                <li>Envio GRATIS a todo el Peru</li>
-                                            </ul>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-
-                                {{-- 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <x-form.textarea wirevalue="product.description_redes" rows="5">
-                                            Descripcion redes
-                                        </x-form.textarea>
-                                    </div>
-                                </div> --}}
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <x-form.textarea wirevalue="product.tags" rows="3">
-                                            Etiquetas del producto
-                                        </x-form.textarea>
+                                        <x-accordion-item label="Descripcion del producto" id="description_product" accordionParentId="accordionExample">
+    
+                                            <x-form.textarea wirevalue="product.description" 
+                                                rows="5">
+                                                Describa al producto
+                                            </x-form.textarea>
+    
+                                        </x-accordion-item>
+    
+                                        <x-accordion-item id="labels_product" accordionParentId="accordionExample" label="Etiquetas del producto">
+    
+                                            <x-form.textarea wirevalue="product.tags" rows="3">
+                                                Etiquetas del producto
+                                            </x-form.textarea>
+    
+                                        </x-accordion-item>
+    
                                     </div>
                                 </div>
 
@@ -227,6 +208,21 @@
             <div class="col-lg-5 col">
 
                 @livewire('components.prices.show-prices', ['product' => $product], key('show-prices-' . $product->id))
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="alert alert-light" role="alert">
+                            <ul>
+                                <li>{{ $product->name }}</li>
+                                <li>Por solo: S/. {{ $product->prices->first()->value }}</li>
+                                <li>Tambien: {{ $product->price_oferta() }}</li>
+                                <li>Envio GRATIS a todo el Peru</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
 
             </div>
 
