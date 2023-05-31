@@ -144,11 +144,18 @@ class ProductController extends Controller
 
         // $url = Storage::put('colors', $request->file('file'));
         $url = uploadImage($request, "products/colors");
+        $urlThumb = uploadImage($request, "products/colors/thumb", 360);
+        $urlMedium = uploadImage($request, "products/colors/medium", 750);
+        $urlLarge = uploadImage($request, "products/colors/large", 1080);
+        
         //Crea el stock en caso no haya tallas
         $color->images()->create(
             [
                 'name' => $url,
                 'usage' => 'color',
+                'thumbnail' => $urlThumb,
+                'medium' => $urlMedium,
+                'large' => $urlLarge,
             ]
         );
 

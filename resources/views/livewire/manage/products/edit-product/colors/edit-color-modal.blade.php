@@ -25,9 +25,6 @@
                 aria-label="Color" aria-describedby="basic-addon1">
         </div>
 
-
-
-
         <button type="button" wire:loading.class="btn-secondary" wire:loading.attr="disabled" wire.target="save"
             wire:click="save" class="btn btn-success ml-auto"><i class="fa-solid fa-floppy-disk mr-1"></i> Guardar
             Cambios</button>
