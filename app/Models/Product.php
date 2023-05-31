@@ -77,7 +77,7 @@ class Product extends Model
         $image = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
 
         if ($image) {
-            return $image->thumbnail;
+            return asset(Storage::url($image->thumbnail));
         } else {
             // $colors = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
 

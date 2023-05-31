@@ -98,10 +98,35 @@ class Color extends Model
         //return url('/') . Storage::url($value);
     }
 
-    public function getThumbAttribute()
+    public function getThumbAttribute2()
     {
         return asset(Storage::url($this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first()->name));
         //return url('/') . Storage::url($value);
+    }
+
+    public function getThumbAttribute()
+    {
+
+        $image = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
+
+        if ($image) {
+            return asset(Storage::url($image->thumbnail));
+        } else {
+            // $colors = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
+
+            //SE COLOCA ASI PORQUE "$this->colors" genera un bucle infinito
+            $color = Color::find($this->id);
+            
+            if($color){
+                foreach ($color->images as $image) {
+                    # code...
+                    return asset(Storage::url($image->thumbnail));
+                }
+            }
+
+            return false;
+        }
+
     }
 
     public function images()
