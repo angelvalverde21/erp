@@ -278,7 +278,7 @@ class User extends Authenticatable
         //en la tabla products busca el atributo store_id (Por defecto seria user_id, pero le estamos indicando expreamente que busque store_id)
 
         // return $this->HasMany(Product::class,'store_id')->where('status','1');
-        return $this->HasMany(Product::class, 'store_id')->where('status', '1')->limit(35)->orderBy('id', 'desc')->with('images')->with('colors.sizes');
+        return $this->HasMany(Product::class, 'store_id');
 
         //ojo para que el json sea aninado se pone con punto '.' si no se desea anidado entonces se agrega un with mas
 

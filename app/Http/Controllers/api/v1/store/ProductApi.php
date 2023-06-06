@@ -23,8 +23,9 @@ class ProductApi extends Controller
     {
         //
         //pones firt porque primero devuelve la informacion del usuario, que por el momento no lo necesitamos
-        $store = User::where('nickname', $nickname)->with('products.colors')->first();
-        return $store->products;
+        $store = User::where('nickname', $nickname)->first();
+        // $store = User::where('nickname', $nickname)->first;
+        return $store->products()->where('status', '1')->where('quantity', '>', 0)->get();
     }
 
     /**
