@@ -26,7 +26,7 @@ function helperTotalPagar()
 {
 }
 
-function uploadImage($request, $dir = "", $size = 0)
+function uploadImage($request, $dir = "", $size = 0, $link = false)
 {
     $originalName = $request->file('file')->getClientOriginalName();
 
@@ -70,7 +70,7 @@ function uploadImage($request, $dir = "", $size = 0)
     //     $constraint->aspectRatio();
     // });
 
-    $image = Image::make($request->file('file'));
+    $image = Image::make($request->file('file')); //OJO Image::make es de intervention no es del Model Imagen
 
     if ($size > 0) {
         //Creamos la imagen segun el tamano deseado
@@ -108,8 +108,13 @@ function uploadImage($request, $dir = "", $size = 0)
     // //finalmente guardo la imagen
     // $image->save($file_path_thumb);
 
+    if($link){
+        return asset(Storage::url($dir . '/' . $name));
+    }else{
+        return $dir . '/' . $name;
+    }
 
-    return $dir . '/' . $name;
+
 }
 
 function uploadSeeder($imageSeeder, $dir = "", $size = 0)

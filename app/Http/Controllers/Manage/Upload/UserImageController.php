@@ -49,12 +49,12 @@ class UserImageController extends Controller
 
         $getOptions = $store->options;
 
-        
+
         foreach ($getOptions as $getOption) { //getOptions de de la base de datos, hemos colocado 'get' a las variables para identificar que son las que vienen de la base de datos
             # code...
             if($request->name == $getOption->name){ //esto quiere decir que $name (de la plantilla) es igual a $getName (de la base de datos)
                 $existe = true;
-                $getOption->value = uploadImage($request, "users/logos"); //el value es el valor de la plantilla
+                $getOption->value = uploadImage($request, "users/logos", 0, true); //el value es el valor de la plantilla, 0 quiere decir que no redimencione y true quiere decir que devuelve un link comleto
                 $getOption->save();
                 break;
             }else{

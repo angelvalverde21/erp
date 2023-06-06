@@ -18,14 +18,14 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
 
-    CONST MAIN_ID = 232;
-    CONST VANE_ID = 1707;
-    CONST STORE_ID = 10;
+    const MAIN_ID = 232;
+    const VANE_ID = 1707;
+    const STORE_ID = 10;
 
-    CONST DIR_VOUCHER_PACKING = "orders/comprobantes/packing/";
-    CONST DIR_VOUCHER_PAYMENTS = "orders/comprobantes/payments/";
-    CONST DIR_VOUCHER_SHIPPING = "orders/comprobantes/shipping/";
-    
+    const DIR_VOUCHER_PACKING = "orders/comprobantes/packing/";
+    const DIR_VOUCHER_PAYMENTS = "orders/comprobantes/payments/";
+    const DIR_VOUCHER_SHIPPING = "orders/comprobantes/shipping/";
+
     // CONST DIR_PRODUCTS = "products/";
     // CONST DIR_PRODUCTS_MEDIUM = "products/medium";
     // CONST DIR_PRODUCTS_THUMB = "products/thumb";
@@ -88,24 +88,28 @@ class User extends Authenticatable
         'roles',
         'logo_store',
         'yape',
+        'perfil'
     ];
 
-    public function getRolesAttribute(){
+    public function getRolesAttribute()
+    {
         return $this->roles()->get();
     }
 
-    public function getLogoStoreAttribute(){
-        if(isset($this->logo)){
+    public function getLogoStoreAttribute()
+    {
+        if (isset($this->logo)) {
             return asset(Storage::url($this->logo));
         }
         return false;
     }
 
-    public function getYapeAttribute(){
+    public function getYapeAttribute()
+    {
         Log::info('imprimiendo el qr_yape ' . $this->qr_yape);
-        if(isset($this->qr_yape)){
+        if (isset($this->qr_yape)) {
             return asset(Storage::url($this->qr_yape));
-        }else{
+        } else {
             return false;
         }
     }
@@ -151,8 +155,13 @@ class User extends Authenticatable
 
     }
 
-    public function images(){
-        return $this->morphMany(Image::class,"imageable")->orderBy('id','DESC');
+    public function store(){
+        return $this->belongsTo(User::class,'store_id');
+    }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC');
     }
 
 
@@ -225,14 +234,16 @@ class User extends Authenticatable
         $this->attributes['wallet'] = json_encode($value);
     }
 
-    function totalOrders(){
-        return Order::where('buyer_id',$this->id)->get()->count();
+    function totalOrders()
+    {
+        return Order::where('buyer_id', $this->id)->get()->count();
     }
 
-    
-    function totalOrderMount(){
-        
-        $orders = Order::where('buyer_id',$this->id)->get();
+
+    function totalOrderMount()
+    {
+
+        $orders = Order::where('buyer_id', $this->id)->get();
 
         $total = 0;
 
@@ -258,15 +269,16 @@ class User extends Authenticatable
 
 
 
-    public function products(){
+    public function products()
+    {
         //return Product::where('status','1')->where('store_id',$this->store->id)->get();
         // return $this->HasMany(Product::class,'store_id')->where('status','1')->with('colors', function($q){
         //     $q->has('sizes');
         // });
         //en la tabla products busca el atributo store_id (Por defecto seria user_id, pero le estamos indicando expreamente que busque store_id)
-    
+
         // return $this->HasMany(Product::class,'store_id')->where('status','1');
-        return $this->HasMany(Product::class,'store_id')->where('status','1')->limit(35)->orderBy('id','desc')->with('images')->with('colors.sizes');
+        return $this->HasMany(Product::class, 'store_id')->where('status', '1')->limit(35)->orderBy('id', 'desc')->with('images')->with('colors.sizes');
 
         //ojo para que el json sea aninado se pone con punto '.' si no se desea anidado entonces se agrega un with mas
 
@@ -274,9 +286,8 @@ class User extends Authenticatable
         Anidado:     ->with('colors.sizes');
         No aninado:  ->with('colors')->with('sizes');;
         */
-    
     }
-    
+
     // , function($q){
     //     $q->has('sizes');
     // }
@@ -285,14 +296,16 @@ class User extends Authenticatable
 
     // }
 
-    public function carousel(){
+    public function carousel()
+    {
 
-        return $this->hasMany(Carousel::class,'store_id')->where('type','web');
+        return $this->hasMany(Carousel::class, 'store_id')->where('type', 'web');
     }
 
-    public function carouselMobile(){
+    public function carouselMobile()
+    {
 
-        return $this->hasMany(Carousel::class,'store_id')->where('type','mobile');
+        return $this->hasMany(Carousel::class, 'store_id')->where('type', 'mobile');
     }
 
     // public function getQrYapeAttribute($value){
@@ -312,20 +325,45 @@ class User extends Authenticatable
     //     }
     // }
 
-    public function profile(){
-        return $this->hasOne(ProfileStore::class,'store_id');
+    public function getPerfilAttribute()
+    {
+
+        $result = [];
+
+        foreach ($this->options as $option) {
+            # code...
+
+            // $result =[
+            //     'name' => $option->value,
+            // ];
+
+            $result[$option->name] = $option->value;
+        }
+
+        Log::info($result);
+        Log::info(array_values($result));
+
+        return $result;
     }
 
-    public function orders(){
+    public function profile()
+    {
+        return $this->hasOne(ProfileStore::class, 'store_id');
+    }
+
+    public function orders()
+    {
         //apunto a la tabla orders pero en ves de ir con user_id por defecto le indico a la funcion que lo haga con store_id
-        return $this->hasMany(Order::class,'store_id');
+        return $this->hasMany(Order::class, 'store_id');
     }
 
-    public function myOrders(){
-        return $this->hasMany(Order::class,'buyer_id');
+    public function myOrders()
+    {
+        return $this->hasMany(Order::class, 'buyer_id');
     }
 
-    public function options(){
+    public function options()
+    {
         return $this->morphMany(Option::class, "optionable");
     }
 }

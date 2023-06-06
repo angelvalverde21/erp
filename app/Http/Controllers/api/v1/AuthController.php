@@ -122,6 +122,7 @@ class AuthController extends Controller
 
         return response()->json(
             $data = [
+                "store" => $user->store,
                 "user" => $data,
                 'access_token' => $accessToken,
                 'valid' => true

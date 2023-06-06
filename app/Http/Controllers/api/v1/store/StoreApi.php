@@ -7,6 +7,7 @@ use App\Models\District;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class StoreApi extends Controller
@@ -106,11 +107,11 @@ class StoreApi extends Controller
         //     ->with('carouselMobile')
         //     ->first();
 
+        $store = User::where('nickname', $nickname)
+        ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
+        ->first();
+        return $store;
 
-            $store = User::where('nickname', $nickname)
-            ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
-            ->first();
-            return $store;
 
             /** esto es con productos */
             // $store = User::where('nickname', $nickname)
