@@ -39,6 +39,7 @@
                         <td class="text-center">Agregar Stock</td>
                         <td class="text-center">Colores</td>
                         <td class="text-center">Variantes</td>
+                        <td class="text-center">Sessiones</td>
                         <td class="text-center">Eliminar</td>
                     </tr>
                 </thead>
@@ -106,6 +107,10 @@
 
                                 </td>
                             @endif
+
+                            <td>
+                                <a href="{{ route('manage.products.color.albums', [$store->nickname, $color->product_id, $color->id]) }}" class="btn btn-secondary">Sessiones</a>
+                            </td>
 
                             <td wire:key="color-{{ $color->id }}" class="text-center">
                                 <a class="btn-color" href="#"

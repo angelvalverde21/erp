@@ -91,7 +91,6 @@
 
                     this.on("sending", function(data, xhr, formData) {
                         formData.append("total_amount", jQuery("#total_amount").val());
-                        9
                         console.log('sending');
                     });
 

@@ -129,13 +129,11 @@
 
     <link rel="stylesheet" href="{{ asset('lightbox2/dist/css/lightbox.min.css') }}">
 
-    <script>
+    {{-- <script>
         lightbox.option({
-
-
             'fadeDuration': 0,
         })
-    </script>
+    </script> --}}
 
 </head>
 
@@ -220,6 +218,7 @@
 
     <script>
         $(document).ready(function() {
+
             Livewire.on('creado', function() {
 
                 // $('.modal').modal('hidden');
@@ -243,18 +242,16 @@
                 });
 
             })
-        });
 
-
-        $(document).ready(function() {
             Livewire.on('Error', function() {
 
                 // $('.modal').modal('hidden');
 
-                Swal.fire(
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Ha ocurrido un error interno',
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ha ocurrido un error interno',
+                    }
                     // footer: '<a href="">Why do I have this issue?</a>'
                 ).then(function() {
                     //$(".modal-backdrop").hide();
@@ -267,7 +264,7 @@
                     // $(".modal").each(function() {
                     //     $(this).toggle();
                     // });
-                    console.log('Creado: se ha pulsado ok en sweetalert2');
+                    console.log('Creado: se ha pulsado ok en sweetalert2')
                 });
 
             })

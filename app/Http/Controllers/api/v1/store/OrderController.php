@@ -350,6 +350,8 @@ class OrderController extends Controller
                         return response()->json(
                             $data = [
                                 "register" => "success",
+                                "user" => $order->buyer,
+                                "roles" => $order->buyer->roles,
                                 "id" => $order->id,
                                 "msg" => "se han creado los datos correctamente",
                                 "access_token" => $accessToken

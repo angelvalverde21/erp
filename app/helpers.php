@@ -627,3 +627,20 @@ function createItemsOrder($items, $order_id)
         }
     }
 }
+
+
+function existeFieldOption(User $store, $field){
+
+    // $existe = false;
+
+    foreach ($store->options as $getOption) {
+        # code...
+        if ($getOption->name == $field) {
+            # code...
+            return true;
+        }
+    }
+
+    return false;
+
+}

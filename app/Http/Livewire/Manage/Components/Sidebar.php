@@ -79,6 +79,12 @@ class Sidebar extends Component
                     "slug"=>route('manage.web', [$this->store->nickname]),
                     "icon"=>"fa-solid fa-globe",
                 ],
+    
+                [
+                    "name"=>"Config",
+                    "slug"=>route('manage.options', [$this->store->nickname]),
+                    "icon"=>"fa-solid fa-gear",
+                ],
                 // [
                 //     "name"=>"Importacion SQL",
                 //     "slug"=>route('manage.import', [$this->store->nickname]),
@@ -93,8 +99,10 @@ class Sidebar extends Component
     
     public function render()
     {
+
         $store = $this->store;
         return view('livewire.manage.components.sidebar',compact('store'));
+
     }
 
 

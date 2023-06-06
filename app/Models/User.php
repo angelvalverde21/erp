@@ -85,12 +85,37 @@ class User extends Authenticatable
 
     protected $appends = [
         'profile_photo_url',
-        'roles'
+        'roles',
+        'logo_store',
+        'yape',
     ];
 
     public function getRolesAttribute(){
         return $this->roles()->get();
     }
+
+    public function getLogoStoreAttribute(){
+        if(isset($this->logo)){
+            return asset(Storage::url($this->logo));
+        }
+        return false;
+    }
+
+    public function getYapeAttribute(){
+        Log::info('imprimiendo el qr_yape ' . $this->qr_yape);
+        if(isset($this->qr_yape)){
+            return asset(Storage::url($this->qr_yape));
+        }else{
+            return false;
+        }
+    }
+
+    // public function getLogoAttribute(){
+    //     if(isset($this->logo)){
+    //         return asset(Storage::url($this->logo));
+    //     }
+    //     return false;
+    // }
 
     //Relacion uno a muchos
     public function addresses()
@@ -231,6 +256,8 @@ class User extends Authenticatable
     // }
     //Productos de los stors ///
 
+
+
     public function products(){
         //return Product::where('status','1')->where('store_id',$this->store->id)->get();
         // return $this->HasMany(Product::class,'store_id')->where('status','1')->with('colors', function($q){
@@ -296,5 +323,9 @@ class User extends Authenticatable
 
     public function myOrders(){
         return $this->hasMany(Order::class,'buyer_id');
+    }
+
+    public function options(){
+        return $this->morphMany(Option::class, "optionable");
     }
 }

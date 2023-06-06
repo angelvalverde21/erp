@@ -149,6 +149,10 @@ class Color extends Model
 
     }
 
+    public function Albums(){
+        return $this->hasMany(Album::class);
+    }
+
     // public function getInfoStockAttribute(){
     //     return $this->pivot->foo;
     // }

@@ -21,6 +21,7 @@
 
     @push('script')
         <script>
+            
             Livewire.on('uploadPhotoJs', (UserId, deleteFunction) => {
 
                 Swal.fire({

@@ -11,6 +11,7 @@ use App\Http\Livewire\Manage\Customers\ShowCustomers;
 use App\Http\Livewire\Manage\Customers\ShowOrdersCustomers;
 use App\Http\Livewire\Manage\Dashboard;
 use App\Http\Livewire\Manage\ImportData;
+use App\Http\Livewire\Manage\Options\ShowOptions;
 use App\Http\Livewire\Manage\Orders\EditOrder;
 use App\Http\Livewire\Manage\Orders\ShowOrders;
 use App\Http\Livewire\Manage\Orders\ShowOrdersDate;
@@ -22,11 +23,15 @@ use App\Http\Livewire\Manage\Productions\ShowProductions;
 use App\Http\Livewire\Manage\Products\CreateProduct;
 use App\Http\Livewire\Manage\Products\EditProduct;
 use App\Http\Livewire\Manage\Products\EditProduct\Albums\EditAlbum;
+use App\Http\Livewire\Manage\Products\EditProduct\Colors\Albums\CreateAlbumColor;
+use App\Http\Livewire\Manage\Products\EditProduct\Colors\Albums\EditAlbumColor;
+use App\Http\Livewire\Manage\Products\EditProduct\Colors\Albums\ShowAllAlbumColor;
 use App\Http\Livewire\Manage\Products\EditProduct\CreateAlbum;
 use App\Http\Livewire\Manage\Products\ShowProducts;
 use App\Http\Livewire\Manage\Profile\ShoProfileWeb;
 use App\Http\Livewire\Manage\Profile\ShowProfileStore;
 use App\Http\Livewire\Manage\Profile\ShowProfileWeb;
+use App\Http\Livewire\ShowAlbumsColor;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
@@ -57,6 +62,10 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::get('products/{product}/albums/{album}/edit', EditAlbum::class)->name('products.albums.edit');
    Route::post('/albums/upload/{album}/{location}', [UploadAlbumController::class, 'uploadAlbum'])->name('albums.upload');
 
+   //Albums (GET)
+   Route::get('/products/{product}/color/{color}/albums', ShowAllAlbumColor::class)->name('products.color.albums');
+   Route::get('/products/{product}/color/{color}/albums/create', CreateAlbumColor::class)->name('products.color.albums.create');
+   Route::get('/products/{product}/color/{color}/albums/{album}', EditAlbumColor::class)->name('products.color.albums.edit');
 
    //ORDERS
    Route::get('/orders', ShowOrders::class)->name('orders');
@@ -76,14 +85,17 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::post('/products/colors/upload/{color}/variantes', [ProductController::class, 'uploadVariantsColor'])->name('products.upload.colors.variants');
    Route::post('/products/{product}/upload/colors', [ProductController::class, 'uploadColors'])->name('products.upload.colors');
    Route::post('/products/{product}/upload/images', [ProductController::class, 'uploadImages'])->name('products.upload.images');
+
    // http://erp.test/ara/manage/products/6/colors
    // http://erp.test/user/profile/10/upload_logo_general
    // Route::post('/products/{product}/images', function(){
    //    Log::info("llego al route.php");
    // })->name('products.images');
+
    Route::post('/products/edit/image/{image}', [ProductController::class, 'editImage'])->name('products.editimage');
    //OJO NO PASAMOS LA VARIABLE PRODUCT_ID PORQUE LOS COLORES SON UNICOS
    Route::post('/products/edit/color/{color}', [ProductController::class, 'editColor'])->name('products.editcolor');
+
 
    //GET customers
    Route::get('/customers', ShowCustomers::class)->name('customers');
@@ -96,6 +108,10 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::get('/productions', ShowProductions::class)->name('productions');
    Route::get('/productions/create', CreateProduction::class)->name('productions.create');
    Route::get('/productions/{production}', EditProduction::class)->name('productions.edit');
+   
+   //GET Options
+   Route::get('/options', ShowOptions::class)->name('options');
+   Route::post('/options/upload', [UserImageController::class, 'uploadImageOption'])->name('option.upload');
 
    //GET Imprimir PDF
    Route::get('/orders/{order}/print/voucher', [PdfController::class, 'generateVaucher'])->name('orders.print.voucher');

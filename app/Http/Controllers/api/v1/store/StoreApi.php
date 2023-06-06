@@ -50,6 +50,15 @@ class StoreApi extends Controller
      */
 
     //Api para el Home
+
+    public function infoStore(){
+    }
+
+    public function showProducts(){
+
+    }
+
+
     public function show($nickname)
     {
 
@@ -100,14 +109,20 @@ class StoreApi extends Controller
 
             $store = User::where('nickname', $nickname)
             ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
-            ->with(['products' => function ($query) {
-                $query->select('id', 'name','owner_id','store_id','category_id','price','slug')
-                      ->where('quantity', '>', 0)->orderBy('quantity','desc');
-            }])
-            ->with('carousel')
-            ->with('carouselMobile')
             ->first();
             return $store;
+
+            /** esto es con productos */
+            // $store = User::where('nickname', $nickname)
+            // ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
+            // ->with(['products' => function ($query) {
+            //     $query->select('id', 'name','owner_id','store_id','category_id','price','slug')
+            //           ->where('quantity', '>', 0)->orderBy('quantity','desc');
+            // }])
+            // ->with('carousel')
+            // ->with('carouselMobile')
+            // ->first();
+            // return $store;
 
         // $store = User::where('nickname', $nickname)
         //     ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
