@@ -23,7 +23,8 @@
                 </div>
         
                 <div class="preview py-3">
-                    <img src="{{ $image }}" width="140px" alt="">
+                    <a href="{{ $image }}" data-lightbox="{{ $field }}"><img src="{{ $image }}" width="140px" alt=""></a>
+                    
                 </div>
         
             </div>

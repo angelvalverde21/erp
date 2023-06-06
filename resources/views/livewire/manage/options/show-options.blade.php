@@ -179,6 +179,7 @@
                                         aria-label="Titular yape">
                                 </div>
                             </div>
+                            
                             <div class="col-lg-6">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fa-solid fa-mobile-screen"></i></span>
@@ -187,12 +188,11 @@
                                         aria-label="Telefono yape">
                                 </div>
                             </div>
+
                             <div class="col-lg-12">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fa-solid fa-qrcode"></i></span>
-                                    <input type="text" class="form-control"
-                                        wire:model.debounce.500ms="options.code_yape"
-                                        placeholder="Codigo Yape (Opcional)" aria-label="Codigo yape">
+                                    <textarea class="form-control" rows="3" wire:model.debounce.500ms="options.code_yape" placeholder="Codigo Yape (Opcional)"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -238,9 +238,7 @@
                             <div class="col-lg-12">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fa-solid fa-qrcode"></i></span>
-                                    <input type="text" class="form-control"
-                                        wire:model.debounce.500ms="options.code_plin"
-                                        placeholder="Codigo Plin (Opcional)" aria-label="Codigo Plin">
+                                    <textarea class="form-control" rows="3" wire:model.debounce.500ms="options.code_plin" placeholder="Codigo Plin (Opcional)"></textarea>
                                 </div>
                             </div>
                         </div>
