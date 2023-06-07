@@ -22,6 +22,7 @@ class CreateStore extends Component
     ];
     
     public function save(){
+        
         Log::info($this->store);
 
         //Primero creamos el nuevo store en la tabla users

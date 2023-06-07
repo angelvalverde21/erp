@@ -2,17 +2,23 @@
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <!-- Left navbar links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="font-size: 1.1rem"><i class="fas fa-bars"></i></a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ route('manage.orders', [$store->nickname]) }}" class="nav-link">Ventas</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ route('manage.products', [$store->nickname]) }}" class="nav-link">Productos</a>
-            </li>
-        </ul>
+
+        @if (isset($store->nickname))
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="font-size: 1.1rem"><i
+                            class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="{{ route('manage.orders', [$store->nickname]) }}" class="nav-link">Ventas</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="{{ route('manage.products', [$store->nickname]) }}" class="nav-link">Productos</a>
+                </li>
+            </ul>
+        @else
+        @endif
+
 
         <!-- Right navbar links -->
 
@@ -138,7 +144,7 @@
                     @else
                         {{-- <i class="fa-solid fa-store mr-2"></i> Tiendas ({{$user->stores->count()}}) --}}
                     @endif
-                    
+
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                     <span class="dropdown-item dropdown-header">Cambiar</span>

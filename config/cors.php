@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:4200','https://ara.pe','https://www.ara.pe','http://ara.pe','http://www.ara.pe'],
+    'allowed_origins' => ['http://localhost:4200','www.ara.pe','http://ara.pe','https://ara.pe','http://www.ara.pe','https://www.ara.pe'],
 
     'allowed_origins_patterns' => [],
 
