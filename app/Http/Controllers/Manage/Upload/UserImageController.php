@@ -67,7 +67,7 @@ class UserImageController extends Controller
             $store->options()->create(
                 [
                     'name' => $request->name,
-                    'value' => uploadImage($request, "users/logos"),
+                    'value' => uploadImage($request, "users/logos", 0, true),
                 ],
             );
         }

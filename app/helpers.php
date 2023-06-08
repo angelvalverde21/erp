@@ -430,7 +430,7 @@ function createItemsOrder($items, $order_id)
 
     // $items = $items->toArray();
 
-    Log::info('imprimiendo datos del carrito de compras');
+    Log::info('imprimiendo datos del  to de compras');
     Log::info($items);
 
     if ($items) {

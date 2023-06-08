@@ -40,7 +40,7 @@ class UploadOption extends Component
             # code...
             if( $option->name == $field ){
                 
-                $image = asset(Storage::url($option->value));
+                $image = $option->value;
                 break;
 
             }
