@@ -89,7 +89,16 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-2 col-12">
+                    <div class="col-lg-3 col-6">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-house"></i></span>
+                            <input type="text" class="form-control" wire:model.debounce.500ms="options.iniciales"
+                                placeholder="Iniciales, Ejemplo: ARA" aria-label="Iniciales"
+                                aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-earth-americas"></i></span>
                             <input type="text" class="form-control" wire:model.debounce.500ms="options.domain"
@@ -97,15 +106,15 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-2 col-5">
+                    <div class="col-lg-6 col-6">
                         <div class="input-group mb-3">
                             <span class="input-group-text">S/.</span>
                             <input type="number" class="form-control" wire:model.debounce.500ms="options.ship_min"
-                                placeholder="0.00" aria-label="Amount (to the nearest dollar)">
+                                placeholder="Monto minimo para envio gratis" aria-label="Amount (to the nearest dollar)">
                         </div>
                     </div>
 
-                    <div class="col-lg-2 col-7">
+                    <div class="col-lg-6 col-6">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-brands fa-whatsapp"></i></span>
                             <input type="number" class="form-control" wire:model.debounce.500ms="options.whatsapp"
