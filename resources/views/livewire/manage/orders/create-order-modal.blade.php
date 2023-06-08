@@ -42,8 +42,9 @@
 
                         <div class="card">
                             <div class="card-body">
-                                <a href="{{ route('manage.customers.edit', [$store->nickname, $user->id]) }}" class="btn btn-secondary">Ver Pedidos</a>
-                                
+                                <a href="{{ route('manage.customers.edit', [$store->nickname, $user->id]) }}"
+                                    class="btn btn-secondary">Ver Pedidos</a>
+
                             </div>
                         </div>
 
@@ -175,7 +176,9 @@
                                     <input type="hidden" class="form-control" id="inputDistrict"
                                         wire:model="district_id">
                                     @error('district_id')
-                                        <span class="error">Debe escoger un distrito</span>
+                                        <div class="has-danger">
+                                            <span class="error">Debe escoger un distrito</span>
+                                        </div>
                                     @enderror
 
                                     <div class="resultados">
@@ -248,7 +251,7 @@
                                     wirevalue="payment_method_id" icon="fa-solid fa-money-bill-1-wave">
 
                                     <option value="">Escoger</option>
-                                    
+
                                     @foreach (paymentMethods() as $paymentMethod)
                                         <option value="{{ $paymentMethod->id }}"> {{ $paymentMethod->name }}</option>
 
