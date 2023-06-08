@@ -28,7 +28,7 @@
         <div class="header d-flex justify-content-between">
             <div class="logo">
                 @if ($order->store->getOption('upload_logo_invoice'))
-                    <img class="logo" src="{{ asset(Storage::url($order->store->getOption('upload_logo_invoice'))) }}"
+                    <img width="250px" class="logo py-2" src="{{ $order->store->getOption('upload_logo_invoice') }}"
                         alt="">
                 @else
                     <h1 class="my-3">SU LOGO AQUI</h1>

@@ -136,7 +136,7 @@
             {{-- OJO EN EL PDF SE DEBE USAR LA RUTA COMPLETA, POR ESO SE USA ASSETS --}}
 
             @if ($order->store->getOption('upload_logo_invoice'))
-                <img class="logo" src="{{ asset(Storage::url($order->store->getOption('upload_logo_invoice'))) }}"
+                <img class="logo" src="{{ $order->store->getOption('upload_logo_invoice') }}"
                     alt="">
             @else
                 <h1 class="my-5">SU LOGO AQUI</h1>

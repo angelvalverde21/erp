@@ -213,8 +213,7 @@
             <div class="logo mb-2">
 
                 @if ($order->store->getOption('upload_logo_invoice'))
-                    <img class="logo" src="{{ asset(Storage::url($order->store->getOption('upload_logo_invoice'))) }}"
-                        alt="">
+                    <img class="logo" src="{{ $order->store->getOption('upload_logo_invoice') }}" alt="">
                 @else
                     <h1 class="my-5">SU LOGO AQUI</h1>
                 @endif
@@ -320,16 +319,28 @@
                         {{-- <img src="{{ asset(Storage::url($order->store->upload_qr_yape)) }}"
                         alt="barcode" height="90" width="90" /> --}}
                         <span>YAPE</span>
-                        <img src="{{ asset(Storage::url($order->store->qr_yape)) }}" alt="barcode" height="130"
-                            width="130" />
+
+                        @if ($order->store->getOption('upload_qr_yape') != '')
+                            <img src="{{ $order->store->getOption('upload_qr_yape') }}" alt="barcode" height="130"
+                                width="130" />
+                        @else
+                            <h3>Aqui debe ir su Qr de Yape</h3>
+                        @endif
+
 
                     </div>
 
                     {{-- <img src="{{ asset(Storage::url("stores/logos/Ux88DfS1uBjW77dJM266NwajMxqxOYbUcuWKcCzz.png")) }}" alt="barcode" height="95" width="95" /> --}}
                     <div class="plin text-center">
                         <span>PLIN</span>
-                        <img src="{{ asset(Storage::url($order->store->qr_plin)) }}" alt="barcode" height="125"
-                            width="125" />
+
+                        @if ($order->store->getOption('upload_qr_plin') != '')
+                            <img src="{{ $order->store->getOption('upload_qr_plin') }}" alt="barcode" height="130"
+                                width="130" />
+                        @else
+                            <h3>Aqui debe ir su Qr de Plin</h3>
+                        @endif
+
 
                     </div>
 
