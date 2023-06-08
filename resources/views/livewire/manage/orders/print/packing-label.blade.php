@@ -211,8 +211,16 @@
 
         <div class="label-left">
             <div class="logo mb-2">
-                <img style="width: 50%; height: auto;" src="{{ asset(Storage::url($order->store->logo)) }}"
-                    alt="">
+
+                @if ($order->store->getOption('upload_logo_invoice'))
+                    <img class="logo" src="{{ asset(Storage::url($order->store->getOption('upload_logo_invoice'))) }}"
+                        alt="">
+                @else
+                    <h1 class="my-5">SU LOGO AQUI</h1>
+                @endif
+
+                {{-- <img style="width: 50%; height: auto;" src="{{ asset(Storage::url($order->store->logo)) }}"
+                    alt=""> --}}
             </div>
             <div class="ship-to py-0">
                 <p>DESTINATARIO: </p>
@@ -259,10 +267,18 @@
 
             @if (!$order->is_contra_entrega())
                 <div class="carrier-address text-center">
-                    <li>{{ $order->carrier_address->title }}</li>
-                    <li>{{ $order->carrier_address->primary }}, {{ $order->carrier_address->district->name }} -
-                        {{ $order->carrier_address->district->province->name }} -
-                        {{ $order->carrier_address->district->province->department->name }}</li>
+
+
+                    @if ($order->carrier_address)
+                        <li>{{ $order->carrier_address->title }}</li>
+
+                        <li>{{ $order->carrier_address->primary }}, {{ $order->carrier_address->district->name }} -
+                            {{ $order->carrier_address->district->province->name }} -
+                            {{ $order->carrier_address->district->province->department->name }}</li>
+                    @else
+                        <li>No se ha asignado transportista</li>
+                    @endif
+
                 </div>
             @endif
 
@@ -275,7 +291,7 @@
                     <h1>CONTRA ENTREGA</h1>
                 </div>
             @endif
-            
+
             @if ($order->is_pay())
                 <div class="status-pago">
                     <h1 class="mt-3">PAGADO</h1>

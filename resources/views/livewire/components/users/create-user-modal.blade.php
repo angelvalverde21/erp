@@ -1,18 +1,18 @@
 <div>
     {{-- If you look to others for fulfillment, you will never truly be fulfilled. --}}
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-sale-modal">
-        <i class="fa-solid fa-clipboard-check mr-1"></i> Nuevo cliente
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-sale-modal-{{ $rol }}">
+        <i class="fa-solid fa-clipboard-check mr-1"></i> Nuevo usuario
     </button>
 
 
     <!-- Modal -->
-    <div wire:ignore.self class="modal fade" id="create-sale-modal" tabindex="-1" role="dialog"
+    <div wire:ignore.self class="modal fade" id="create-sale-modal-{{ $rol }}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Ingresar Usuario</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Ingresar Usuario ( {{ $rol }} )</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -27,13 +27,13 @@
                     <div class="row">
 
                         <div class="col-lg-6 col-6">
-                            <x-form.input type="number" wirevalue="phone" icon="fa-solid fa-phone" error="Este campo es requerido">
+                            <x-form.input type="number" debounce="500" wirevalue="phone" icon="fa-solid fa-phone" error="Este campo es requerido">
                                 Celular
                             </x-form.input>
                         </div>
 
                         <div class="col-lg-6 col-6">
-                            <x-form.input type="number" wirevalue="dni" icon="fa-solid fa-id-badge" error="Este campo es requerido">
+                            <x-form.input type="number" debounce="500" wirevalue="dni" icon="fa-solid fa-id-badge" error="Este campo es requerido">
                                 DNI
                             </x-form.input>
                         </div>
@@ -42,7 +42,7 @@
                     <div class="row">
 
                         <div class="col-lg-12 col-12">
-                            <x-form.input type="text" wirevalue="name" icon="fa-solid fa-user" error="Este campo es requerido">
+                            <x-form.input type="text" debounce="500" wirevalue="name" icon="fa-solid fa-user" error="Este campo es requerido">
                                 Nombre completo
                             </x-form.input>
                         </div>
@@ -52,13 +52,13 @@
                     <div class="row">
 
                         <div class="col-lg-6 col-12">
-                            <x-form.input type="text" wirevalue="primary" icon="fa-solid fa-dolly" error="Este campo es requerido">
+                            <x-form.input type="text" debounce="500" wirevalue="primary" icon="fa-solid fa-dolly" error="Este campo es requerido">
                                 Direccion principal
                             </x-form.input>
                         </div>
 
                         <div class="col-lg-6 col-12">
-                            <x-form.input type="text" wirevalue="secondary">
+                            <x-form.input type="text" debounce="500" wirevalue="secondary">
                                 Direccion secundaria
                             </x-form.input>
                         </div>
@@ -67,7 +67,7 @@
                     <div class="row">
 
                         <div class="col-lg-12 col-12">
-                            <x-form.input type="text" wirevalue="references" icon="fa-solid fa-right-long" error="Este campo es requerido">
+                            <x-form.input type="text" debounce="500" wirevalue="references" icon="fa-solid fa-right-long" error="Este campo es requerido">
                                 Referencia
                             </x-form.input>
                         </div>
@@ -96,7 +96,7 @@
 
                         <div class="col-lg-12 col-12">
                             <div class="mb-3">
-                                <input type="text" autocomplete="off" class="form-control" id="inputDistrict" wire:model="namedistrict"
+                                <input type="text" autocomplete="off" class="form-control" id="inputDistrict" debounce="250" wire:model="namedistrict"
                                     aria-describedby="nameHelp" placeholder="Distrito">
 
                                 <input type="hidden" class="form-control" id="inputDistrict"

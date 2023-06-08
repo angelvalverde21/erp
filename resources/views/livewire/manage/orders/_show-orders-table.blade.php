@@ -131,7 +131,12 @@
                     </td>
     
                     <td class="text-center">
+                        @if ($order->delivery_man)
                         {{ $order->delivery_man->name }}
+                        @else
+                            No se ha seleccionado el personal de entrega
+                        @endif
+                        
                     </td>
                     <td class="text-center">
     

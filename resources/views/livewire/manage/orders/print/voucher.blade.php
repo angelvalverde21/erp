@@ -115,7 +115,7 @@
                 border: 0px solid red;
             }
 
-            .pagado{
+            .pagado {
                 position: absolute;
                 top: 200px;
                 left: 75px;
@@ -128,14 +128,21 @@
 
         <div class="pagado">
             @if ($order->is_pay())
-            <img class="px-1 pt-1" src="{{ asset(Storage::url("orders/pagado.png")) }}" height="250px"
-            alt="">
+                <img class="px-1 pt-1" src="{{ asset(Storage::url('orders/pagado.png')) }}" height="250px" alt="">
             @endif
         </div>
         <div class="header">
 
             {{-- OJO EN EL PDF SE DEBE USAR LA RUTA COMPLETA, POR ESO SE USA ASSETS --}}
-            <img class="logo" src="{{ asset(Storage::url($order->store->logo)) }}" alt="">
+
+            @if ($order->store->getOption('upload_logo_invoice'))
+                <img class="logo" src="{{ asset(Storage::url($order->store->getOption('upload_logo_invoice'))) }}"
+                    alt="">
+            @else
+                <h1 class="my-5">SU LOGO AQUI</h1>
+            @endif
+
+
             <h1 class="name">ORDEN DE COMPRA: #{{ $order->id }}</h1>
             <small style="padding: 0 10px">
                 Aquarella Ropa y Accesorios, Tienda 100% Online Open 24/7,
@@ -192,21 +199,46 @@
             <div class="content-header pt-2 pb-3" style="height: 100px;">
 
                 @if ($order->is_pay())
-                <img class="px-1 pt-1" src="{{ asset(Storage::url("orders/paid.png")) }}" height="90px"
-                alt="">
+                    <img class="px-1 pt-1" src="{{ asset(Storage::url('orders/paid.png')) }}" height="90px"
+                        alt="">
                 @else
-                <div class="qr ps-3 pe-4">
-                    {{-- <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('https://erp.3b.pe/summary/imprimir/voucher.php?IDVENTA=10813', 'QRCODE') }}"
+                    <div class="qr ps-3 pe-4">
+                        {{-- <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('https://erp.3b.pe/summary/imprimir/voucher.php?IDVENTA=10813', 'QRCODE') }}"
                     alt="barcode" height="75" width="75" /> --}}
-                    <div class="content-qr text-center">
-                        <label class="">YAPE</label>
-                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG($order->store->wallet->code_yape, 'QRCODE') }}"
-                            alt="barcode" height="100" width="100" />
-                        {{-- <label>{{ $order->store->wallet->yape }}</label>
-                            <label>{{ $order->store->wallet->titular_yape }}</label> --}}
-                    </div>
+                        <div class="content-qr text-center">
+                            <label class=""> </label>
 
-                </div>
+                            @if ($order->store->getOption('code_yape'))
+                                <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG($order->store->getOption('code_yape'), 'QRCODE') }}"
+                                    alt="barcode" height="100" width="100" />
+                            @else
+                                <div class="logo_temp p-3">
+                                    <img src="{{ asset(Storage::url('upload_qr_temp.jpg')) }}" alt="barcode"
+                                    height="100" width="100" />
+                                </div>
+
+                                {{-- <style>
+                                    .qr_temp .marco{
+                                        width: 100px;
+                                        height: 100px;
+                                        border: 5px solid #000000;
+                                        border-radius: 10px
+                                    }
+                                </style>
+
+                                <div class="qr_tem">
+                                    <div class="marco">
+                                        <h1>Su Qr Aqui</h1>
+                                    </div>
+                                </div> --}}
+                            @endif
+
+
+                            {{-- <label>{{ $order->store->wallet->yape }}</label>
+                            <label>{{ $order->store->wallet->titular_yape }}</label> --}}
+                        </div>
+
+                    </div>
                 @endif
 
 
@@ -217,12 +249,14 @@
                         <li>DESCUENTOS: S/. {{ $order->descuentos }}</li>
                     @endif
 
-                        @if ($order->shipping_cost_buyer>0)
-                        <li>ENVIO @if ($order->is_contra_entrega()) (Motorizado) @endif: S/. {{ $order->shipping_cost_buyer }}</li> 
-                        @else
+                    @if ($order->shipping_cost_buyer > 0)
+                        <li>ENVIO @if ($order->is_contra_entrega())
+                                (Motorizado)
+                            @endif: S/. {{ $order->shipping_cost_buyer }}</li>
+                    @else
                         <li>ENVIO: GRATIS (x OLVA)</li>
-                        @endif
-                        <li>------------------------------------</li>
+                    @endif
+                    <li>------------------------------------</li>
                     <li><strong style="font-size: 14pt">TOTAL: S/. {{ $order->total_amount }}</strong></li>
                 </div>
 
@@ -230,15 +264,15 @@
 
             @if (!$order->is_pay())
 
-            <hr class="linea-separador my-3">
+                <hr class="linea-separador my-3">
 
-            <div class="status-pago">
-                <h1>PENDIENTE DE PAGO</h1>
-                @if ($order->is_contra_entrega())
-                <h2>(CONTRA ENTREGA)</h2>
-                @endif
-                
-            </div>
+                <div class="status-pago">
+                    <h1>PENDIENTE DE PAGO</h1>
+                    @if ($order->is_contra_entrega())
+                        <h2>(CONTRA ENTREGA)</h2>
+                    @endif
+
+                </div>
 
             @endif
     </body>

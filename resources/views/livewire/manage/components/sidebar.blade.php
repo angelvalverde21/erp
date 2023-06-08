@@ -6,6 +6,14 @@
             width: 100%;
             height: 0.50px;
         }
+
+        .nav-sidebar>.nav-item .nav-icon{
+            font-size: 0.9rem !important;
+        }
+
+        .user-panel{
+            font-size: 0.9rem !important;   
+        }
     </style>
 
 
@@ -51,12 +59,24 @@
 
 
                 @foreach ($menus as $menu)
-                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div class="info">
-                            <a href="{{ $menu['slug'] }}" class="d-block"><i class="{{ $menu['icon'] }} mr-2"></i>
-                                {{ $menu['name'] }}</a>
+
+                    {{-- Si hay submenu le quitamos el slug --}}
+                    @if (isset($menu['sub_menu']))
+                        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                            <div class="info">
+                                <a href="#" class="d-block"><i class="{{ $menu['icon'] }} mr-2"></i>
+                                    {{ $menu['name'] }}</a>
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                            <div class="info">
+                                <a href="{{ $menu['slug'] }}" class="d-block"><i class="{{ $menu['icon'] }} mr-2"></i>
+                                    {{ $menu['name'] }}</a>
+                            </div>
+                        </div>
+                    @endif
+
 
 
                     <!-- sub menu -->
@@ -83,12 +103,12 @@
                     </nav>
                 @endforeach
 
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                {{-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="info">
                         <a href="{{ route('manage.profile', [$store->nickname]) }}" class="d-block"><i
                                 class="fa-solid fa-store mr-2"></i> {{ $store->name }}</a>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- sub menu -->
 

@@ -178,9 +178,6 @@
                                         <span class="error">Debe escoger un distrito</span>
                                     @enderror
 
-
-
-
                                     <div class="resultados">
 
                                         <ul class="list-group">
@@ -203,7 +200,7 @@
 
 
 
-                            <div class="col-lg-6 col-12">
+                            {{-- <div class="col-lg-6 col-12">
                                 <x-form.select wirevalue="delivery_method_id" icon="fa-solid fa-truck"
                                     error="Debe Elegir un metodo de entrega">
                                     <option value="">Escoger</option>
@@ -213,10 +210,10 @@
                                     @endforeach
                                 </x-form.select>
 
-                            </div>
+                            </div> --}}
 
 
-                            <div class="col-lg-6 col-12">
+                            {{-- <div class="col-lg-6 col-12">
                                 <x-form.select label="" wirevalue="delivery_man_id"
                                     icon="fa-solid fa-person-biking"
                                     error="Debe Elegir la persona que entregara el paquete">
@@ -226,7 +223,7 @@
                                         </option>
                                     @endforeach
                                 </x-form.select>
-                            </div>
+                            </div> --}}
 
 
                             {{-- <div class="col-lg-12 col-12">
@@ -247,7 +244,7 @@
 
                             <div class="col-lg-12 col-12">
 
-                                <x-form.select id="payment_method_id" label="Cliente indica que pagara con"
+                                <x-form.select id="payment_method_id" label="Metodo de pago"
                                     wirevalue="payment_method_id" icon="fa-solid fa-money-bill-1-wave">
 
                                     <option value="">Escoger</option>

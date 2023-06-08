@@ -5,6 +5,8 @@ use App\Http\Controllers\Manage\ProductController;
 use App\Http\Controllers\Manage\Upload\OrderController;
 use App\Http\Controllers\Manage\Upload\UploadAlbumController;
 use App\Http\Controllers\Manage\Upload\UserImageController;
+use App\Http\Livewire\Components\Users\EditUser;
+use App\Http\Livewire\Manage\Couriers\ShowCouriers;
 use App\Http\Livewire\Manage\Customers\CreateCustomer;
 use App\Http\Livewire\Manage\Customers\EditCustomer;
 use App\Http\Livewire\Manage\Customers\ShowCustomers;
@@ -31,6 +33,7 @@ use App\Http\Livewire\Manage\Products\ShowProducts;
 use App\Http\Livewire\Manage\Profile\ShoProfileWeb;
 use App\Http\Livewire\Manage\Profile\ShowProfileStore;
 use App\Http\Livewire\Manage\Profile\ShowProfileWeb;
+use App\Http\Livewire\Manage\Staff\ShowStaff;
 use App\Http\Livewire\ShowAlbumsColor;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
@@ -102,6 +105,17 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::get('/customers/create', CreateCustomer::class)->name('customers.create');
    Route::get('/customers/{customer}/edit', EditCustomer::class)->name('customers.edit');
    Route::get('/customers/{customer}/orders', ShowOrdersCustomers::class)->name('customers.orders');
+   
+   
+   //GET staff
+
+   Route::get('/users/{user}/edit', EditUser::class)->name('users.edit');
+
+
+   Route::get('/staff', ShowStaff::class)->name('staff');
+   Route::get('/couriers', ShowCouriers::class)->name('couriers');
+
+
 
    //GET Producciones
 

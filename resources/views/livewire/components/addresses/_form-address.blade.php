@@ -2,19 +2,18 @@
 {{-- ==== INICIO DEL INPUT DISTRITO QUE SOLO SERVIRARA PARA SELECCIONAR EL DISTRITO ==== --}}
 {{-- ================================================================================== --}}
 
-
 <input type="hidden" wire:model="address.user_id">
 
 <div class="row">
 
     <div class="col-lg-6 col-6">
-        <x-form.input type="number" wirevalue="address.phone" icon="fa-solid fa-phone" error="Este campo es requerido">
+        <x-form.input type="number" debounce="500" wirevalue="address.phone" icon="fa-solid fa-phone" error="Este campo es requerido">
             Phone
         </x-form.input>
     </div>
 
     <div class="col-lg-6 col-6">
-        <x-form.input type="number" wirevalue="address.dni" icon="fa-solid fa-id-badge">
+        <x-form.input type="number" debounce="500" wirevalue="address.dni" icon="fa-solid fa-id-badge">
             DNI o RUC
         </x-form.input>
     </div>
@@ -23,7 +22,7 @@
 <div class="row">
 
     <div class="col-lg-12 col-12">
-        <x-form.input type="text" wirevalue="address.name" icon="fa-solid fa-user" error="Este campo es requerido">
+        <x-form.input type="text" debounce="500" wirevalue="address.name" icon="fa-solid fa-user" error="Este campo es requerido">
             Nombre completo o Razon Social
         </x-form.input>
     </div>
@@ -33,14 +32,14 @@
 <div class="row">
 
     <div class="col-lg-6 col-12">
-        <x-form.input type="text" wirevalue="address.primary" icon="fa-solid fa-dolly"
+        <x-form.input type="text" debounce="500" wirevalue="address.primary" icon="fa-solid fa-dolly"
             error="Este campo es requerido">
             Direccion principal
         </x-form.input>
     </div>
 
     <div class="col-lg-6 col-12">
-        <x-form.input type="text" wirevalue="address.secondary">
+        <x-form.input type="text" debounce="500" wirevalue="address.secondary">
             Direccion secundaria
         </x-form.input>
     </div>
@@ -49,7 +48,7 @@
 <div class="row">
 
     <div class="col-lg-12 col-12">
-        <x-form.input type="text" wirevalue="address.references" icon="fa-solid fa-right-long">
+        <x-form.input type="text" debounce="500" wirevalue="address.references" icon="fa-solid fa-right-long">
             Referencia
         </x-form.input>
     </div>
@@ -71,7 +70,7 @@
         @endif
 
         {{-- Input para seleccionar el distrito, pero ojo el verdadero id lo envian los campos de abajo --}}
-        <input onclick="this.select();"  type="text" class="form-control" wire:model.debounce.250ms="namedistrict" aria-describedby="nameHelp"
+        <input onclick="this.select();"  type="text" class="form-control" wire:model.debounce.500ms="namedistrict" aria-describedby="nameHelp"
             placeholder="Distrito">
 
         {{-- Elemento para fijar el valor del district_ id y activar el error por si el cliente no selecciona distrito --}}
@@ -84,7 +83,7 @@
         @endif
 
         @error('address.district_id')
-            <span class="error">Debe escoger un distrito</span>
+            <span class="error has-danger">Debe escoger un distrito</span>
         @enderror
 
         {{-- FIN Elemento para fijar el valor del district_ id y activar el error por si el cliente no selecciona distrito --}}
@@ -152,7 +151,7 @@
     @endif
 
     <button type="button" wire:loading.class="btn-secondary" wire:loading.attr="disabled" wire.target="save"
-        wire:click="save" class="btn btn-primary ml-auto"><i class="fa-solid fa-floppy-disk mr-1"></i> Guardar
+        wire:click="save" class="btn btn-success ml-auto"><i class="fa-solid fa-floppy-disk mr-1"></i> Guardar
         Cambios</button>
 
     <div class="spinner-border" wire:loading.flex wire:target="save" role="status">

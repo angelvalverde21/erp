@@ -87,9 +87,12 @@
                                         <p> Publicado en: {{ $product->category->name }}</p>
                                     </div>
                                     <div class="col-md-12 p-y-3">
-                                        <p><a target="_blank"
-                                                href="https://{{ $store->profile->domain }}/{{ $product->short_link }}">https://{{ $store->profile->domain }}/{{ $product->short_link }}</a>
-                                        </p>
+                                        @if ($store->getOption('domain'))
+                                            <p><a target="_blank"
+                                                    href="https://{{ $store->getOption('domain') }}/{{ $product->short_link }}">https://{{ $store->getOption('domain') }}/{{ $product->short_link }}</a>
+                                            </p>
+                                        @endif
+
                                     </div>
                                 </div>
 
@@ -114,23 +117,24 @@
                                 <div class="accordion-content" wire:ignore>
                                     <div class="accordion mb-3" id="accordionExample">
 
-                                        <x-accordion-item label="Descripcion del producto" id="description_product" accordionParentId="accordionExample">
-    
-                                            <x-form.textarea wirevalue="product.description" 
-                                                rows="5">
+                                        <x-accordion-item label="Descripcion del producto" id="description_product"
+                                            accordionParentId="accordionExample">
+
+                                            <x-form.textarea wirevalue="product.description" rows="5">
                                                 Describa al producto
                                             </x-form.textarea>
-    
+
                                         </x-accordion-item>
-    
-                                        <x-accordion-item id="labels_product" accordionParentId="accordionExample" label="Etiquetas del producto">
-    
+
+                                        <x-accordion-item id="labels_product" accordionParentId="accordionExample"
+                                            label="Etiquetas del producto">
+
                                             <x-form.textarea wirevalue="product.tags" rows="3">
                                                 Etiquetas del producto
                                             </x-form.textarea>
-    
+
                                         </x-accordion-item>
-    
+
                                     </div>
                                 </div>
 

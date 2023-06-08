@@ -23,12 +23,16 @@
 <body style="font-family: Arial, Helvetica, sans-serif">
 
 
-    <div class="container">
+    <div class="container"> 
 
         <div class="header d-flex justify-content-between">
             <div class="logo">
-                <img style="width: 50%; height: auto;" src="{{ asset(Storage::url($order->store->logo)) }}"
-                    alt="">
+                @if ($order->store->getOption('upload_logo_invoice'))
+                    <img class="logo" src="{{ asset(Storage::url($order->store->getOption('upload_logo_invoice'))) }}"
+                        alt="">
+                @else
+                    <h1 class="my-3">SU LOGO AQUI</h1>
+                @endif
             </div>
 
             <div class="info-right text-end">

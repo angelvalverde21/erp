@@ -315,6 +315,19 @@
         });
     </script>
 
+
+    <script>
+        Livewire.on('vacio', function() {
+            Swal.fire({
+                    icon: 'info',
+                    title: 'Error',
+                    text: 'Por favor complete los campos',
+                }
+
+            )
+        });
+    </script>
+
     @livewireStyles
 
     {{-- datepicker --}}

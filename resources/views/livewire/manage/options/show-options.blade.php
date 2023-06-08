@@ -28,7 +28,7 @@
             <div class="card-body">
 
                 <div class="row">
-                    <div class="col-lg-4 col">
+                    <div class="col-lg-4 col-12">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-brands fa-instagram"></i></span>
                             <input type="text" class="form-control" wire:model.debounce.500ms="options.instagram"
@@ -37,7 +37,7 @@
                     </div>
 
 
-                    <div class="col-lg-4 col">
+                    <div class="col-lg-4 col-12">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-brands fa-facebook"></i></span>
                             <input type="text" class="form-control" wire:model.debounce.500ms="options.facebook"
@@ -46,7 +46,7 @@
                     </div>
 
 
-                    <div class="col-lg-4 col">
+                    <div class="col-lg-4 col-12">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-brands fa-tiktok"></i></span>
                             <input type="text" class="form-control" wire:model.debounce.500ms="options.tiktok"
@@ -80,7 +80,7 @@
 
                 <div class="row">
 
-                    <div class="col-lg-6 col">
+                    <div class="col-lg-6 col-12">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-house"></i></span>
                             <input type="text" class="form-control" wire:model.debounce.500ms="options.title"
@@ -89,7 +89,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-2 col">
+                    <div class="col-lg-2 col-12">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-earth-americas"></i></span>
                             <input type="text" class="form-control" wire:model.debounce.500ms="options.domain"
@@ -97,7 +97,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-2 col">
+                    <div class="col-lg-2 col-5">
                         <div class="input-group mb-3">
                             <span class="input-group-text">S/.</span>
                             <input type="number" class="form-control" wire:model.debounce.500ms="options.ship_min"
@@ -105,7 +105,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-2 col">
+                    <div class="col-lg-2 col-7">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-brands fa-whatsapp"></i></span>
                             <input type="number" class="form-control" wire:model.debounce.500ms="options.whatsapp"

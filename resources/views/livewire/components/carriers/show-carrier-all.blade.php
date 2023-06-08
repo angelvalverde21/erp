@@ -24,29 +24,34 @@
     <div class="accordion" id="accordionShowCarrier">
 
         {{-- Ojo esta linea consulta en la tabla usuarios a los carriers (courier) --}}
-        @foreach ($carriers as $carrier) 
+        @foreach ($carriers as $carrier)
 
-            <x-accordion-item id="item-carrier-{{ $carrier->id }}" label="{{ $carrier->name }}"
-
+            <x-accordion-item id="item-carrier-{{ $carrier->id }}" label="{{ $carrier->name }}" icon="fa-solid fa-truck-fast"
                 accordion_parent_id="accordionShowCarrier">
 
-                <table class="table table-transportista mx-0 my-0">
+                <div class="table-responsive">
+                <table class="table table-transportista mx-0 mb-3">
 
                     {{-- //Luego de consultar a los usuarios extraemos sus direcciones de envio que seran las oficinas de atencion --}}
-                    
+
                     @foreach ($carrier->addresses as $office)
                         <tr>
-                            <td><a class="btn btn-secondary" href="#" role="button"
+                            {{-- Si la orden esta definida colocamos la opcion seleccionar --}}
+                            @if ( $order->id > 0)
+                                <td><a class="btn btn-secondary" href="#" role="button"
                                         wire:click.prevent="selectAddress('{{ $office->id }}')">Seleccionar</a>
-                            </td>
-                            <td><strong>{{ $office->title }}</strong></td>
+                                </td>
+                            @endif
+
+                            <td>{{ $office->title }}</td>
                             <td>{{ $office->name }}</td>
                             <td>{{ $office->primary }} {{ $office->secondary }}</td>
                             <td>{{ $office->references }}</td>
                             <td>{{ $office->district->name }}</td>
                             <td>
-                                <a href="#collapse-edit-carrier-{{ $office->id }}" class="btn btn-success" data-toggle="collapse"
-                                    role="button" aria-expanded="false" aria-controlxs="collapseExample">Editar                                    
+                                <a href="#collapse-edit-carrier-{{ $office->id }}" class="btn btn-secondary"
+                                    data-toggle="collapse" role="button" aria-expanded="false"
+                                    aria-controlxs="collapseExample">Editar
                                 </a>
                             </td>
                         </tr>
@@ -60,10 +65,12 @@
 
                             </td>
                         </tr>
-                        
                     @endforeach
 
                 </table>
+                </div>
+
+                {{-- El cambio de boton sucede abajo con un jquery --}}
 
                 <a class="btn btn-primary btn-agregar-office" data-toggle="collapse"
                     href="#collapse-carrier-{{ $carrier->id }}" role="button" aria-expanded="false"
@@ -85,9 +92,8 @@
                     })
                 </script> --}}
 
-            
-            </x-accordion-item>
 
+            </x-accordion-item>
         @endforeach
 
     </div>
@@ -104,7 +110,7 @@
                         if (text == textInit) {
                             console.log(textInit);
 
-                            $(this).text('x');
+                            $(this).text('Cancelar');
                             $(this).removeClass(BtnClass);
                             $(this).addClass('btn-secondary');
                         } else {

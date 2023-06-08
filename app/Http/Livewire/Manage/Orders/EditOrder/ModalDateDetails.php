@@ -24,7 +24,7 @@ class ModalDateDetails extends Component
         $user = new User();
         $this->order = $order;
         $this->carriers = $user->carriers();
-        $this->repartidores = $user->repartidores();
+        $this->repartidores = $user->repartidores($order->store_id);
 
     }
 

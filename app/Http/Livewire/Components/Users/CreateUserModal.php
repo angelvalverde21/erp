@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Manage\Customers;
+namespace App\Http\Livewire\Components\Users;
 
 use Livewire\Component;
 
@@ -12,11 +12,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 
-class CreateCustomerModal extends Component
+class CreateUserModal extends Component
 {
 
+    
     public $namedistrict, $name, $dni, $phone, $primary, $secondary, $references, $district_id, $delivery_date;
-    public $observations_public, $observations_private;
+    public $observations_public, $observations_private, $rol, $store;
 
     public $sales = [];
 
@@ -37,8 +38,9 @@ class CreateCustomerModal extends Component
         'district_id' => 'required',
     ];
 
-    public function mount()
+    public function mount($rol = 'buyer')
     {
+        $this->rol = $rol;
         $this->namedistrict = '';
         $this->store = Request::get('store');
     }
@@ -91,7 +93,7 @@ class CreateCustomerModal extends Component
         $user->save();
 
         //una vez creado se asigna el rol de cliente
-        $user->assignRole('buyer');
+        $user->assignRole($this->rol);
 
         Log::debug('Usuario creado :' . $user);
 
@@ -114,9 +116,13 @@ class CreateCustomerModal extends Component
         $address->district_id  = $this->district_id; //el usuario al cual le pertenece la direccion
 
         $address->save();
+        
         Log::debug('Direccion de envio creado :' . $address);
 
         //este emit necesita un listener
+
+        $this->emitTo('components.users.show-users','render');
+
         $this->emit('creado');
     }
 
@@ -148,19 +154,9 @@ class CreateCustomerModal extends Component
         }
     }
 
-    // public function updatedName($value)
-    // {
-    //     $user = User::where('name', 'like', '%' . $value . '%')->get();
-
-    //     if(count($user) == 1 ){
-    //         $this->dni = $user[0]->dni;
-    //         $this->phone = $user[0]->phone;
-    //     }
-    // }
-
     public function render()
     {
-
+        
         //Log::debug($this->namedistrict);
 
         if ($this->namedistrict <> "") {
@@ -173,8 +169,8 @@ class CreateCustomerModal extends Component
             $districts = [];
         }
 
+        $rol = $this->rol;
 
-        return view('livewire.manage.customers.create-customer-modal', compact('districts'));
+        return view('livewire.components.users.create-user-modal', compact('districts', 'rol'));
     }
 }
-

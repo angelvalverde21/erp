@@ -175,9 +175,23 @@ class User extends Authenticatable
         )->orderBy('id', 'desc')->get();
     }
 
-    public static function repartidores()
+
+    // public static function couriers()
+    // {
+    //     return User::whereHas(
+    //         'roles',
+    //         function ($q) {
+    //             $q->where('name', 'carrier');
+    //         }
+    //     )->orderBy('id', 'desc')->get();
+    // }
+
+    public static function repartidores($store_id)
     {
-        return User::whereHas(
+
+        $store = User::where('store_id', '=',  $store_id);
+
+        return $store->whereHas(
             'roles',
             function ($q) {
                 $q->where('name', 'repartidor');
@@ -365,5 +379,16 @@ class User extends Authenticatable
     public function options()
     {
         return $this->morphMany(Option::class, "optionable");
+    }
+
+    public function getOption($optionName){
+        
+
+        try {
+            return $this->morphMany(Option::class, "optionable")->where('name',$optionName)->firstOrFail()->value;
+        } catch (\Throwable $th) {
+            //throw $th;
+            return false;
+        }
     }
 }

@@ -62,28 +62,54 @@ class Sidebar extends Component
                     ]
                 ],
     
-                [
-                    "name"=>"Herramientas",
-                    "slug"=>"#",
-                    "icon"=>"fa-solid fa-screwdriver-wrench",
-                ],
+                // [
+                //     "name"=>"Herramientas",
+                //     "slug"=>"#",
+                //     "icon"=>"fa-solid fa-screwdriver-wrench",
+                // ],
+    
+                // [
+                //     "name"=>"Mis Producciones",
+                //     "slug"=>route('manage.productions', [$this->store->nickname]),
+                //     "icon"=>"fa-solid fa-business-time",
+                // ],
+    
+                // [
+                //     "name"=>"Web",
+                //     "slug"=>route('manage.web', [$this->store->nickname]),
+                //     "icon"=>"fa-solid fa-globe",
+                // ],
     
                 [
-                    "name"=>"Mis Producciones",
-                    "slug"=>route('manage.productions', [$this->store->nickname]),
-                    "icon"=>"fa-solid fa-business-time",
-                ],
-    
-                [
-                    "name"=>"Web",
-                    "slug"=>route('manage.web', [$this->store->nickname]),
-                    "icon"=>"fa-solid fa-globe",
-                ],
-    
-                [
-                    "name"=>"Config",
-                    "slug"=>route('manage.options', [$this->store->nickname]),
-                    "icon"=>"fa-solid fa-gear",
+                    "name"=>"Informacion de la pagina",
+                    // "slug"=>route('manage.options', [$this->store->nickname]),
+                    "icon"=>"fa-solid fa-house",
+                    "sub_menu"=>[
+                        // [
+                        //     "name"=>"Entregas Hoy",
+                        //     "slug"=> route('manage.orders.today',[$this->store->nickname]),
+                        //     "active"=>"orders.today",
+                        //     "icon"=>"fa-solid fa-align-justify",
+                        // ],
+                        [
+                            "name"=>"Configuracion",
+                            "slug"=>route('manage.options', [$this->store->nickname]),
+                            "active"=>"options",
+                            "icon"=>"fa-solid fa-gear",
+                        ],
+                        [
+                            "name"=>"Mis empresas de envio",
+                            "slug"=> route('manage.couriers',[$this->store->nickname]),
+                            "active"=>"couriers",
+                            "icon"=>"fa-solid fa-truck-fast",
+                        ],
+                        [
+                            "name"=>"Staff",
+                            "active"=>"staff",
+                            "slug"=>route('manage.staff',[$this->store->nickname]),
+                            "icon"=>"fa-solid fa-people-carry-box",
+                        ],
+                    ]
                 ],
                 // [
                 //     "name"=>"Importacion SQL",

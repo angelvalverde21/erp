@@ -42,8 +42,8 @@ class CreateOrderModal extends Component
         'references' => '',
         'district_id' => 'required',
         'payment_method_id' => 'required',
-        'delivery_man_id' => 'required',
-        'delivery_method_id' => 'required',
+        // 'delivery_man_id' => 'required',
+        // 'delivery_method_id' => 'required',
     ];
 
     public function mount()
@@ -85,82 +85,102 @@ class CreateOrderModal extends Component
         //Primero buscamos si existe el cliente por el numero de celular o por dni o por nombre
 
         $rules = $this->rules;
-        $this->validate($rules);
+
+        // $this->validate($rules);
+        // try {
+        //     //code...
+            
+        // } catch (\Throwable $th) {
+        //     $this->emit('vacio');
+        // }
 
         //crear usuario
 
-        $buyer = new User();
-        $buyer->name = trim($this->name); //Elimina los espacios en blanco al incio y final
-        if ($this->dni) {
-            $buyer->dni = str_replace(' ', '', $this->dni); //Elimina los espacios en blanco de toda la cadena
-        }
-
-        $buyer->phone = str_replace(' ', '', $this->phone); //Elimina los espacios en blanco de toda la cadena
-        $buyer->password = bcrypt(substr(trim($this->name), 0, 1) . $this->phone); //genera un password con la primera letra de su nombre + un telefono
+        try {
+            $this->validate($this->rules);
         
-        $buyer->store_id = $this->store->id; //genera un password con la primera letra de su nombre + un telefono
-        $buyer->owner_id = $this->owner->id; //genera un password con la primera letra de su nombre + un telefono
+            $buyer = new User();
+            $buyer->name = trim($this->name); //Elimina los espacios en blanco al incio y final
+            if ($this->dni) {
+                $buyer->dni = str_replace(' ', '', $this->dni); //Elimina los espacios en blanco de toda la cadena
+            }
+    
+            $buyer->phone = str_replace(' ', '', $this->phone); //Elimina los espacios en blanco de toda la cadena
+            $buyer->password = bcrypt(substr(trim($this->name), 0, 1) . $this->phone); //genera un password con la primera letra de su nombre + un telefono
+            
+            $buyer->store_id = $this->store->id; //genera un password con la primera letra de su nombre + un telefono
+            $buyer->owner_id = $this->owner->id; //genera un password con la primera letra de su nombre + un telefono
+    
+            $buyer->save();
+    
+            //una vez creado se asigna el rol de cliente
+            $buyer->assignRole('buyer');
+    
+            Log::debug('Usuario creado :' . $buyer);
+    
+            //crear direccion de envio
+    
+            $address = new Address();
+    
+            $address->name = trim($this->name);
+            if ($this->dni) {
+                $address->dni = str_replace(' ', '', $this->dni);
+            }
+            $address->phone = str_replace(' ', '', $this->phone);
+            $address->primary = trim($this->primary);
+            $address->secondary = trim($this->secondary);
+            if ($this->references) {
+                $address->references = trim($this->references);
+            }
+    
+            $address->user_id = $buyer->id; //el usuario al cual le pertenece la direccion
+            $address->district_id  = $this->district_id; //el usuario al cual le pertenece la direccion
+    
+            $address->save();
+    
+            //agregar el address_id a la tabla user (que sera la direccion por defecto que tomen las aplicaciones)
+    
+            $address->user->address_id = $address->id;
+            $address->user->save();
+    
+    
+            Log::debug('Direccion de envio creado :' . $address);
+    
+            //crear id de venta
+    
+            $order = new Order();
+    
+            // $order->delivery_man_id = $this->delivery_man_id;
+            $order->payment_method_id = $this->payment_method_id;
+            // $order->delivery_method_id = $this->delivery_method_id;
+            $order->store_id = $this->store->id;
+            $order->seller_id = $this->owner->id;
+            $order->buyer_id = $buyer->id;
+            $order->address_id = $address->id; //el id de la direccion recien creada
+    
+            $order->save();
+    
+            $order->Addstatus('creado',$this->current);
+    
+            Log::debug('Orden creada :' . $order);
+    
+            $this->emitTo('manage.orders.show-orders', 'render');
+    
+    
+            //este emit necesita un listener
+            $this->emit('creado');
 
-        $buyer->save();
-
-        //una vez creado se asigna el rol de cliente
-        $buyer->assignRole('buyer');
-
-        Log::debug('Usuario creado :' . $buyer);
-
-        //crear direccion de envio
-
-        $address = new Address();
-
-        $address->name = trim($this->name);
-        if ($this->dni) {
-            $address->dni = str_replace(' ', '', $this->dni);
+            return redirect()->route('manage.orders.edit', ['nickname' => $this->store->nickname, 'order' => $order->id]);
+        
+        } catch (\Throwable $e) {
+            Log::error('Error de validación: ' . $e->getMessage());
+            // Opcionalmente, también puedes registrar detalles adicionales, como los campos específicos que fallaron en la validación
+            Log::error('Campos con errores: ' . json_encode($e->validator->errors()->all()));
         }
-        $address->phone = str_replace(' ', '', $this->phone);
-        $address->primary = trim($this->primary);
-        $address->secondary = trim($this->secondary);
-        if ($this->references) {
-            $address->references = trim($this->references);
-        }
-
-        $address->user_id = $buyer->id; //el usuario al cual le pertenece la direccion
-        $address->district_id  = $this->district_id; //el usuario al cual le pertenece la direccion
-
-        $address->save();
-
-        //agregar el address_id a la tabla user (que sera la direccion por defecto que tomen las aplicaciones)
-
-        $address->user->address_id = $address->id;
-        $address->user->save();
 
 
-        Log::debug('Direccion de envio creado :' . $address);
 
-        //crear id de venta
-
-        $order = new Order();
-
-        $order->delivery_man_id = $this->delivery_man_id;
-        $order->payment_method_id = $this->payment_method_id;
-        $order->delivery_method_id = $this->delivery_method_id;
-        $order->store_id = $this->store->id;
-        $order->seller_id = $this->owner->id;
-        $order->buyer_id = $buyer->id;
-        $order->address_id = $address->id; //el id de la direccion recien creada
-
-        $order->save();
-
-        $order->Addstatus('creado',$this->current);
-
-        Log::debug('Orden creada :' . $order);
-
-        $this->emitTo('manage.orders.show-orders', 'render');
-
-
-        //este emit necesita un listener
-        $this->emit('creado');
-
-        return redirect()->route('manage.orders.edit', ['nickname' => $this->store->nickname, 'order' => $order->id]);
+        
     }
 
     public function updatedPhone($value)

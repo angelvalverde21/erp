@@ -13,6 +13,7 @@
         
         <div class="card-body py-3">
 
+            @if ($order->carrier_address)
             <li><h4>{{ $order->carrier_address->title }}</h4></li>
             <li>{{ $order->carrier_address->name }}</li>
             <li>{{ $order->carrier_address->phone }}</li>
@@ -21,6 +22,11 @@
             <li>{{ $order->carrier_address->district->name }} -
                 {{ $order->carrier_address->district->province->name }} -
                 {{ $order->carrier_address->district->province->department->name }}</li>
+            @else
+                No hay courier, debe seleccionar uno
+            @endif
+
+
 
         </div>
 
