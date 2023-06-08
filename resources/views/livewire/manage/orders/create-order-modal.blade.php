@@ -101,14 +101,14 @@
                         <div class="row">
 
                             <div class="col-lg-6 col-6">
-                                <x-form.input type="number" wirevalue="phone" icon="fa-solid fa-phone"
+                                <x-form.input debounce="500" type="number" wirevalue="phone" icon="fa-solid fa-phone"
                                     error="Este campo es requerido">
                                     Celular
                                 </x-form.input>
                             </div>
 
                             <div class="col-lg-6 col-6">
-                                <x-form.input type="number" wirevalue="dni" icon="fa-solid fa-id-badge"
+                                <x-form.input debounce="500" type="number" wirevalue="dni" icon="fa-solid fa-id-badge"
                                     error="Este campo es requerido">
                                     DNI
                                 </x-form.input>
@@ -118,7 +118,7 @@
                         <div class="row">
 
                             <div class="col-lg-12 col-12">
-                                <x-form.input type="text" wirevalue="name" icon="fa-solid fa-user"
+                                <x-form.input debounce="500" type="text" wirevalue="name" icon="fa-solid fa-user"
                                     error="Este campo es requerido">
                                     Nombre completo
                                 </x-form.input>
@@ -129,14 +129,14 @@
                         <div class="row">
 
                             <div class="col-lg-6 col-12">
-                                <x-form.input type="text" wirevalue="primary" icon="fa-solid fa-dolly"
+                                <x-form.input debounce="500" type="text" wirevalue="primary" icon="fa-solid fa-dolly"
                                     error="Este campo es requerido">
                                     Direccion principal
                                 </x-form.input>
                             </div>
 
                             <div class="col-lg-6 col-12">
-                                <x-form.input type="text" wirevalue="secondary">
+                                <x-form.input debounce="500" type="text" wirevalue="secondary">
                                     Direccion secundaria
                                 </x-form.input>
                             </div>
@@ -145,7 +145,7 @@
                         <div class="row">
 
                             <div class="col-lg-12 col-12">
-                                <x-form.input type="text" wirevalue="references" icon="fa-solid fa-right-long"
+                                <x-form.input debounce="500" type="text" wirevalue="references" icon="fa-solid fa-right-long"
                                     error="Este campo es requerido">
                                     Referencia
                                 </x-form.input>
@@ -171,7 +171,7 @@
                             <div class="col-lg-12 col-12">
                                 <div class="mb-3">
                                     <input type="text" autocomplete="off" class="form-control" id="inputDistrict"
-                                        wire:model="namedistrict" aria-describedby="nameHelp" placeholder="Distrito">
+                                        wire:model.debounce.500ms="namedistrict" aria-describedby="nameHelp" placeholder="Distrito">
 
                                     <input type="hidden" class="form-control" id="inputDistrict"
                                         wire:model="district_id">

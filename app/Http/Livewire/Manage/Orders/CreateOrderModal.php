@@ -211,6 +211,7 @@ class CreateOrderModal extends Component
             $this->user = User::where('dni', $value)->limit(1)->first();
 
             if ($this->user) {
+                
                 $this->name = $this->user->name;
                 $this->phone = $this->user->phone;
                 $this->existe_usuario = true;

@@ -355,8 +355,8 @@ class User extends Authenticatable
             $result[$option->name] = $option->value;
         }
 
-        Log::info($result);
-        Log::info(array_values($result));
+        // Log::info($result);
+        // Log::info(array_values($result));
 
         return $result;
     }
