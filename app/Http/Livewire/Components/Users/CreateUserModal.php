@@ -168,9 +168,8 @@ class CreateUserModal extends Component
             //$districts = District::all();
             $districts = [];
         }
+        
 
-        $rol = $this->rol;
-
-        return view('livewire.components.users.create-user-modal', compact('districts', 'rol'));
+        return view('livewire.components.users.create-user-modal', compact('districts'));
     }
 }

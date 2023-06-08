@@ -24,6 +24,15 @@
             margin: 0 !important;
             padding: 0 !important;
         }
+
+        .main-sidebar, .sidebar-dark-primary{
+            background-color: #484F56 !important;
+        }
+
+        .form-control-sidebar{
+            background-color: #ffffff !important;  
+        }
+
     </style>
 
     {{-- fancybox --}}

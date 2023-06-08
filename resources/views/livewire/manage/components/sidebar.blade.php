@@ -7,12 +7,12 @@
             height: 0.50px;
         }
 
-        .nav-sidebar>.nav-item .nav-icon{
+        .nav-sidebar>.nav-item .nav-icon {
             font-size: 0.9rem !important;
         }
 
-        .user-panel{
-            font-size: 0.9rem !important;   
+        .user-panel {
+            font-size: 0.9rem !important;
         }
     </style>
 
@@ -23,18 +23,34 @@
 
         <!-- Sidebar -->
         <div class="sidebar">
+
+
+            <div class="logo-store px-3 pt-3 text-center">
+                @if ($store->getOption('upload_logo') != '')
+                    <img width="150px" src="{{ $store->getOption('upload_logo') }}" alt="">
+                @else
+                    <h3>SU LOGO AQUI</h3>
+                @endif
+            </div>
             <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex justify-content-between text-white">
+
                 <div class="image">
                     <img src="{{ asset('admin-lte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
                         alt="User Image">
                 </div>
+
                 <div class="info">
-                    @if ($user->hasRole('admin'))
-                        <a href="{{ route('home') }}" class="d-block">{{ $user->name }} (admin)</a>
-                    @else
+                    <div class="name text-end">
                         <a href="{{ route('home') }}" class="d-block">{{ $user->name }} </a>
-                    @endif
+                    </div>
+
+                    <div class="rol text-end">
+                        @if ($user->hasRole('admin'))
+                            (admin)
+                        @endif
+                    </div>
+
                 </div>
             </div>
 
@@ -59,7 +75,6 @@
 
 
                 @foreach ($menus as $menu)
-
                     {{-- Si hay submenu le quitamos el slug --}}
                     @if (isset($menu['sub_menu']))
                         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
