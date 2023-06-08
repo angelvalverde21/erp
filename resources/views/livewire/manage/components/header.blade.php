@@ -20,7 +20,7 @@
                     </li> --}}
                 </ul>
     
-                <ul class="d-block d-sm-none me-2">
+                <ul class="d-block d-md-block d-xl-none me-2">
                     @if ($store->getOption('upload_logo') != '')
                         <img height="25px" src="{{ $store->getOption('upload_logo') }}" alt="">
                     @else
