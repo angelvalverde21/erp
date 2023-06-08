@@ -98,9 +98,10 @@ class User extends Authenticatable
 
     public function getLogoStoreAttribute()
     {
-        if (isset($this->logo)) {
-            return asset(Storage::url($this->logo));
+        if ($this->getOption('upload_logo') != "") {
+            return $this->getOption('upload_logo');
         }
+
         return false;
     }
 
