@@ -235,6 +235,13 @@
     </x-sectioncontent>
 
     <x-sectioncontent>
+
+        <a href="{{ route('manage.products.download.zip', [$store->nickname, $product->id]) }}" class="btn btn-success mb-3">Descargar Stock</a>
+        
+
+    </x-sectioncontent>
+
+    <x-sectioncontent>
         <div class="card">
             <div class="card-body">
                 <ul class="nav nav-tabs" role="tablist">

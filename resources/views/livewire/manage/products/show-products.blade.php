@@ -41,11 +41,13 @@
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Imagen</th>
+                            <th class="text-center">Descargar</th>
+                            <th class="text-center">Imagen</th>
                             <th>Nombre del producto</th>
                             <th>Costo</th>
                             <th>Precio</th>
                             <th>Publicado</th>
+
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -56,6 +58,9 @@
                         @foreach ($products as $product)
                             <tr>
                                 <td>{{ $product->id }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('manage.products.download.zip', [$store->nickname, $product->id]) }}" class="btn btn-success"><i class="fa-solid fa-download me-2"></i> Stock</a>
+                                </td>
                                 <td class="text-center">
 
                                     @if ($product->images->count() or $product->colors->count())

@@ -52,7 +52,17 @@
                                 {{-- boton para el stock --}}
                                 <button class="btn btn-success" data-toggle="modal"
                                     data-target="#editarStock-{{ $color->id }}" type="button"><i
-                                        class="fa-solid fa-barcode me-1"></i> Stock</button>
+                                        class="fa-solid fa-barcode me-1"></i>Editar Stock</button>
+
+                                        <table class="table mt-3">
+
+                                            @foreach ($color->sizes as $size)
+                                            <tr>
+                                                <td>{{ $size->name }}</td>
+                                                <td>{{ $size->pivot->quantity }}</td>
+                                            </tr>      
+                                            @endforeach
+                                        </table>
                             </td>
 
                             @if ($color->image)
@@ -64,6 +74,7 @@
                                         <img loading="lazy" src="{{ Storage::url($color->image->name) }}" alt="" width="100px"
                                             height="100%">
                                     </a>
+
                                     <div>({{ $color->quantity }})</div>
 
                                     @if ($color->label != '')
@@ -109,7 +120,7 @@
                             @endif
 
                             <td>
-                                <a href="{{ route('manage.products.color.albums', [$store->nickname, $color->product_id, $color->id]) }}" class="btn btn-secondary">Sessiones</a>
+                                <a href="{{ route('manage.products.download.stock', [$store->nickname, $color->product_id]) }}" class="btn btn-secondary">Descargar Stock</a>
                             </td>
 
                             <td wire:key="color-{{ $color->id }}" class="text-center">

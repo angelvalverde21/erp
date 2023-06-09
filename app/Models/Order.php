@@ -522,7 +522,7 @@ class Order extends Model
 
         $payments = $this->payments->where('payment_status_id', '4');
 
-        Log::info('se imprime los pagos');
+        // Log::info('se imprime los pagos');
         // Log::info($payments);
 
         foreach ($payments as $payment) {

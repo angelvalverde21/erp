@@ -88,6 +88,9 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::post('/products/colors/upload/{color}/variantes', [ProductController::class, 'uploadVariantsColor'])->name('products.upload.colors.variants');
    Route::post('/products/{product}/upload/colors', [ProductController::class, 'uploadColors'])->name('products.upload.colors');
    Route::post('/products/{product}/upload/images', [ProductController::class, 'uploadImages'])->name('products.upload.images');
+   //GET Products
+   Route::get('/products/{product}/download/stock', [ProductController::class, 'downLoadStock'])->name('products.download.stock');
+   Route::get('/products/{product}/download/zip', [ProductController::class, 'downLoadZipProduct'])->name('products.download.zip');
 
    // http://erp.test/ara/manage/products/6/colors
    // http://erp.test/user/profile/10/upload_logo_general

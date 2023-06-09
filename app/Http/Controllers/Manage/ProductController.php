@@ -10,8 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use App\Models\Size;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-
+use ZipArchive;
 
 class ProductController extends Controller
 {
@@ -172,5 +173,117 @@ class ProductController extends Controller
         //         ]
         //     );
         // }
+    }
+
+    public function downLoadColor($nickname, Product $color){
+        
+    }
+
+
+    public function downLoadZipProduct($nickname, Product $product){
+
+        $colors = $product->colors;
+
+        foreach ($colors as $color) {
+            # code...
+            if($color->quantity > 0){
+                $rutasImagenes[] = $color->image->name;
+            }
+        }
+    
+        $zip = new ZipArchive();
+        $nombreArchivoZip = $product->slug.'.zip';
+        $rutaArchivoZip = public_path($nombreArchivoZip);
+    
+        if ($zip->open($rutaArchivoZip, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+            foreach ($rutasImagenes as $rutaImagen) {
+                $nombreArchivo = basename($rutaImagen);
+                $rutaCompleta = public_path(storage::url($rutaImagen));
+    
+                $zip->addFile($rutaCompleta, $nombreArchivo);
+            }
+    
+            $zip->close();
+    
+            return response()->download($rutaArchivoZip)->deleteFileAfterSend(true);
+        }
+    
+        return response('No se pudo crear el archivo ZIP', 500);
+
+    }
+
+    public function downLoadStock($nickname, Product $product){
+
+        $colors = $product->colors;
+
+        $rutasImagenes = [];
+        $descargas = [];
+        $i = 0;
+
+        foreach ($colors as $color) {
+            # code...
+            $rutasImagenes[] = $color->image->name;
+
+            $descargas[] = response()->download(public_path(Storage::url($rutasImagenes[$i])), $i.".jpg");
+
+            $i++;
+        }
+        return $descargas;
+
+        // $descargas = [];
+
+        // $rutasImagenes = [];
+
+        // $i=0;
+
+        // foreach ($colors as $color) {
+
+        //     $rutasImagenes[] = $color->image->name;
+
+        //     $nombreArchivo = basename($rutasImagenes[$i]);
+        //     $rutaCompleta = public_path(Storage::url($rutasImagenes[$i]));
+    
+        //     $headers = [
+        //         'Content-Type' => 'image/jpeg', // Ajusta el tipo MIME según el formato de tus imágenes
+        //     ];
+    
+        //     $descargas[] = response()->download($rutaCompleta, $nombreArchivo, $headers);
+
+        //     $i++;
+        // }
+
+        // return $descargas;
+
+        // return response()->download(asset(Storage::url($rutasImagenes[0])), "descargar.jpg");
+        
+
+        // return $rutasImagenes;
+        // $rutasImagenes = [
+        //     'ruta/imagen1.jpg',
+        //     'ruta/imagen2.jpg',
+        //     'ruta/imagen3.jpg',
+        // ];
+
+        // // Crear un directorio temporal para almacenar las imágenes descargadas
+        // $directorioTemporal = storage_path('temp');
+        // File::makeDirectory($directorioTemporal);
+
+        // // Descargar cada imagen individualmente
+        // foreach ($rutasImagenes as $rutaImagen) {
+        //     // Obtener el nombre del archivo de la ruta completa
+        //     $nombreArchivo = basename($rutaImagen);
+
+        //     // Generar una nueva ruta para almacenar la imagen descargada
+        //     $rutaDescarga = $directorioTemporal . '/' . $nombreArchivo;
+
+        //     // Descargar la imagen
+        //     File::copy(public_path($rutaImagen), $rutaDescarga);
+
+        //     // Descargar la imagen
+        //     return response()->download($rutaDescarga, $nombreArchivo)->deleteFileAfterSend();
+        // }
+
+        // // Eliminar el directorio temporal después de la descarga
+        // File::deleteDirectory($directorioTemporal);
     }
 }
