@@ -27,7 +27,7 @@
 
             <div class="logo-store px-3 pt-3 text-center">
                 @if ($store->getOption('upload_logo') != '')
-                    <img width="150px" src="{{ $store->getOption('upload_logo') }}" alt="">
+                    <img width="100px" src="{{ $store->getOption('upload_logo') }}" alt="">
                 @else
                     <h3>SU LOGO AQUI</h3>
                 @endif
