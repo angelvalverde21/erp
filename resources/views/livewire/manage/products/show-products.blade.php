@@ -10,7 +10,7 @@
 
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Buscar" wire:model.debounce.500ms="search" aria-label="Recipient's username" aria-describedby="basic-addon2">
-            <select class="form-select" id="inputGroupSelect01">
+            {{-- <select class="form-select" id="inputGroupSelect01">
 
                 <option selected>Escoja una categoria</option>
                 @foreach ($categories as $category)
@@ -19,16 +19,16 @@
 
                 @endforeach
 \
-              </select>
+              </select> --}}
             <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-magnifying-glass"></i></span>
           </div>
     </x-sectioncontent>
 
     <x-sectioncontent>
         <div class="card">
-            <div class="card-header">
+            <div class="card-header py-3">
                 <a href="{{ route('manage.products.create', [$store->nickname]) }}"
-                    class="btn btn-primary">Agregar
+                    class="btn btn-primary"><i class="fa-solid fa-plus me-1"></i> Crear
                     producto</a>
             </div>
 
@@ -43,7 +43,7 @@
                             <th>Id</th>
                             <th class="text-center">Descargar</th>
                             <th class="text-center">Imagen</th>
-                            <th>Nombre del producto</th>
+                            <th>Nombre</th>
                             <th>Costo</th>
                             <th>Precio</th>
                             <th>Publicado</th>
@@ -54,12 +54,11 @@
 
                     <tbody>
 
-
                         @foreach ($products as $product)
                             <tr>
                                 <td>{{ $product->id }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('manage.products.download.zip', [$store->nickname, $product->id]) }}" class="btn btn-success"><i class="fa-solid fa-download me-2"></i> Stock</a>
+                                    <a href="{{ route('manage.products.download.zip', [$store->nickname, $product->id]) }}" style="width: 75px; margin: 0 auto;"  class="btn btn-success btn-erp d-flex justify-content-between align-items-center"><i class="fa-solid fa-download me-2"></i> <span>Stock</span></a>
                                 </td>
                                 <td class="text-center">
 
