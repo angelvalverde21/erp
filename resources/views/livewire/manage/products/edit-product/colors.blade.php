@@ -39,7 +39,6 @@
                         <td class="text-center">Agregar Stock</td>
                         <td class="text-center">Colores</td>
                         <td class="text-center">Variantes</td>
-                        <td class="text-center">Sessiones</td>
                         <td class="text-center">Eliminar</td>
                     </tr>
                 </thead>
@@ -50,9 +49,9 @@
                             <td class="text-center">{{ $color->id }}</td>
                             <td>
                                 {{-- boton para el stock --}}
-                                <button class="btn btn-success" data-toggle="modal"
-                                    data-target="#editarStock-{{ $color->id }}" type="button"><i
-                                        class="fa-solid fa-barcode me-1"></i>Editar Stock</button>
+                                <button class="btn btn-success" style="width: 115px;" data-toggle="modal"
+                                    data-target="#editarStock-{{ $color->id }}" type="button" class="d-flex justify-content-between align-items-center"><i
+                                        class="fa-solid fa-barcode me-1"></i><span>Editar Stock</span></button>
 
                                         <table class="table mt-3">
 
@@ -119,9 +118,9 @@
                                 </td>
                             @endif
 
-                            <td>
+                            {{-- <td>
                                 <a href="{{ route('manage.products.download.stock', [$store->nickname, $color->product_id]) }}" class="btn btn-secondary">Descargar Stock</a>
-                            </td>
+                            </td> --}}
 
                             <td wire:key="color-{{ $color->id }}" class="text-center">
                                 <a class="btn-color" href="#"

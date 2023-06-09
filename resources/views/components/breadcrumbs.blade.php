@@ -1,12 +1,12 @@
 @props(['title' => '', 'icon' => ''])
-<section class="content-header">
+<section class="content-header d-none d-md-block">
     <div class="container-fluid d-flex justify-content-between align-items-center">
 
 
         @if ($icon != '')
-            <h1><i class="{{ $icon }} mr-2"></i> {{ $title }}</h1>
+            <h5><i class="{{ $icon }} mr-2"></i> {{ $title }}</h5>
         @else
-            <h1>{{ $title }}</h1>
+            <h5>{{ $title }}</h5>
         @endif
 
 

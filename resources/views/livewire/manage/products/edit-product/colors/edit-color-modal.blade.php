@@ -1,7 +1,7 @@
 <div>
     {{-- Close your eyes. Count to one. That is how long forever feels. --}}
-    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#addImagesColor{{ $color->id }}">
-        Editar Color
+    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#addImagesColor{{ $color->id }}" style="width: 125px;" class="d-flex justify-content-between align-items-center">
+        <i class="fa-solid fa-palette me-1"></i><span> Editar Color</span>
     </a>
     <p>Agregue fotos del mismo color pero actuales</p>
 
