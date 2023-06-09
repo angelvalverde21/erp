@@ -47,7 +47,7 @@
 
                     <div class="rol text-end">
                         @if ($user->hasRole('admin'))
-                            (admin)
+                            Admin
                         @endif
                     </div>
 
