@@ -192,12 +192,16 @@ class User extends Authenticatable
 
         $store = User::where('store_id', '=',  $store_id);
 
-        return $store->whereHas(
+        $repartidores = $store->whereHas(
             'roles',
             function ($q) {
                 $q->where('name', 'repartidor');
             }
         )->get();
+
+        Log::info($repartidores);
+
+        return $repartidores;
     }
 
     public static function modelos()
