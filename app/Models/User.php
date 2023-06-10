@@ -190,6 +190,8 @@ class User extends Authenticatable
     public static function repartidores($store_id)
     {
 
+        Log::info('holaaaaaaaaaaa');
+
         $store = User::where('store_id', '=',  $store_id);
 
         $repartidores = $store->whereHas(
