@@ -41,9 +41,9 @@
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th class="text-center">Descargar</th>
                             <th class="text-center">Imagen</th>
                             <th>Nombre</th>
+                            <th class="text-center">Descargar</th>
                             <th>Costo</th>
                             <th>Precio</th>
                             <th>Publicado</th>
@@ -57,9 +57,7 @@
                         @foreach ($products as $product)
                             <tr>
                                 <td>{{ $product->id }}</td>
-                                <td class="text-center">
-                                    <a href="{{ route('manage.products.download.zip', [$store->nickname, $product->id]) }}" style="width: 75px; margin: 0 auto;"  class="btn btn-success btn-erp d-flex justify-content-between align-items-center"><i class="fa-solid fa-download me-2"></i> <span>Stock</span></a>
-                                </td>
+
                                 <td class="text-center">
 
                                     @if ($product->images->count() or $product->colors->count())
@@ -83,7 +81,11 @@
                                     @endif
                                     ({{ $product->quantity }})
                                 </td>
+
                                 <td><a href="{{ route('manage.products.edit', [$store->nickname, $product->id]) }}">{{ $product->name }}</a></td>
+                                <td class="text-center">
+                                    <a href="{{ route('manage.products.download.zip', [$store->nickname, $product->id]) }}" style="width: 75px; margin: 0 auto;"  class="btn btn-success btn-erp d-flex justify-content-between align-items-center"><i class="fa-solid fa-download me-2"></i> <span>Stock</span></a>
+                                </td>
                                 <td>S/. {{ $product->costo }}</td>
                                 <td>S/. {{ $product->price }}</td>
                                 <td>{{ $product->created_at }}</td>

@@ -91,31 +91,32 @@
                                         class="hidden-xs-down">Fotos</span></a> </li>
                             <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages"
                                     role="tab"><span class="hidden-sm-up"><i class="ti-gallery"></i></span> <span
-                                        class="hidden-xs-down">Sessiones ({{ $product->albums->count() }})</span></a> </li>
+                                        class="hidden-xs-down">Sessiones ({{ $product->albums->count() }})</span></a>
+                            </li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div class="tab-pane active py-3" id="home" role="tabpanel">
                                 {{-- Inventario --}}
                                 @livewire('manage.products.edit-product.colors', ['product' => $product], key('product-colors-' . $product->id))
-        
+
                             </div>
                             <div class="tab-pane  py-3" id="profile" role="tabpanel">
-        
+
                                 @livewire('manage.products.edit-product.images', ['product' => $product], key('product-images-' . $product->id))
                             </div>
-        
+
                             <div class="tab-pane py-3" id="messages" role="tabpanel">
-        
+
                                 @livewire('manage.products.edit-product.show-albums', ['product' => $product], key('product-show-albums-' . $product->id))
                             </div>
-        
+
                         </div>
                     </div>
                 </div>
                 {{-- Fin de almacen --}}
             </div>
-            
+
             {{-- sidebar  --}}
 
             <div class="col-lg-4 col-12">
@@ -124,7 +125,15 @@
                         {{-- Editar Producto --}}
                         <div class="card">
                             <div class="card-header py-3">
-                                Publicado en: {{ $product->category->name }}
+                                <div class="header-content d-flex justify-content-between align-items-center">
+                                    <span>
+                                        Publicado en: {{ $product->category->name }}
+                                    </span>
+                                    <a href="{{ route('manage.products.download.zip', [$store->nickname, $product->id]) }}"
+                                        style="width: 75px;"
+                                        class="btn btn-success btn-erp d-flex justify-content-between align-items-center"><i
+                                            class="fa-solid fa-download me-2"></i> <span>Stock</span></a>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <form action="#">
@@ -225,7 +234,8 @@
                                                     <input class="form-check-input"
                                                         wire:model.debounce.500ms="product.force_size_unique"
                                                         type="checkbox" role="switch" id="flexSwitchCheckDefault2">
-                                                    <label class="form-check-label" for="flexSwitchCheckDefault">Vender
+                                                    <label class="form-check-label"
+                                                        for="flexSwitchCheckDefault">Vender
                                                         como una
                                                         sola talla (ESTANDAR)</label>
                                                 </div>
@@ -239,7 +249,8 @@
                                     <div class="botones d-flex justify-content-between mt-3">
                                         <div class="form-actions">
                                             <button type="button" wire:loading.attr="disabled" wire.target="save"
-                                                wire:click="save" class="btn btn-success"> <i class="fa fa-check"></i>
+                                                wire:click="save" class="btn btn-success"> <i
+                                                    class="fa fa-check"></i>
                                                 Guardar
                                                 Cambios</button>
                                             <button type="button" class="btn btn-secondary">Cancel</button>
