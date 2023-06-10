@@ -1,4 +1,6 @@
    {{ $order->store }}
+<hr>
+   {{ $order->store_id }}
 
 <x-form.select label="Entregado por" wirevalue="order.delivery_man_id" icon="fa-solid fa-person-biking"
     wirechange="saveSelected()">
