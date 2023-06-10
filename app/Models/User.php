@@ -156,8 +156,9 @@ class User extends Authenticatable
 
     }
 
-    public function store(){
-        return $this->belongsTo(User::class,'store_id');
+    public function store()
+    {
+        return $this->belongsTo(User::class, 'store_id');
     }
 
     public function images()
@@ -190,20 +191,27 @@ class User extends Authenticatable
     public static function repartidores($store_id)
     {
 
-        Log::info('holaaaaaaaaaaa');
+        // Log::info('holaaaaaaaaaaa');
 
-        $store = User::where('store_id', '=',  $store_id);
+        try {
 
-        $repartidores = $store->whereHas(
-            'roles',
-            function ($q) {
-                $q->where('name', 'repartidor');
-            }
-        )->get();
+            $store = User::findOrFail($store_id);
 
-        Log::info($repartidores);
+            $repartidores = $store->whereHas(
+                'roles',
+                function ($q) {
+                    $q->where('name', 'repartidor');
+                }
+            )->get();
 
-        return $repartidores;
+            Log::info($repartidores);
+
+            return $repartidores;
+
+        } catch (\Throwable $th) {
+            Log::info('ha ocurrido un error al seleccionar la tienda donde se encuentran los repartidores: Models\User.php');
+            return false;
+        }
     }
 
     public static function modelos()
@@ -388,11 +396,12 @@ class User extends Authenticatable
         return $this->morphMany(Option::class, "optionable");
     }
 
-    public function getOption($optionName){
-        
+    public function getOption($optionName)
+    {
+
 
         try {
-            return $this->morphMany(Option::class, "optionable")->where('name',$optionName)->firstOrFail()->value;
+            return $this->morphMany(Option::class, "optionable")->where('name', $optionName)->firstOrFail()->value;
         } catch (\Throwable $th) {
             //throw $th;
             return false;
