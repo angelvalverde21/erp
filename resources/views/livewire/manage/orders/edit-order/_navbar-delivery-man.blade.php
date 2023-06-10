@@ -1,4 +1,4 @@
-   {{ $order->store->repartidores($order->store_id) }}
+   {{ $order->store }}
 
 <x-form.select label="Entregado por" wirevalue="order.delivery_man_id" icon="fa-solid fa-person-biking"
     wirechange="saveSelected()">
