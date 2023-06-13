@@ -33,9 +33,14 @@ class EditAlbum extends Component
 
     public function delete($url_path_original){
 
+        Log::info('se hizo click');
+
         $photo = Photo::where('large', '=', $url_path_original)->limit(1)->first();
 
         if($photo){
+
+            Log::info('se borro correctamente');
+
             Storage::disk('spaces')->delete($photo->large);
             Storage::disk('spaces')->delete($photo->medium);
             Storage::disk('spaces')->delete($photo->thumbnail);
@@ -46,8 +51,6 @@ class EditAlbum extends Component
         }else{
             Log::info('no se ha encontrado la photo para eliminar');
         }
-
-
 
     }
 
