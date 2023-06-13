@@ -87,13 +87,13 @@
                                             
 
                                             <a target="_blank" href="{{ Storage::disk('spaces')->url($photo->large) }}"
-                                                class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar</a>
+                                                class="btn btn-success"><i class="fa-solid fa-download me-1"></i> Descargar</a>
 
 
                                             @if ($user->hasRole('admin'))
                                             <button type="button" wire:loading.attr="disabled" wire.target="delete-{{ $photo->id }}"
                                                 wire:click="delete('{{ $photo->large }}')" class="btn btn-danger"> <i
-                                                    class="fa-solid fa-trash"></i>Borrar</button>
+                                                    class="fa-solid fa-trash me-1"></i>Borrar</button>
 
                                             <div wire:loading wire:target="delete-{{ $photo->id }}" class="spinner-border"
                                                 role="status">
