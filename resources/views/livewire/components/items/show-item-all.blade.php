@@ -22,6 +22,7 @@
                     <tbody>
 
                         @foreach ($items as $item)
+
                             <tr>
                                 <td class="text-center">
 
@@ -34,6 +35,8 @@
 
                                 </td>
                                 <td class="text-center">{{ $item->quantity }}</td>
+
+                                <td class="text-center">{{ $item->content->talla_impresa }}</td>
                                 {{-- <td class="text-center">
                                     {{ extraerImagenOld($item->content->image) }}
                                     {{ $item->quantity_oversale }}</td> --}}
@@ -62,7 +65,7 @@
                                 <td class="text-center">Sin url</td>
                         @endif
 
-                        <td class="text-center">{{ $item->content->talla_impresa }}</td>
+                        
 
                         <div class="content-stock">
 
