@@ -85,7 +85,7 @@
                                         <a target="_blank" href="{{ Storage::disk('spaces')->url($photo->large) }}"
                                             class="btn btn-primary"><i class="fa-solid fa-download"></i></a>
 
-                                        <a href="#" wire:click="delete({{ $photo->large }})"></a>
+                                        <a href="#" class="btn btn-danger" wire:click="delete({{ $photo->large }})"></a>
 
                                         {{-- <div class="card-body">
                                       <h5 class="card-title">Card title</h5>
