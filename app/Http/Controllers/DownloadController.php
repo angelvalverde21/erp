@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\Response;
 class DownloadController extends Controller
 {
     //
-    public function descargarImagen($photo_id)
+    public function descargarImagen($nickname, $photo_id)
     {
+
+        Log::info($photo_id);
 
         try {
 
@@ -25,18 +27,21 @@ class DownloadController extends Controller
             $urlImagen = Storage::disk('spaces')->url($rutaImagen);
             
             // Obtiene el nombre de archivo de la imagen
-            $nombreArchivo = basename($rutaImagen);
+            // $nombreArchivo = basename($rutaImagen);
 
             // Verifica si la imagen existe
             if (Storage::disk('spaces')->exists($rutaImagen)) {
                 // Redirecciona a la URL de la imagen para iniciar la descarga
-                return Response::redirectTo($urlImagen);
+                return response()->download($urlImagen);
             } else {
                 // Maneja el caso en que la imagen no exista
                 abort(404);
             }
+
         } catch (\Throwable $th) {
+
             Log::info('la imagen no existe');
+
         }
     }
 }

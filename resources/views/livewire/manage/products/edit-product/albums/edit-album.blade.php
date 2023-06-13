@@ -83,6 +83,9 @@
 
                                         <div class="controles d-flex justify-content-between p-3">
 
+                                            <a href="{{ route('manage.download.photo', [$store->nickname, $photo->id]) }}" class="btn btn-success">Descargar</a>
+                                            
+
                                             <a target="_blank" href="{{ Storage::disk('spaces')->url($photo->large) }}"
                                                 class="btn btn-primary"><i class="fa-solid fa-download"></i></a>
 
