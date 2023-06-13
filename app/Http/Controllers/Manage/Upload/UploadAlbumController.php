@@ -116,7 +116,7 @@ class UploadAlbumController extends Controller
                     Log::info('Creando la imagen con imagenjpg()');
                     imagejpeg($rotateThumb, $file_path_thumb, '90');
                     imagejpeg($rotateMedium, $file_path_medium, '90');
-                    
+
                 } else {
                     # code...
                     //La imagen no debe ser rotada y debemos corregir las dimensiones
@@ -158,7 +158,7 @@ class UploadAlbumController extends Controller
 
             //Eliminando el archivo creado para que no ocupe espacio en cpanel
             Log::info('Eliminando el archivo con Storage::delete');
-            Log::info($file_path);
+            // Log::info($file_path);
 
             Storage::delete('albums/thumb/' . $name_thumb);
             Storage::delete('albums/medium/' . $name_medium);
