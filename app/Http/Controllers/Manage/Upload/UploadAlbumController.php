@@ -125,7 +125,7 @@ class UploadAlbumController extends Controller
                     $anchoOriginal = $image->getWidth();
                     $altoOriginal = $image->getHeight();
 
-                    $image->resize($anchoOriginal*.025, $altoOriginal*0.25);
+                    $image->resize($anchoOriginal*0.25, $altoOriginal*0.25);
 
                     //finalmente guardo la imagen
                     $image->save($file_path_medium);
