@@ -23,25 +23,21 @@ class DownloadController extends Controller
             // Ruta de la imagen que deseas descargar
             $rutaImagen = $photo->large;
 
-            // Obtiene la URL pública de la imagen
-            $urlImagen = Storage::disk('spaces')->url($rutaImagen);
-            
-            // Obtiene el nombre de archivo de la imagen
-            // $nombreArchivo = basename($rutaImagen);
-
             // Verifica si la imagen existe
             if (Storage::disk('spaces')->exists($rutaImagen)) {
-                // Redirecciona a la URL de la imagen para iniciar la descarga
+                // Obtiene la URL pública de la imagen
+                $urlImagen = Storage::disk('spaces')->temporaryUrl($rutaImagen, now()->addMinutes(5));
+
+                // Devuelve una respuesta para forzar la descarga de la imagen
                 return response()->download($urlImagen);
+                
             } else {
                 // Maneja el caso en que la imagen no exista
                 abort(404);
             }
-
         } catch (\Throwable $th) {
 
             Log::info('la imagen no existe');
-
         }
     }
 }
