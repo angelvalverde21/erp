@@ -97,7 +97,7 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
 
 
    //Donwloads
-   Route::get('/products/print/deals', [DownloadController::class, 'descargarImagen'])->name('download.photo');
+   Route::get('/download/photo/{photo_id}', [DownloadController::class, 'descargarImagen'])->name('download.photo');
    
 
    // http://erp.test/ara/manage/products/6/colors
