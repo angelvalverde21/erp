@@ -52,7 +52,7 @@ class EditAlbum extends Component
             Log::info('no se ha encontrado la photo para eliminar');
         }
 
-        $this->album->fresh();
+        $this->album = $this->album->fresh();
 
     }
 
