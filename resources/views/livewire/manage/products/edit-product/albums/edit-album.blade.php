@@ -85,8 +85,15 @@
                                         <div class="controles d-flex justify-content-between">
                                             <a target="_blank" href="{{ Storage::disk('spaces')->url($photo->large) }}"
                                                 class="btn btn-primary"><i class="fa-solid fa-download"></i></a>
-    
-                                            <a href="#" class="btn btn-danger" wire:click.prevent="delete({{ $photo->large }})">Eliminar</a>
+
+
+                                            <button type="button" wire:loading.attr="disabled" wire.target="delete"
+                                            wire:click="delete({{ $photo->large }})" class="btn btn-danger"> <i
+                                                class="fa-solid fa-trash"></i>Borrar</button>
+
+                                            <div wire:loading wire:target="delete" class="spinner-border" role="status">
+                                                <span class="sr-only">Espere...</span>
+                                            </div>
                                         </div>
 
                                         {{-- <div class="card-body">
