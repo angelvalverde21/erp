@@ -8,8 +8,8 @@
                         <tr>
                             <td class="text-center">ID</td>
                             <td class="text-center">QTY</td>
-                            <td class="text-center">Imagen</td>
                             <td>Talla solicitada</td>
+                            <td class="text-center">Imagen</td>
                             <td>Descripcion</td>
                             <td>Precio</td>
                             <td>Final</td>
