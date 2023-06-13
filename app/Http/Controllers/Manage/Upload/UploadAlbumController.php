@@ -53,81 +53,91 @@ class UploadAlbumController extends Controller
 
             $original_name = $request->file('file')->getClientOriginalName();
 
-            $file_path = Storage::path('albums/' . $original_name);
+            //Hasta aqui ya tenemos el nombre de los 3 archivos que subiremos al servidor respectivo.
 
-            //Recibo la imagen
+            // $file_path = Storage::path('albums/' . $original_name);
+
+            //Recibo la imagen original
             $image = Image::make($request->file('file'));
 
-            //Redimenciono a Medium
-            $image->resize(750, 500);
 
-            //finalmente guardo la imagen
-            $image->save($file_path_medium);
-
-            //Redimenciono a Thumbnail
-            $image->resize(300, 200);
-
-            //finalmente guardo la imagen
-            $image->save($file_path_thumb);
-
-
-
-            // //Redimenciono a Large
-            // $image->resize(1500, 1000);
-
-            // //finalmente guardo la imagen
-            // $image->save($file_path_large);
-
-
-
-            //Preparo la direccion donde lo voy a guardar
-            // $file_path = Storage::path('albums/' . $original_name);
-            // // $file_path = storage_path() . "/app/public/temp/" . $original_name;
-
-            // //Dejo un registro en el servidor porsiaca
-            // Log::info($file_path);
-
-            // Log::info('imagen redimensionada con INTERVENTION');
-            // Log::info('Guardando imagen...');
-
-            //finalmente guardo la imagen
-            // $image->save(Storage::path('albums/' . $original_name));
-            Log::info('Imagen guardada');
-
-            //Subiendo el thumbnail, pero antes tenemos que rotarla
-            //rotando el thumbnail
-
+            //Extrayendo la informacion "exif" de la imagen 
             $exif = exif_read_data($request->file('file'), 0, true);
 
 
-            if (isset($exif) && isset($exif['IFD0']['Orientation']) == 8) {
+            if (isset($exif)) {
 
-                Log::info('La imagen esta rotada 270 grados');
-                
-                //"si es 8, la imagen esta rotada 270";
+                if (isset($exif['IFD0']['Orientation']) == 8) {
 
-                //Imagen inicial horizontal
-                // $imageNew = $file_path;
-                //Destino de la nueva imagen vertical
+                    //se debe rotar la imagen
+                    Log::info('La imagen esta rotada 270 grados');
 
-                //Definimos los grados de rotacion
-                $degrees = 90;
+                    //Redimenciono a Medium
+                    $image->resize(750, 500);
 
-                //Creamos una nueva imagen a partir del fichero inicial
-                $sourceThumb = imagecreatefromjpeg($file_path_thumb);
-                $sourceMedium = imagecreatefromjpeg($file_path_medium);
+                    //finalmente guardo la imagen
+                    $image->save($file_path_medium);
 
-                //Rotamos la imagen 90 grados
-                Log::info('Rotando imagen');
-                $rotateThumb = imagerotate($sourceThumb, $degrees, 0);
-                $rotateMedium = imagerotate($sourceMedium, $degrees, 0);
+                    Log::info('Imagen Medium guardada');
 
-                //Creamos el archivo jpg vertical
+                    //Redimenciono a Thumbnail
+                    $image->resize(300, 200);
 
-                Log::info('Creando la imagen con imagenjpg()');
-                imagejpeg($rotateThumb, $file_path_thumb, '90');
-                imagejpeg($rotateMedium, $file_path_medium, '90');
+                    //finalmente guardo la imagen
+                    $image->save($file_path_thumb);
 
+                    Log::info('Imagen Thumb guardada');
+
+                    //Subiendo el thumbnail, pero antes tenemos que rotarla
+                    //rotando el thumbnail
+
+
+                    //"si es 8, la imagen esta rotada 270";
+
+                    //Imagen inicial horizontal
+                    // $imageNew = $file_path;
+                    //Destino de la nueva imagen vertical
+
+                    //Definimos los grados de rotacion
+
+                    $degrees = 90;
+
+                    //Creamos una nueva imagen a partir del fichero inicial
+                    $sourceThumb = imagecreatefromjpeg($file_path_thumb);
+                    $sourceMedium = imagecreatefromjpeg($file_path_medium);
+
+                    //Rotamos la imagen 90 grados
+                    Log::info('Rotando imagen');
+                    $rotateThumb = imagerotate($sourceThumb, $degrees, 0);
+                    $rotateMedium = imagerotate($sourceMedium, $degrees, 0);
+
+                    //Creamos el archivo jpg vertical
+
+                    Log::info('Creando la imagen con imagenjpg()');
+                    imagejpeg($rotateThumb, $file_path_thumb, '90');
+                    imagejpeg($rotateMedium, $file_path_medium, '90');
+                    
+                } else {
+                    # code...
+                    //La imagen no debe ser rotada y debemos corregir las dimensiones
+
+                    //Redimenciono a Medium
+                    $image->resize(500, 750);
+
+                    //finalmente guardo la imagen
+                    $image->save($file_path_medium);
+
+                    Log::info('Imagen Medium guardada');
+
+                    //Redimenciono a Thumbnail
+                    $image->resize(200, 300);
+
+                    //finalmente guardo la imagen
+                    $image->save($file_path_thumb);
+
+                    Log::info('Imagen Thumb guardada');
+                    
+                }
             }
 
 
@@ -180,6 +190,8 @@ class UploadAlbumController extends Controller
                 Log::info($value);
 
                 $album_location->photos()->create($value);
+            } else {
+                Log::info('el thubm no es valido');
             }
 
 
