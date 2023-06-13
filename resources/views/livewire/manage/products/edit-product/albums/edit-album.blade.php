@@ -85,6 +85,8 @@
                                         <a target="_blank" href="{{ Storage::disk('spaces')->url($photo->large) }}"
                                             class="btn btn-primary"><i class="fa-solid fa-download"></i></a>
 
+                                        <a href="#" wire:click="delete({{ $photo->large }})"></a>
+
                                         {{-- <div class="card-body">
                                       <h5 class="card-title">Card title</h5>
                                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>

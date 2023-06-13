@@ -4,8 +4,10 @@ namespace App\Http\Livewire\Manage\Products\EditProduct\Albums;
 
 use App\Models\Album;
 use App\Models\Location;
+use App\Models\Photo;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class EditAlbum extends Component
@@ -27,6 +29,26 @@ class EditAlbum extends Component
         // Lógica para cargar las imágenes de acuerdo a la página actual y la cantidad por página
         // $offset = ($this->currentPage - 1) * $this->perPage;
         // $this->images = Image::skip($offset)->take($this->perPage)->get();
+    }
+
+    public function delete($url_path_original){
+
+        $photo = Photo::where('large', '=', $url_path_original)->limit(1)->first();
+
+        if($photo){
+            Storage::disk('spaces')->delete($photo->large);
+            Storage::disk('spaces')->delete($photo->medium);
+            Storage::disk('spaces')->delete($photo->thumbnail);
+    
+            // finalmente elimino el registro
+    
+            $photo->delete();
+        }else{
+            Log::info('no se ha encontrado la photo para eliminar');
+        }
+
+
+
     }
 
     public function render()
