@@ -88,7 +88,7 @@
 
 
                                             <button type="button" wire:loading.attr="disabled" wire.target="delete"
-                                            wire:click="delete({{ $photo->large }})" class="btn btn-danger"> <i
+                                            wire:click="delete('{{ $photo->large }}')" class="btn btn-danger"> <i
                                                 class="fa-solid fa-trash"></i>Borrar</button>
 
                                             <div wire:loading wire:target="delete" class="spinner-border" role="status">
