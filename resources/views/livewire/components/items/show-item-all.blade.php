@@ -9,8 +9,8 @@
                             <td class="text-center">ID</td>
                             <td class="text-center">QTY</td>
                             <td class="text-center">Imagen</td>
-                            <td>Descripcion</td>
                             <td>Talla solicitada</td>
+                            <td>Descripcion</td>
                             <td>Precio</td>
                             <td>Final</td>
                             <td>Stock</td>
@@ -62,6 +62,7 @@
                                 <td class="text-center">Sin url</td>
                         @endif
 
+                        <td class="text-center">{{ $item->content->talla_impresa }}</td>
 
                         <div class="content-stock">
 
@@ -89,7 +90,7 @@
                         </div>
 
                         </td>
-                        <td class="text-center">{{ $item->content->talla_impresa }}</td>
+                        
                         <td>{{ $item->price }}</td>
                         <td>{{ $item->precio_final }}</td>
 

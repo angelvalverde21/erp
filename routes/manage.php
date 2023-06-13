@@ -5,6 +5,7 @@ use App\Http\Controllers\Manage\ProductController;
 use App\Http\Controllers\Manage\Upload\OrderController;
 use App\Http\Controllers\Manage\Upload\UploadAlbumController;
 use App\Http\Controllers\Manage\Upload\UserImageController;
+use App\Http\Controllers\PdfProductController;
 use App\Http\Livewire\Components\Users\EditUser;
 use App\Http\Livewire\Manage\Couriers\ShowCouriers;
 use App\Http\Livewire\Manage\Customers\CreateCustomer;
@@ -91,6 +92,7 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    //GET Products
    Route::get('/products/{product}/download/stock', [ProductController::class, 'downLoadStock'])->name('products.download.stock');
    Route::get('/products/{product}/download/zip', [ProductController::class, 'downLoadZipProduct'])->name('products.download.zip');
+   Route::get('/products/print/deals', [PdfProductController::class, 'printDeals'])->name('products.print.deals');
 
    // http://erp.test/ara/manage/products/6/colors
    // http://erp.test/user/profile/10/upload_logo_general
