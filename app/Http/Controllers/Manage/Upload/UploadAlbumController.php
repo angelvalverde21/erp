@@ -133,7 +133,7 @@ class UploadAlbumController extends Controller
                     Log::info('Imagen Medium guardada');
 
                     //Redimenciono a Thumbnail
-                    $image->resize($anchoOriginal*.0.125, $altoOriginal*0.125);
+                    $image->resize($anchoOriginal*0.125, $altoOriginal*0.125);
 
                     //finalmente guardo la imagen
                     $image->save($file_path_thumb);
