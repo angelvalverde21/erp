@@ -93,11 +93,12 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    //GET Products
    Route::get('/products/{product}/download/stock', [ProductController::class, 'downLoadStock'])->name('products.download.stock');
    Route::get('/products/{product}/download/zip', [ProductController::class, 'downLoadZipProduct'])->name('products.download.zip');
-   Route::get('/products/print/deals', [DownloadController::class, 'printDeals'])->name('products.print.deals');
+   Route::get('/products/print/deals', [PdfProductController::class, 'printDeals'])->name('products.print.deals');
 
-   //photos
 
-   Route::get('/download/photo/{photo_id}', [ProductController::class, 'descargarImagen'])->name('download.photo');
+   //Donwloads
+   Route::get('/products/print/deals', [DownloadController::class, 'descargarImagen'])->name('download.photo');
+   
 
    // http://erp.test/ara/manage/products/6/colors
    // http://erp.test/user/profile/10/upload_logo_general
