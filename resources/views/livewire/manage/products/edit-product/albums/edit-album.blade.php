@@ -46,7 +46,6 @@
             @if ($album->locations->count() > 0)
 
                 @foreach ($album->locations as $location)
-
                     <x-accordion-item id="item-album-location-{{ $location->pivot->id }}" show="{{ $loop->first }}"
                         label="{{ $location->name }} ({{ albumLocation($album->id, $location->id)->images->count() }})"
                         accordion_parent_id="accordionAlbum">
@@ -82,18 +81,23 @@
 
                                         <span>{{ $photo->name }}</span>
 
-                                        <div class="controles d-flex justify-content-between">
+                                        <div class="controles d-flex justify-content-between p-3">
+
                                             <a target="_blank" href="{{ Storage::disk('spaces')->url($photo->large) }}"
                                                 class="btn btn-primary"><i class="fa-solid fa-download"></i></a>
 
 
+                                            @if ($user->hasRole('admin'))
                                             <button type="button" wire:loading.attr="disabled" wire.target="delete"
-                                            wire:click="delete('{{ $photo->large }}')" class="btn btn-danger"> <i
-                                                class="fa-solid fa-trash"></i>Borrar</button>
+                                                wire:click="delete('{{ $photo->large }}')" class="btn btn-danger"> <i
+                                                    class="fa-solid fa-trash"></i>Borrar</button>
 
-                                            <div wire:loading wire:target="delete" class="spinner-border" role="status">
+                                            <div wire:loading wire:target="delete" class="spinner-border"
+                                                role="status">
                                                 <span class="sr-only">Espere...</span>
                                             </div>
+                                            @endif
+
                                         </div>
 
                                         {{-- <div class="card-body">
@@ -127,7 +131,7 @@
 </div>
 
 <style>
-    .dropzone{
+    .dropzone {
         width: 150px !important;
     }
 </style>

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Manage\Products\EditProduct\Albums;
 use App\Models\Album;
 use App\Models\Location;
 use App\Models\Photo;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
@@ -12,12 +13,14 @@ use Livewire\Component;
 
 class EditAlbum extends Component
 {
-    public $album, $store, $perPage;
+    public $album, $store, $user, $perPage;
 
     protected $listeners = ['render' => 'render'];
 
     public function mount(Album $album)
     {
+
+        $this->user = Auth::user();
 
         $this->album = $album;
         $this->perPage = 20;
