@@ -99,7 +99,8 @@ class UploadAlbumController extends Controller
 
             $exif = exif_read_data($request->file('file'), 0, true);
 
-            if (isset($exif) && $exif['IFD0']['Orientation'] == 8) {
+
+            if (isset($exif) && isset($exif['IFD0']['Orientation']) == 8) {
 
                 Log::info('La imagen esta rotada 270 grados');
                 
@@ -126,6 +127,7 @@ class UploadAlbumController extends Controller
                 Log::info('Creando la imagen con imagenjpg()');
                 imagejpeg($rotateThumb, $file_path_thumb, '90');
                 imagejpeg($rotateMedium, $file_path_medium, '90');
+
             }
 
 
@@ -137,7 +139,7 @@ class UploadAlbumController extends Controller
             //Ojo, aqui le indicamos a amazon el nombre del archivo, por lo que nos devolvera 1 si todo es correcto
             // $imageThumb = Storage::disk('s3')->put('albums/thumb/' . $name_thumb, file_get_contents($file_path_thumb), 'public');
 
-
+            //ojo spaces es de digital ocean pero usa la misma configuracion de s3
             $imageThumb = Storage::disk('spaces')->put('albums/thumb/' . $name_thumb, file_get_contents($file_path_thumb), 'public');
 
             $imageMedium = Storage::disk('spaces')->put('albums/medium/' . $name_medium, file_get_contents($file_path_medium), 'public');
