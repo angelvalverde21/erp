@@ -116,13 +116,16 @@ class UploadAlbumController extends Controller
                     Log::info('Creando la imagen con imagenjpg()');
                     imagejpeg($rotateThumb, $file_path_thumb, '90');
                     imagejpeg($rotateMedium, $file_path_medium, '90');
-
                 } else {
                     # code...
                     //La imagen no debe ser rotada y debemos corregir las dimensiones
 
                     //Redimenciono a Medium
-                    $image->resize(500, 750);
+
+                    $anchoOriginal = $image->getWidth();
+                    $altoOriginal = $image->getHeight();
+
+                    $image->resize($anchoOriginal*.025, $altoOriginal*0.25);
 
                     //finalmente guardo la imagen
                     $image->save($file_path_medium);
@@ -130,13 +133,12 @@ class UploadAlbumController extends Controller
                     Log::info('Imagen Medium guardada');
 
                     //Redimenciono a Thumbnail
-                    $image->resize(200, 300);
+                    $image->resize($anchoOriginal*.0125, $altoOriginal*0.125);
 
                     //finalmente guardo la imagen
                     $image->save($file_path_thumb);
 
                     Log::info('Imagen Thumb guardada');
-                    
                 }
             }
 
