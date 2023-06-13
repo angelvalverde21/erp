@@ -88,11 +88,11 @@
 
 
                                             @if ($user->hasRole('admin'))
-                                            <button type="button" wire:loading.attr="disabled" wire.target="delete"
+                                            <button type="button" wire:loading.attr="disabled" wire.target="delete-{{ $photo->id }}"
                                                 wire:click="delete('{{ $photo->large }}')" class="btn btn-danger"> <i
                                                     class="fa-solid fa-trash"></i>Borrar</button>
 
-                                            <div wire:loading wire:target="delete" class="spinner-border"
+                                            <div wire:loading wire:target="delete-{{ $photo->id }}" class="spinner-border"
                                                 role="status">
                                                 <span class="sr-only">Espere...</span>
                                             </div>
