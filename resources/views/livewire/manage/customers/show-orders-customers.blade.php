@@ -3,8 +3,6 @@
 
     {{-- <x-breadcrumbs title="Ordenes: {{ $user->name }}" /> --}}
 
-    <x-sectioncontent>
-
         <div class="card">
 
             <div class="card-header py-3">
@@ -17,7 +15,5 @@
 
             </div>
         </div>
-
-    </x-sectioncontent>
 
 </div>

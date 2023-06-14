@@ -50,19 +50,19 @@
                         label="{{ $location->name }} ({{ albumLocation($album->id, $location->id)->images->count() }})"
                         accordion_parent_id="accordionAlbum">
 
+
                         <div class="row pb-3" wire:ignore>
 
-                            <div class="col position-relative">
-
-                                <form method="POST" wire:ignore.self
-                                    action="{{ route('manage.albums.upload', [$store->nickname, $album, $location]) }}"
-                                    class="dropzone d-flex flex-wrap justify-content-around p-3"
-                                    id="my-awesome-dropzone-albums">
-                                </form>
-
-                            </div>
-
                             <div class="mt-3 album d-flex flex-wrap justify-content-around">
+
+                                <div class="card text-center" style="width: 340px">
+                                    <form method="POST" wire:ignore.self
+                                        action="{{ route('manage.albums.upload', [$store->nickname, $album, $location]) }}"
+                                        class="dropzone d-flex flex-wrap justify-content-around p-3"
+                                        id="my-awesome-dropzone-albums">
+                                    </form>
+
+                                </div>
 
                                 @foreach (albumLocation($album->id, $location->id)->photos as $photo)
                                     {{-- 
@@ -84,20 +84,22 @@
                                         <div class="controles d-flex justify-content-between p-3">
 
                                             {{-- <a href="{{ route('manage.download.photo', [$store->nickname, $photo->id]) }}" class="btn btn-success">Descargar</a> --}}
-                                            
+
                                             <a target="_blank" href="{{ Storage::disk('spaces')->url($photo->large) }}"
-                                                class="btn btn-success"><i class="fa-solid fa-download me-1"></i> Descargar</a>
+                                                class="btn btn-success"><i class="fa-solid fa-download me-1"></i>
+                                                Descargar</a>
 
 
                                             @if ($user->hasRole('admin'))
-                                            <button type="button" wire:loading.attr="disabled" wire.target="delete-{{ $photo->id }}"
-                                                wire:click="delete('{{ $photo->large }}')" class="btn btn-danger"> <i
-                                                    class="fa-solid fa-trash me-1"></i>Borrar</button>
+                                                <button type="button" wire:loading.attr="disabled"
+                                                    wire.target="delete-{{ $photo->id }}"
+                                                    wire:click="delete('{{ $photo->large }}')" class="btn btn-danger">
+                                                    <i class="fa-solid fa-trash me-1"></i>Borrar</button>
 
-                                            <div wire:loading wire:target="delete-{{ $photo->id }}" class="spinner-border"
-                                                role="status">
-                                                <span class="sr-only">Espere...</span>
-                                            </div>
+                                                <div wire:loading wire:target="delete-{{ $photo->id }}"
+                                                    class="spinner-border" role="status">
+                                                    <span class="sr-only">Espere...</span>
+                                                </div>
                                             @endif
 
                                         </div>
@@ -134,7 +136,13 @@
 
 <style>
     .dropzone {
-        width: 150px !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .dz-default{
+        display: flex !important;
+        align-items: center!important;
     }
 </style>
 
@@ -144,7 +152,7 @@
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
-            dictDefaultMessage: "<div class='add-photos'>Agregar x colores</div> <i class=\"fas fa-camera mt-5\" style=\"font-size: 18pt;\"></i>",
+            dictDefaultMessage: "<div class='add-photos'>Agregar + fotos al album </div> <i class=\"fas fa-camera mt-5\" style=\"font-size: 18pt;\"></i>",
             acceptedFiles: "image/*",
             paramName: "file", // The name that will be used to transfer the file
             maxFilesize: 10, //10MB max, Tambien hemos agregado un validador en el servidor

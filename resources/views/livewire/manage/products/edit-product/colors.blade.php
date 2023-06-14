@@ -4,16 +4,6 @@
 
     {{-- cargar imagen --}}
 
-    <div class="row pb-3" wire:ignore>
-
-        <div class="col position-relative">
-            <form method="POST" action="{{ route('manage.products.upload.colors', [$store->nickname, $product]) }}"
-                class="dropzone" id="my-awesome-dropzone-colors">
-            </form>
-        </div>
-
-    </div>
-
     {{-- fin de cargar imagen --}}
 
     <h4>{{ $colors->count() }} disenos disponibles</h4>
@@ -44,6 +34,23 @@
                 </thead>
 
                 <tbody>
+
+                    <tr class="text-center">
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">
+                            <div class="row p-3" wire:ignore>
+
+                                <form method="POST" action="{{ route('manage.products.upload.colors', [$store->nickname, $product]) }}"
+                                    class="dropzone" id="my-awesome-dropzone-colors">
+                                </form>
+                        
+                            </div>
+                        </td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                    </tr>
+
                     @foreach ($colors as $color)
                         <tr class="text-center">
                             <td class="text-center">{{ $color->id }}</td>

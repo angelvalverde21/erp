@@ -47,7 +47,7 @@
                                         <a href="{{ Storage::url($item->content->image) }}"
                                             data-lightbox="show-images-preview"
                                             data-title="Click the right half of the image to move forward.">
-                                            <img src="{{ Storage::url($item->content->image) }}" height="75px"
+                                            <img src="{{ Storage::url($item->content->image) }}" height="125px"
                                                 alt="">
                                         </a>
                                     </td>
