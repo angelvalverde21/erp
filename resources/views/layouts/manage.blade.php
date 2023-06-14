@@ -346,7 +346,7 @@
             Fancybox.bind("[data-fancybox]", {
                 // Configuración de FancyBox
                 Images: {
-                    initialSize: "cover",
+                    initialSize: "cover", 
                 },
 
                 // Thumbs: false, // este atributo no funciona
