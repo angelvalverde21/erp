@@ -73,7 +73,7 @@
                                     <div class="card text-center" style="width: 340px">
 
                                         <a href="{{ Storage::disk('spaces')->url($photo->medium) }}"
-                                            data-fancybox="gallery" data-caption="Caption {{ $photo->id }}" data-title="{{ $photo->name }}">
+                                            data-fancybox="gallery">
 
                                             <img loading="lazy" src="{{ Storage::disk('spaces')->url($photo->medium) }}"
                                                 class="card-img-top" height="" alt="...">

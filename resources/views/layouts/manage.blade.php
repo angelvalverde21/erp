@@ -112,6 +112,7 @@
     {{-- Fancybox 5 --}}
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
     {{-- fin de fancybox 5 --}}
 
@@ -327,13 +328,54 @@
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
+
+
+    <!-- Scripts JavaScript -->
+
+    {{-- <script>
+        $(document).ready(function() {
+            $('[data-fancybox]').fancybox({
+                thumbs: false
+            });
+        });
+    </script> --}}
     <script>
-        Fancybox.bind("[data-fancybox]", {
-            // Your custom options
+        document.addEventListener("DOMContentLoaded", function() {
+            // Coloca aquí tu código para inicializar FancyBox
+            Fancybox.bind("[data-fancybox]", {
+                // Configuración de FancyBox
+                Images: {
+                    initialSize: "cover",
+                },
+
+                // Thumbs: false, // este atributo no funciona
+                // showOnStart: false, este si funciona y se usa dentro de thumbs
+
+                Thumbs: {
+                    type: "classic",
+                    showOnStart: true,
+                },
+                
+            });
         });
     </script>
+
+    {{-- <script>
+
+        $(document).ready(function() {
+            const options = {
+                Images: {
+                    initialSize: "fit",
+                }
+            };
+
+            Fancybox.bind("[data-fancybox]", {
+                // Your custom options
+                options
+            });
+        });
+    </script> --}}
 
     {{-- <script>
         ClassicEditor
