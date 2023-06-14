@@ -5,6 +5,14 @@
             href="{{ route('manage.customers.edit', [$store->nickname, $order->buyer_id]) }}"><i
                 class="fa-solid fa-user"></i>
             {{ $order->buyer->name }} ({{ $order->buyer->totalOrders() }})</a>
+
+
+        <a class="btn btn-success"
+            href="{{ route('manage.orders.create.with.user', [$store->nickname, $order->buyer_id]) }}"><i
+                class="fa-solid fa-user"></i> Crear Nueva Orden</a>
+            
+
+
     </li>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"

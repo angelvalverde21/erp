@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\Manage\OrderController as ManageOrderController;
 use App\Http\Controllers\Manage\Print\Order\PdfController;
 use App\Http\Controllers\Manage\ProductController;
 use App\Http\Controllers\Manage\Upload\OrderController;
@@ -151,6 +152,9 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::post('/orders/{order}/upload/invoice', [OrderController::class, 'uploadFileOrderInvoice'])->name('orders.upload.invoice');
    Route::post('/orders/{order}/upload/comprobantes/empaque', [OrderController::class, 'comprobantesEmpaque'])->name('orders.upload.comprobantes.empaque');
    Route::post('/orders/{order}/upload/comprobantes/envio', [OrderController::class, 'comprobantesEnvio'])->name('orders.upload.comprobantes.envio');
+   
+   
+   Route::get('/orders/create-with-user/{user}', [ManageOrderController::class, 'createOrderWithUserId'])->name('orders.create.with.user');
 
    //Post upload home carousel
 

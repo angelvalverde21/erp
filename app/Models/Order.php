@@ -324,7 +324,7 @@ class Order extends Model
         // }
     }
 
-    public function Addstatus(string $statusValue, $current)
+    public function Addstatus(string $statusValue, $current = "")
     {
 
         //$current es la url de donde proviene la peticion
