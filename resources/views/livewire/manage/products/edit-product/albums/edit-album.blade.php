@@ -73,7 +73,7 @@
                                     <div class="card text-center" style="width: 340px">
 
                                         <a href="{{ Storage::disk('spaces')->url($photo->medium) }}"
-                                            data-fancybox="gallery">
+                                            data-fancybox="gallery" data-caption="{{ $photo->name }}">
 
                                             <img loading="lazy" src="{{ Storage::disk('spaces')->url($photo->medium) }}"
                                                 class="card-img-top" height="" alt="...">
@@ -85,7 +85,6 @@
 
                                             {{-- <a href="{{ route('manage.download.photo', [$store->nickname, $photo->id]) }}" class="btn btn-success">Descargar</a> --}}
                                             
-
                                             <a target="_blank" href="{{ Storage::disk('spaces')->url($photo->large) }}"
                                                 class="btn btn-success"><i class="fa-solid fa-download me-1"></i> Descargar</a>
 
