@@ -9,10 +9,8 @@
 
         <a class="btn btn-success"
             href="{{ route('manage.orders.create.with.user', [$store->nickname, $order->buyer_id]) }}"><i
-                class="fa-solid fa-user"></i> Crear Nueva Orden</a>
+                class="fa-solid fa-file-line"></i> Crear Nueva Orden</a>
             
-
-
     </li>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
@@ -70,12 +68,6 @@
                     })
                 </script>
             @endpush
-
-
-
-
-
-
 
             {{-- <li class="nav-item active">
 
