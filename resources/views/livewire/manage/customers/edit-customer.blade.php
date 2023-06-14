@@ -10,7 +10,11 @@
 
       <div class="row mb-3">
         <div class="col-lg-6">
+
           <div class="card">
+            <div class="card-header">
+                <h3>Direcciones de envio</h3>
+              </div>
             <div class="card-body">
               @livewire('components.addresses.show-address-all', ['user' => $user->id, 'model_refer' => 'User', 'model_refer_id' => $user->id, 'render' => 'render'], key('show-addresses-all-' . $user->id))
             </div>
@@ -20,7 +24,7 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-header">
-              <h1>Roles</h1>
+              <h3>Roles</h3>
             </div>
             <div class="card-body">
               @livewire('manage.roles.show-roles', ['user' => $user], key($user->id))

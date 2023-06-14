@@ -105,7 +105,7 @@ class EditOrder extends Component
         
         // Log::info('fin de status');
 
-        return view('livewire.manage.orders.edit-order', compact('order'))->layout('layouts.manage', ['title' => 'Order: #' . $this->order->id . ' - ']);
+        return view('livewire.manage.orders.edit-order', compact('order'))->layout('layouts.manage', ['title' => 'Order: #' . $this->order->id . ' || ']);
     }
 
 }

@@ -25,20 +25,15 @@
             padding: 0 !important;
         }
 
-        .main-sidebar, .sidebar-dark-primary{
+        .main-sidebar,
+        .sidebar-dark-primary {
             background-color: #484F56 !important;
         }
 
-        .form-control-sidebar{
-            background-color: #ffffff !important;  
+        .form-control-sidebar {
+            background-color: #ffffff !important;
         }
-
     </style>
-
-    {{-- fancybox --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" /> --}}
-    {{-- fin de fancybox --}}
 
     <!-- Scripts -->
     <script src="{{ asset('js/current.js') }}"></script>
@@ -99,14 +94,6 @@
 
     @stack('script-header')
 
-    {{-- <script>
-        $(document).ready(function() {
-            $(".fancybox").fancybox();
-        });
-    </script> --}}
-    {{-- <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
-
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('admin-lte/dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style_custom.css') }}">
@@ -118,29 +105,15 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
 
-    {{-- <style>
-        .resultados {
-            box-shadow: -2px 3px 24px 0px rgb(163 163 163);
-        }
-
-        .resultados ul li {
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 3px;
-        }
-
-        .resultados ul {
-            margin: 0 !important;
-            padding: 0 10px !important;
-        }
-    </style> --}}
+    {{-- lightbox2 --}}
 
     <link rel="stylesheet" href="{{ asset('lightbox2/dist/css/lightbox.min.css') }}">
 
-    {{-- <script>
-        lightbox.option({
-            'fadeDuration': 0,
-        })
-    </script> --}}
+    {{-- Fancybox 5 --}}
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+
+    {{-- fin de fancybox 5 --}}
 
 </head>
 
@@ -337,9 +310,8 @@
 
     @livewireStyles
 
-    {{-- datepicker --}}
 
-    {{-- fin de date picker --}}
+    {{-- lightbox2 --}}
 
     <script src="{{ asset('lightbox2/dist/js/lightbox-plus-jquery.min.js') }}"></script>
 
@@ -352,6 +324,14 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 //console.log($(this).text().toLowerCase().indexOf(value));
             });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+    <script>
+        Fancybox.bind("[data-fancybox]", {
+            // Your custom options
         });
     </script>
 

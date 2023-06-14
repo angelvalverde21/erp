@@ -3,8 +3,8 @@
 
         <div class="card-header">
 
-            <div class="d-flex justify-content-between">
-                <div class="title d-flex align-items-cente">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="title d-flex align-items-center">
                     <i class="fa-solid fa-truck mr-2"></i> <span>Enviar por:</span>
                 </div>
                 <x-form.button-open-modal target="#editCarrierOrder" />

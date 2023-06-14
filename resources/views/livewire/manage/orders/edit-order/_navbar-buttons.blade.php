@@ -3,14 +3,13 @@
     <li class="nav-item active mr-2 mt-2">
         <a class="btn btn-outline-success"
             href="{{ route('manage.customers.edit', [$store->nickname, $order->buyer_id]) }}"><i
-                class="fa-solid fa-user"></i>
-            {{ $order->buyer->name }} ({{ $order->buyer->totalOrders() }})</a>
+                class="fa-solid fa-user me-1"></i>
+             ({{ $order->buyer->totalOrders() }})</a>
 
-
+             {{-- {{ $order->buyer->name }} --}}
         <a class="btn btn-success"
             href="{{ route('manage.orders.create.with.user', [$store->nickname, $order->buyer_id]) }}"><i
-                class="fa-solid fa-file-line"></i> Crear Nueva Orden</a>
-            
+                class="fa-solid fa-receipt me-1"></i> Crear Orden</a>
     </li>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
