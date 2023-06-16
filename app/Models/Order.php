@@ -52,6 +52,11 @@ class Order extends Model
         return $this->belongsTo(PaymentMethod::class);
     }
 
+    public function collect_method()
+    {
+        return $this->belongsTo(CollectMethod::class);
+    }
+
     public function delivery_method()
     {
         return $this->belongsTo(DeliveryMethod::class);
@@ -81,6 +86,11 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // public function repartidor()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
 
     public function address()
     {
@@ -174,13 +184,13 @@ class Order extends Model
     }
 
     //Singular
-    public function getPaymentMethodAttribute()
-    {
+    // public function getPaymentMethodAttribute()
+    // {
 
-        // $paymentListMethod = PaymentListMethod::find($this->payment_list_method_id);
+    //     // $paymentListMethod = PaymentListMethod::find($this->payment_list_method_id);
 
-        // return PaymentMethod::find($paymentListMethod->payment_method_id);
-    }
+    //     // return PaymentMethod::find($paymentListMethod->payment_method_id);
+    // }
 
     //Plural
     public function getPaymentListsAttribute()
@@ -261,6 +271,7 @@ class Order extends Model
     // public function status(){
     //     return $this->belongsToMany(Status::class);
     // }
+
 
     public function getStatusPagoAttribute()
     {

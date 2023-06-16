@@ -109,7 +109,10 @@ class StoreApi extends Controller
 
         $store = User::where('nickname', $nickname)
         ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
+        ->with('carousel')
+        ->with('carouselMobile')
         ->first();
+
         return $store;
 
 

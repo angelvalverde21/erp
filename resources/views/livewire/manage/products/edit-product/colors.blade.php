@@ -8,7 +8,7 @@
 
     <h4>{{ $colors->count() }} disenos disponibles</h4>
 
-    @if ($colors->count())
+    @if ($colors->count()>0)
 
         <div class="input-group mb-3">
             <input type="text" class="form-control buscar_table" placeholder="Buscar Color">
@@ -235,6 +235,16 @@
                 </x-modal> --}}
             @endforeach
 
+        </div>
+
+    @else
+
+        <div class="row p-3" wire:ignore>
+
+            <form method="POST" action="{{ route('manage.products.upload.colors', [$store->nickname, $product]) }}"
+                class="dropzone" id="my-awesome-dropzone-colors">
+            </form>
+    
         </div>
 
     @endif

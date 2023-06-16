@@ -205,7 +205,7 @@
                     <div class="qr ps-3 pe-4">
                         {{-- <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('https://erp.3b.pe/summary/imprimir/voucher.php?IDVENTA=10813', 'QRCODE') }}"
                     alt="barcode" height="75" width="75" /> --}}
-                        <div class="content-qr text-center">
+                        <div class="content-qr text-center mt-3">
                             <label class=""> </label>
 
                             @if ($order->store->getOption('code_yape'))

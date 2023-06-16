@@ -87,6 +87,9 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::get('/profile', ShowProfileStore::class)->name('profile');
    Route::get('/profile/web', ShowProfileWeb::class)->name('web');
 
+   //sidebar
+   Route::get('/carousel', ShowProfileWeb::class)->name('carousel');
+
    //POST Products
    Route::post('/products/colors/upload/{color}/variantes', [ProductController::class, 'uploadVariantsColor'])->name('products.upload.colors.variants');
    Route::post('/products/{product}/upload/colors', [ProductController::class, 'uploadColors'])->name('products.upload.colors');
@@ -159,6 +162,7 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    //Post upload home carousel
 
    Route::post('/post/profile/carousel', [UserImageController::class, 'uploadCarousel'])->name('post.profile.carousel');
+
 });
 
 // Route::bind('',function(User $nickname){
