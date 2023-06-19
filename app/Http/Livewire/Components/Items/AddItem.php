@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Request;
 
 class AddItem extends Component
 {
-    public $search, $quantity_oversale = [], $product = [], $size;
+    public $search, $quantity_oversale = [], $product, $size;
     public $size_pivot, $sizepivot, $quantity = [];
     public $stock, $size_color, $showSelect;
     public $order;

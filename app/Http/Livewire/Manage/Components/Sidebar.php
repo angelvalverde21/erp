@@ -115,6 +115,12 @@ class Sidebar extends Component
                             "slug"=>route('manage.carousel',[$this->store->nickname]),
                             "icon"=>"fa-solid fa-panorama",
                         ],
+                        [
+                            "name"=>"Sessiones",
+                            "active"=>"carousel",
+                            "slug"=>route('manage.carousel',[$this->store->nickname]),
+                            "icon"=>"fa-solid fa-panorama",
+                        ],
                     ]
                 ],
                 // [
