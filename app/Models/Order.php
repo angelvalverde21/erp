@@ -507,7 +507,7 @@ class Order extends Model
         foreach ($items as $item) { //recorremos todos los items
 
             //Puede que un item tenga mas de un stock asignado
-            $item->asignarStock();
+            // $item->asignarStock();
             // $stocks = Stock::where('item_id',$item->id)->get(); //consultamos a la tabla stock cuantos item_id tiene
 
             $stocks = Stock::where('item_id',$item->id)->where('status',Stock::VENDIDO)->get();
