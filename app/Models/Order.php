@@ -492,6 +492,34 @@ class Order extends Model
         }
     }
 
+    public function asignarStock()
+    {
+
+
+        Log::info('se confirma que la orden esta pagada');
+
+        $items = $this->items()->get(); //consultamos los items de la orden
+
+        Log::info('imprimiendo items asociados a la orden: ' . $this->id);
+
+        Log::info($items);
+
+        foreach ($items as $item) { //recorremos todos los items
+
+            //Puede que un item tenga mas de un stock asignado
+            $item->asignarStock();
+            // $stocks = Stock::where('item_id',$item->id)->get(); //consultamos a la tabla stock cuantos item_id tiene
+
+            $stocks = Stock::where('item_id',$item->id)->where('status',Stock::VENDIDO)->get();
+
+            if($stocks->count() == $item->quantity){
+                //Esto quiere decir que el stock de este item que esta recorriendo la orden ya esta asignado, asi que no debo hacer nada
+            }else{
+                $item->asignarStock();  
+            }
+        }
+    }
+
     public function reservar()
     {
 
