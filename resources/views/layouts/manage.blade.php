@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    {{-- Este titulo esta definido en el archivo .env --}}
+    @if (isset($title))
+        <title>{{ $title }} {{ config('app.name', 'Laravel') }}</title>
+    @else
+        <title>{{ config('app.name', 'Laravel') }}</title>
+    @endif
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -14,11 +19,28 @@
     <!-- Styles -->
     {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}"> --}}
 
+    <style>
+        ul {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .main-sidebar,
+        .sidebar-dark-primary {
+            background-color: #484F56 !important;
+        }
+
+        .form-control-sidebar {
+            background-color: #ffffff !important;
+        }
+    </style>
 
     <!-- Scripts -->
     <script src="{{ asset('js/current.js') }}"></script>
     <script src="{{ mix('js/app.js') }}" defer></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script> --}}
 
     <style>
         .dropzone {
@@ -72,9 +94,6 @@
 
     @stack('script-header')
 
-    {{-- <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
-
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('admin-lte/dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style_custom.css') }}">
@@ -86,21 +105,16 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
 
-    <style>
-        .resultados {
-            box-shadow: -2px 3px 24px 0px rgb(163 163 163);
-        }
+    {{-- lightbox2 --}}
 
-        .resultados ul li {
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 3px;
-        }
+    <link rel="stylesheet" href="{{ asset('lightbox2/dist/css/lightbox.min.css') }}">
 
-        .resultados ul {
-            margin: 0 !important;
-            padding: 0 10px !important;
-        }
-    </style>
+    {{-- Fancybox 5 --}}
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+    {{-- fin de fancybox 5 --}}
 
 </head>
 
@@ -112,7 +126,7 @@
         }
 
         body {
-            font-size: 11pt;
+            font-size: 10pt;
         }
 
         .btn {
@@ -185,6 +199,7 @@
 
     <script>
         $(document).ready(function() {
+
             Livewire.on('creado', function() {
 
                 // $('.modal').modal('hidden');
@@ -205,6 +220,32 @@
                     //     $(this).toggle();
                     // });
                     console.log('Creado: se ha pulsado ok en sweetalert2');
+                });
+
+            })
+
+            Livewire.on('Error', function() {
+
+                // $('.modal').modal('hidden');
+
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ha ocurrido un error interno',
+                    }
+                    // footer: '<a href="">Why do I have this issue?</a>'
+                ).then(function() {
+                    //$(".modal-backdrop").hide();
+                    // //$(".modal").hide();
+                    // $('.modal').removeClass('show');
+                    // $('body').removeClass('modal-open');
+                    // $('.modal').hide();
+                    // $('body').remove('modal-backdrop');
+
+                    // $(".modal").each(function() {
+                    //     $(this).toggle();
+                    // });
+                    console.log('Creado: se ha pulsado ok en sweetalert2')
                 });
 
             })
@@ -244,13 +285,105 @@
             )
         });
     </script>
+
+    <script>
+        Livewire.on('address-selected', function() {
+            Swal.fire(
+                'Seleccionado',
+                'Se ha establecido la direccion por defecto',
+                'success'
+            )
+        });
+    </script>
+
+
+    <script>
+        Livewire.on('vacio', function() {
+            Swal.fire({
+                    icon: 'info',
+                    title: 'Error',
+                    text: 'Por favor complete los campos',
+                }
+
+            )
+        });
+    </script>
+
     @livewireStyles
 
-    {{-- datepicker --}}
 
-    {{-- fin de date picker --}}
+    {{-- lightbox2 --}}
+
+    <script src="{{ asset('lightbox2/dist/js/lightbox-plus-jquery.min.js') }}"></script>
 
     @stack('script')
+
+    <script>
+        $(".buscar_table").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $(".table tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                //console.log($(this).text().toLowerCase().indexOf(value));
+            });
+        });
+    </script>
+
+
+
+
+    <!-- Scripts JavaScript -->
+
+    {{-- <script>
+        $(document).ready(function() {
+            $('[data-fancybox]').fancybox({
+                thumbs: false
+            });
+        });
+    </script> --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Coloca aquí tu código para inicializar FancyBox
+            Fancybox.bind("[data-fancybox]", {
+                // Configuración de FancyBox
+                Images: {
+                    initialSize: "fit", 
+                },
+
+                // Thumbs: false, // este atributo no funciona
+                // showOnStart: false, este si funciona y se usa dentro de thumbs
+
+                Thumbs: {
+                    type: "classic",
+                    showOnStart: true,
+                },
+                
+            });
+        });
+    </script>
+
+    {{-- <script>
+
+        $(document).ready(function() {
+            const options = {
+                Images: {
+                    initialSize: "fit",
+                }
+            };
+
+            Fancybox.bind("[data-fancybox]", {
+                // Your custom options
+                options
+            });
+        });
+    </script> --}}
+
+    {{-- <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script> --}}
 
     {{-- Js font-awesome --}}
 

@@ -48,16 +48,26 @@ class OrderController extends Controller
 
             Log::info('se paso la validacion de comprobantes de envio');
             Log::info($request);
-            $image = Storage::put('orders/comprobantes/empaque', $request->file('file'));
+            $image = Storage::put('orders/comprobantes/envio', $request->file('file'));
 
             $order->comprobantesEmpaque()->create([ //crea un nuevo registro en la tabla images
                 'usage' => 'comprobante_envio',
                 'name' => $image,
             ]);
 
+            //hay veces que la orden no esta pagada porque es contra entrega
+            if ($order->is_contra_entrega()) {
+                if ($order->is_pay()) {
+                    # code...
+                } else {
+                    $order->confirmarStock();
+                }
+            }
+            
             Log::info('empieza el helper');
             Log::info(uploadImage($request));
             Log::info('Termina el helper');
+
         } catch (\Throwable $th) {
 
             Log::info('No se paso la validacion de comprobantes de envio');
@@ -80,7 +90,7 @@ class OrderController extends Controller
             Log::info('se paso la validacion de comprobantes de invoice');
             Log::info($request);
 
-            $image = Storage::put('orders/comprobantes/payments', $request->file('file'));
+            $image = Storage::put('orders/comprobantes/pago', $request->file('file'));
             // $image = uploadImage($request,"orders/comprobantes/payments");
 
             $order->payments()->create([
@@ -196,7 +206,7 @@ class OrderController extends Controller
         $request->validate([
             'file' => 'required|image|max:10240'  //10 megas
         ]);
-        $url = Storage::put('public/orders', $request->file('file'));
+        $url = Storage::put('orders/comprobantes/pago', $request->file('file'));
         $order->photo_payment = $url;
         $order->save();
 
@@ -210,7 +220,7 @@ class OrderController extends Controller
         $request->validate([
             'file' => 'required|image|max:10240'  //10 megas
         ]);
-        $url = Storage::put('public/orders', $request->file('file'));
+        $url = Storage::put('orders/comprobantes/paquete', $request->file('file'));
         $order->photo_package = $url;
         $order->save();
 
@@ -224,7 +234,7 @@ class OrderController extends Controller
         $request->validate([
             'file' => 'required|image|max:10240'  //10 megas
         ]);
-        $url = Storage::put('public/orders', $request->file('file'));
+        $url = Storage::put('orders/comprobantes/envio', $request->file('file'));
         $order->photo_delivery = $url;
         $order->save();
 

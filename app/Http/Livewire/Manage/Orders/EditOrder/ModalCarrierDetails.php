@@ -20,7 +20,9 @@ class ModalCarrierDetails extends Component
         'order.shipping_cost_to_carrier' => '',
     ];
 
-    public function mount(Order $order){
+    public $order;
+
+    public function mount($order){
         $this->order = $order;
     }
 

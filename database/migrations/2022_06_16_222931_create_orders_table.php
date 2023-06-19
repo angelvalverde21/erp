@@ -64,6 +64,10 @@ class CreateOrdersTable extends Migration
             $table->text('observations_time')->nullable();
             $table->text('observations_public')->nullable();
             $table->text('observations_private')->nullable();
+            
+            $table->text('observations_delivery')->nullable();
+
+            $table->enum('feedback', [1, 2, 3, 4, 5])->default(null)->nullable();
 
             $table->timestamps();
         });

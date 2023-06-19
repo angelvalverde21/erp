@@ -16,6 +16,7 @@ class ShowPrices extends Component
 
     protected $rules = [
         'price' => 'required',
+        'price_total' => 'required',
         'quantity' => 'required',
     ];
 
@@ -33,6 +34,7 @@ class ShowPrices extends Component
 
         $this->product->prices()->create([
             'value' => $this->price,
+            'value_total' => $this->price_total,
             'quantity' => $this->quantity,
         ]);
 

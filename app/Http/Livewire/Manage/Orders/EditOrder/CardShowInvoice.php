@@ -25,7 +25,7 @@ class CardShowInvoice extends Component
     public $store;
     public $total_amount;
 
-    public function mount(Order $order){
+    public function mount($order){
 
         $this->order = $order;
         $this->store = Request::get('store');
@@ -47,9 +47,18 @@ class CardShowInvoice extends Component
     }
 
     public function deletePayment( $id ){
+        
         $payment = Payment::findOrFail($id);
         $payment->delete();
+
+        //Primero devolvemos el stock reservado
+        $this->order->devolverStock();
+
+        //Luego lo volvemos a asignar
+        $this->order->reservarStock();
+        
         $this->order = $this->order->fresh();
+
         $this->emit('render');
         $this->emit('eliminado');
 

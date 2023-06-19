@@ -4,8 +4,11 @@ namespace App\Http\Controllers\api\v1\store;
 
 use App\Http\Controllers\Controller;
 use App\Models\District;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class StoreApi extends Controller
 {
@@ -48,6 +51,15 @@ class StoreApi extends Controller
      */
 
     //Api para el Home
+
+    public function infoStore(){
+    }
+
+    public function showProducts(){
+
+    }
+
+
     public function show($nickname)
     {
 
@@ -75,30 +87,127 @@ class StoreApi extends Controller
 
         //Api para el Home
 
+        //OJO SI SE USA SELECT CON WITH se debe seleccionar si o si las llaves foraneas
+        // $store = User::where('nickname', $nickname)
+        //     ->with(
+        //         [
+        //             'products:id,name,title,owner_id,store_id,category_id'=>
+        //                 [
+        //                     'colors:id,product_id'
+        //                 ]
+        //         ]
+        //     )->first();
+
+        // $store = User::where('nickname', $nickname)
+        //     ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
+        //     ->with('products', function ($query) { //ojo whereHas no funciona
+        //         $query->select(['id', 'name'])->where('quantity', '>', 0);
+        //     })
+        //     ->with('carousel')
+        //     ->with('carouselMobile')
+        //     ->first();
+
         $store = User::where('nickname', $nickname)
-            ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
-            ->with('products')
-            ->with('carousel')
-            ->with('carouselMobile')
-            ->with('profile')
-            ->with('offices')
-            ->first();
+        ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
+        ->with('carousel')
+        ->with('carouselMobile')
+        ->first();
+
         return $store;
-        
+
+
+            /** esto es con productos */
+            // $store = User::where('nickname', $nickname)
+            // ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
+            // ->with(['products' => function ($query) {
+            //     $query->select('id', 'name','owner_id','store_id','category_id','price','slug')
+            //           ->where('quantity', '>', 0)->orderBy('quantity','desc');
+            // }])
+            // ->with('carousel')
+            // ->with('carouselMobile')
+            // ->first();
+            // return $store;
+
+        // $store = User::where('nickname', $nickname)
+        //     ->select(['id', 'name', 'email', 'phone', 'logo', 'wallet'])
+        //     ->with('products', function ($query) { //ojo whereHas no funciona
+        //         $query->where('quantity', '>', 0)
+        //             ->orderBy('quantity', 'desc');
+        //     })
+        //     ->with('carousel')
+        //     ->with('carouselMobile')
+        //     ->first();
+
+        //buscando imagenes
+
+        // $products_category = Product::where('category_id',8)->get();
+
+        // //convirtiendo a array
+
+        // $storeArray = $store->toArray();
+        // $products_category_array = $products_category->toArray();
+
+        // $storeArray['poleras'] = $products_category_array;
+
+
+
+        // foreach ($store->products as $product) {
+        //     # code...
+        //     if($product->image == null){
+        //         foreach ($product->colors as $color) {
+        //             # code...
+        //             if($color->image){
+        //                 return $color->image->name;
+        //                 break;
+        //             }
+        //         }
+        //     }
+
+        // }
+
+        //Seteando imagen, en caso el producto no tenga
+
+        // $storeArray = $store->toArray();
+
+        // $productsArray = array_map(function ($productArray) {
+
+        //     if($productArray['image'] == null || $productArray['image'] == false){
+        //         //creamos la variable que 
+        //         $product = Product::find($productArray['id']);
+
+        //         foreach ($product->colors as $color) {
+        //             # code...
+        //             if($color->image){
+        //                 $productArray['image'] =  asset(Storage::url($color->image->name));
+        //                 // break;
+        //             }
+        //         }
+        //     }
+
+        //     return $productArray;
+
+        // }, $storeArray['products']);
+        // // return $store;
+
+
+        // $storeArray['products'] = array_reverse($productsArray); //asignamos los nuevos productos al array
+
+
     }
 
-    public function buscarDistritos(Request $request){
+    public function buscarDistritos(Request $request)
+    {
 
         // $distritos = District::where('name', 'like','%'.$request->cadena.'%')->get();
 
         $districts = District::with(['province.department'])
-                        ->where('name', 'like', '%' . $request->cadena . '%')
-                        ->orderBy('name', 'asc')
-                        ->limit(20)
-                        ->get();
+            ->where('name', 'like', '%' . $request->cadena . '%')
+            ->orderBy('name', 'asc')
+            ->limit(20)
+            ->get();
 
         $data = [
-            "message" => "buscando el distrito: ".$request->cadena,
+            "message" => "buscando el distrito: " . $request->cadena,
             "districts" => $districts
         ];
 

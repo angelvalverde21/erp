@@ -15,11 +15,12 @@ use Illuminate\Support\Facades\Request;
 
 class AddItem extends Component
 {
-    public $search, $quantity_oversale = [], $qty, $product, $size;
+    public $search, $quantity_oversale = [], $product, $size;
     public $size_pivot, $sizepivot, $quantity = [];
     public $stock, $size_color, $showSelect;
     public $order;
     public $store;
+    private  $items = [];
 
     public function mount(Order $order){
 
@@ -30,20 +31,6 @@ class AddItem extends Component
     }
 
     public function addItem($color_size_id){
-
-
-        // Log::debug($this->order->id);
-        // Log::debug($this->quantity[$value]);
-
-        // $arrayValue = explode('-',$this->quantity[$value]);
-        // $color_size_id = $arrayValue[0];
-        // $qty = $arrayValue[1];
-
-        // Log::debug($this->order->id);
-        // Log::debug($this->quantity[$value]);
-
-        //Obteniendo nombre de talla, archivo de imagen,  nombre de imagen
-        //y el titulo del producto
 
         $colorSize = ColorSize::find($color_size_id);
 
@@ -58,17 +45,34 @@ class AddItem extends Component
         //     'product_id'        =>  $colorSize->color->product->id,
         // ];
 
+        // $item->content =  [
+
+        //     'color_size_id'     =>  $colorSize->id,
+        //     'talla'             =>  $colorSize->size->name,
+        //     'talla_impresa'     =>  $colorSize->size->name,
+        //     'color_id'          =>  $colorSize->color->id,
+        //     'image'             =>  $colorSize->color->image->name,
+        //     'price'             =>  $colorSize->color->product->price,
+        //     'product_id'        =>  $colorSize->color->product->id,
+        //     'description'       =>  $colorSize->color->product->name,
+
+        // ];
+
         $item->content =  [
-
-            'color_size_id'     =>  $colorSize->id,
-            'talla'             =>  $colorSize->size->name,
-            'color_id'          =>  $colorSize->color->id,
-            'image'             =>  $colorSize->color->image->name,
-            'price'             =>  $colorSize->color->product->price,
-            'product_id'        =>  $colorSize->color->product->id,
-            'description'       =>  $colorSize->color->product->name,
-
+            'color_size_id'     => $colorSize->id,
+            'size_name'         => $colorSize->size->name,
+            'color_id'          => $colorSize->color->id,
+            'size_name_real'    => $colorSize->size->name,
+            'size_name_virtual' => $colorSize->size->name,
+            'talla'             => $colorSize->size->name, //Es la talla que se envia al cliente
+            'talla_original'    => $colorSize->size->name, //es la talla real despachada
+            'talla_impresa'     => $colorSize->size->name,
+            'image'             => $colorSize->color->image->name,
+            'price'             => $colorSize->color->product->price,
+            'product_id'        => $colorSize->color->product->id,
+            'description'       => $colorSize->color->product->name,
         ];
+
 
         //si la casilla quantity_oversale esta marcada entonces seteamos el quantity real en 0
         // if(isset($this->quantity_oversale[$color_size_id])){
@@ -141,14 +145,16 @@ class AddItem extends Component
 
     public function deleteSearchText(){
         $this->search = "";
+        $this->product = [];
+        // $this->showSelect = false;
     }
 
     public function selectItem($value)
     {
         Log::debug($value);
 
-        $user = new User();
-        $user = auth()->user();
+        // $user = new User();
+        // $user = auth()->user();
 
         $product = Product::find($value);
 
@@ -167,18 +173,27 @@ class AddItem extends Component
             $this->product = Product::with(['colors'])->where('store_id',$this->store->id)->find($value);
 
             if( $product->category->has_size ){
-                $this->product = Product::with(['colors.sizes'])->where('store_id',$this->store->id)->find($value);
-                $this->showSelect = true;
+
+                $this->product = Product::where('id',$value)
+                                            ->with(['colors.sizes'])
+                                            ->where('store_id',$this->store->id)
+                                            ->first();
+                // $this->showSelect = true;
+                Log::info("el producto se ha encontrado y se muestra el showSelect");
+
             }
 
         } else {
             # code...
+
             $this->product = $product;
+
+            Log::info("Solo el producto se ha encontrado ");
+
         }
 
-
-        
-        $this->items = [];
+        //Vaciamos los items
+        // $this->items = [];
 
         //Log::debug($district);
         //Log::debug($province);
@@ -253,24 +268,32 @@ class AddItem extends Component
 
     public function render()
     {
-        $user = auth()->user();
+        // $user = auth()->user();
 
         if ($this->search <> "") {
 
-            $items = Product::where('title', 'like', '%' . $this->search . '%')->where('store_id', $this->store->id)
+            $this->items = Product::where('title', 'like', '%' . $this->search . '%')
+                ->where('status', Product::PUBLICADO)
+                ->where('store_id', $this->store->id)
                 ->orderBy('id', 'desc')
                 ->paginate(10);
 
-            $this->showSelect = true;
+                Log::info($this->search);
+
+                Log::info($this->items);
+
+            // $this->showSelect = false;
 
         } else {
             //Muestra todos los post
             //$posts = Photography::all();
             //Tambien Muestra todos los post pero filtrado
-            $items = [];
+            $this->items = [];
 
-            $this->showSelect = false;
+            // $this->showSelect = false;
         }
+
+        $items = $this->items;
 
         return view('livewire.components.items.add-item', compact('items'));
     }

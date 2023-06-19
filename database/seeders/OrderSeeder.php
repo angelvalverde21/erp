@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 use Illuminate\Support\Facades\File;
@@ -30,7 +31,7 @@ class OrderSeeder extends Seeder
 
                 [
                     'id' => $obj->id,
-                    'seller_id' => $obj->seller_id,
+                    'seller_id' => User::MAIN_ID,
                     'buyer_id' => $obj->buyer_id,
                     'address_id' => $obj->address_id,
                     'delivery_man_id' => $obj->delivery_man_id,

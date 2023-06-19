@@ -4,115 +4,165 @@
         <link rel="stylesheet" href="{{ asset('admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     @endpush
 
-    <x-breadcrumbs title="Ventas" />
+
+
+    {{-- <x-breadcrumbs title="Ventas" /> --}}
+
 
     <x-sectioncontent>
 
-        <div class="card">
+        <div class="create-order my-3">
+            @livewire('manage.orders.create-order-modal', key('create-order-modal'))
+        </div>
 
-            <div class="card-header">
-                @livewire('manage.orders.create-order-modal', ['user' => $orders], key('create-order-modal'))
+        <div class="buscador d-flex justify-content-between">
+
+
+            <div class="input-group mb-3 me-2">
+                <input type="text" class="form-control" placeholder="Buscar" wire:model.debounce.500ms="search"
+                    aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-magnifying-glass"></i></span>
             </div>
 
-            <div class="card-body table-responsive">
-                {{-- <h4 class="card-title">Productos</h4>
-            <h6 class="card-subtitle">Productos actualmente en almacen</h6> --}}
+            <div class="input-group mb-3 me-2">
+                <input id="fecha" type="date" class="form-control" placeholder="Buscar por fecha">
+            </div>
 
-                {{-- {{ count($orders) }}
-                <hr>
-                {{ count($orders2) }}
-                <hr> --}}
+            <div class="input-group mb-3 w-25">
+                <a id="enviarfecha" href="{{ route('manage.orders', [$store->nickname]) }}"
+                    class="btn btn-secondary w-100">Buscar</a>
+            </div>
+            
 
+        </div>
 
-                {{-- @foreach ($orders2 as $order)
-                    {{ $order->id }}
-                @endforeach --}}
-
-                @if (count($orders) > 0)
-
-                    <table id="example1" class="table table-bordered table-striped">
-
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Cliente</th>
-                                <th>Entregar por</th>
-                                <th>Status</th>
-                                <th>Pago</th>
-                                <th>Total</th>
-                                <th>Autor</th>
-                                <th>Creado</th>
-                                <th>Actualizado</th>
-                                <th>Editar</th>
-                            </tr>
-                        </thead>
-                        {{-- <tfoot>
-                            <tr>
-                                <th>Id</th>
-                                <th>Cliente</th>
-                                <th>Entregar por</th>
-                                <th>Status</th>
-                                <th>Total</th>
-                                <th>Creado</th>
-                                <th>Actualizado</th>
-                                <th>Editar</th>
-                            </tr>
-                        </tfoot> --}}
-                        <tbody>
-
-                            @foreach ($orders as $order)
-                                {{-- {{ $order }} --}}
-
-                                <tr 
-                                @if (!$order->is_active)
-                                    class="bg-danger"
-                                @endif
-                                >
-                                    <td class="text-center">{{ $order->id }} </td>
-                                    <td class="text-center">
-                                        {{ $order->buyer->name }}
-                                    </td>
-                                    <td class="text-center">
-                                        {{ $order->delivery_man->name }}
-                                    </td>
-                                    <td>En proceso de empaque</td>
-                                    <td>
-                                        @if ($order->is_pay())
-                                            <button class="btn btn-success">Pagado</button>
-                                        @else
-                                            <button class="btn btn-warning">Pendiente</button>
-                                        @endif
-                                    </td>
-                                    <td>{{ $order->total_amount }}</td>
-                                    <td>{{ $order->seller->name }}</td>
-                                    <td>{{ $order->created_at }}</td>
-                                    <td>{{ $order->updated_at }}</td>
-                                    <td>
-                                        <div class="d-flex  justify-content-center">
-
-                                            <a href="{{ route('manage.orders.edit', [$store->nickname, $order->id]) }}"
-                                                class="btn btn-success mr-2">Editar</a>
-
-                                            <a href="#" wire:click="cancelOrder( {{ $order }} )"
-                                                class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-
-
-                        </tbody>
-                    </table>
-                @else
-                    No hay registros disponibles
-                @endif
+        <div class="text-buscando">
+            <div wire:loading>
+                <div class="spinner-grow" role="status">
+                    <span class="sr-only">Buscando...</span>
+                  </div>
             </div>
         </div>
+
+        <script>
+
+            var fecha = document.getElementById('fecha');
+            var enlace = document.getElementById('enviarfecha');
+
+            fecha.addEventListener('change', () => {
+                console.log('El valor ha cambiado:', fecha.value); // Acción a realizar cuando cambia el valor
+                enlace.href = enlace.href + '/date/' + fecha.value;
+            });
+            
+        </script>
+
+    </x-sectioncontent>
+
+    <x-sectioncontent>
+
+        {{-- Resultados de busqueda --}}
+        @if (isset($ordersResult))
+            <div class="card">
+                <div class="card-body">
+                    @include('livewire.manage.orders._show-orders-table', ['orders' => $ordersResult])
+                </div>
+            </div>
+        @endif
+
+    </x-sectioncontent>
+
+    <x-sectioncontent>
+
+
+        <div wire:ignore.self class="accordion" id="accordionExample">
+            <div class="accordion-item">
+
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Entregas para Hoy
+                    </button>
+                </h2>
+
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+
+                        @include('livewire.manage.orders._show-orders-table', ['orders' => $ordersToday])
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="accordion-item">
+
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Pendientes de pago
+                    </button>
+                </h2>
+
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+
+                        @include('livewire.manage.orders._show-orders-table', [
+                            'orders' => $ordersPendientesPago,
+                        ])
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="accordion-item">
+
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Pagados
+                    </button>
+                </h2>
+
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        @include('livewire.manage.orders._show-orders-table', ['orders' => $ordersPagados])
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="accordion-item">
+
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Pendientes de envio (Todos)
+                    </button>
+                </h2>
+
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        @include('livewire.manage.orders._show-orders-table', ['orders' => $ordersAll])
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
     </x-sectioncontent>
 
     @push('script-footer')
         <!-- DataTables  & Plugins -->
-        <script src="{{ asset('admin-lte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+        {{-- <script src="{{ asset('admin-lte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
         <script src="{{ asset('admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
@@ -135,7 +185,7 @@
                 }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
             });
-        </script>
+        </script> --}}
     @endpush
 
 

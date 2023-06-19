@@ -2,6 +2,7 @@
 
 
 use App\Http\Livewire\Account\HomeAccount;
+use App\Http\Livewire\HomePublic;
 use App\Http\Livewire\Web\Home;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -17,13 +18,27 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-//Route::get('/', HomeAccount::class)->middleware('auth')->name('home');
-Route::get('/', function(){
-    //Seenvia a la seccion account por defecto
-    return redirect('/account');
+Route::get('/', HomePublic::class)->name('home');
 
-})->middleware('auth')->name('home');
+// Route::get('/', HomeAccount::class)->middleware('auth')->name('homex');
+// Route::get('/', function(){
+//     //Seenvia a la seccion account por defecto
+//     // return redirect('/account');
+//     // Route::get('/', HomeAccount::class);
+//     return "hola";
 
+// })->middleware('auth')->name('home');
+
+
+
+
+// Route::get('/', function(){
+//     //Seenvia a la seccion account por defecto
+//     // return redirect('/account');
+    
+//     return "hola";
+
+// })->middleware('auth')->name('home');
 
 //URL HOME
 

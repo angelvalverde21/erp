@@ -14,7 +14,7 @@ class Color extends Model
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
-    protected $appends = ['image', 'stock_total'];
+    protected $appends = ['image', 'thumb'];
     //Relacion muchos a muchos
 
     public function product()
@@ -92,10 +92,41 @@ class Color extends Model
         }
     }
 
-    public function getImageAttribute($value)
+    public function getImageAttribute()
     {
         return $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
         //return url('/') . Storage::url($value);
+    }
+
+    public function getThumbAttribute2()
+    {
+        return asset(Storage::url($this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first()->name));
+        //return url('/') . Storage::url($value);
+    }
+
+    public function getThumbAttribute()
+    {
+
+        $image = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
+
+        if ($image) {
+            return asset(Storage::url($image->thumbnail));
+        } else {
+            // $colors = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
+
+            //SE COLOCA ASI PORQUE "$this->colors" genera un bucle infinito
+            $color = Color::find($this->id);
+            
+            if($color){
+                foreach ($color->images as $image) {
+                    # code...
+                    return asset(Storage::url($image->thumbnail));
+                }
+            }
+
+            return false;
+        }
+
     }
 
     public function images()
@@ -116,6 +147,10 @@ class Color extends Model
         $this->quantity = $total_size;
         $this->save();
 
+    }
+
+    public function Albums(){
+        return $this->hasMany(Album::class);
     }
 
     // public function getInfoStockAttribute(){

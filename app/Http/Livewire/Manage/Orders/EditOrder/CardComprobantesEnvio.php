@@ -23,7 +23,7 @@ class CardComprobantesEnvio extends Component
     public $store;
     public $total_amount;
 
-    public function mount(Order $order){
+    public function mount($order){
 
         $this->order = $order;
         $this->store = Request::get('store');
@@ -36,11 +36,19 @@ class CardComprobantesEnvio extends Component
     }
 
     public function deleteComprobante( $id ){
+
         $comprobante = Image::findOrFail($id);
         $comprobante->delete();
+        
+        if(!$this->order->is_pay()){
+            $this->order->devolverStock();
+            $this->order->reservarStock();
+        }
+
         $this->order = $this->order->fresh();
         $this->emit('eliminado');
         $this->emitTo('manage.orders.edit-order.card-status-iconos','render');
+        
     }
 
     public function render()

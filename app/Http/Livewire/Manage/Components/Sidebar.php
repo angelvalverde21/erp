@@ -29,6 +29,18 @@ class Sidebar extends Component
                     "slug"=>"profile",
                     "icon"=>"fa-solid fa-store",
                     "sub_menu"=>[
+                        // [
+                        //     "name"=>"Entregas Hoy",
+                        //     "slug"=> route('manage.orders.today',[$this->store->nickname]),
+                        //     "active"=>"orders.today",
+                        //     "icon"=>"fa-solid fa-align-justify",
+                        // ],
+                        // [
+                        //     "name"=>"Entregas pendientes",
+                        //     "slug"=> route('manage.orders.pending',[$this->store->nickname]),
+                        //     "active"=>"orders.pending",
+                        //     "icon"=>"fa-solid fa-align-justify",
+                        // ],
                         [
                             "name"=>"Mis ventas",
                             "slug"=> route('manage.orders',[$this->store->nickname]),
@@ -50,28 +62,72 @@ class Sidebar extends Component
                     ]
                 ],
     
-                [
-                    "name"=>"Herramientas",
-                    "slug"=>"#",
-                    "icon"=>"fa-solid fa-screwdriver-wrench",
-                ],
+                // [
+                //     "name"=>"Herramientas",
+                //     "slug"=>"#",
+                //     "icon"=>"fa-solid fa-screwdriver-wrench",
+                // ],
+    
+                // [
+                //     "name"=>"Mis Producciones",
+                //     "slug"=>route('manage.productions', [$this->store->nickname]),
+                //     "icon"=>"fa-solid fa-business-time",
+                // ],
+    
+                // [
+                //     "name"=>"Web",
+                //     "slug"=>route('manage.web', [$this->store->nickname]),
+                //     "icon"=>"fa-solid fa-globe",
+                // ],
     
                 [
-                    "name"=>"Mis Producciones",
-                    "slug"=>route('manage.productions', [$this->store->nickname]),
-                    "icon"=>"fa-solid fa-business-time",
+                    "name"=>"Informacion de la pagina",
+                    // "slug"=>route('manage.options', [$this->store->nickname]),
+                    "icon"=>"fa-solid fa-house",
+                    "sub_menu"=>[
+                        // [
+                        //     "name"=>"Entregas Hoy",
+                        //     "slug"=> route('manage.orders.today',[$this->store->nickname]),
+                        //     "active"=>"orders.today",
+                        //     "icon"=>"fa-solid fa-align-justify",
+                        // ],
+                        [
+                            "name"=>"Configuracion",
+                            "slug"=>route('manage.options', [$this->store->nickname]),
+                            "active"=>"options",
+                            "icon"=>"fa-solid fa-gear",
+                        ],
+                        [
+                            "name"=>"Mis empresas de envio",
+                            "slug"=> route('manage.couriers',[$this->store->nickname]),
+                            "active"=>"couriers",
+                            "icon"=>"fa-solid fa-truck-fast",
+                        ],
+                        [
+                            "name"=>"Staff",
+                            "active"=>"staff",
+                            "slug"=>route('manage.staff',[$this->store->nickname]),
+                            "icon"=>"fa-solid fa-people-carry-box",
+                        ],
+                        [
+                            "name"=>"Carousel",
+                            "active"=>"carousel",
+                            "slug"=>route('manage.carousel',[$this->store->nickname]),
+                            "icon"=>"fa-solid fa-panorama",
+                        ],
+                        [
+                            "name"=>"Sessiones",
+                            "active"=>"carousel",
+                            "slug"=>route('manage.carousel',[$this->store->nickname]),
+                            "icon"=>"fa-solid fa-panorama",
+                        ],
+                    ]
                 ],
-    
-                [
-                    "name"=>"Web",
-                    "slug"=>route('manage.web', [$this->store->nickname]),
-                    "icon"=>"fa-solid fa-globe",
-                ],
-                [
-                    "name"=>"Importacion SQL",
-                    "slug"=>route('manage.import', [$this->store->nickname]),
-                    "icon"=>"fa-solid fa-globe",
-                ],
+                // [
+                //     "name"=>"Importacion SQL",
+                //     "slug"=>route('manage.import', [$this->store->nickname]),
+                //     "icon"=>"fa-solid fa-globe",
+                // ],
                 
     
             ];
@@ -81,8 +137,10 @@ class Sidebar extends Component
     
     public function render()
     {
+
         $store = $this->store;
         return view('livewire.manage.components.sidebar',compact('store'));
+
     }
 
 

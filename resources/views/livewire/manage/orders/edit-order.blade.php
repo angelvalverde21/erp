@@ -1,7 +1,7 @@
 <div>
 
     <x-sectioncontent>
-        @livewire('manage.orders.edit-order.card-status-iconos', ['order' => $order], key('card-status-iconos'))
+        {{-- @livewire('manage.orders.edit-order.card-status-iconos', ['order' => $order], key('card-status-iconos')) --}}
     </x-sectioncontent>
 
     @if (!$order->is_active)
@@ -14,7 +14,9 @@
     @endif
 
     <x-sectioncontent>
+        {{-- Botones para impresion print --}}
         @include('livewire.manage.orders.edit-order._navbar-buttons')
+
     </x-sectioncontent>
 
     <x-sectioncontent>
@@ -55,9 +57,24 @@
                     @livewire('manage.orders.edit-order.card-carrier-details', ['order' => $order], key('card-carrier-' . $order->address_id))
                 </div>
 
+
+                {{-- Hora y fecha de entrega --}}
                 <div class="col-12 col-lg-4">
-                    @livewire('manage.orders.edit-order.card-date-details', ['order' => $order->id], key('card-details'))
+                    @livewire('manage.orders.edit-order.card-date-details', ['order' => $order], key('card-details'))
                 </div>
+
+                
+                {{-- resumen de envio --}}
+                {{-- <div class="col-12 col-lg-3">
+
+                    <ul class="list-group">
+                        <li class="list-group-item">Metodo entrega: {{ $order->delivery_method->title }}</li>
+                        <li class="list-group-item">Metodo de Cobro: {{ $order->collect_method->title }}</li>
+                        <li class="list-group-item">Metodo de Pago: {{ $order->payment_method->name }}</li>
+                        <li class="list-group-item">Encargado del envio: {{ $order->delivery_man->name }}</li>
+                    </ul>
+                    
+                </div> --}}
 
             </div>
         @endif
@@ -70,7 +87,7 @@
 
         {{-- Item de la orden --}}
 
-        @livewire('components.items.show-item-all', ['order' => $order->id], key('card-show-all-items'))
+        @livewire('components.items.show-item-all', ['order' => $order], key('card-show-all-items'))
 
 
         <div class="row">
@@ -84,7 +101,7 @@
 
             {{-- Detalles del pago --}}
             <div class="col-lg-6 col">
-                @livewire('manage.orders.edit-order.card-show-summary', ['order' => $order->id], key('show-summary'))
+                @livewire('manage.orders.edit-order.card-show-summary', ['order' => $order], key('show-summary'))
             </div>
 
         </div>
@@ -155,4 +172,3 @@
     {{-- Modal para las observaciones --}}
 
 </div>
-

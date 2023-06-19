@@ -1,0 +1,64 @@
+<?php
+
+//ayv_usuarios => users
+
+php artisan db:seed --class=InsertOldUsersSeeder
+$this->call(InsertOldUsersSeeder::class);
+
+//ayv_direcciones_envio => addresses
+
+php artisan db:seed --class=InsertOldAddresesSeeder
+$this->call(InsertOldAddresesSeeder::class);
+
+//ayv_productos => products
+
+php artisan db:seed --class=InsertOldProductsSeeder
+$this->call(InsertOldProductsSeeder::class);
+
+//ayv_multimedia => colors
+
+php artisan db:seed --class=InsertOldColorsSeeder
+$this->call(InsertOldColorsSeeder::class);
+
+//Size ejecuta unos create internos no los hace desde un json como los demas
+
+php artisan db:seed --class=InsertOldSizesSeeder
+$this->call(InsertOldSizesSeeder::class);
+
+
+//Ahora ejecutamos el comando ColorSizeSeeder del seeder usual
+php artisan db:seed --class=ColorSizeSeeder
+$this->call(ColorSizeSeeder::class);
+
+//Creando las ordenes
+php artisan db:seed --class=InsertOldOrdersSeeder
+$this->call(InsertOldOrdersSeeder::class);
+
+//Creando los items
+php artisan db:seed --class=InsertOldOrdersDetailsSeeder
+$this->call(InsertOldOrdersDetailsSeeder::class);
+
+//Creando el content de cada item
+php artisan db:seed --class=InsertOldOrdersDetailsCompleteSeeder
+$this->call(InsertOldOrdersDetailsCompleteSeeder::class);
+
+//aplicando los voucher para los pedidos pagados
+
+php artisan db:seed --class=InsertOldAmountPaymentSeeder
+$this->call(InsertOldAmountPaymentSeeder::class);
+---------------------------------------------------------------------
+
+//Moviendo imagenes
+
+php artisan db:seed --class=MoveOldOrderImagesSeeder
+$this->call(MoveOldOrderImagesSeeder::class);
+php artisan db:seed --class=MoveOldProductImagesSeeder
+$this->call(MoveOldProductImagesSeeder::class);
+
+
+------------------------------------------------------------------
+
+Despues del seeder ejecutar passport para instalar las claves
+
+php artisan passport:install
+

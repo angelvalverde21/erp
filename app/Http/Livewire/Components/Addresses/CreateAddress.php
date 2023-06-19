@@ -15,12 +15,16 @@ class CreateAddress extends Component
 
     use AddressTrait;
 
-    public function mount($user_id){
+    public $render, $user;
+
+    public function mount($user_id, $render = ''){
 
         $this->user =  User::find($user_id);
         //$this->user['user_id'] = $this->user->id;
 
         $this->SendToInput($this->user);
+
+        $this->render = $render;
     
         // $this->address['user_id'] = $this->user->id;
         // $this->address['name'] = $this->user->name;
@@ -64,9 +68,22 @@ class CreateAddress extends Component
 
         $address->save();
 
-        $this->emit('creado'); //SweetAlert2
+        //Actualizar la direccion por defecto del usuario
+
+        $address->user->address_id = $address->id;
+
+        $address->user->save();
+
         //$this->emitTo('components.addresses.show-address','render'); //Refresca la tarjeta por defecto que se muestra en el blade
         $this->emitTo('components.addresses.show-address-all','render');  //Refresca el componente ShowAddressAll
+        
+        if($this->render <> ""){
+            
+            $this->emit($this->render,'render');  //Refresca el componente ShowAddressAll
+            
+        }
+        
+        $this->emit('creado'); //SweetAlert2
 
         //Cierra el modal de crear direccion y todas las direcciones contenidas en el modal
         //$this->dispatchBrowserEvent('cerrar-modal', ['modalID' => '#show-all-address-modal']);
@@ -113,4 +130,3 @@ class CreateAddress extends Component
     }
 
 }
-

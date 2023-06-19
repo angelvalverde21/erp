@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -16,6 +17,24 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+
+    const MAIN_ID = 232;
+    const VANE_ID = 1707;
+    const STORE_ID = 10;
+
+    const DIR_VOUCHER_PACKING = "orders/comprobantes/packing/";
+    const DIR_VOUCHER_PAYMENTS = "orders/comprobantes/payments/";
+    const DIR_VOUCHER_SHIPPING = "orders/comprobantes/shipping/";
+
+    // CONST DIR_PRODUCTS = "products/";
+    // CONST DIR_PRODUCTS_MEDIUM = "products/medium";
+    // CONST DIR_PRODUCTS_THUMB = "products/thumb";
+
+    // CONST DIR_COLORS = "products/colors";
+    // CONST DIR_COLORS_THUMB = "products/colors/thumb";
+    // CONST DIR_COLORS_MEDIUM = "products/colors/medium";
+
+
 
     // use HasApiTokens;
     use HasApiTokens;
@@ -66,7 +85,42 @@ class User extends Authenticatable
 
     protected $appends = [
         'profile_photo_url',
+        'roles',
+        'logo_store',
+        'yape',
+        'perfil'
     ];
+
+    public function getRolesAttribute()
+    {
+        return $this->roles()->get();
+    }
+
+    public function getLogoStoreAttribute()
+    {
+        if ($this->getOption('upload_logo') != "") {
+            return $this->getOption('upload_logo');
+        }
+
+        return false;
+    }
+
+    public function getYapeAttribute()
+    {
+        Log::info('imprimiendo el qr_yape ' . $this->qr_yape);
+        if (isset($this->qr_yape)) {
+            return asset(Storage::url($this->qr_yape));
+        } else {
+            return false;
+        }
+    }
+
+    // public function getLogoAttribute(){
+    //     if(isset($this->logo)){
+    //         return asset(Storage::url($this->logo));
+    //     }
+    //     return false;
+    // }
 
     //Relacion uno a muchos
     public function addresses()
@@ -96,10 +150,20 @@ class User extends Authenticatable
         //Finalmente tambien le decimos a laravel que el id de este modelo (user) es user_id y que el id de los stores (que tambien es la misma tabla user)
         //sera store_id que a su ves es user_id (llave foranea)
 
+        // return 
+        // Log::info(RoleStoreUser::whereHas('user_id',$this->id)->get());
+        // return User::whereHas("roles", function($q){ $q->where("name", "store")->limit(5); })->get();
+
     }
 
-    public function images(){
-        return $this->morphMany(Image::class,"imageable")->orderBy('id','DESC');
+    public function store()
+    {
+        return $this->belongsTo(User::class, 'store_id');
+    }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC');
     }
 
 
@@ -113,12 +177,49 @@ class User extends Authenticatable
         )->orderBy('id', 'desc')->get();
     }
 
-    public static function repartidores()
+
+    // public static function couriers()
+    // {
+    //     return User::whereHas(
+    //         'roles',
+    //         function ($q) {
+    //             $q->where('name', 'carrier');
+    //         }
+    //     )->orderBy('id', 'desc')->get();
+    // }
+
+    public static function repartidores($store_id)
+    {
+
+        // Log::info('holaaaaaaaaaaa');
+
+        try {
+
+            $store = User::findOrFail($store_id);
+
+            $repartidores = $store->whereHas(
+                'roles',
+                function ($q) {
+                    $q->where('name', 'repartidor');
+                }
+            )->get();
+
+            Log::info($repartidores);
+
+            return $repartidores;
+
+        } catch (\Throwable $th) {
+            Log::info('ha ocurrido un error al seleccionar la tienda donde se encuentran los repartidores: Models\User.php');
+            return false;
+        }
+    }
+
+    public static function modelos()
     {
         return User::whereHas(
             'roles',
             function ($q) {
-                $q->where('name', 'repartidor');
+                $q->where('name', 'modelo');
             }
         )->get();
     }
@@ -162,14 +263,16 @@ class User extends Authenticatable
         $this->attributes['wallet'] = json_encode($value);
     }
 
-    function totalOrders(){
-        return Order::where('buyer_id',$this->id)->get()->count();
+    function totalOrders()
+    {
+        return Order::where('buyer_id', $this->id)->get()->count();
     }
 
-    
-    function totalOrderMount(){
-        
-        $orders = Order::where('buyer_id',$this->id)->get();
+
+    function totalOrderMount()
+    {
+
+        $orders = Order::where('buyer_id', $this->id)->get();
 
         $total = 0;
 
@@ -184,23 +287,27 @@ class User extends Authenticatable
     //     return 'nickname';
     // }
 
-    public function getLogoAttribute($value){
-        if($value){
-            return url('/') . Storage::url($value);
-        }else{
-            return '';
-        }
-    }
+    // public function getLogoAttribute($value){
+    //     if($value){
+    //         return url('/') . Storage::url($value);
+    //     }else{
+    //         return '';
+    //     }
+    // }
     //Productos de los stors ///
 
-    public function products(){
+
+
+    public function products()
+    {
         //return Product::where('status','1')->where('store_id',$this->store->id)->get();
         // return $this->HasMany(Product::class,'store_id')->where('status','1')->with('colors', function($q){
         //     $q->has('sizes');
         // });
         //en la tabla products busca el atributo store_id (Por defecto seria user_id, pero le estamos indicando expreamente que busque store_id)
-    
-        return $this->HasMany(Product::class,'store_id')->where('status','1')->orderBy('id','desc')->with('category')->with('images')->with('colors.sizes');
+
+        // return $this->HasMany(Product::class,'store_id')->where('status','1');
+        return $this->HasMany(Product::class, 'store_id');
 
         //ojo para que el json sea aninado se pone con punto '.' si no se desea anidado entonces se agrega un with mas
 
@@ -208,8 +315,8 @@ class User extends Authenticatable
         Anidado:     ->with('colors.sizes');
         No aninado:  ->with('colors')->with('sizes');;
         */
-    
     }
+
     // , function($q){
     //     $q->has('sizes');
     // }
@@ -218,43 +325,86 @@ class User extends Authenticatable
 
     // }
 
-    public function carousel(){
+    public function carousel()
+    {
 
-        return $this->hasMany(Carousel::class,'store_id')->where('type','web');
+        return $this->hasMany(Carousel::class, 'store_id')->where('type', 'web');
     }
 
-    public function carouselMobile(){
+    public function carouselMobile()
+    {
 
-        return $this->hasMany(Carousel::class,'store_id')->where('type','mobile');
+        return $this->hasMany(Carousel::class, 'store_id')->where('type', 'mobile');
     }
 
-    public function getQrYapeAttribute($value){
-        if($value){
-            return url('/') . Storage::url($value);
-        }else{
-            return '';
+    // public function getQrYapeAttribute($value){
+    //     if($value){
+    //         return url('/') . Storage::url($value);
+    //     }else{
+    //         return '';
+    //     }
+
+    // }
+
+    // public function getQrPlinAttribute($value){
+    //     if($value){
+    //         return url('/') . Storage::url($value);
+    //     }else{
+    //         return '';
+    //     }
+    // }
+
+    public function getPerfilAttribute()
+    {
+
+        $result = [];
+
+        foreach ($this->options as $option) {
+            # code...
+
+            // $result =[
+            //     'name' => $option->value,
+            // ];
+
+            $result[$option->name] = $option->value;
         }
 
+        // Log::info($result);
+        // Log::info(array_values($result));
+
+        return $result;
     }
 
-    public function getQrPlinAttribute($value){
-        if($value){
-            return url('/') . Storage::url($value);
-        }else{
-            return '';
-        }
+    public function profile()
+    {
+        return $this->hasOne(ProfileStore::class, 'store_id');
     }
 
-    public function profile(){
-        return $this->hasOne(ProfileStore::class,'store_id');
-    }
-
-    public function orders(){
+    public function orders()
+    {
         //apunto a la tabla orders pero en ves de ir con user_id por defecto le indico a la funcion que lo haga con store_id
-        return $this->hasMany(Order::class,'store_id');
+        return $this->hasMany(Order::class, 'store_id');
     }
 
-    public function myOrders(){
-        return $this->hasMany(Order::class,'buyer_id');
+    public function myOrders()
+    {
+        return $this->hasMany(Order::class, 'buyer_id');
+    }
+
+    public function options()
+    {
+        return $this->morphMany(Option::class, "optionable");
+    }
+
+    public function getOption($optionName)
+    {
+
+
+        try {
+            return $this->morphMany(Option::class, "optionable")->where('name', $optionName)->firstOrFail()->value;
+        } catch (\Throwable $th) {
+            //throw $th;
+            return false;
+        }
     }
 }

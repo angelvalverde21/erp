@@ -24,11 +24,13 @@ class ColorSizeSeeder extends Seeder
 
             $sizes = Size::where('product_id',$color->product_id)->get();
 
+            $quantityTotal = 0;
+
             foreach ($sizes as $size){
 
                 $color->sizes()->attach([
                     $size->id => [
-                        'quantity' => 3,
+                        'quantity' => 1,
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s'),
                     ]
@@ -36,11 +38,13 @@ class ColorSizeSeeder extends Seeder
 
                 $colorSize = ColorSize::where('color_id', $color->id)->where('size_id',$size->id)->first();
 
-                $colorSize->agregarStock(3);
+                $colorSize->quantity = 1;
+
+                $quantityTotal++;
 
             }
 
-            $color->quantity = 9;
+            $color->quantity = $quantityTotal;
 
             $color->save();
 

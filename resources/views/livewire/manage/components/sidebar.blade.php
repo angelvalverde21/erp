@@ -6,6 +6,14 @@
             width: 100%;
             height: 0.50px;
         }
+
+        .nav-sidebar>.nav-item .nav-icon {
+            font-size: 0.9rem !important;
+        }
+
+        .user-panel {
+            font-size: 0.9rem !important;
+        }
     </style>
 
 
@@ -15,14 +23,34 @@
 
         <!-- Sidebar -->
         <div class="sidebar">
+
+
+            <div class="logo-store px-3 pt-3 text-center">
+                @if ($store->getOption('upload_logo') != '')
+                    <img width="100px" src="{{ $store->getOption('upload_logo') }}" alt="">
+                @else
+                    <h3>SU LOGO AQUI</h3>
+                @endif
+            </div>
             <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex justify-content-between text-white">
+
                 <div class="image">
                     <img src="{{ asset('admin-lte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
                         alt="User Image">
                 </div>
+
                 <div class="info">
-                    <a href="{{ route('home') }}" class="d-block">{{ $user->name }}</a>
+                    <div class="name text-end">
+                        <a href="{{ route('home') }}" class="d-block">{{ $user->name }} </a>
+                    </div>
+
+                    <div class="rol text-end">
+                        @if ($user->hasRole('admin'))
+                            Admin
+                        @endif
+                    </div>
+
                 </div>
             </div>
 
@@ -47,13 +75,23 @@
 
 
                 @foreach ($menus as $menu)
-
-                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div class="info">
-                            <a href="{{ $menu['slug'] }}" class="d-block"><i
-                                    class="{{ $menu['icon'] }} mr-2"></i> {{ $menu['name'] }}</a>
+                    {{-- Si hay submenu le quitamos el slug --}}
+                    @if (isset($menu['sub_menu']))
+                        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                            <div class="info">
+                                <a href="#" class="d-block"><i class="{{ $menu['icon'] }} mr-2"></i>
+                                    {{ $menu['name'] }}</a>
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                            <div class="info">
+                                <a href="{{ $menu['slug'] }}" class="d-block"><i class="{{ $menu['icon'] }} mr-2"></i>
+                                    {{ $menu['name'] }}</a>
+                            </div>
+                        </div>
+                    @endif
+
 
 
                     <!-- sub menu -->
@@ -64,30 +102,28 @@
                             data-accordion="">
 
                             @if (isset($menu['sub_menu']))
-
                                 @foreach ($menu['sub_menu'] as $sub_menu)
                                     <li class="nav-item">
                                         <a href="{{ $sub_menu['slug'] }}"
-                                            class="nav-link {{ request()->routeIs('manage.'.$sub_menu['active'].'*', [$store->nickname]) ? 'active' : '' }}">
+                                            class="nav-link {{ request()->routeIs('manage.' . $sub_menu['active'], [$store->nickname]) ? 'active' : '' }}">
+                                            {{-- class="nav-link {{ request()->routeIs('manage.'.$sub_menu['active'].'*', [$store->nickname]) ? 'active' : '' }}"> --}}
                                             <i class="{{ $sub_menu['icon'] }} nav-icon"></i>
                                             <p>{{ $sub_menu['name'] }}</p>
                                         </a>
                                     </li>
                                 @endforeach
-
                             @endif
 
                         </ul>
                     </nav>
-
                 @endforeach
 
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                {{-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="info">
                         <a href="{{ route('manage.profile', [$store->nickname]) }}" class="d-block"><i
                                 class="fa-solid fa-store mr-2"></i> {{ $store->name }}</a>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- sub menu -->
 
@@ -124,7 +160,7 @@
                 </nav> --}}
 
                 {{-- herramientas --}}
-{{-- 
+                {{-- 
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="info">
                         <a href="{{ route('manage.profile', [$store->nickname]) }}" class="d-block"><i
@@ -164,27 +200,25 @@
 
 
                 {{-- <li class="nav-item"> --}}
-                    
-                @else
-                    {{-- fin de else --}}
-                    <!-- Sidebar Menu -->
+            @else
+                {{-- fin de else --}}
+                <!-- Sidebar Menu -->
 
-                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div class="info">
-                            <a href="{{ route('account') }}" class="d-block"><i
-                                    class="fa-solid fa-store mr-2"></i>Paginas</a>
-                        </div>
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="info">
+                        <a href="{{ route('account') }}" class="d-block"><i
+                                class="fa-solid fa-store mr-2"></i>Paginas</a>
                     </div>
+                </div>
 
-                    <nav class="mt-2">
+                <nav class="mt-2">
 
-                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="" role="menu"
-                            data-accordion="">
-                            <!-- Add icons to the links using the .nav-icon class
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="" role="menu" data-accordion="">
+                        <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
 
-                            {{-- <li class="nav-item">
+                        {{-- <li class="nav-item">
                                 <a href="" class="nav-link">
                                     <i class="fa-solid fa-align-justify nav-icon"></i>
                                     <p>Mis ventas</p>
@@ -200,15 +234,15 @@
                             </li>
 
                             <hr class="separador-sidebar"> --}}
-                            <li class="nav-item">
+                        <li class="nav-item">
 
-                                <a href="{{ route('account.store.create') }}" class="nav-link"><i
-                                        class="fa-solid fa-box nav-icon"></i>Crear nueva pagina</a>
+                            <a href="{{ route('account.store.create') }}" class="nav-link"><i
+                                    class="fa-solid fa-box nav-icon"></i>Crear nueva pagina</a>
 
-                            </li>
+                        </li>
 
-                        </ul>
-                    </nav>
+                    </ul>
+                </nav>
             @endif
 
 

@@ -3,7 +3,7 @@
     <div>
         <div class="card">
 
-            <div class="card-header">
+            <div class="card-header py-3">
                 <x-form.button-open-modal class="primary" text='Agregar Precio' target="#editCarrierOrderDetails" />
             </div>
 
@@ -32,7 +32,7 @@
                             <td class="text-center">x</td>
                             <td class="text-center">S/. {{ $price->value }}</td>
                             <td class="text-center">=</td>
-                            <td class="text-center">S/. {{ $price->quantity*$price->value }}</td>
+                            <td class="text-center">S/. {{ $price->value_total }}</td>
                             <td class="text-center">{{ $price->created_at }}</td>
                             <td class="text-center">
                                 <a href="#" wire:click.prevent="deletePrice({{ $price->id }})" class="btn btn-danger"><i

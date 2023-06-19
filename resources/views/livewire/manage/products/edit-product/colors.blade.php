@@ -1,25 +1,25 @@
 <div>
     {{-- Because she competes with no one, no one can compete with her. --}}
-    <h4><i class="fa-solid fa-cart-flatbed mr-2"></i>( {{ $product->stock }} ) Productos en almacen</h4>
+    <h4><i class="fa-solid fa-cart-flatbed mr-2"></i>( {{ $product->quantity }} ) Productos en almacen</h4>
 
     {{-- cargar imagen --}}
 
-    <div class="row pb-3" wire:ignore>
-
-        <div class="col position-relative">
-            <form method="POST" action="{{ route('manage.products.upload.colors', [$store->nickname, $product]) }}"
-                class="dropzone" id="my-awesome-dropzone-colors">
-            </form>
-        </div>
-
-    </div>
-
     {{-- fin de cargar imagen --}}
 
-    @if ($product->colors->count())
+    <h4>{{ $colors->count() }} disenos disponibles</h4>
+
+    @if ($colors->count()>0)
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control buscar_table" placeholder="Buscar Color">
+            <div class="input-group-append">
+                <span class="input-group-text">
+                    <li class="material-icons">search</li>
+                </span>
+            </div>
+        </div>
 
         <div class="table-responsive">
-
 
             <table class="table">
 
@@ -29,26 +29,68 @@
                         <td class="text-center">Agregar Stock</td>
                         <td class="text-center">Colores</td>
                         <td class="text-center">Variantes</td>
-                        <td class="text-center">Stock</td>
                         <td class="text-center">Eliminar</td>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @foreach ($product->colors as $color)
+
+                    <tr class="text-center">
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">
+                            <div class="row p-3" wire:ignore>
+
+                                <form method="POST" action="{{ route('manage.products.upload.colors', [$store->nickname, $product]) }}"
+                                    class="dropzone" id="my-awesome-dropzone-colors">
+                                </form>
+                        
+                            </div>
+                        </td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                    </tr>
+
+                    @foreach ($colors as $color)
                         <tr class="text-center">
                             <td class="text-center">{{ $color->id }}</td>
                             <td>
                                 {{-- boton para el stock --}}
-                                <button class="btn btn-success" data-toggle="modal"
-                                    data-target="#editarStock-{{ $color->id }}" type="button"><i
-                                        class="fa-solid fa-barcode me-1"></i> Stock</button>
+                                <button class="btn btn-success" style="width: 115px;" data-toggle="modal"
+                                    data-target="#editarStock-{{ $color->id }}" type="button" class="d-flex justify-content-between align-items-center"><i
+                                        class="fa-solid fa-barcode me-1"></i><span>Editar Stock</span></button>
+
+                                        <table class="table mt-3">
+
+                                            @foreach ($color->sizes as $size)
+                                            <tr>
+                                                <td>{{ $size->name }}</td>
+                                                <td>{{ $size->pivot->quantity }}</td>
+                                            </tr>      
+                                            @endforeach
+                                        </table>
                             </td>
 
                             @if ($color->image)
                                 <td>
                                     {{-- boton para las variantes --}}
-                                    <a href="#" data-toggle="modal" data-target="#zoom-{{ $color->id }}">
+
+                                    <a href="{{ Storage::url($color->image->name) }}" data-lightbox="colors"
+                                        data-title="Stock: {{ $color->quantity }}">
+                                        <img loading="lazy" src="{{ Storage::url($color->image->name) }}" alt="" width="100px"
+                                            height="100%">
+                                    </a>
+
+                                    <div>({{ $color->quantity }})</div>
+
+                                    @if ($color->label != '')
+                                        <div>({{ $color->label }})</div>
+                                    @endif
+                                    {{-- <a href="#" class="btn btn-secondary">Agregar info</a> --}}
+
+                                    {{-- Mostrar como modal de bootstrap --}}
+
+                                    {{-- <a href="#" data-toggle="modal" data-target="#zoom-{{ $color->id }}">
                                         <img src="{{ Storage::url($color->image->name) }}" alt="" width="100px"
                                             height="100%">
                                     </a>
@@ -57,14 +99,21 @@
 
                                         <img src="{{ Storage::url($color->image->name) }}" alt="" width="100%" height="100%">
 
-                                    </x-modal>
+                                    </x-modal> --}}
+
+                                    {{-- fin de mostrar como modal de bootstrap --}}
                                 </td>
 
                                 <td>
-                                    <a class="btn btn-primary" href="#" data-toggle="modal"
+
+                                    @livewire('manage.products.edit-product.colors.edit-color-modal', ['color' => $color, 'store' => $store], key('edit-color-' . $color->id))
+
+                                    {{-- <a class="btn btn-primary" href="#" data-toggle="modal"
                                         data-target="#addImagesColor{{ $color->id }}">
-                                        Agregar Variantes
+                                        Editar Color
                                     </a>
+                                    <p>Agregue fotos del mismo color pero actuales</p> --}}
+
                                 </td>
                             @else
                                 <td>
@@ -76,7 +125,9 @@
                                 </td>
                             @endif
 
-                            <td>{{ $color->quantity }}</td>
+                            {{-- <td>
+                                <a href="{{ route('manage.products.download.stock', [$store->nickname, $color->product_id]) }}" class="btn btn-secondary">Descargar Stock</a>
+                            </td> --}}
 
                             <td wire:key="color-{{ $color->id }}" class="text-center">
                                 <a class="btn-color" href="#"
@@ -89,9 +140,10 @@
                 </tbody>
             </table>
         </div>
+
         <div class="contenedor">
 
-            @foreach ($product->colors as $color)
+            @foreach ($colors as $color)
                 {{-- modal para agregar el stock --}}
 
                 <x-modal title="Editar Stock" id="editarStock-{{ $color->id }}" size="modal-lg">
@@ -99,7 +151,8 @@
                     <div class="row text-center">
                         <div class="col-lg-4 col-12">
                             @if ($color->image)
-                            <img src="{{ $color->image->name }}" alt="" width="100%" height="100%">
+                                <img src="{{ Storage::url($color->image->name) }}" alt="" width="100%"
+                                    height="100%">
                             @endif
                         </div>
 
@@ -112,7 +165,8 @@
 
                 {{-- modal para agregar variantes de la imagen --}}
 
-                <x-modal title="Agregar variantes" id="addImagesColor{{ $color->id }}" size="modal-lg">
+                {{-- <x-modal title="Agregar variantes" id="addImagesColor{{ $color->id }}" size="modal-lg">
+
                     <div class="zoom-color">
                         <div wire:ignore class="drop-zoom" wire:key="color-variants-form-upload-{{ $color->id }}">
 
@@ -123,6 +177,21 @@
 
                         </div>
                     </div>
+
+                    <div class="input-group mb-3 mt-3">
+                        <input type="text" class="form-control" wire:model.debounce.500ms="color.name"
+                            placeholder="Color" aria-label="Color" aria-describedby="basic-addon1">
+                    </div>
+
+                    <button type="button" wire:loading.class="btn-secondary" wire:loading.attr="disabled"
+                        wire.target="save" wire:click="save" class="btn btn-success ml-auto"><i
+                            class="fa-solid fa-floppy-disk mr-1"></i> Guardar
+                        Cambios</button>
+
+                    <div class="spinner-border" wire:loading.flex wire:target="save" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+
 
                     <table class="table table-striped mt-3">
                         <tr>
@@ -136,7 +205,8 @@
                             @foreach ($color->images as $image)
                                 <tr>
                                     <td>{{ $image->id }}</td>
-                                    <td><img src="{{ $image->name }}" width="100px" height="100%" alt="">
+                                    <td><img src="{{ Storage::url($image->name) }}" width="100px" height="100%"
+                                            alt="">
                                     </td>
                                     <td>{{ $image->created_at }}</td>
                                     <td wire:key="color-variante-{{ $image->id }}" class="text-center">
@@ -148,7 +218,8 @@
                             @foreach ($color->images as $image)
                                 <tr>
                                     <td>{{ $image->id }}</td>
-                                    <td><img src="{{ $image->name }}" width="100px" height="100%" alt="">
+                                    <td><img src="{{ Storage::url($image->name) }}" width="100px" height="100%"
+                                            alt="">
                                     </td>
                                     <td>{{ $image->created_at }}</td>
                                     <td wire:key="color-variante-{{ $image->id }}" class="text-center">
@@ -161,12 +232,23 @@
                         @endif
 
                     </table>
-                </x-modal>
+                </x-modal> --}}
             @endforeach
 
         </div>
 
+    @else
+
+        <div class="row p-3" wire:ignore>
+
+            <form method="POST" action="{{ route('manage.products.upload.colors', [$store->nickname, $product]) }}"
+                class="dropzone" id="my-awesome-dropzone-colors">
+            </form>
+    
+        </div>
+
     @endif
+
 
     {{-- @push('script')
 
@@ -202,7 +284,7 @@
         };
     </script>
 
-    <script>
+    {{-- <script>
         Dropzone.options.myAwesomeDropzoneVariantsColorsEdit = {
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -239,5 +321,5 @@
                 }
             }
         };
-    </script>
+    </script> --}}
 @endpush

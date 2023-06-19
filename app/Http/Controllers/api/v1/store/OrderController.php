@@ -8,6 +8,7 @@ use App\Models\ColorSize;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Size;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -142,6 +143,80 @@ class OrderController extends Controller
     }
 
     //Registrar sin login
+
+    public function createOrderWithLogin($nickname, Request $request){
+
+        $buyer = Auth::user();
+
+        $store = User::where('nickname', $nickname)->first();
+
+        if($buyer){
+
+            try {
+
+                $order = new Order();
+
+                $order->delivery_man_id = 1707; //el usuario 1707 es magaly vanesa
+                $order->shipping_cost_buyer = 0; //por el momento todos los pedidos de internet tienen envio gratis
+                $order->payment_method_id = 1; //simula que el pago lo hico con transferencia deposito
+                $order->delivery_method_id = 1; //quiere decir que se envia via delivery
+                $order->store_id = $store->id;
+                $order->seller_id = 1; //el usuario 1 es que el pedido vino desde internet
+                $order->buyer_id = $buyer->id;
+                $order->address_id = $buyer->addresses->first()->id; //el id de la direccion recien creada
+
+                $order->saveOrFail();
+
+                Log::debug('Orden creado :' . $order);
+
+                //Ahora Agregar los items del carrito de compras a la orden
+
+                createItemsOrder($request->order, $order->id);
+
+                //Hasta aqui todo se creo correctamente
+
+                //$accessToken = $buyer->createToken('authToken')->accessToken;
+
+
+                if ($order->id) {
+                    return response()->json(
+                        $data = [
+                            "register" => "success",
+                            "id" => $order->id,
+                            "msg" => "se han creado la orden correctamente",
+                        ],
+                        $status = 200
+                    );
+                }
+
+            } catch (\Exception $error) {
+
+                Log::info($error->getMessage());
+
+                return response()->json(
+                    $data = [
+                        "error" => "500",
+                        "msg" => "Error al crear la orden",
+                        "message_api" => $error->getMessage(),
+                    ],
+
+                    
+                    // $status = 500
+                );
+            }
+
+        }else{
+            return response()->json(
+                $data = [
+                    "message" => "el usuario no esta autenticado"
+                ],
+                // $status = 500
+                // $status = 200
+            );
+        }
+
+    }
+
     public function createOneStep($nickname, Request $request)
     {
 
@@ -249,12 +324,12 @@ class OrderController extends Controller
 
                     $order = new Order();
 
-                    $order->delivery_man_id = 3; //el usuario 3 es magaly vanesa
+                    $order->delivery_man_id = 1707; //el usuario 1707 es magaly vanesa
                     $order->shipping_cost_buyer = 0; //por el momento todos los pedidos de internet tienen envio gratis
                     $order->payment_method_id = 1; //simula que el pago lo hico con transferencia deposito
                     $order->delivery_method_id = 1; //quiere decir que se envia via delivery
                     $order->store_id = $store->id;
-                    $order->seller_id = 12; //el usuario 12 es que el pedido vino desde internet
+                    $order->seller_id = 1; //el usuario 1 es que el pedido vino desde internet
                     $order->buyer_id = $buyer->id;
                     $order->address_id = $address->id; //el id de la direccion recien creada
 
@@ -264,194 +339,7 @@ class OrderController extends Controller
 
                     //Ahora Agregar los items del carrito de compras a la orden
 
-                    if ($request->order) {
-
-                        Log::info('imprimiendo todo el objeto');
-
-                        Log::info($request->order);
-
-                        $i = 0;
-                        
-                        //recorremos cada item del itemCart
-
-                        foreach ($request->order as $itemOrder) {
-
-                            //calculamos cuantos elementos repetidos hay
-                            for ($j = 0; $j < $itemOrder['quantity']; $j++) {
-                                # code...
-                                $array_repetidos[] = $itemOrder['product_id'];
-                            }
-
-                            $i++;
-                        }
-
-                        Log::info('Products ids');
-
-                        Log::info($array_repetidos);
-
-
-                        $repetidos = array_count_values($array_repetidos);
-
-                        Log::info('Product_id con el total de repeticiones');
-
-                        Log::info($repetidos);
-
-
-                        // foreach ($repetidos as $product_id) {
-                        //     # code...
-                        // }
-
-                        $array_prices = [];
-
-                        foreach ($repetidos as $product_id => $cantidad) {
-
-                            // Log::info('Imprimiendo el product_id');
-
-                            // Log::info($product_id);
-
-                            // Log::info('Imprimiendo la cantidad');
-
-                            // Log::info($cantidad);
-
-                            # code...
-                            $product = Product::find($product_id);
-
-                            // Log::info('Imprimiendo el producto');
-                            // Log::info($product);
-
-                            $precios = $product->prices;
-
-                            // Log::info('Imprimiendo los precios');
-                            // Log::info($precios);
-
-                            foreach ($precios as $precio) {
-
-                                Log::info('ingreso al foreach');
-                                Log::info($precio['quantity']);
-
-                                if ($cantidad == $precio['quantity']) {
-                                    # code...
-                                    $array_prices[$product_id] = $precio['value'];
-                                    break;
-                                }else{
-                                    $array_prices[$product_id] = $product->price;
-                                }
-                            }
-                        }
-
-                        // Log::info('Array Precios');
-
-                        // Log::info($array_prices);
-
-                        foreach ($request->order as $itemOrder) {
-
-                            //ojo $itemOrder->color_size_id no funciona en el foreach
-                            //se tiene que usar $itemOrder['color_size_id']
-
-                            // Log::info('imprimiendo el item del obejto');
-
-                            // Log::info($itemOrder);
-
-                            // Log::info('imprimiendo el id');
-
-                            // Log::info($itemOrder['color_size_id']);
-
-                            // Log::info('imprimiendo el qty');
-
-                            // Log::info($itemOrder->qty);
-
-                            try {
-                                # code...
-                                //Recibiendo los parametros del formulario uno por uno
-
-                                //fin de recibiendo los parametros del formulario
-
-                                switch ($itemOrder['type']) {
-                                    case 'color_id':
-                                        # code...
-                                        break;
-
-                                    case 'size_id':
-                                        # code...
-                                        break;
-
-                                    case 'none':
-                                        # code...
-                                        break;
-
-                                    default:
-
-                                        //color_size
-
-                                        //Buscando el color_size_id
-
-                                        // $tallaSolicitada = $itemOrder["talla"];
-
-                                        switch ($product->how_sell) {
-                                            case 'value':
-                                                # code...
-                                                break;
-                                            
-                                            default:
-                                                # code...
-                                                break;
-                                        }
-
-                                        $colorSize = ColorSize::find($itemOrder['id']);
-
-                                        $id = $colorSize->id;
-                                        $talla = $colorSize->size->name;
-                                        $imagenColor = $colorSize->color->image;
-
-                                        //Precio normal
-                                        $price = $colorSize->color->product->price;
-
-                                        // $qty = $itemOrder['quantity'];
-
-                                        $description = $colorSize->color->product->name;
-
-                                        //Precio oferta
-                                        $price_oferta = $array_prices[$colorSize->color->product->id];
-
-                                        //Prapando el json content
-
-                                        $content = [
-                                            'color_id' => $itemOrder['color_id'], //es el id del item que se agrega ra a la orden, este contiene el color y talla
-                                            'color_size_id' => $id, //es el id del item que se agrega ra a la orden, este contiene el color y talla
-                                            'talla' => $talla, //name indica la talla
-                                            'image' => $imagenColor, //image indica la url de la imagen del colors
-                                            'price' => $price_oferta, //Este sera el precio real que se le cobrara al cliente, por eso que se pone en el json
-                                            // Asi lo podremos variarar sin malograr la base de datos
-                                        ];
-
-                                        //Renombrando la variable
-                                        $item = new Item();
-
-                                        $item->quantity = $itemOrder['quantity'];
-
-                                        $item->price = $price;
-                                        $item->description = $description;
-                                        $item->content = $content;
-                                        $item->order_id = $order->id;
-
-                                        $item->saveOrFail();
-
-                                        $item->asignar_stock(); //Asignar quiere decir que descuente de la base de datos el pedido porque este es seguro para entrega
-
-                                        break;
-                                }
-                            } catch (\Exception $error) {
-                                return response()->json(
-                                    $data = [
-                                        "error" => "500",
-                                        "msg" => "Error al insertar los items de la orden",
-                                        "message_api" => $error->getMessage(),
-                                    ],
-                                    // $status = 500
-                                );
-                            }
-                        }
-                    }
+                    createItemsOrder($request->order, $order->id);
 
                     //Hasta aqui todo se creo correctamente
 
@@ -462,6 +350,8 @@ class OrderController extends Controller
                         return response()->json(
                             $data = [
                                 "register" => "success",
+                                "user" => $order->buyer,
+                                "roles" => $order->buyer->roles,
                                 "id" => $order->id,
                                 "msg" => "se han creado los datos correctamente",
                                 "access_token" => $accessToken
@@ -470,12 +360,17 @@ class OrderController extends Controller
                         );
                     }
                 } catch (\Exception $error) {
+
+                    Log::info($error->getMessage());
+
                     return response()->json(
                         $data = [
                             "error" => "500",
                             "msg" => "Error al crear la orden",
                             "message_api" => $error->getMessage(),
                         ],
+
+                        
                         // $status = 500
                     );
                 }

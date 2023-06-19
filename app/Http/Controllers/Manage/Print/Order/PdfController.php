@@ -52,6 +52,24 @@ class PdfController extends Controller
         $pdf = app('dompdf.wrapper');
    
         $pdf->set_paper('A4', 'portrait'); // 283.465  puntos equivale a 10 cms y 510.236 equivale a 18cms
+
+        // if ($order->is_contra_entrega()) {
+        //     # es contra entrega
+        //     $pdf = $pdf->loadview('livewire.manage.orders.print.packing-label-contra-entrega', compact('order'));
+        // } else {
+        //     # No es contra entrega
+
+        //     if ($order->is_pay()) {
+        //         # Esta pagado
+        //         $pdf = $pdf->loadview('livewire.manage.orders.print.packing-label', compact('order'));
+        //     } else {
+        //         # No esta pagado
+        //         $pdf = $pdf->loadview('livewire.manage.orders.print.packing-label', compact('order'));
+        //     }
+            
+        // }
+        
+
         $pdf = $pdf->loadview('livewire.manage.orders.print.packing-label', compact('order'));
 
         // $order->Addstatus('preparando_envio', $current);
@@ -59,5 +77,20 @@ class PdfController extends Controller
         //return $pdf-> download ('prueba.pdf');
         return $pdf->stream('packing.pdf');
         
+    }
+
+    public function generateInvoice($store, Order $order){
+
+
+        $pdf = app('dompdf.wrapper');
+   
+        $pdf->set_paper('A4', 'portrait'); // 283.465  puntos equivale a 10 cms y 510.236 equivale a 18cms
+
+        $pdf = $pdf->loadview('livewire.manage.orders.print.invoice', compact('order'));
+
+        // return $pdf->stream('packing.pdf');
+        // Devuelve la vista en Html
+        return view('livewire.manage.orders.print.invoice', compact('order'))->layout('layouts.manage');
+
     }
 }

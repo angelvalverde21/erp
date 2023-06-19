@@ -25,7 +25,14 @@
                     @foreach ($order->comprobantesEnvio as $comprobante)
                         <tr>
                             <td>{{ $comprobante->id }}</td>
-                            <td class="text-center"><img class="imagen-comprobante" src="{{ asset($comprobante->name) }}" height="60px" alt="">
+                            <td class="text-center">
+
+                                <a href="{{ Storage::url($comprobante->name) }}" data-lightbox="example-set" data-title="Click the right half of the image to move forward.">
+                                    <img class="imagen-comprobante" src="{{ Storage::url($comprobante->name) }}" height="60px" alt="">
+                                </a>
+
+                                
+
                             <td>{{ $comprobante->created_at }}</td>
                             </td>
                             <td class="text-center"><button type="button" wire:loading:click

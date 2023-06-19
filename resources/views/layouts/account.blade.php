@@ -76,9 +76,9 @@
                 width="60">
         </div>
 
-        {{-- @livewire('manage.components.header')
+        @livewire('account.comunes.header')
 
-        @livewire('manage.components.sidebar') --}}
+        @livewire('manage.components.sidebar')
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -117,7 +117,7 @@
 
     <script src="{{ asset('admin-lte/dist/js/adminlte.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="{{ asset('admin-lte/dist/js/demo.js') }}"></script>
+    {{-- <script src="{{ asset('admin-lte/dist/js/demo.js') }}"></script> --}}
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     {{-- <script src="{{ asset('admin-lte/dist/js/pages/dashboard.js') }}"></script> --}}
 

@@ -8,7 +8,9 @@ use App\Models\ColorSize;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Storage;
 
 class ProductApi extends Controller
 {
@@ -21,8 +23,9 @@ class ProductApi extends Controller
     {
         //
         //pones firt porque primero devuelve la informacion del usuario, que por el momento no lo necesitamos
-        $store = User::where('nickname', $nickname)->with('products')->first();
-        return $store->products;
+        $store = User::where('nickname', $nickname)->first();
+        // $store = User::where('nickname', $nickname)->first;
+        return $store->products()->where('status', '1')->where('quantity', '>', 0)->get();
     }
 
     /**
@@ -48,8 +51,8 @@ class ProductApi extends Controller
         if (is_numeric($id)) {
 
             $colorSize = ColorSize::findOrFail($id);
-
             return response()->json(['status' => '200', 'stock' => $colorSize->quantity]);
+
         } else {
 
             //si el usuario manda el formato "color-id" entonces eso no es numerico y lo analizamos aqui
@@ -123,23 +126,93 @@ class ProductApi extends Controller
     public function show($nickname, $id)
     {
 
+        //OJO SI EL NUMERO TIENE LA FORMA xxxeyyyy php podria pensar que es un numero xxx elevado a la yyyy
         if (is_numeric($id)) {
 
             $product = Product::where('id', $id)->with('images')->with('prices')->with('colors.sizes')->first();
-
+            Log::info('es id');
         } else {
 
+            //si la url es un short_link ------(CASO: 2)
             $product = Product::where('short_link', $id)->with('images')->with('prices')->with('colors.sizes')->first();
 
-            //si la url es un short_link ------(CASO: 2)
+            Log::info('es short link');
+            Log::info($product);
+
+            //comprobamos si el producto existe
             if ($product) {
-                return $product;
+
+                // $colorsArray = $product->colors->toArray();
+                // $colorsArray = array_map(function ($colorArray) {
+                //     $colorArray['image'] =  asset(Storage::url($colorArray[]));
+                //     return $productArray;
+                // }, $colorsArray);
+
+                // return $product;
+
             } else {
 
+                // return $store;
                 //si la url es un slug ------(CASO: 3)
-                $product = Product::where('slug', $id)->with('images')->with('prices')->with('colors.sizes')->first();
+                //Importante cuando se usa select se tiene que colocar los id o llaves de la tabla sino no funciona
+                // $user = Auth::user();
+
+                //si esta autenticado
+
+                Log::info('es slug');
+
+                if (Auth::guard('api')->check()) { //se usa esto para comprobar si el usuario esta siempre logeado, ya que hemos programado a angular con un interceptor 
+                // para que cada ves que user HttpCliente se envie el AuthToken bearer
+
+                    $product = Product::where('slug', $id)
+                        ->select(
+                            [
+                                'id',
+                                'name',
+                                'owner_id',
+                                'store_id',
+                                'category_id',
+                                'name',
+                                'title',
+                                'description',
+                                'price',
+                                'price_seller'
+                            ]
+                        )
+                        
+                        ->with('images')
+                        ->with('colors.sizes')
+                        ->first();
+
+
+                        $product->price = $product->price_seller;
+                        $product->price_seller = 0.00;
+
+                } else {
+
+                    $product = Product::where('slug', $id)
+                        ->select(
+                            [
+                                'id',
+                                'name',
+                                'owner_id',
+                                'store_id',
+                                'category_id',
+                                'name',
+                                'title',
+                                'description',
+                                'quantity',
+                                'price'
+                            ]
+                        )
+                        ->with('images')->with('prices')
+                        ->with('colors.sizes')
+                        ->first();
+                }
             }
         }
+
+        // $product = $product->toArray();
 
         //vamos a modificar las tallas originales y cambiarlas por un "ESTANDAR"
 

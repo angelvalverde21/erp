@@ -17,11 +17,11 @@
     <x-user.card-upload-user wirekey="a1" filename="{{ $user->$field }}" userid="{{ $user->id }}"
         field="{{ $field }}" iddrop="my-awesome-dropzone-photo">
         {{ $field }}
-
     </x-user.card-upload-user>
 
     @push('script')
         <script>
+            
             Livewire.on('uploadPhotoJs', (UserId, deleteFunction) => {
 
                 Swal.fire({

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\Models\ColorSize;
 use App\Models\Image;
+use App\Models\Product;
 use Illuminate\Support\Facades\Request;
 
 class Colors extends Component
@@ -21,7 +22,8 @@ class Colors extends Component
         'refreshColor'=>'refreshColor',
     ]; //cuando laravel escuche este evento buscara un metodo con el mismo nombre
     
-    public function mount(){
+    public function mount(Product $product){
+        $this->product = $product;
         $this->showTotalStock = 10;
         $this->store = Request::get('store');
     }
@@ -43,7 +45,7 @@ class Colors extends Component
 
         Log::info('Borrando el archivo');
         
-        Storage::delete([$color->name]);
+        Storage::delete([$color->image->name]);
 
         //Borra los registros de la base de datos
 
@@ -55,6 +57,7 @@ class Colors extends Component
 
         Log::debug($sizes);
 
+        //Borrabdo tallas asociadas
         foreach ($sizes as $size) {
             $color->sizes()->detach($size->id);
         }
@@ -81,6 +84,9 @@ class Colors extends Component
 
     public function render()
     {
-        return view('livewire.manage.products.edit-product.colors');
+
+        $colors = Color::where('product_id', $this->product->id)->orderBy('quantity','desc')->with('images')->get();
+
+        return view('livewire.manage.products.edit-product.colors', compact('colors'));
     }
 }

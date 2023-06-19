@@ -20,9 +20,12 @@
 
         @if ($filename)
             <div class="text-center mt-3" style="100%">
-                <img style="width: 150px;" src="{{ $filename }}" alt="">
+                <img style="width: 150px;" src="{{ Storage::url($filename) }}" alt="">
             </div>
+            
         @endif
+
+        
         
     </div>
     {{-- Funcion para borrar la foto subida --}}

@@ -16,13 +16,23 @@ class ShowAddressAll extends Component
         'render' => 'render',
     ];
 
-    public function mount(User $user, $model_refer = '', $model_refer_id = '')
+    public $user;
+    public $model_refer;
+    public $model_refer_id;
+    public $model;
+    public $render;
+    public $address_selected;
+    public $address;
+
+    public function mount(User $user, $model_refer = '', $model_refer_id = '', $render = '')
     {
 
         // $this->user = User::find($user_id)->whereHas('addresses', function ($query) {
         //     $query->orderBy('updated_at','desc');
         // })->first();
 
+
+        $this->render = $render;
         $this->user = $user;
 
         if ($model_refer) {
@@ -65,7 +75,7 @@ class ShowAddressAll extends Component
         $this->emitTo('components.addresses.show-address', 'refreshCard');
         //$this->emitSelf('render');
         
-        $this->emit('actualizado');
+        $this->emit('address-selected');
     }
 
     public function render()

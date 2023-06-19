@@ -28,7 +28,7 @@ class StoreExist
         $nickname = Route::current()->parameter('nickname');
 
         if($nickname != ""){
-            $store = User::where('nickname',$nickname);
+            $store = User::where('nickname',$nickname)->limit(1);
 
             if($store->exists()){
     

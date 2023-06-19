@@ -34,7 +34,9 @@ class ShowCarrierAll extends Component
 
     public function render()
     {
+        
         $carriers = User::carriers();
+
         return view('livewire.components.carriers.show-carrier-all',compact('carriers'));
     }
 

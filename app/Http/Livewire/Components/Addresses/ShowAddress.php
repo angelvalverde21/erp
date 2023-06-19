@@ -10,6 +10,8 @@ class ShowAddress extends Component
 {
     protected $listeners = ['render'=>'render', 'refreshCard'=>'refreshCard'];
 
+
+    
     public function mount(Address $address, $model_refer = '', $model_refer_id = ''){
         
         // $this->user = User::find($user_id)->whereHas('addresses', function ($query) {

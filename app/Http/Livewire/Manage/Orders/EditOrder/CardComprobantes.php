@@ -22,7 +22,7 @@ class CardComprobantes extends Component
     public $order;
     public $store;
     
-    public function mount(Order $order){
+    public function mount($order){
         $this->order = $order;
         $this->store = Request::get('store');
     }

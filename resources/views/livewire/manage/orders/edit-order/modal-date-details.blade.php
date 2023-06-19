@@ -2,7 +2,7 @@
 
     <div class="row">
 
-        <div class="col-lg-12 col">
+        <div class="col-lg-12 col-12">
 
             {{-- <input type="date" wire:model="order.delivery_date" placeholder="Fecha de entrega" class="form-control"> --}}
             <x-form.input type="date" wirevalue="order.delivery_date"
@@ -12,7 +12,7 @@
 
         </div>
 
-        <div class="col-lg-6 col">
+        <div class="col-lg-6 col-12">
 
             <x-form.select wirevalue="order.delivery_time_start" icon="fa-solid fa-clock">
                 <option value="0">Seleccionar</option>
@@ -35,7 +35,7 @@
 
         </div>
 
-        <div class="col-lg-6 col">
+        <div class="col-lg-6 col-12">
 
             <x-form.select wirevalue="order.delivery_time_end" icon="fa-solid fa-clock">
                 <option value="0">Seleccionar</option>
@@ -58,7 +58,7 @@
 
         </div>
 
-        <div class="col-lg-12 col">
+        <div class="col-lg-12 col-12">
             <x-form.textarea wirevalue="order.observations_time" id="observations_time">
                 Observaciones de horario
             </x-form.textarea>

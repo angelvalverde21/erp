@@ -11,6 +11,8 @@ class CreateOfficeCarrier extends Component
 {
     use AddressTrait;
 
+    public $user;
+
     public function mount($user_id){
 
         $this->user =  User::find($user_id);
@@ -20,7 +22,7 @@ class CreateOfficeCarrier extends Component
     public function save(){
 
         $this->validate($this->rules);
-
+            
         $address = new Address();
 
         $address = $this->loadValuesTemplateForAddress($address);
@@ -29,9 +31,9 @@ class CreateOfficeCarrier extends Component
 
         $this->emit('creado'); //SweetAlert2
         //$this->emitTo('user.sales.edit-sale.addresses.show-address-default','render'); //Refresca la tarjeta por defecto que se muestra en el blade
+
         $this->emitTo('user.sales.edit-sale.carriers.show-carrier-all','render');  //Refresca el componente ShowAddressAll
     }
-
 
     public function render()
     {

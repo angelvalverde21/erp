@@ -77,6 +77,7 @@ class CreateCustomerModal extends Component
         //crear usuario
 
         $user = new User();
+        
         $user->name = trim($this->name); //Elimina los espacios en blanco al incio y final
         if ($this->dni) {
             $user->dni = str_replace(' ', '', $this->dni); //Elimina los espacios en blanco de toda la cadena
@@ -84,8 +85,8 @@ class CreateCustomerModal extends Component
         $user->phone = str_replace(' ', '', $this->phone); //Elimina los espacios en blanco de toda la cadena
         $user->password = bcrypt(substr(trim($this->name), 0, 1) . $this->phone); //genera un password con la primera letra de su nombre + un telefono
         
-        $user->store_id = $this->store->id; //genera un password con la primera letra de su nombre + un telefono
-        $user->owner_id = $owner->id; //genera un password con la primera letra de su nombre + un telefono
+        $user->store_id = $this->store->id; //es el id a la tienda que pertenece
+        $user->owner_id = $owner->id; //es quien crea al usuario
 
         $user->save();
 

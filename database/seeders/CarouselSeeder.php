@@ -27,24 +27,33 @@ class CarouselSeeder extends Seeder
 
         $productos = Product::all();
 
-        foreach ($productos as $product) {
+        $i = 0;
 
-                Carousel::create(
+        if($productos->count()>0){
+            foreach ($productos as $product) {
 
-                    [
+                $i++;
     
-                        'title' => $product->title,
-                        'sub_title' => $product->title,
-                        'slug' => $product->slug,
-                        'image' => 'stores/carousel/' . $this->faker->image('public/storage/stores/carousel',1920,800, null, false),
-                        'store_id' => $product->store_id,
+                    Carousel::create(
     
-                    ]
+                        [
+        
+                            'title' => $product->title,
+                            'sub_title' => $product->title,
+                            'slug' => $product->slug,
+                            'image' => 'stores/carousel/' . $this->faker->image('public/storage/stores/carousel',1920,800, null, false),
+                            'store_id' => $product->store_id,
+        
+                        ]
+        
+                    );
     
-                );
-            
-
-
+                    if ($i==10) {
+                        # code...
+                        break;
+                    }
+    
+            }
         }
-    }
+        }
 }

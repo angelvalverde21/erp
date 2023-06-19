@@ -6,12 +6,19 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
+    //Comando personalizado
+    protected $commands = [
+        \App\Console\Commands\makeListSelectable::class,
+    ];
+
     /**
      * The application's global HTTP middleware stack.
      *
      * These middleware are run during every request to your application.
      *
      * @var array<int, class-string|string>
+     * 
+     * 
      */
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
@@ -21,6 +28,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        // \App\Http\Middleware\Cors::class,
     ];
 
     /**
@@ -64,5 +72,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'StoreExist' => Middleware\StoreExist::class,
+        'RegisterVisit' => Middleware\RegisterVisit::class,
+        \Fruitcake\Cors\HandleCors::class,
     ];
 }

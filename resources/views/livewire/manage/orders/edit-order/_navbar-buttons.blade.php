@@ -1,10 +1,15 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg">
 
     <li class="nav-item active mr-2 mt-2">
         <a class="btn btn-outline-success"
             href="{{ route('manage.customers.edit', [$store->nickname, $order->buyer_id]) }}"><i
-                class="fa-solid fa-user"></i>
-            {{ $order->buyer->name }} ({{ $order->buyer->totalOrders() }})</a>
+                class="fa-solid fa-user me-1"></i>
+             ({{ $order->buyer->totalOrders() }})</a>
+
+             {{-- {{ $order->buyer->name }} --}}
+        <a class="btn btn-success"
+            href="{{ route('manage.orders.create.with.user', [$store->nickname, $order->buyer_id]) }}"><i
+                class="fa-solid fa-receipt me-1"></i> Crear Orden</a>
     </li>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
@@ -18,21 +23,21 @@
 
             <li class="nav-item active">
                 <div class="dropdown ">
-                    <button class="btn btn-outline-info mx-1 my-1 dropdown-toggle" type="button"
+                    <button class="btn btn-outline-info w-100 my-1 dropdown-toggle" type="button"
                         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-print mr-2 pt-1"></i> Imprimir
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start dropdown-menu-right"
                         aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-clipboard-list mr-1"></i>
+                        <li><a class="dropdown-item" target="_blank" href="{{ route('manage.orders.print.invoice', [$store->nickname, $order->id]) }}"><i class="fa-solid fa-clipboard-list mr-1"></i>
                                 Orden de compra</a></li>
                         <div class="dropdown-divider"></div>
-                        <li><a class="dropdown-item"
-                                href="{{ route('manage.orders.print.packing-label', [$store->nickname, $order->id]) }}"><i
+                        <li><a class="dropdown-item" target="_blank"
+                                href="{{ route('manage.orders.print.packing-label', [$store->nickname, $order->id]) }}" target="_blank"><i
                                     class="fa-solid fa-box-open mr-1"></i>
                                 Rotulado</a></li>
                         <div class="dropdown-divider"></div>
-                        <li><a class="dropdown-item"
+                        <li><a class="dropdown-item" target="_blank"
                                 href="{{ route('manage.orders.print.voucher', [$store->nickname, $order->id]) }}"><i
                                     class="fa-solid fa-receipt mr-2 pt-1"></i> Voucher</a></li>
                     </ul>
@@ -46,7 +51,7 @@
             </li> --}}
 
             <li class="nav-item active">
-                <a class="btn btn-outline-info d-flex mx-1 my-1" data-toggle="modal" data-target="#observations-modal"
+                <a class="btn btn-outline-info d-flex my-1" data-toggle="modal" data-target="#observations-modal"
                     href="#"><i class="fa-solid fa-message mr-2 pt-1"></i>
                     Observaciones</a>
             </li>
@@ -63,12 +68,6 @@
                 </script>
             @endpush
 
-
-
-
-
-
-
             {{-- <li class="nav-item active">
 
                 <a class="btn btn-outline-info d-flex mx-1 my-1"
@@ -78,8 +77,17 @@
 
         </ul>
     </div>
+
 </nav>
 
+<nav>
+    
+    <li class="nav-item d-flex justify-content-between w-100 mb-2 mt-1">
+        <div class="registrado">Registrado: {{ $order->created_at }}</div>
+        <div class="actualizado">Ultima Actualizacion: {{ $order->updated_at }}</div>
+    </li>
+    
+</nav>
 
 <x-modal title="Observaciones" id="observations-modal">
 
@@ -98,8 +106,6 @@
                 icon="fa-solid fa-lock">
                 Observaciones Internas
             </x-form.textarea>
-
-
         </div>
         <div class="col-lg-12"></div>
     </div>

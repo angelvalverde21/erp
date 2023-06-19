@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Components\Items;
 
+use App\Models\Color;
 use App\Models\ColorSize;
 use App\Models\Item;
 use Illuminate\Support\Facades\Log;
@@ -16,8 +17,8 @@ class AddStockItem extends Component
     {
         $this->item = $item;
 
-        $color_size = ColorSize::find($item->content->color_size_id);
-        $this->color = $color_size->color;
+        // $color_size = ColorSize::find($item->content->color_size_id);
+        $this->color = Color::find($item->content->color_id);
     }
 
     public function separarOrAsignar($color_size_id){
@@ -25,7 +26,7 @@ class AddStockItem extends Component
         Log::info($color_size_id);
         // Log::debug($this->order->id);
         // Log::debug($this->quantity[$value]);
-
+        // $quantity = $this->quantity[$color_size_id];
         // $arrayValue = explode('-',$this->quantity[$value]);
         // $color_size_id = $arrayValue[0];
         // $qty = $arrayValue[1];
