@@ -1,12 +1,18 @@
 <div>
     {{-- Because she competes with no one, no one can compete with her. --}}
-    <h4><i class="fa-solid fa-cart-flatbed mr-2"></i>( {{ $product->quantity }} ) Productos en almacen</h4>
 
-    {{-- cargar imagen --}}
 
-    {{-- fin de cargar imagen --}}
+    <div class="head-color d-flex justify-content-between">
 
-    <h4>{{ $colors->count() }} disenos disponibles</h4>
+        <h6><i class="fa-solid fa-cart-flatbed mr-2"></i>( {{ $product->quantity }} ) Productos en almacen</h6>
+
+        {{-- cargar imagen --}}
+    
+        {{-- fin de cargar imagen --}}
+    
+        <h6>{{ $colors->count() }} disenos disponibles</h6>
+    </div>
+
 
     @if ($colors->count()>0)
 

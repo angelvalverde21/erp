@@ -121,6 +121,16 @@ class AddItem extends Component
         $this->emitTo('manage.orders.edit-order.card-show-invoice','render');
 
         //este emit necesita un listener
+
+
+        //finalmente comprobamos si la orden ya esta pagada para poder asignar el stock
+
+        if($this->order->is_pay()){
+            $item->asignarStock();
+        }
+
+
+        //alertamos que finalizo la creacion del item
         $this->emit('creado');
 
     }
