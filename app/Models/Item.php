@@ -210,6 +210,7 @@ class Item extends Model
             }
 
             $stock->status = Stock::VENDIDO;
+            
             $stock->item_id = $this->id;
 
             $stock->save();

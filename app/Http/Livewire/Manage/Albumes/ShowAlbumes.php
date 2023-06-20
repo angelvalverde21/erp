@@ -83,35 +83,29 @@ class ShowAlbumes extends Component
     public function createPath()
     {
 
-        try {
-
-            $this->validate($this->rules);
+        $this->validate($this->rules);
 
 
-            $album = new Album();
-    
-            $album->name = $this->name;
+        $album = new Album();
 
-            $album->slug = Str::slug($this->name);
+        $album->name = $this->name;
 
-            if($this->album_id>0){
-                $album->parent_id = $this->album_id;
-            }
-    
-            $album->store_id = $this->store->id;
-    
-            $album->save();
-    
-            $this->emit('creado');
-    
-            if($this->album_id>0){
-                $this->albumes = Album::where('parent_id', $this->album_id)->get();
-            }else{
-                $this->albumes = Album::where('parent_id', 0)->get();
-            }
+        $album->slug = Str::slug($this->name);
 
-        } catch (\Throwable $th) {
-            $this->emit('carpeta_exists');
+        if($this->album_id>0){
+            $album->parent_id = $this->album_id;
+        }
+
+        $album->store_id = $this->store->id;
+
+        $album->save();
+
+        $this->emit('creado');
+
+        if($this->album_id>0){
+            $this->albumes = Album::where('parent_id', $this->album_id)->get();
+        }else{
+            $this->albumes = Album::where('parent_id', 0)->get();
         }
 
     }

@@ -52,7 +52,7 @@ class ShowItemAll extends Component
 
         $this->item->save();
 
-        $this->order->asignarStock();
+        // $this->order->asignarStock();
 
         $this->emitTo('manage.orders.edit-order.card-show-summary','render');
         $this->emit('actualizado');
