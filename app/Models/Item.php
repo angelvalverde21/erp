@@ -207,13 +207,20 @@ class Item extends Model
                 //Buscara entre un ALMACENADO o un SEPARADO asi perteneesca a otra orden, porque si se asigna es porque e
                 //pedido ya esta pagado o entregado asi que se le da prioridad al item de la orden respectiva
                 $stock = $color_size->stocks()->first(); 
+
+                //si apesar de eso no encuentro...
+                if(!$stock){
+                    //eso quiere decir que no hay stock, en ese casi no se puede asignar un status, entonces no hago nada
+                }else{
+                    $stock->status = Stock::VENDIDO;
+                    $stock->item_id = $this->id;
+                    $stock->save();
+                }
             }
 
-            $stock->status = Stock::VENDIDO;
             
-            $stock->item_id = $this->id;
+            
 
-            $stock->save();
         }
 
 

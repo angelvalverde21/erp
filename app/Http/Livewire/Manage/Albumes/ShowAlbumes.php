@@ -57,6 +57,10 @@ class ShowAlbumes extends Component
     public function mount($album_id =  null)
     {
 
+        //$breadcrums =
+        
+
+
         $this->album_id = $album_id;
 
 
