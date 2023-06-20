@@ -9,6 +9,7 @@ use App\Http\Controllers\Manage\Upload\UploadAlbumController;
 use App\Http\Controllers\Manage\Upload\UserImageController;
 use App\Http\Controllers\PdfProductController;
 use App\Http\Livewire\Components\Users\EditUser;
+use App\Http\Livewire\Manage\Albumes\ShowAlbumes;
 use App\Http\Livewire\Manage\Couriers\ShowCouriers;
 use App\Http\Livewire\Manage\Customers\CreateCustomer;
 use App\Http\Livewire\Manage\Customers\EditCustomer;
@@ -67,6 +68,11 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::get('/products/{product}/albums/create', CreateAlbum::class)->name('albums.create');
    Route::get('products/{product}/albums/{album}/edit', EditAlbum::class)->name('products.albums.edit');
    Route::post('/albums/upload/{album}/{location}', [UploadAlbumController::class, 'uploadAlbum'])->name('albums.upload');
+
+   //albumes
+
+   Route::get('/albumes', ShowAlbumes::class)->name('albumes');
+   Route::get('/albumes/{album_id}', ShowAlbumes::class)->name('albumes.album');
 
    //Albums (GET)
    Route::get('/products/{product}/color/{color}/albums', ShowAllAlbumColor::class)->name('products.color.albums');

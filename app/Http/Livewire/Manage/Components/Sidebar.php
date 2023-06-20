@@ -116,10 +116,10 @@ class Sidebar extends Component
                             "icon"=>"fa-solid fa-panorama",
                         ],
                         [
-                            "name"=>"Sessiones",
-                            "active"=>"carousel",
-                            "slug"=>route('manage.carousel',[$this->store->nickname]),
-                            "icon"=>"fa-solid fa-panorama",
+                            "name"=>"Albumes",
+                            "active"=>"albumes",
+                            "slug"=>route('manage.albumes',[$this->store->nickname]),
+                            "icon"=>"fa-solid fa-images",
                         ],
                     ]
                 ],

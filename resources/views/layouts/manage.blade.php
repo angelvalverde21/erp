@@ -309,6 +309,19 @@
         });
     </script>
 
+    
+<script>
+    Livewire.on('carpeta_exists', function() {
+        Swal.fire({
+                icon: 'info',
+                title: 'Error',
+                text: 'La carpeta ya existe',
+            }
+
+        )
+    });
+</script>
+
     @livewireStyles
 
 

@@ -24,3 +24,8 @@
         </div>
     </div>
 </div>
+
+
+{{-- <button class="btn btn-success" style="width: 115px;" data-toggle="modal"
+data-target="#editarStock-{{ $color->id }}" type="button" class="d-flex justify-content-between align-items-center"><i
+    class="fa-solid fa-barcode me-1"></i><span>Editar Stock</span></button> --}}

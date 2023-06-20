@@ -129,7 +129,6 @@ class AddItem extends Component
             $item->asignarStock();
         }
 
-
         //alertamos que finalizo la creacion del item
         $this->emit('creado');
 
