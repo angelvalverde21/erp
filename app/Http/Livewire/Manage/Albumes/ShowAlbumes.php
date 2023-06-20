@@ -3,9 +3,11 @@
 namespace App\Http\Livewire\Manage\Albumes;
 
 use App\Models\Album;
+use App\Models\Photo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -27,6 +29,30 @@ class ShowAlbumes extends Component
         // 'album.price' => 'required'
     ];
 
+    public function delete($url_path_original){
+
+        Log::info('se hizo click');
+
+        $photo = Photo::where('large', '=', $url_path_original)->limit(1)->first();
+
+        if($photo){
+
+            Log::info('se borro correctamente');
+
+            Storage::disk('spaces')->delete($photo->large);
+            Storage::disk('spaces')->delete($photo->medium);
+            Storage::disk('spaces')->delete($photo->thumbnail);
+    
+            // finalmente elimino el registro
+    
+            $photo->delete();
+        }else{
+            Log::info('no se ha encontrado la photo para eliminar');
+        }
+
+        $this->album = $this->album->fresh();
+
+    }
 
     public function mount($album_id =  null)
     {
@@ -39,6 +65,10 @@ class ShowAlbumes extends Component
         $this->user = Auth::user();
 
         if($this->album_id>0){
+
+            //album que se esta visitando
+            $this->album = Album::findOrFail($album_id);
+
             $this->albumes = Album::where('parent_id', $this->album_id)->get();
         }else{
             $this->albumes = Album::where('parent_id', 0)->get();

@@ -69,10 +69,14 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::get('products/{product}/albums/{album}/edit', EditAlbum::class)->name('products.albums.edit');
    Route::post('/albums/upload/{album}/{location}', [UploadAlbumController::class, 'uploadAlbum'])->name('albums.upload');
 
+
+
    //albumes
 
    Route::get('/albumes', ShowAlbumes::class)->name('albumes');
    Route::get('/albumes/{album_id}', ShowAlbumes::class)->name('albumes.album');
+   //ojo upload directo al album (sin location)
+   Route::post('/albumes/upload/{album}', [UploadAlbumController::class, 'uploadPhotosToAlbum'])->name('albumes.upload');
 
    //Albums (GET)
    Route::get('/products/{product}/color/{color}/albums', ShowAllAlbumColor::class)->name('products.color.albums');

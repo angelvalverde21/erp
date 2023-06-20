@@ -147,6 +147,7 @@
 </style>
 
 @push('script')
+
     <script>
         Dropzone.options.myAwesomeDropzoneAlbums = {
             headers: {
