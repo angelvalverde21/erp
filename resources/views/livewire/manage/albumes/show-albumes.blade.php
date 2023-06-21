@@ -15,25 +15,49 @@
         .albumes .title {}
     </style>
 
-    <x-breadcrumbs title="Albumes" />
+    <section class="content-header d-none d-md-block">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+
+
+            @if (isset($album->name))
+                <h5>{{ Str::upper($album->name) }}</h5>
+            @else
+                <h5>Albumes de fotos</h5>
+            @endif
+
+            <ol class="breadcrumb float-sm-right">
+                @foreach ($breadcrumbs as $breadcrumb)
+                    <li class="breadcrumb-item"><a
+                            href="{{ route('manage.albumes.album', [$store->nickname, $breadcrumb['id']]) }}">{{ $breadcrumb['name'] }}</a>
+                    </li>
+                @endforeach
+
+                {{-- <li class="breadcrumb-item active">{{ $title }}</li> --}}
+            </ol>
+
+        </div><!-- /.container-fluid -->
+    </section>
+
 
     <x-sectioncontent>
 
 
         <div class="content-controls" wire:ignore>
-            
-            <button class="btn btn-success" style="width: 145px;" data-toggle="modal" data-target="#addAlbum"
-                type="button">+
-                Agregar Carpeta</button>
+
 
             @if (isset($album_id))
-                <div class="content-form mt-3">
+                <div class="content-form">
                     <form method="POST" wire:ignore.self
                         action="{{ route('manage.albumes.upload', [$store->nickname, $album_id]) }}"
                         class="dropzone d-flex flex-wrap justify-content-around p-3" id="my-awesome-dropzone-albums">
                     </form>
                 </div>
             @endif
+
+            
+            <button class="btn btn-success mt-3" style="width: 145px;" data-toggle="modal" data-target="#addAlbum"
+                type="button">+
+                Agregar Carpeta</button>
 
         </div>
 

@@ -20,7 +20,7 @@ class ShowAlbumes extends Component
         'render' => 'render'
     ];
 
-    public $album, $store, $user, $product, $albumes, $name, $album_id;
+    public $album, $store, $user, $product, $albumes, $name, $album_id, $breadcrumbs;
 
     protected $rules = [
         'name' => 'required',
@@ -57,7 +57,7 @@ class ShowAlbumes extends Component
     public function mount($album_id =  null)
     {
 
-        //$breadcrums =
+        $breadcrumbs = [];
 
         $parent_id = 0;
 
@@ -80,19 +80,34 @@ class ShowAlbumes extends Component
             //vamos a generar los breadcrumbs
             $parent_id = $this->album->parent_id;
 
+            $breadcrumbs[0]['id'] = $this->album->id;
+            $breadcrumbs[0]['name'] = $this->album->name;
+
+            $i = 0;
+
             while ($parent_id > 0) {
                 # code...
+
+                $i++;
 
                 $anotherAlbum = Album::findOrFail($parent_id);
 
                 $parent_id = $anotherAlbum->parent_id;
+
+                $breadcrumbs[$i]['id'] = $anotherAlbum->id;
+                $breadcrumbs[$i]['name'] = $anotherAlbum->name;
             }
-            
+
         } else {
             $this->albumes = Album::where('parent_id', 0)->get();
         }
 
         Log::info($this->albumes);
+
+        Log::info('breadcrumbs');
+        Log::info($breadcrumbs);
+
+        $this->breadcrumbs = array_reverse($breadcrumbs);
 
         // $this->category_id = $album->subcategory->category->id;
         // $this->subcategories = Subcategory::where('category_id', $this->category_id)->get();
