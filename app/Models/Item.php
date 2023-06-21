@@ -212,13 +212,15 @@ class Item extends Model
                 if(!$stock){
                     //eso quiere decir que no hay stock, en ese casi no se puede asignar un status, entonces no hago nada
                 }else{
-                    $stock->status = Stock::VENDIDO;
-                    $stock->item_id = $this->id;
-                    $stock->save();
+                    // $stock->status = Stock::VENDIDO;
+                    // $stock->item_id = $this->id;
+                    // $stock->save();
                 }
             }
 
-            
+            $stock->status = Stock::VENDIDO;
+            $stock->item_id = $this->id;
+            $stock->save();
             
 
         }

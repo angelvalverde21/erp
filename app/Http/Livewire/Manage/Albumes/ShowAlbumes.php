@@ -29,36 +29,37 @@ class ShowAlbumes extends Component
         // 'album.price' => 'required'
     ];
 
-    public function delete($url_path_original){
+    public function delete($url_path_original)
+    {
 
         Log::info('se hizo click');
 
         $photo = Photo::where('large', '=', $url_path_original)->limit(1)->first();
 
-        if($photo){
+        if ($photo) {
 
             Log::info('se borro correctamente');
 
             Storage::disk('spaces')->delete($photo->large);
             Storage::disk('spaces')->delete($photo->medium);
             Storage::disk('spaces')->delete($photo->thumbnail);
-    
+
             // finalmente elimino el registro
-    
+
             $photo->delete();
-        }else{
+        } else {
             Log::info('no se ha encontrado la photo para eliminar');
         }
 
         $this->album = $this->album->fresh();
-
     }
 
     public function mount($album_id =  null)
     {
 
         //$breadcrums =
-        
+
+        $parent_id = 0;
 
 
         $this->album_id = $album_id;
@@ -68,13 +69,26 @@ class ShowAlbumes extends Component
 
         $this->user = Auth::user();
 
-        if($this->album_id>0){
+        if ($this->album_id > 0) {
 
             //album que se esta visitando
             $this->album = Album::findOrFail($album_id);
 
             $this->albumes = Album::where('parent_id', $this->album_id)->get();
-        }else{
+
+
+            //vamos a generar los breadcrumbs
+            $parent_id = $this->album->parent_id;
+
+            while ($parent_id > 0) {
+                # code...
+
+                $anotherAlbum = Album::findOrFail($parent_id);
+
+                $parent_id = $anotherAlbum->parent_id;
+            }
+            
+        } else {
             $this->albumes = Album::where('parent_id', 0)->get();
         }
 
@@ -96,7 +110,7 @@ class ShowAlbumes extends Component
 
         $album->slug = Str::slug($this->name);
 
-        if($this->album_id>0){
+        if ($this->album_id > 0) {
             $album->parent_id = $this->album_id;
         }
 
@@ -106,12 +120,11 @@ class ShowAlbumes extends Component
 
         $this->emit('creado');
 
-        if($this->album_id>0){
+        if ($this->album_id > 0) {
             $this->albumes = Album::where('parent_id', $this->album_id)->get();
-        }else{
+        } else {
             $this->albumes = Album::where('parent_id', 0)->get();
         }
-
     }
 
     public function render()
