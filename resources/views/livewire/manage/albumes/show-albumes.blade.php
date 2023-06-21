@@ -19,20 +19,17 @@
         <div class="container-fluid d-flex justify-content-between align-items-center">
 
 
-            @if (isset($album->name))
-                <h5>{{ Str::upper($album->name) }}</h5>
-            @else
-                <h5>Albumes de fotos</h5>
-            @endif
-
-            <ol class="breadcrumb float-sm-right">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a
+                            href="{{ route('manage.albumes.album', [$store->nickname, 0]) }}">ALBUMES</a></li>
                 @foreach ($breadcrumbs as $breadcrumb)
                     <li class="breadcrumb-item"><a
-                            href="{{ route('manage.albumes.album', [$store->nickname, $breadcrumb['id']]) }}">{{ $breadcrumb['name'] }}</a>
+                            href="{{ route('manage.albumes.album', [$store->nickname, $breadcrumb['id']]) }}">{{ Str::upper($breadcrumb['name']) }}</a>
                     </li>
                 @endforeach
 
-                {{-- <li class="breadcrumb-item active">{{ $title }}</li> --}}
+                
             </ol>
 
         </div><!-- /.container-fluid -->
@@ -101,7 +98,7 @@
                     </a>
 
                     <div class="title text-center pb-3">
-                        {{ $album->name }}
+                        <h5>{{ $album->name }}</h5>
                     </div>
 
                 </div>
