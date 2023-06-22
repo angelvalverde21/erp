@@ -42,9 +42,10 @@ class UserImageController extends Controller
 
     }
 
-    public function uploadImageOption($nickname, Request $request){
+    public function uploadImageOption($nickname, Request $request, User $user = null){
 
         $existe = false;
+
         $store = User::where('nickname',$nickname)->first();
 
         $getOptions = $store->options;
@@ -53,9 +54,11 @@ class UserImageController extends Controller
         foreach ($getOptions as $getOption) { //getOptions de de la base de datos, hemos colocado 'get' a las variables para identificar que son las que vienen de la base de datos
             # code...
             if($request->name == $getOption->name){ //esto quiere decir que $name (de la plantilla) es igual a $getName (de la base de datos)
+
                 $existe = true;
                 $getOption->value = uploadImage($request, "users/logos", 0, true); //el value es el valor de la plantilla, 0 quiere decir que no redimencione y true quiere decir que devuelve un link comleto
                 $getOption->save();
+                
                 break;
             }else{
                 $existe = false;
@@ -64,12 +67,25 @@ class UserImageController extends Controller
         
         if(!$existe){
             //sino existe el campo entonces creamos
-            $store->options()->create(
-                [
-                    'name' => $request->name,
-                    'value' => uploadImage($request, "users/logos", 0, true),
-                ],
-            );
+
+            if ($user) {
+                $user->options()->create(
+                    [
+                        'name' => $request->name,
+                        'value' => uploadImage($request, "users/logos", 0, true),
+                    ],
+                );
+            } else {
+                $store->options()->create(
+                    [
+                        'name' => $request->name,
+                        'value' => uploadImage($request, "users/logos", 0, true),
+                    ],
+                );
+            }
+            
+
+
         }
 
     }

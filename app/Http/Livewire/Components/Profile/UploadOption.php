@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class UploadOption extends Component
 {
     
-    public $store, $text, $field, $fieldKebabCase, $fieldPascalCase;
+    public $store, $text, $field, $fieldKebabCase, $fieldPascalCase, $user;
 
     protected $listeners = [
         'render'=>'render',
@@ -18,8 +18,8 @@ class UploadOption extends Component
 
     ];
 
-    public function mount(User $store, $field = '', $text = 'Subir Imagen'){
-
+    public function mount(User $store, $field, $user = null, $text = 'Subir Imagen'){
+        $this->user = $user;
         $this->text = $text;
         $this->store = $store;
         $this->field = $field;

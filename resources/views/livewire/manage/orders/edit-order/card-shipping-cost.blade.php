@@ -1,8 +1,53 @@
 <div>
-    <div class="card">
+
+    <ul class="list-group mb-3">
+
+        <li class="list-group-item d-flex justify-content-between lh-condensed bg-light">
+            <div>
+                <h5 class=""><i class="fa-solid fa-truck"></i></h5>
+            </div>
+            <h5>GASTOS DE ENVIO</h5>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+                <h6 class="my-0">Costo de envio</h6>
+                <small class="text-muted">Costo que ha pagodo el cliente</small>
+            </div>
+            <span class="text-muted">S/. {{ $order->shipping_cost_buyer }}</span>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+                <h6 class="my-0">Translado</h6>
+                <small class="text-muted">Pasajes y taxis para envio</small>
+            </div>
+            <span class="text-muted">S/. {{ $order->shipping_cost_to_carrier }}</span>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between">
+            <div>
+                <h6 class="my-0">Gasto envio</h6>
+                <small class="text-muted">Costo que cobra la agencia</small>
+            </div>
+            <span class="text-muted">S/. {{ $order->shipping_cost_carrier }}</span>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between">
+            <div>
+                <x-form.button-open-modal target="#editCarrierOrderDetails" mr="0"/>
+            </div>
+            <div>
+                <span>S/. {{ $order->shipping_cost_buyer - $order->shipping_cost_to_carrier - $order->shipping_cost_carrier }}</span>
+            </div>
+        </li>
+
+    </ul>
+
+    {{-- <div class="card">
 
         <div class="card-header">
-            <x-form.button-open-modal target="#editCarrierOrderDetails" />
+
         </div>
 
 
@@ -10,10 +55,6 @@
 
             <table class="table table table-striped">
 
-                {{-- <tr>
-                    <td>Trasladado por</td>
-                    <td><i class="fa-solid fa-person-biking mr-2"></i>{{ $order->delivery_man->name }}</td>
-                </tr> --}}
                 <tr>
                     <td class="ultimo-td"><i class="fa-solid fa-user mr-2"></i> Costo cobrado al cliente</td>
                     <td class="ultimo-td">S/. {{ $order->shipping_cost_buyer }}</td>
@@ -32,17 +73,14 @@
                     <td class="ultimo-td fw-bold">Saldo</td>
                     <td class="ultimo-td fw-bold">S/. {{ $order->shipping_cost_buyer - $order->shipping_cost_to_carrier - $order->shipping_cost_carrier }}</td>
                 </tr>
-                {{-- <tr>
-                    <td class="ultimo-td">Medioxx de pago</td>
-                    <td class="ultimo-td">{{ $order->payment_list->name }}</td>
-                </tr> --}}
+
             </table>
 
         </div>
 
-    </div>
+    </div> --}}
 
-    <x-modal title="Detalles de envio" id="editCarrierOrderDetails" size="modal-lg">
+    <x-modal title="Costos de:" id="editCarrierOrderDetails" size="modal-lg">
 
         @livewire('manage.orders.edit-order.modal-carrier-details', ['order' => $order], key('modal-carrier-details-' . $order->id))
 

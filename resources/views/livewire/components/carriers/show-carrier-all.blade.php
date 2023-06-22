@@ -25,58 +25,65 @@
 
         {{-- Ojo esta linea consulta en la tabla usuarios a los carriers (courier) --}}
         @foreach ($carriers as $carrier)
-
-            <x-accordion-item id="item-carrier-{{ $carrier->id }}" label="{{ $carrier->name }}" icon="fa-solid fa-truck-fast"
-                accordion_parent_id="accordionShowCarrier">
+            <x-accordion-item id="item-carrier-{{ $carrier->id }}" label="{{ $carrier->name }}"
+                icon="fa-solid fa-truck-fast" accordion_parent_id="accordionShowCarrier">
 
                 <div class="table-responsive">
-                <table class="table table-transportista mx-0 mb-3">
+                    <table class="table table-transportista mx-0 mb-3">
 
-                    {{-- //Luego de consultar a los usuarios extraemos sus direcciones de envio que seran las oficinas de atencion --}}
+                        {{-- //Luego de consultar a los usuarios extraemos sus direcciones de envio que seran las oficinas de atencion --}}
 
-                    @foreach ($carrier->addresses as $office)
-                        <tr>
-                            {{-- Si la orden esta definida colocamos la opcion seleccionar --}}
-                            @if ( $order->id > 0)
-                                <td><a class="btn btn-secondary" href="#" role="button"
-                                        wire:click.prevent="selectAddress('{{ $office->id }}')">Seleccionar</a>
+                        @foreach ($carrier->addresses as $office)
+                            <tr>
+                                {{-- Si la orden esta definida colocamos la opcion seleccionar --}}
+                                @if ($order->id > 0)
+                                    <td><a class="btn btn-secondary" href="#" role="button"
+                                            wire:click.prevent="selectAddress('{{ $office->id }}')">Seleccionar</a>
+                                    </td>
+                                @endif
+
+                                <td>{{ $office->title }}</td>
+                                <td>{{ $office->name }}</td>
+                                <td>{{ $office->primary }} {{ $office->secondary }}</td>
+                                <td>{{ $office->references }}</td>
+                                <td>{{ $office->district->name }}</td>
+                                <td>
+                                    <a href="#collapse-edit-carrier-{{ $office->id }}"
+                                        class="btn btn-secondary float-end" data-toggle="collapse" role="button"
+                                        aria-expanded="false" aria-controlxs="collapseExample">Editar
+                                    </a>
                                 </td>
-                            @endif
+                            </tr>
 
-                            <td>{{ $office->title }}</td>
-                            <td>{{ $office->name }}</td>
-                            <td>{{ $office->primary }} {{ $office->secondary }}</td>
-                            <td>{{ $office->references }}</td>
-                            <td>{{ $office->district->name }}</td>
-                            <td>
-                                <a href="#collapse-edit-carrier-{{ $office->id }}" class="btn btn-secondary"
-                                    data-toggle="collapse" role="button" aria-expanded="false"
-                                    aria-controlxs="collapseExample">Editar
-                                </a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td colspan="7">
 
-                        <tr>
-                            <td colspan="7">
+                                    <div class="collapse mt-4" id="collapse-edit-carrier-{{ $office->id }}">
+                                        @livewire('components.carriers.edit-office-carrier', ['address' => $office->id], key('edit-office-carrier-' . $office->id))
+                                    </div>
 
-                                <div class="collapse mt-4" id="collapse-edit-carrier-{{ $office->id }}">
-                                    @livewire('components.carriers.edit-office-carrier', ['address' => $office->id], key('edit-office-carrier-' . $office->id))
-                                </div>
+                                </td>
+                            </tr>
+                        @endforeach
 
-                            </td>
-                        </tr>
-                    @endforeach
-
-                </table>
+                    </table>
                 </div>
 
                 {{-- El cambio de boton sucede abajo con un jquery --}}
 
-                <a class="btn btn-primary btn-agregar-office" data-toggle="collapse"
-                    href="#collapse-carrier-{{ $carrier->id }}" role="button" aria-expanded="false"
-                    aria-controls="collapseExample"><i class="fa-solid fa-circle-plus mr-2"></i>
-                    Agregar Oficina
-                </a>
+                <div class="controls d-flex justify-content-between">
+                    <a class="btn btn-primary btn-agregar-office" data-toggle="collapse"
+                        href="#collapse-carrier-{{ $carrier->id }}" role="button" aria-expanded="false"
+                        aria-controls="collapseExample"><i class="fa-solid fa-circle-plus mr-2"></i>
+                        Agregar Oficina
+                    </a>
+
+                    </a>
+                    
+                    <a href="{{ route('manage.couriers.edit', [$store->nickname, $carrier->id]) }}" class="btn btn-success"><i class="fa-solid fa-gear mr-2"></i>
+                        Editar Courier
+                    </a>
+                </div>
 
                 <div class="collapse mt-4" id="collapse-carrier-{{ $carrier->id }}">
                     @livewire('components.carriers.create-office-carrier', ['user_id' => $carrier->id], key('create-office-carrier-' . $carrier->id))

@@ -1,2 +1,2 @@
-@props(['target', 'class'=>'secondary', 'text'=>'Editar'])
-<a class="btn btn-{{ $class }}" href="#" data-toggle="modal" data-target="{{ $target }}"><i class="fa-solid fa-pen-to-square mr-1"></i> {{ $text }}</a>
+@props(['target', 'class'=>'secondary', 'text'=>'Editar', 'mr'=>1])
+<a class="btn btn-{{ $class }}" href="#" data-toggle="modal" data-target="{{ $target }}"><i class="fa-solid fa-pen-to-square mr-{{ $mr }}"></i> {{ $text }}</a>

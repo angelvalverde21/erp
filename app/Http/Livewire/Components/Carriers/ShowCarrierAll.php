@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 
 class ShowCarrierAll extends Component
@@ -17,6 +18,7 @@ class ShowCarrierAll extends Component
     public function mount(Order $order){
        
         $this->order = $order;
+        $this->store = Request::get('store');
     }
 
     public function selectAddress(Address $address){

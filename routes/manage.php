@@ -8,8 +8,11 @@ use App\Http\Controllers\Manage\Upload\OrderController;
 use App\Http\Controllers\Manage\Upload\UploadAlbumController;
 use App\Http\Controllers\Manage\Upload\UserImageController;
 use App\Http\Controllers\PdfProductController;
+use App\Http\Livewire\Components\Carriers\EditCarrier;
 use App\Http\Livewire\Components\Users\EditUser;
 use App\Http\Livewire\Manage\Albumes\ShowAlbumes;
+use App\Http\Livewire\Manage\Carriers\ShowCarriers;
+use App\Http\Livewire\Manage\Couriers\EditCourier;
 use App\Http\Livewire\Manage\Couriers\ShowCouriers;
 use App\Http\Livewire\Manage\Customers\CreateCustomer;
 use App\Http\Livewire\Manage\Customers\EditCustomer;
@@ -138,7 +141,10 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
 
 
    Route::get('/staff', ShowStaff::class)->name('staff');
+
+   //couriers
    Route::get('/couriers', ShowCouriers::class)->name('couriers');
+   Route::get('/couriers/{courier}', EditCourier::class)->name('couriers.edit');
 
 
 
@@ -172,6 +178,10 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    //Post upload home carousel
 
    Route::post('/post/profile/carousel', [UserImageController::class, 'uploadCarousel'])->name('post.profile.carousel');
+
+   //carriers
+
+      // Route::get('/carriers', ShowCarriers::class)->name('carriers');
 
 });
 
