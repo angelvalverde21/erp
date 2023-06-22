@@ -7,15 +7,22 @@
             <h4>{{ $address->title }}</h4>
         </li> --}}
         <li class="list-group-item  list-group-item-dark d-flex justify-content-between align-items-center">
-            <span><h6><i class="fa-solid fa-user me-2"></i> Direccion de envio</h6></span>
+            <span>
+                <h6><i class="fa-solid fa-user me-2"></i> Direccion de envio</h6>
+            </span>
             <div class="controls">
                 <x-user.button-open-modal target="#show-all-address-modal" />
             </div>
         </li>
-        <li class="list-group-item"><h5>{{ $address->name }}</h5></li>
+        <li class="list-group-item">
+            <h5>{{ $address->name }}</h5>
+        </li>
         <li class="list-group-item">DNI: {{ $address->dni }}</li>
         <li class="list-group-item">{{ $address->primary }}</li>
-        <li class="list-group-item">{{ $address->secondary }}</li>
+
+        @if ($address->secondary != '')
+            <li class="list-group-item">{{ $address->secondary }}</li>
+        @endif
         @if ($address->references != '')
             <li class="list-group-item">{{ $address->references }}</li>
         @endif
@@ -24,7 +31,7 @@
             {{ $address->district->province->department->name }}</li>
         <li class="list-group-item">CEL: {{ $address->phone }}</li>
     </ul>
-    
+
     {{-- <div class="card">
 
         <div class="card-header">
@@ -45,20 +52,20 @@
 
     </div> --}}
 
-    
-        <!-- Modal content de Address All-->
 
-        <x-modal id="show-all-address-modal" title="Agregar o editar direccion">
+    <!-- Modal content de Address All-->
 
-            @livewire('components.addresses.show-address-all', ['user' => $address->user_id, 'model_refer' => $this->model_refer, 'model_refer_id' => $this->model_refer_id], key('show-addresses-all-' . $address->user_id))
+    <x-modal id="show-all-address-modal" title="Agregar o editar direccion">
 
-        </x-modal>
+        @livewire('components.addresses.show-address-all', ['user' => $address->user_id, 'model_refer' => $this->model_refer, 'model_refer_id' => $this->model_refer_id], key('show-addresses-all-' . $address->user_id))
 
-        <script>
-            window.addEventListener('closeModal', event => {
-                $('#show-all-address-modal').modal('hide');
-                console.log('modal cerrado');
-            })
-        </script>
+    </x-modal>
+
+    <script>
+        window.addEventListener('closeModal', event => {
+            $('#show-all-address-modal').modal('hide');
+            console.log('modal cerrado');
+        })
+    </script>
 
 </div>

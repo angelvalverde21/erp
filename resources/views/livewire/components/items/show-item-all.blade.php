@@ -186,13 +186,17 @@
         </div>
 
         <x-slot name="footer">
-            <button type="button" class="btn btn-info" wire:loading.attr="disabled" wire.target="save"
+            <button type="button" data-dismiss="modal" class="btn btn-info" wire:loading.attr="disabled" wire.target="save"
                 wire:click="saveEditItem"><i class="fa-solid fa-floppy-disk mr-1"></i> Guardar
             </button>
         </x-slot>
 
     </x-user.modal>
 
-
+    {{-- <script>
+        $(document).ready(function(){
+            $('#nameModal').modal('hide');
+        });
+    </script> --}}
 
 </div>
