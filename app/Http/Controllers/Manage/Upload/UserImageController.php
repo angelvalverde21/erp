@@ -42,14 +42,22 @@ class UserImageController extends Controller
 
     }
 
-    public function uploadImageOption($nickname, Request $request, User $user = null){
+    public function uploadImageOption($nickname, Request $request){
 
         $existe = false;
 
-        $store = User::where('nickname',$nickname)->first();
+        if ($request->user_id > 0) {
+            Log::info('modo user');
+            $user = User::findOrFail($request->user_id);
+            Log::info($user);
+            $getOptions = $user->options;
+        }else{
+            Log::info('modo store');
+            $store = User::where('nickname',$nickname)->first();
+            $getOptions = $store->options;
+        }
 
-        $getOptions = $store->options;
-
+        Log::info($getOptions);
 
         foreach ($getOptions as $getOption) { //getOptions de de la base de datos, hemos colocado 'get' a las variables para identificar que son las que vienen de la base de datos
             # code...
@@ -67,14 +75,16 @@ class UserImageController extends Controller
         
         if(!$existe){
             //sino existe el campo entonces creamos
-
+            Log::info('ya existe');
             if ($user) {
+
                 $user->options()->create(
                     [
                         'name' => $request->name,
                         'value' => uploadImage($request, "users/logos", 0, true),
                     ],
                 );
+
             } else {
                 $store->options()->create(
                     [
@@ -83,9 +93,9 @@ class UserImageController extends Controller
                     ],
                 );
             }
-            
 
-
+        }else{
+            Log::info('no existe');
         }
 
     }

@@ -52,18 +52,27 @@
                     @livewire('components.addresses.show-address', ['address' => $order->address_id, 'model_refer' => 'Order', 'model_refer_id' => $order->id], key('show-address-' . $order->address_id))
                 </div>
 
-                {{-- Transportista --}}
+
                 <div class="col-12 col-lg-4">
+
+                    {{-- Transportista --}}
                     @livewire('manage.orders.edit-order.card-carrier-details', ['order' => $order], key('card-carrier-' . $order->address_id))
-                </div>
 
-
-                {{-- Hora y fecha de entrega --}}
-                <div class="col-12 col-lg-4">
+                    {{-- Hora y fecha de entrega --}}
                     @livewire('manage.orders.edit-order.card-date-details', ['order' => $order], key('card-details'))
+
                 </div>
 
-                
+
+                <div class="col-12 col-lg-4">
+
+                    @livewire('manage.orders.edit-order.card-shipping-cost', ['order' => $order], key('card-carrier-cost-' . $order->address_id))
+                    
+                </div>
+
+
+
+
                 {{-- resumen de envio --}}
                 {{-- <div class="col-12 col-lg-3">
 
@@ -94,13 +103,65 @@
 
             {{-- Costos del transporte --}}
 
-            <div class="col-12 col-lg-6">
-                @livewire('manage.orders.edit-order.card-shipping-cost', ['order' => $order], key('card-carrier-cost-' . $order->address_id))
+            <div class="col-12 col-lg-8">
+                <div class="card card-primary card-outline card-outline-tabs">
+                    <div class="card-header p-0 border-bottom-0">
+        
+                        <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+        
+                            <li class="nav-item">
+                                <a class="nav-link active" id="comprobatesPago-tab" data-toggle="pill" href="#comprobatesPago"
+                                    role="tab" aria-controls="comprobatesPago" aria-selected="true">Pagos</a>
+                            </li>
+        
+                            <li class="nav-item">
+                                <a class="nav-link" id="comprobantesEmpaque-tab" data-toggle="pill" href="#comprobantesEmpaque"
+                                    role="tab" aria-controls="comprobantesEmpaque" aria-selected="false">Empaque
+                                    ({{ $order->comprobantesEmpaque->count() }})</a>
+                            </li>
+        
+                            <li class="nav-item">
+                                <a class="nav-link" id="comprobantesEnvio-tab" data-toggle="pill" href="#comprobantesEnvio"
+                                    role="tab" aria-controls="comprobantesEnvio" aria-selected="false">Envio
+                                    ({{ $order->comprobantesEnvio->count() }})</a>
+                            </li>
+        
+                        </ul>
+        
+                    </div>
+        
+                    <div class="card-body">
+                        <div class="tab-content" id="custom-tabs-four-tabContent">
+        
+                            <div class="tab-pane fade show active" id="comprobatesPago" role="tabpanel"
+                                aria-labelledby="comprobatesPago-tab">
+                                @livewire('manage.orders.edit-order.card-show-invoice', ['order' => $order], key('card-show-invoice'))
+        
+                            </div>
+        
+                            <div class="tab-pane fade" id="comprobantesEmpaque" role="tabpanel"
+                                aria-labelledby="comprobantesEmpaque-tab">
+        
+                                @livewire('manage.orders.edit-order.card-comprobantes-empaque', ['order' => $order], key('card-comprobantes-empaque'))
+        
+                            </div>
+        
+                            <div class="tab-pane fade" id="comprobantesEnvio" role="tabpanel"
+                                aria-labelledby="comprobantesEnvio-tab">
+                                @livewire('manage.orders.edit-order.card-comprobantes-envio', ['order' => $order], key('card-comprobantes-envio'))
+        
+                            </div>
+        
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+        
             </div>
 
 
             {{-- Detalles del pago --}}
-            <div class="col-lg-6 col">
+            <div class="col-lg-4 col">
                 @livewire('manage.orders.edit-order.card-show-summary', ['order' => $order], key('show-summary'))
             </div>
 
@@ -109,65 +170,6 @@
         {{-- @livewire('manage.orders.edit-order.card-comprobantes', ['order' => $order->id], key('card-comprobantes')) --}}
 
     </x-content>
-
-    <x-sectioncontent>
-
-        <h3 class="mb-3">Comprobantes</h3>
-
-        <div class="card card-primary card-outline card-outline-tabs">
-            <div class="card-header p-0 border-bottom-0">
-
-                <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
-
-                    <li class="nav-item">
-                        <a class="nav-link active" id="comprobatesPago-tab" data-toggle="pill" href="#comprobatesPago"
-                            role="tab" aria-controls="comprobatesPago" aria-selected="true">Pagos</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="comprobantesEmpaque-tab" data-toggle="pill" href="#comprobantesEmpaque"
-                            role="tab" aria-controls="comprobantesEmpaque" aria-selected="false">Empaque
-                            ({{ $order->comprobantesEmpaque->count() }})</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="comprobantesEnvio-tab" data-toggle="pill" href="#comprobantesEnvio"
-                            role="tab" aria-controls="comprobantesEnvio" aria-selected="false">Envio
-                            ({{ $order->comprobantesEnvio->count() }})</a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <div class="card-body">
-                <div class="tab-content" id="custom-tabs-four-tabContent">
-
-                    <div class="tab-pane fade show active" id="comprobatesPago" role="tabpanel"
-                        aria-labelledby="comprobatesPago-tab">
-                        @livewire('manage.orders.edit-order.card-show-invoice', ['order' => $order], key('card-show-invoice'))
-
-                    </div>
-
-                    <div class="tab-pane fade" id="comprobantesEmpaque" role="tabpanel"
-                        aria-labelledby="comprobantesEmpaque-tab">
-
-                        @livewire('manage.orders.edit-order.card-comprobantes-empaque', ['order' => $order], key('card-comprobantes-empaque'))
-
-                    </div>
-
-                    <div class="tab-pane fade" id="comprobantesEnvio" role="tabpanel"
-                        aria-labelledby="comprobantesEnvio-tab">
-                        @livewire('manage.orders.edit-order.card-comprobantes-envio', ['order' => $order], key('card-comprobantes-envio'))
-
-                    </div>
-
-                </div>
-            </div>
-            <!-- /.card -->
-        </div>
-
-    </x-sectioncontent>
 
     {{-- Modal para las observaciones --}}
 

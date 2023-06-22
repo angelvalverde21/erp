@@ -13,18 +13,39 @@
         
         <div class="card-body py-3">
 
-            @if ($order->carrier_address)
-            <li><h4>{{ $order->carrier_address->title }}</h4></li>
-            <li>{{ $order->carrier_address->name }}</li>
-            <li>{{ $order->carrier_address->phone }}</li>
-            <li>{{ $order->carrier_address->primary }}</li>
-            <li>{{ $order->carrier_address->secondary }}</li>
-            <li>{{ $order->carrier_address->district->name }} -
-                {{ $order->carrier_address->district->province->name }} -
-                {{ $order->carrier_address->district->province->department->name }}</li>
-            @else
-                No hay courier, debe seleccionar uno
-            @endif
+            <style>
+                .carrier{
+                    position: relative;
+                }
+
+                .logo-carrier{
+                    position: absolute;
+                    right: 10px;
+                    bottom: 0px;
+                    z-index: 100;
+                    width: 25%
+                }
+            </style>
+
+            <div class="carrier">
+                <div class="details">
+                    @if ($order->carrier_address)
+                    <li><h4>{{ $order->carrier_address->title }}</h4></li>
+                    <li>{{ $order->carrier_address->name }}</li>
+                    <li>{{ $order->carrier_address->phone }}</li>
+                    <li>{{ $order->carrier_address->primary }}</li>
+                    <li>{{ $order->carrier_address->secondary }}</li>
+                    <li>{{ $order->carrier_address->district->name }} -
+                        {{ $order->carrier_address->district->province->name }} -
+                        {{ $order->carrier_address->district->province->department->name }}</li>
+                    @else
+                        No hay courier, debe seleccionar uno
+                    @endif
+                </div>
+                <div class="logo-carrier">
+                    <img src="{{ $order->carrier_address->user->getOption('logo_profile') }}" width="100%">
+                </div>
+            </div>
 
 
 

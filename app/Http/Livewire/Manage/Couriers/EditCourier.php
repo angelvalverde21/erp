@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Manage\Couriers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 
 class EditCourier extends Component
@@ -13,6 +14,8 @@ class EditCourier extends Component
     public function mount(User $courier){
 
         $this->courier = $courier;
+
+        $this->store = Request::get('store');
 
     }
 

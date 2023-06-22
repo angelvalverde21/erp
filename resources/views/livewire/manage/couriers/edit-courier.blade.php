@@ -16,7 +16,7 @@
                     </div>
                     <div class="card-body">
                         
-                        @livewire('components.profile.upload-option', ['store' => $courier, 'field' => 'logo_profile'], key('logo_profile'))
+                        @livewire('components.profile.upload-option', ['store' => $store, 'field' => 'logo_profile', 'user_id'=>$courier->id], key('logo_profile'))
 
                     </div>
                 </div>

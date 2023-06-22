@@ -2,11 +2,11 @@
 
     <ul class="list-group mb-3">
 
-        <li class="list-group-item d-flex justify-content-between lh-condensed bg-light">
-            <div>
-                <h5 class=""><i class="fa-solid fa-truck"></i></h5>
+        <li class="list-group-item  list-group-item-dark d-flex justify-content-between align-items-center">
+            <span><h6><i class="fa-solid fa-comments-dollar me-2"></i> Gastos de envio</h6></span>
+            <div class="controls">
+                <x-form.button-open-modal target="#editCarrierOrderDetails" mr="0"/>
             </div>
-            <h5>GASTOS DE ENVIO</h5>
         </li>
 
         <li class="list-group-item d-flex justify-content-between lh-condensed">
@@ -35,7 +35,7 @@
 
         <li class="list-group-item d-flex justify-content-between">
             <div>
-                <x-form.button-open-modal target="#editCarrierOrderDetails" mr="0"/>
+                
             </div>
             <div>
                 <span>S/. {{ $order->shipping_cost_buyer - $order->shipping_cost_to_carrier - $order->shipping_cost_carrier }}</span>

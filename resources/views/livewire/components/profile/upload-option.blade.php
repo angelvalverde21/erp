@@ -19,15 +19,9 @@
 
         <div wire:ignore class="drop-zoom" wire:key="upload-option-{{ $field }}">
 
-            @if ($user)
-                <form method="POST" action="{{ route('manage.option.upload', [$store->nickname, $user]) }}"
-                    class="dropzone" id="my-awesome-dropzone-upload-option-{{ $field }}">
-                </form>
-            @else
-                <form method="POST" action="{{ route('manage.option.upload', [$store->nickname]) }}" class="dropzone"
-                    id="my-awesome-dropzone-upload-option-{{ $field }}">
-                </form>
-            @endif
+            <form method="POST" action="{{ route('manage.option.upload', [$store->nickname]) }}" class="dropzone"
+                id="my-awesome-dropzone-upload-option-{{ $field }}">
+            </form>
 
         </div>
 
@@ -50,6 +44,7 @@
                 paramName: "file", // The name that will be used to transfer the file
                 params: {
                     'name': '{{ $field }}',
+                    'user_id': '{{ $user_id}}', //esto lo recibe la funcion en el controller
                 },
                 maxFilesize: 10, //10MB max, Tambien hemos agregado un validador en el servidor
 

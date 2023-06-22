@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class UploadOption extends Component
 {
     
-    public $store, $text, $field, $fieldKebabCase, $fieldPascalCase, $user;
+    public $store, $text, $field, $fieldKebabCase, $fieldPascalCase, $user, $user_id;
 
     protected $listeners = [
         'render'=>'render',
@@ -18,8 +18,15 @@ class UploadOption extends Component
 
     ];
 
-    public function mount(User $store, $field, $user = null, $text = 'Subir Imagen'){
-        $this->user = $user;
+    public function mount(User $store, $field, $user_id = null, $text = 'Subir Imagen'){
+
+        if ($user_id>0) {
+            $this->user_id = $user_id;
+            $this->user = User::findOrFail($user_id);
+        } else {
+            $this->user_id = null;
+        }
+
         $this->text = $text;
         $this->store = $store;
         $this->field = $field;
@@ -36,16 +43,32 @@ class UploadOption extends Component
 
         $image = 'image no encontrada';
 
-        foreach ($store->options as $option) {
-            # code...
-            if( $option->name == $field ){
-                
-                $image = $option->value;
-                break;
+        if ($this->user) {
 
+            foreach ($this->user->options as $option) {
+                # code...
+                if( $option->name == $field ){
+                    
+                    $image = $option->value;
+                    break;
+    
+                }
+    
             }
+        } else {
 
+            foreach ($store->options as $option) {
+                # code...
+                if( $option->name == $field ){
+                    
+                    $image = $option->value;
+                    break;
+    
+                }
+    
+            }
         }
+        
 
         return view('livewire.components.profile.upload-option', compact('store','field','image','text'));
     }
