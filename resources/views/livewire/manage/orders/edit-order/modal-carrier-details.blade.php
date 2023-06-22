@@ -1,5 +1,17 @@
 <div>
 
+    <style>
+        .input-group-text{
+            padding: 0 5px 0 10px !important;
+            background-color: #fff !important;
+        }
+
+        .form-control{
+            border-left: 0 !important;
+            padding-left: 5px !important; 
+        }
+    </style>
+
     <div class="row">
 
         {{-- <div class="col col-lg-6">
@@ -26,23 +38,43 @@
             {{-- <h3>Linear stepper</h3> --}}
             <div id="stepper1" class="bs-stepper linear">
                 <div class="bs-stepper-header" role="tablist">
-                    <div class="step active" data-target="#test-l-1">
-                        <button type="button" class="step-trigger" role="tab" id="stepper1trigger1"
-                            aria-controls="test-l-1" aria-selected="true">
-                            <span class="bs-stepper-circle"><li class="fa-solid fa-user"></li></span>
-                            <span class="bs-stepper-label">Envio</span>
-                        </button>
-                    </div>
+
+
+                    @if ($order->shipping_cost_to_carrier > 0)
+                        <div class="step active" data-target="#test-l-1">
+                    @else
+                        <div class="step" data-target="#test-l-1">
+                    @endif
+                            <button type="button" class="step-trigger" role="tab" id="stepper1trigger1"
+                                aria-controls="test-l-1" aria-selected="true">
+                                <span class="bs-stepper-circle"><li class="fa-solid fa-user"></li></span>
+                                <span class="bs-stepper-label">Envio</span>
+                            </button>
+                        </div>
+
                     <div class="bs-stepper-line"></div>
-                    <div class="step active" data-target="#test-l-2">
+
+                    @if ($order->shipping_cost_carrier > 0)
+                        <div class="step active" data-target="#test-l-2">
+                    @else
+                        <div class="step" data-target="#test-l-2">
+                    @endif
+
                         <button type="button" class="step-trigger" role="tab" id="stepper1trigger2"
                             aria-controls="test-l-2" aria-selected="false">
                             <span class="bs-stepper-circle"><i class="fa-solid fa-motorcycle"></i></span>
                             <span class="bs-stepper-label">Translado</span>
                         </button>
                     </div>
+
                     <div class="bs-stepper-line"></div>
-                    <div class="step active" data-target="#test-l-3">
+
+                    @if ($order->shipping_cost_buyer > 0)
+                        <div class="step active" data-target="#test-l-3">
+                    @else
+                        <div class="step" data-target="#test-l-3">
+                    @endif
+
                         <button type="button" class="step-trigger" role="tab" id="stepper1trigger3"
                             aria-controls="test-l-3" aria-selected="false">
                             <span class="bs-stepper-circle"><i class="fa-solid fa-truck"></i></span>

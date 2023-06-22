@@ -18,11 +18,12 @@
 
         <thead>
             <tr>
-                <th>Id</th>
+                <th class="text-center">Id</th>
                 <th>Cliente</th>
                 <th>Productos</th>
                 <th>Status</th>
-                <th>Asignado</th>
+                <th class="text-center">Asignado</th>
+                <th class="text-center">Empresa</th>
                 <th class="text-center">Status</th>
                 <th>Pago</th>
                 <th>Total</th>
@@ -137,6 +138,9 @@
                             No se ha seleccionado el personal de entrega
                         @endif
                         
+                    </td>
+                    <td>
+                        <img src="{{ $order->carrier_address->user->getOption('logo_profile') }}" width="100px" alt="">
                     </td>
                     <td class="text-center">
     
