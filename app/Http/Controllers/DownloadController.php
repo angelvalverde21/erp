@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AlbumLocation;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -40,4 +41,5 @@ class DownloadController extends Controller
             Log::info('la imagen no existe');
         }
     }
+
 }

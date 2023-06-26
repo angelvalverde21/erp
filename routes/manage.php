@@ -112,6 +112,9 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    //GET Products
    Route::get('/products/{product}/download/stock', [ProductController::class, 'downLoadStock'])->name('products.download.stock');
    Route::get('/products/{product}/download/zip', [ProductController::class, 'downLoadZipProduct'])->name('products.download.zip');
+   
+   Route::get('/products/{product}/download/albumlocation/{album_location_id}/zip', [ProductController::class, 'downLoadZipAlbumLocation'])->name('products.download.albumlocation.zip');
+   
    Route::get('/products/print/deals', [PdfProductController::class, 'printDeals'])->name('products.print.deals');
 
 

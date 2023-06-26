@@ -23,5 +23,15 @@ class AlbumLocation extends Model
     {
         return $this->morphMany(Photo::class, "photoable")->orderBy('id', 'DESC');
     }
+
+    public function album()
+    {
+        return $this->belongsTo(Album::class);
+    }
+    
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
     
 }

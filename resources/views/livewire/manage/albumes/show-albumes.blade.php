@@ -21,15 +21,15 @@
 
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a
-                            href="{{ route('manage.albumes.album', [$store->nickname, 0]) }}">ALBUMES</a></li>
+                    <a href="{{ route('manage.albumes.album', [$store->nickname, 0]) }}">ALBUMES</a>
+                </li>
                 @foreach ($breadcrumbs as $breadcrumb)
                     <li class="breadcrumb-item"><a
                             href="{{ route('manage.albumes.album', [$store->nickname, $breadcrumb['id']]) }}">{{ Str::upper($breadcrumb['name']) }}</a>
                     </li>
                 @endforeach
 
-                
+
             </ol>
 
         </div><!-- /.container-fluid -->
@@ -51,7 +51,7 @@
                 </div>
             @endif
 
-            
+
             <button class="btn btn-success mt-3" style="width: 145px;" data-toggle="modal" data-target="#addAlbum"
                 type="button">+
                 Agregar Carpeta</button>
@@ -131,41 +131,43 @@
 
     <x-sectioncontent>
 
-        @foreach ($album->photos as $photo)
-            <div class="card text-center" style="width: 340px">
+        <div class="d-flex flex-wrap justify-content-around">
+            @foreach ($album->photos as $photo)
+                <div class="card text-center" style="width: 340px">
 
-                <a href="{{ Storage::disk('spaces')->url($photo->medium) }}" data-fancybox="gallery"
-                    data-caption="{{ $photo->name }}">
+                    <a href="{{ Storage::disk('spaces')->url($photo->medium) }}" data-fancybox="gallery"
+                        data-caption="{{ $photo->name }}">
 
-                    <img loading="lazy" src="{{ Storage::disk('spaces')->url($photo->medium) }}" class="card-img-top"
-                        height="" alt="...">
-                </a>
+                        <img loading="lazy" src="{{ Storage::disk('spaces')->url($photo->medium) }}"
+                            class="card-img-top" height="" alt="...">
+                    </a>
 
-                <span>{{ $photo->name }}</span>
+                    <span>{{ $photo->name }}</span>
 
-                <div class="controles d-flex justify-content-between p-3">
+                    <div class="controles d-flex justify-content-between p-3">
 
-                    {{-- <a href="{{ route('manage.download.photo', [$store->nickname, $photo->id]) }}" class="btn btn-success">Descargar</a> --}}
+                        {{-- <a href="{{ route('manage.download.photo', [$store->nickname, $photo->id]) }}" class="btn btn-success">Descargar</a> --}}
 
-                    <a target="_blank" href="{{ Storage::disk('spaces')->url($photo->large) }}"
-                        class="btn btn-success"><i class="fa-solid fa-download me-1"></i>
-                        Descargar</a>
+                        <a target="_blank" href="{{ Storage::disk('spaces')->url($photo->large) }}"
+                            class="btn btn-success"><i class="fa-solid fa-download me-1"></i>
+                            Descargar</a>
 
+                        @if ($user->hasRole('admin'))
+                            <button type="button" wire:loading.attr="disabled"
+                                wire.target="delete-{{ $photo->id }}" wire:click="delete('{{ $photo->large }}')"
+                                class="btn btn-danger">
+                                <i class="fa-solid fa-trash me-1"></i>Borrar</button>
 
-                    @if ($user->hasRole('admin'))
-                        <button type="button" wire:loading.attr="disabled" wire.target="delete-{{ $photo->id }}"
-                            wire:click="delete('{{ $photo->large }}')" class="btn btn-danger">
-                            <i class="fa-solid fa-trash me-1"></i>Borrar</button>
+                            <div wire:loading wire:target="delete-{{ $photo->id }}" class="spinner-border"
+                                role="status">
+                                <span class="sr-only">Espere...</span>
+                            </div>
+                        @endif
 
-                        <div wire:loading wire:target="delete-{{ $photo->id }}" class="spinner-border"
-                            role="status">
-                            <span class="sr-only">Espere...</span>
-                        </div>
-                    @endif
-
+                    </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
 
     </x-sectioncontent>
 

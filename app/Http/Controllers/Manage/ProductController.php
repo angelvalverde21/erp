@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manage;
 
 use App\Http\Controllers\Controller;
+use App\Models\AlbumLocation;
 use App\Models\Color;
 use App\Models\ColorSize;
 use App\Models\Image;
@@ -13,6 +14,7 @@ use App\Models\Size;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use ZipArchive;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -148,7 +150,7 @@ class ProductController extends Controller
         $urlThumb = uploadImage($request, "products/colors/thumb", 360);
         $urlMedium = uploadImage($request, "products/colors/medium", 750);
         $urlLarge = uploadImage($request, "products/colors/large", 1080);
-        
+
         //Crea el stock en caso no haya tallas
         $color->images()->create(
             [
@@ -175,44 +177,102 @@ class ProductController extends Controller
         // }
     }
 
-    public function downLoadColor($nickname, Product $color){
-        
+    public function downLoadColor($nickname, Product $color)
+    {
     }
 
 
-    public function downLoadZipProduct($nickname, Product $product){
+    public function downLoadZipProduct($nickname, Product $product)
+    {
 
         $colors = $product->colors;
 
         foreach ($colors as $color) {
             # code...
-            if($color->quantity > 0){
+            if ($color->quantity > 0) {
                 $rutasImagenes[] = $color->image->name;
             }
         }
-    
+
         $zip = new ZipArchive();
-        $nombreArchivoZip = $product->slug.'.zip';
+        $nombreArchivoZip = $product->slug . '.zip';
         $rutaArchivoZip = public_path($nombreArchivoZip);
-    
+
         if ($zip->open($rutaArchivoZip, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
             foreach ($rutasImagenes as $rutaImagen) {
                 $nombreArchivo = basename($rutaImagen);
                 $rutaCompleta = public_path(storage::url($rutaImagen));
-    
+
                 $zip->addFile($rutaCompleta, $nombreArchivo);
             }
-    
+
             $zip->close();
-    
+
             return response()->download($rutaArchivoZip)->deleteFileAfterSend(true);
         }
-    
+
         return response('No se pudo crear el archivo ZIP', 500);
+    }
+
+    public function downLoadZipAlbumLocation($nickname, $product, $album_location_id)
+    {
+
+        $album_location = AlbumLocation::findOrFail($album_location_id);
+
+        $photos = $album_location->photos;
+
+        
+        $carpetaTemp = "temp/" . Str::slug($album_location->album->name . "-" . $album_location->location->name);
+
+        if (!file_exists(Storage::path($carpetaTemp))) {
+            mkdir(Storage::path($carpetaTemp), 0755, true);
+        }
+
+        foreach ($photos as $photo) {
+            # code...
+            $rutasImagenes[] = $photo->large;
+
+            $rutaArchivo = basename($photo->large);
+
+            Log::info($rutaArchivo);
+
+            // Log::info($photo->large);
+
+            $contenidoArchivo = Storage::disk('spaces')->get($photo->large);
+            
+            // Log::info($contenidoArchivo);
+
+            $rutaDestino = $carpetaTemp . '/' . $rutaArchivo;
+
+            // Log::info(Storage::path($contenidoArchivo));
+            file_put_contents(Storage::path($rutaDestino), $contenidoArchivo);
+        }
+
+        // $zip = new ZipArchive();
+
+        // //carpeta temp donde se copiaran temporalmente las fotos de spaces
+
+        Log::info($carpetaTemp);
+
+
+
+        // $rutaArchivoZip = public_path($nombreArchivoZip);
+
+        // foreach ($rutasImagenes as $rutaImagen) {
+
+        //     $nombreArchivo = basename($rutaImagen);
+
+        //     $contenidoArchivo = Storage::disk('digitalocean')->get($archivo);
+
+        //     file_put_contents($rutaDestino, $contenidoArchivo);
+
+        // }
+
 
     }
 
-    public function downLoadStock($nickname, Product $product){
+    public function downLoadStock($nickname, Product $product)
+    {
 
         $colors = $product->colors;
 
@@ -224,7 +284,7 @@ class ProductController extends Controller
             # code...
             $rutasImagenes[] = $color->image->name;
 
-            $descargas[] = response()->download(public_path(Storage::url($rutasImagenes[$i])), $i.".jpg");
+            $descargas[] = response()->download(public_path(Storage::url($rutasImagenes[$i])), $i . ".jpg");
 
             $i++;
         }
@@ -242,11 +302,11 @@ class ProductController extends Controller
 
         //     $nombreArchivo = basename($rutasImagenes[$i]);
         //     $rutaCompleta = public_path(Storage::url($rutasImagenes[$i]));
-    
+
         //     $headers = [
         //         'Content-Type' => 'image/jpeg', // Ajusta el tipo MIME según el formato de tus imágenes
         //     ];
-    
+
         //     $descargas[] = response()->download($rutaCompleta, $nombreArchivo, $headers);
 
         //     $i++;
@@ -255,7 +315,7 @@ class ProductController extends Controller
         // return $descargas;
 
         // return response()->download(asset(Storage::url($rutasImagenes[0])), "descargar.jpg");
-        
+
 
         // return $rutasImagenes;
         // $rutasImagenes = [
