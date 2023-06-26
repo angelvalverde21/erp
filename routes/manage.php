@@ -41,6 +41,8 @@ use App\Http\Livewire\Manage\Profile\ShoProfileWeb;
 use App\Http\Livewire\Manage\Profile\ShowProfileStore;
 use App\Http\Livewire\Manage\Profile\ShowProfileWeb;
 use App\Http\Livewire\Manage\Staff\ShowStaff;
+use App\Http\Livewire\Manage\Tasks\EditTask;
+use App\Http\Livewire\Manage\Tasks\ShowTasks;
 use App\Http\Livewire\ShowAlbumsColor;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
@@ -146,6 +148,10 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    Route::get('/couriers', ShowCouriers::class)->name('couriers');
    Route::get('/couriers/{courier}', EditCourier::class)->name('couriers.edit');
 
+   //tareas
+
+   Route::get('/tasks', ShowTasks::class)->name('tasks');
+   Route::get('/tasks/{task}', EditTask::class)->name('tasks.edit');
 
 
    //GET Producciones

@@ -121,6 +121,13 @@ class Sidebar extends Component
                             "slug"=>route('manage.albumes',[$this->store->nickname]),
                             "icon"=>"fa-solid fa-images",
                         ],
+
+                        [
+                            "name"=>"Tareas",
+                            "active"=>"tasks",
+                            "slug"=>route('manage.tasks',[$this->store->nickname]),
+                            "icon"=>"fa-solid fa-images",
+                        ],
                     ]
                 ],
                 // [

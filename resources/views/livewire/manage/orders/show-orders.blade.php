@@ -4,10 +4,39 @@
         <link rel="stylesheet" href="{{ asset('admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     @endpush
 
+    <x-sectioncontent>
 
+        <div class="row mt-3">
 
-    {{-- <x-breadcrumbs title="Ventas" /> --}}
+            @if ($tasks->count() > 0)
 
+                @foreach ($tasks as $task)
+                    <div class="col-md-3">
+                        <div class="card bg-gradient-warning">
+                            <div class="card-header">
+                                <h3 class="card-title">{{ $task->name }}</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.card-tools -->
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                {{ $task->description }}
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                @endforeach
+            @endif
+            
+        </div>
+
+    </x-sectioncontent>
 
     <x-sectioncontent>
 
@@ -32,7 +61,7 @@
                 <a id="enviarfecha" href="{{ route('manage.orders', [$store->nickname]) }}"
                     class="btn btn-secondary w-100">Buscar</a>
             </div>
-            
+
 
         </div>
 
@@ -40,12 +69,11 @@
             <div wire:loading>
                 <div class="spinner-grow" role="status">
                     <span class="sr-only">Buscando...</span>
-                  </div>
+                </div>
             </div>
         </div>
 
         <script>
-
             var fecha = document.getElementById('fecha');
             var enlace = document.getElementById('enviarfecha');
 
@@ -53,7 +81,6 @@
                 console.log('El valor ha cambiado:', fecha.value); // Acción a realizar cuando cambia el valor
                 enlace.href = enlace.href + '/date/' + fecha.value;
             });
-            
         </script>
 
     </x-sectioncontent>
@@ -159,34 +186,5 @@
 
 
     </x-sectioncontent>
-
-    @push('script-footer')
-        <!-- DataTables  & Plugins -->
-        {{-- <script src="{{ asset('admin-lte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-        <script src="{{ asset('admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-        <script src="{{ asset('admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-        <script src="{{ asset('admin-lte/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-        <script src="{{ asset('admin-lte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-        <script src="{{ asset('admin-lte/plugins/jszip/jszip.min.js') }}"></script>
-        <script src="{{ asset('admin-lte/plugins/pdfmake/pdfmake.min.js') }}"></script>
-        <script src="{{ asset('admin-lte/plugins/pdfmake/vfs_fonts.js') }}"></script>
-        <script src="{{ asset('admin-lte/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-        <script src="{{ asset('admin-lte/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-        <script src="{{ asset('admin-lte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
-        <script>
-            $(function() {
-                $("#example1").DataTable({
-                    "lengthChange": false,
-                    "autoWidth": false,
-                    "ordering": false,
-                    "buttons": ["pdf", "print"]
-                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-
-            });
-        </script> --}}
-    @endpush
-
 
 </div>

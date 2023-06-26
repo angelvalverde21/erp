@@ -1,5 +1,6 @@
 <div>
     {{-- If you look to others for fulfillment, you will never truly be fulfilled. --}}
+
     <div class="card bg-">
         <div class="card-body py-0">
             <div class="table-responsive">
@@ -22,7 +23,6 @@
                     <tbody>
 
                         @foreach ($items as $item)
-
                             <tr>
                                 <td class="text-center">
 
@@ -65,7 +65,7 @@
                                 <td class="text-center">Sin url</td>
                         @endif
 
-                        
+
 
                         <div class="content-stock">
 
@@ -93,7 +93,7 @@
                         </div>
 
                         </td>
-                        
+
                         <td>{{ $item->price }}</td>
                         <td>{{ $item->precio_final }}</td>
 
@@ -186,11 +186,24 @@
         </div>
 
         <x-slot name="footer">
-            <button type="button" data-dismiss="modal" class="btn btn-info" wire:loading.attr="disabled" wire.target="save"
-                wire:click="saveEditItem"><i class="fa-solid fa-floppy-disk mr-1"></i> Guardar
+            <button type="button" data-dismiss="modal" class="btn btn-info" wire:loading.attr="disabled"
+                wire.target="save" wire:click="saveEditItem"><i class="fa-solid fa-floppy-disk mr-1"></i> Guardar
             </button>
         </x-slot>
 
+        {{-- @push('script')
+            <script>
+                //por el momento no pasamos nada a data, pero es necesario para el correcto funcionamiento
+                Livewire.on('updateItemOrder', data2 => {
+                    console.log('se ha escuchado el envento updateItemOrder');
+                    // console.log(data);
+
+                    var genericModalEl = document.getElementById('editItem');
+                    var modal = bootstrap.Modal.getInstance(genericModalEl);
+                    modal.hide();
+                })
+            </script>
+        @endpush --}}
     </x-user.modal>
 
     {{-- <script>

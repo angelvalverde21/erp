@@ -58,6 +58,8 @@ class ShowItemAll extends Component
         $this->emit('actualizado');
         //$this->dispatchBrowserEvent('cerrar-modal', ['modalID' => '#editItem']);
 
+        $this->emit('updateItemOrder');
+
         //$this->emitSelf('render');
     }
 

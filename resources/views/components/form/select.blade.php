@@ -21,10 +21,12 @@
         {{ $slot }}
     </select>
 
-    @if ($error != '')
+    <div class="d-flex w-100">
+        @if ($error != '')
         @error($wirevalue)
-            <span class="error">{{ $error }}</span>
+            <span class="error has-danger">{{ $error }}</span>
         @enderror
-    @endif
-
+        @endif
+    </div>
 </div>
+

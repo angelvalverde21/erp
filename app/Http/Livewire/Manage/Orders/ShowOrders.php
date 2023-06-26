@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Manage\Orders;
 
 use App\Models\Address;
 use App\Models\Order;
+use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
@@ -30,6 +31,9 @@ class ShowOrders extends Component
 
     public function render()
     {
+
+        $tasks = Task::orderBy('id','desc')->where('active',1)->limit(4)->get();
+
         $ordersAll = Order::where('store_id', $this->store->id)->limit(15)->orderBy('id', 'desc')->with(['buyer', 'seller', 'delivery_man'])->get();
 
         $ordersToday = Order::where('store_id', $this->store->id)->limit(20)->where('delivery_date', date('Y-m-d'))->orderBy('id', 'desc')->with(['buyer', 'seller', 'delivery_man'])->get();
@@ -54,7 +58,7 @@ class ShowOrders extends Component
 
             $ordersResult = Order::search($this->search);
 
-            return view('livewire.manage.orders.show-orders', compact('ordersAll', 'ordersToday', 'ordersPendientesPago', 'ordersPagados', 'ordersResult'))->layout('layouts.manage');
+            return view('livewire.manage.orders.show-orders', compact('ordersAll', 'ordersToday', 'ordersPendientesPago', 'ordersPagados', 'ordersResult','tasks'))->layout('layouts.manage');
             
         } else {
 
@@ -64,7 +68,7 @@ class ShowOrders extends Component
             //     $query->where('status.id', '=', 5);
             // })->get();
 
-            return view('livewire.manage.orders.show-orders', compact('ordersAll', 'ordersToday', 'ordersPendientesPago', 'ordersPagados'))->layout('layouts.manage');
+            return view('livewire.manage.orders.show-orders', compact('ordersAll', 'ordersToday', 'ordersPendientesPago', 'ordersPagados','tasks'))->layout('layouts.manage');
         }
     }
 }
