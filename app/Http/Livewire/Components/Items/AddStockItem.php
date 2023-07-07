@@ -17,8 +17,16 @@ class AddStockItem extends Component
     {
         $this->item = $item;
 
+        Log::info($item);
+
         // $color_size = ColorSize::find($item->content->color_size_id);
         $this->color = Color::find($item->content->color_id);
+
+        Log::info('color_id');
+        Log::info($item->content->color_id);
+        Log::info('color');
+        Log::info($this->color);
+        Log::info('fin de color');
     }
 
     public function separarOrAsignar($color_size_id){

@@ -206,7 +206,9 @@ class ProductApi extends Controller
                             ]
                         )
                         ->with('images')->with('prices')
-                        ->with('colors.sizes')
+                        ->with('colors', function($query){
+                            $query->where('quantity', '>', 0)->with('sizes');
+                        })
                         ->first();
                 }
             }

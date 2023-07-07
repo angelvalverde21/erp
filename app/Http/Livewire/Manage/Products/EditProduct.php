@@ -35,19 +35,23 @@ class EditProduct extends Component
 
     public $product, $slug, $store;
 
-    public function mount(Product $product){
+    public function mount(Product $product)
+    {
+
+        // Inicializar CKEditor con los datos iniciales
+        // \Livewire\Scripts::push('ckeditor');
 
         //Log::debug($product);
         $this->store = Request::get('store');
-        
+
         Log::info($this->store);
-        
+
 
         // $store = User::findOrFail($this->store->id);
 
-        if($this->store->id == $product->store_id){
+        if ($this->store->id == $product->store_id) {
             $this->product = $product;
-        }else{
+        } else {
             abort(403);
         }
 
@@ -55,26 +59,28 @@ class EditProduct extends Component
         // $this->authorize('owner');
 
         //$this->authorize()
-        
+
     }
 
-    public function refreshProductEdit(){
+    public function refreshProductEdit()
+    {
         $this->product = $this->product->fresh();
     }
-    
-    public function save(){
+
+    public function save()
+    {
 
         $rules = $this->rules;
-        $rules['product.slug'] = 'required|unique:products,slug,'.$this->product->id;
+        $rules['product.slug'] = 'required|unique:products,slug,' . $this->product->id;
 
         $this->validate($rules);
-        
+
         //$this->product->slug = $this->slug;
 
         Log::info('log desde el editProduct.php');
-        
+
         Log::info($this->product);
-        
+
         Log::info('fin de log desde el editProduct.php');
 
         // $this->product->prices()->create([
@@ -85,10 +91,10 @@ class EditProduct extends Component
         Log::debug($this->product);
         $this->product->save();
         $this->emit('actualizado');
-
     }
 
-    public function updatedProductName($value){
+    public function updatedProductName($value)
+    {
         //Log::debug($value);
         $this->product->slug = Str::slug($value);
     }
@@ -98,13 +104,13 @@ class EditProduct extends Component
         $product = $this->product;
         $title = $product->name;
 
-        return view('livewire.manage.products.edit-product',compact('product'))->layout('layouts.manage', ['title' => $title]);
+        return view('livewire.manage.products.edit-product', compact('product'))->layout('layouts.manage', ['title' => $title]);
     }
 
     // public function layout()
     // {
     //     $pageTitle = 'Página de inicio';
-    
+
     //     return view('layouts.manage', [
     //         'pageTitle' => $pageTitle,
     //     ]);

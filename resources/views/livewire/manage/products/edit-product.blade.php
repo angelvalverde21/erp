@@ -77,7 +77,185 @@
 
             {{-- Bloque principal --}}
 
-            <div class="col-lg-8 col-12">
+            <div class="col-lg-12 col-12">
+                <div class="row">
+                    <div class="col-lg-12 col-12">
+                        {{-- Editar Producto --}}
+                        <div class="card">
+                            <div class="card-header py-3">
+                                <div class="header-content d-flex justify-content-between align-items-center">
+                                    <span>
+                                        Publicado en: {{ $product->category->name }}
+                                    </span>
+                                    <a href="{{ route('manage.products.download.zip', [$store->nickname, $product->id]) }}"
+                                        style="width: 75px;"
+                                        class="btn btn-success btn-erp d-flex justify-content-between align-items-center"><i
+                                            class="fa-solid fa-download me-2"></i> <span>Stock</span></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form action="#">
+                                    <div class="form-body">
+
+                                        <div class="row">
+                                            <div class="col-md-12 p-y-3">
+                                                @if ($store->getOption('domain'))
+                                                    <p><a target="_blank"
+                                                            href="{{ $store->getOption('domain') }}/{{ $product->short_link }}">{{ $store->getOption('domain') }}/{{ $product->short_link }}</a>
+                                                    </p>
+                                                @endif
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row p-t-20">
+                                            <div class="col-md-12">
+                                                <x-form.input type="text" wirevalue="product.name" debounce="1000"
+                                                    error="Este campo es requerido">
+                                                    Titulo
+                                                </x-form.input>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <x-form.input type="hidden" disabled="disabled"
+                                                    wirevalue="product.slug" error="este producto ya existe">
+                                                    Url del producto
+                                                </x-form.input>
+                                            </div>
+
+                                            <style>
+                                                .ck-editor__editable_inline {
+                                                    min-height: 150px;
+                                                }
+                                            </style>
+
+                                            <div class="col-md-12">
+                                                <label for="">Description</label>
+                                                <textarea id="editor" wire:model.defer.debounce.500ms="product.description" wire:ignore.self
+                                                    style="height: 150px !important;">
+                                                    {{ $product['description'] }}
+                                                </textarea>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="row mt-3">
+                                            <!--/span-->
+                                            <div class="col-md-4">
+                                                <x-form.input type="number" label="Precio Costo" texticon="S/. "
+                                                    wirevalue="product.costo" debouce="500"
+                                                    error="Este campo es requerido">
+                                                    Precio Costo
+                                                </x-form.input>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <x-form.input type="number" label="Precio Normal" texticon="S/. "
+                                                    wirevalue="product.price" debouce="500"
+                                                    error="Este campo es requerido">
+                                                    Precio Costo
+                                                </x-form.input>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <x-form.input type="number" label="Precio Mayor" texticon="S/. "
+                                                    wirevalue="product.price_seller" debouce="500"
+                                                    error="Debe indicar el precio por mayor">
+                                                    Precio por mayor
+                                                </x-form.input>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <!--/row-->
+
+                                        <div class="row">
+                                            <!--/span-->
+                                            <div class="d-flex justify-content-between">
+
+                                                <div class="check">
+
+                                                    <div class="form-check-label" for="flexSwitchCheckDefault">Sobre
+                                                        Vender</div>
+
+                                                    <div class="form-check form-switch">
+                                                        <input style="width: 75px; height: 25px;"
+                                                            class="form-check-input"
+                                                            wire:model.debounce.500ms="product.over_sale"
+                                                            type="checkbox" role="switch" id="flexSwitchCheckDefault1">
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="check">
+
+                                                    <div class="form-check-label" for="flexSwitchCheckDefault">Vender
+                                                        como una
+                                                        sola talla (ESTANDAR)</div>
+
+                                                    <div class="form-check form-switch d-flex flex-column">
+                                                        <input style="width: 75px; height: 25px;"
+                                                            class="form-check-input"
+                                                            wire:model.debounce.500ms="product.force_size_unique"
+                                                            type="checkbox" role="switch" id="flexSwitchCheckDefault2">
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <!--/span-->
+                                        </div>
+                                        <!--/row-->
+
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer">
+
+                                <div class="botones d-flex justify-content-between py-2">
+                                    <div class="form-actions">
+                                        <button type="button" wire:loading.attr="disabled" wire.target="save"
+                                            wire:click="save" class="btn btn-success"> <i class="fa fa-check"></i>
+                                            Guardar
+                                            Cambios</button>
+                                        {{-- <button type="button" class="btn btn-secondary">Cancel</button> --}}
+                                    </div>
+
+                                    <div wire:loading wire:target="save" class="spinner-border" role="status">
+                                        <span class="sr-only">Espere...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- FIN de editar Producto --}}
+                    </div>
+
+                    <div class="col-lg-12 col-12">
+                        {{-- Lista de precios --}}
+                        @livewire('components.prices.show-prices', ['product' => $product], key('show-prices-' . $product->id))
+                        {{-- FIN de lista de precios --}}
+
+                        {{-- texto paa publicar en redes --}}
+                        <div class="alert alert-light" role="alert">
+                            <ul>
+                                <li>{{ $product->name }}</li>
+                                <li>Por solo: S/. {{ $product->prices->first()->value }}</li>
+                                <li>Tambien: {{ $product->price_oferta() }}</li>
+                                <li>Envio GRATIS a todo el Peru</li>
+                            </ul>
+
+                        </div>
+                        {{-- FIN texto paa publicar en redes --}}
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12 col-12">
 
                 {{-- Almacen --}}
                 <div class="card">
@@ -119,175 +297,7 @@
 
             {{-- sidebar  --}}
 
-            <div class="col-lg-4 col-12">
-                <div class="row">
-                    <div class="col-lg-12 col-12">
-                        {{-- Editar Producto --}}
-                        <div class="card">
-                            <div class="card-header py-3">
-                                <div class="header-content d-flex justify-content-between align-items-center">
-                                    <span>
-                                        Publicado en: {{ $product->category->name }}
-                                    </span>
-                                    <a href="{{ route('manage.products.download.zip', [$store->nickname, $product->id]) }}"
-                                        style="width: 75px;"
-                                        class="btn btn-success btn-erp d-flex justify-content-between align-items-center"><i
-                                            class="fa-solid fa-download me-2"></i> <span>Stock</span></a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <form action="#">
-                                    <div class="form-body">
 
-                                        <div class="row">
-                                            <div class="col-md-12 p-y-3">
-                                                @if ($store->getOption('domain'))
-                                                    <p><a target="_blank"
-                                                            href="https://{{ $store->getOption('domain') }}/{{ $product->short_link }}">https://{{ $store->getOption('domain') }}/{{ $product->short_link }}</a>
-                                                    </p>
-                                                @endif
-
-                                            </div>
-                                        </div>
-
-                                        <div class="row p-t-20">
-                                            <div class="col-md-12">
-                                                <x-form.input type="text" wirevalue="product.name" debounce="1000"
-                                                    error="Este campo es requerido">
-                                                    Titulo
-                                                </x-form.input>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <x-form.input type="hidden" disabled="disabled"
-                                                    wirevalue="product.slug" error="este producto ya existe">
-                                                    Url del producto
-                                                </x-form.input>
-                                            </div>
-                                        </div>
-
-                                        <div class="accordion-content" wire:ignore>
-                                            <div class="accordion mb-3" id="accordionExample">
-
-                                                <x-accordion-item label="Descripcion del producto"
-                                                    id="description_product" accordionParentId="accordionExample">
-
-                                                    <x-form.textarea wirevalue="product.description" rows="5">
-                                                        Describa al producto
-                                                    </x-form.textarea>
-
-                                                </x-accordion-item>
-
-                                                <x-accordion-item id="labels_product"
-                                                    accordionParentId="accordionExample" label="Etiquetas del producto">
-
-                                                    <x-form.textarea wirevalue="product.tags" rows="3">
-                                                        Etiquetas del producto
-                                                    </x-form.textarea>
-
-                                                </x-accordion-item>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <!--/span-->
-                                            <div class="col-md-4">
-                                                <x-form.input type="number" label="Precio Costo" texticon="S/. "
-                                                    wirevalue="product.costo" debouce="500"
-                                                    error="Este campo es requerido">
-                                                    Precio Costo
-                                                </x-form.input>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <x-form.input type="number" label="Precio Normal" texticon="S/. "
-                                                    wirevalue="product.price" debouce="500"
-                                                    error="Este campo es requerido">
-                                                    Precio Costo
-                                                </x-form.input>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <x-form.input type="number" label="Precio Mayor" texticon="S/. "
-                                                    wirevalue="product.price_seller" debouce="500"
-                                                    error="Debe indicar el precio por mayor">
-                                                    Precio por mayor
-                                                </x-form.input>
-                                            </div>
-                                            <!--/span-->
-                                        </div>
-                                        <!--/row-->
-                                        <div class="row">
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input"
-                                                        wire:model.debounce.500ms="product.over_sale" type="checkbox"
-                                                        role="switch" id="flexSwitchCheckDefault1">
-                                                    <label class="form-check-label" for="flexSwitchCheckDefault">Sobre
-                                                        Vender</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input"
-                                                        wire:model.debounce.500ms="product.force_size_unique"
-                                                        type="checkbox" role="switch" id="flexSwitchCheckDefault2">
-                                                    <label class="form-check-label"
-                                                        for="flexSwitchCheckDefault">Vender
-                                                        como una
-                                                        sola talla (ESTANDAR)</label>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                        </div>
-                                        <!--/row-->
-
-                                    </div>
-
-                                    <div class="botones d-flex justify-content-between mt-3">
-                                        <div class="form-actions">
-                                            <button type="button" wire:loading.attr="disabled" wire.target="save"
-                                                wire:click="save" class="btn btn-success"> <i
-                                                    class="fa fa-check"></i>
-                                                Guardar
-                                                Cambios</button>
-                                            <button type="button" class="btn btn-secondary">Cancel</button>
-                                        </div>
-
-                                        <div wire:loading wire:target="save" class="spinner-border" role="status">
-                                            <span class="sr-only">Espere...</span>
-                                        </div>
-                                    </div>
-
-
-                                </form>
-                            </div>
-                        </div>
-                        {{-- FIN de editar Producto --}}
-                    </div>
-
-                    <div class="col-lg-12 col-12">
-                        {{-- Lista de precios --}}
-                        @livewire('components.prices.show-prices', ['product' => $product], key('show-prices-' . $product->id))
-                        {{-- FIN de lista de precios --}}
-
-                        {{-- texto paa publicar en redes --}}
-                        <div class="alert alert-light" role="alert">
-                            <ul>
-                                <li>{{ $product->name }}</li>
-                                <li>Por solo: S/. {{ $product->prices->first()->value }}</li>
-                                <li>Tambien: {{ $product->price_oferta() }}</li>
-                                <li>Envio GRATIS a todo el Peru</li>
-                            </ul>
-
-                        </div>
-                        {{-- FIN texto paa publicar en redes --}}
-
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="row">
@@ -318,6 +328,21 @@
 
 
     </x-sectioncontent>
+
+    @push('script')
+        <script>
+            ClassicEditor
+                .create(document.querySelector('#editor'))
+                .then(editor => {
+                    editor.model.document.on('change:data', (e) => {
+                        @this.set('product.description', editor.getData());
+                    })
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        </script>
+    @endpush
 
 
 

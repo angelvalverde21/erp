@@ -14,7 +14,7 @@ class Color extends Model
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
-    protected $appends = ['image', 'thumb'];
+    protected $appends = ['image', 'thumb', 'large'];
     //Relacion muchos a muchos
 
     public function product()
@@ -97,6 +97,33 @@ class Color extends Model
         return $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
         //return url('/') . Storage::url($value);
     }
+
+    
+    public function getLargeAttribute()
+    {
+
+        $image = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
+
+        if ($image) {
+            return asset(Storage::url($image->large));
+        } else {
+            // $colors = $this->morphMany(Image::class, "imageable")->orderBy('id', 'DESC')->first();
+
+            //SE COLOCA ASI PORQUE "$this->colors" genera un bucle infinito
+            $color = Color::find($this->id);
+            
+            if($color){
+                foreach ($color->images as $image) {
+                    # code...
+                    return asset(Storage::url($image->large));
+                }
+            }
+
+            return false;
+        }
+        //return url('/') . Storage::url($value);
+    }
+
 
     public function getThumbAttribute2()
     {

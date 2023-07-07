@@ -4,7 +4,10 @@
         <div class="card">
 
             <div class="card-header py-3">
-                <x-form.button-open-modal class="primary" text='Agregar Precio' target="#editCarrierOrderDetails" />
+                <div class="header-content d-flex justify-content-between">
+                    <h5>Precios por lote</h5>
+                    <x-form.button-open-modal class="primary float-end" text='Agregar Precio' target="#editCarrierOrderDetails" />
+                </div>
             </div>
 
 

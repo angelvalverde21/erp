@@ -13,7 +13,6 @@
         <h6>{{ $colors->count() }} disenos disponibles</h6>
     </div>
 
-
     @if ($colors->count()>0)
 
         <div class="input-group mb-3">
@@ -27,7 +26,7 @@
 
         <div class="table-responsive">
 
-            <table class="table">
+            <table class="table table-bordered table-striped dataTable dtr-inline">
 
                 <thead>
                     <tr>
@@ -40,6 +39,7 @@
                 </thead>
 
                 <tbody>
+                    
 
                     <tr class="text-center">
                         <td class="text-center"></td>
@@ -58,6 +58,7 @@
                     </tr>
 
                     @foreach ($colors as $color)
+                    
                         <tr class="text-center">
                             <td class="text-center">{{ $color->id }}</td>
                             <td>
@@ -92,22 +93,7 @@
                                     @if ($color->label != '')
                                         <div>({{ $color->label }})</div>
                                     @endif
-                                    {{-- <a href="#" class="btn btn-secondary">Agregar info</a> --}}
 
-                                    {{-- Mostrar como modal de bootstrap --}}
-
-                                    {{-- <a href="#" data-toggle="modal" data-target="#zoom-{{ $color->id }}">
-                                        <img src="{{ Storage::url($color->image->name) }}" alt="" width="100px"
-                                            height="100%">
-                                    </a>
-
-                                    <x-modal title="Zoom" id="zoom-{{ $color->id }}" size="modal-lg">
-
-                                        <img src="{{ Storage::url($color->image->name) }}" alt="" width="100%" height="100%">
-
-                                    </x-modal> --}}
-
-                                    {{-- fin de mostrar como modal de bootstrap --}}
                                 </td>
 
                                 <td>
@@ -169,76 +155,6 @@
 
                 </x-modal>
 
-                {{-- modal para agregar variantes de la imagen --}}
-
-                {{-- <x-modal title="Agregar variantes" id="addImagesColor{{ $color->id }}" size="modal-lg">
-
-                    <div class="zoom-color">
-                        <div wire:ignore class="drop-zoom" wire:key="color-variants-form-upload-{{ $color->id }}">
-
-                            <form method="POST"
-                                action="{{ route('manage.products.upload.colors.variants', [$store->nickname, $color]) }}"
-                                class="dropzone" id="my-awesome-dropzone-variants-colors-edit">
-                            </form>
-
-                        </div>
-                    </div>
-
-                    <div class="input-group mb-3 mt-3">
-                        <input type="text" class="form-control" wire:model.debounce.500ms="color.name"
-                            placeholder="Color" aria-label="Color" aria-describedby="basic-addon1">
-                    </div>
-
-                    <button type="button" wire:loading.class="btn-secondary" wire:loading.attr="disabled"
-                        wire.target="save" wire:click="save" class="btn btn-success ml-auto"><i
-                            class="fa-solid fa-floppy-disk mr-1"></i> Guardar
-                        Cambios</button>
-
-                    <div class="spinner-border" wire:loading.flex wire:target="save" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-
-
-                    <table class="table table-striped mt-3">
-                        <tr>
-                            <td>#</td>
-                            <td>Color</td>
-                            <td>Created at</td>
-                            <td></td>
-                        </tr>
-
-                        @if ($color->images->count() == 1)
-                            @foreach ($color->images as $image)
-                                <tr>
-                                    <td>{{ $image->id }}</td>
-                                    <td><img src="{{ Storage::url($image->name) }}" width="100px" height="100%"
-                                            alt="">
-                                    </td>
-                                    <td>{{ $image->created_at }}</td>
-                                    <td wire:key="color-variante-{{ $image->id }}" class="text-center">
-                                        Para borrar, Agregue otra imagen
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @else
-                            @foreach ($color->images as $image)
-                                <tr>
-                                    <td>{{ $image->id }}</td>
-                                    <td><img src="{{ Storage::url($image->name) }}" width="100px" height="100%"
-                                            alt="">
-                                    </td>
-                                    <td>{{ $image->created_at }}</td>
-                                    <td wire:key="color-variante-{{ $image->id }}" class="text-center">
-                                        <a class="btn-color" href="#"
-                                            wire:click.prevent="deleteVarianteColor({{ $image->id }})"
-                                            wire:loading.attr="disabled"><i class="fa-solid fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-
-                    </table>
-                </x-modal> --}}
             @endforeach
 
         </div>
@@ -290,42 +206,4 @@
         };
     </script>
 
-    {{-- <script>
-        Dropzone.options.myAwesomeDropzoneVariantsColorsEdit = {
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            dictDefaultMessage: "<div>Actualizar color</div> <i class=\"fas fa-camera mt-5\" style=\"font-size: 18pt;\"></i>",
-            acceptedFiles: "image/*",
-            paramName: "file", // The name that will be used to transfer the file
-            maxFilesize: 10, //10MB max, Tambien hemos agregado un validador en el servidor
-            init: function() {
-
-                console.log('init');
-
-                var myDropzone = this;
-
-                this.on("sending", function(data, xhr, formData) {
-                    formData.append("total_amount", jQuery("#total_amount").val());
-                    9
-                    console.log('sending');
-                });
-
-
-            },
-            complete: function(file) {
-                this.removeFile(file);
-            },
-            queuecomplete: function() {
-                Livewire.emit('refreshColor');
-            },
-            accept: function(file, done) {
-                if (file.name == "justinbieber.jpg") {
-                    done("Naha, you don't.");
-                } else {
-                    done();
-                }
-            }
-        };
-    </script> --}}
 @endpush

@@ -19,6 +19,12 @@
     <!-- Styles -->
     {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}"> --}}
 
+    {{-- Ck Editor --}}
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
+
+    {{-- fin de CK Editor --}}
+
     <style>
         ul {
             margin: 0 !important;
