@@ -22,6 +22,8 @@ class PdfController extends Controller
             'content'=> []
         ]);
 
+        //return view('livewire.manage.orders.print.voucher', compact('order'));
+
         $pdf = $pdf->loadview('livewire.manage.orders.print.voucher', compact('order'));
         //return view('livewire.manage.orders.print.voucher', compact('order'));
         //return $pdf-> download ('prueba.pdf');

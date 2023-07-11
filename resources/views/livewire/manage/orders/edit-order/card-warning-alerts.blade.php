@@ -43,7 +43,7 @@
 
 
         @if ($order->observations_private)
-            <x-alert alert="danger">
+            <x-alert alert="warning">
                 (PRIVADO) {{ $order->observations_private }}
             </x-alert>
         @endif
