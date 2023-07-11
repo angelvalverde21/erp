@@ -45,7 +45,7 @@
 
     <x-content>
 
-        @if ($order->delivery_method_id == 1)
+
             <div class="row">
                 {{-- Direccion de envio --}}
                 <div class="col-12 col-lg-4" x-data="{ shipping_method: 1 }">
