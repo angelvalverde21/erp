@@ -279,7 +279,7 @@
 
                     <div class="modal-footer">
                         <button type="button" wire:loading.class="btn-secondary" wire:loading.attr="disabled"
-                            wire.target="save" wire:click="save" class="btn btn-info ml-auto"><i
+                            wire.target="save" wire:click="save" class="btn btn-success ml-auto"><i
                                 class="fa-solid fa-floppy-disk mr-1"></i>Guardar Cambios</button>
 
                         <div class="spinner-border" wire:loading.flex wire:target="save" role="status">
