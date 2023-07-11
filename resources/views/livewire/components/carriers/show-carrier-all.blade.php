@@ -80,7 +80,7 @@
 
                     </a>
                     
-                    <a href="{{ route('manage.couriers.edit', [$store->nickname, $carrier->id]) }}" class="btn btn-success"><i class="fa-solid fa-gear mr-2"></i>
+                    <a href="{{ route('manage.couriers.edit', [$order->store->id, $carrier->id]) }}" class="btn btn-success"><i class="fa-solid fa-gear mr-2"></i>
                         Editar Courier
                     </a>
                 </div>
