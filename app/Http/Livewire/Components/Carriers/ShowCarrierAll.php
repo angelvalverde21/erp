@@ -14,6 +14,8 @@ class ShowCarrierAll extends Component
 {
 
     protected $listeners = ['render'=>'render'];
+
+    public $store, $order;
     
     public function mount(Order $order){
        
