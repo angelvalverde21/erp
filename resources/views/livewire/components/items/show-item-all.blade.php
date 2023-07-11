@@ -44,7 +44,7 @@
                                 @if (isset($item->content->image))
                                     {{-- card-show-invoice.blade --}}
                                     <td class="text-center">
-                                        @for ($i = 0; $item->quantity; $i++)
+                                        @for ($i=0; $i<$item->quantity; $i++)
                                             <a href="{{ Storage::url($item->content->image) }}"
                                                 data-lightbox="show-images-preview"
                                                 data-title="Click the right half of the image to move forward.">
