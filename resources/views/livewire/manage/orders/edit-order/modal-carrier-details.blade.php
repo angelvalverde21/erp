@@ -87,7 +87,7 @@
             <div id="stepper2" class="bs-stepper linear">
                 <div class="bs-stepper-header" role="tablist">
                     <div class="step active" data-target="#test-l-1">
-                        <x-form.input-number wirevalue="order.shipping_cost_to_carrier" texticon="S/."
+                        <x-form.input-number wirevalue="order.shipping_cost_buyer" texticon="S/."
                             error="Este campo es requerido">
                             0.00
                         </x-form.input-number>
@@ -101,7 +101,7 @@
                     </div>
                     <div class="bs-stepper-line"></div>
                     <div class="step" data-target="#test-l-3">
-                        <x-form.input-number wirevalue="order.shipping_cost_buyer" texticon="S/."
+                        <x-form.input-number wirevalue="order.shipping_cost_to_carrier" texticon="S/."
                             error="Este campo es requerido">
                             0.00
                         </x-form.input-number>
