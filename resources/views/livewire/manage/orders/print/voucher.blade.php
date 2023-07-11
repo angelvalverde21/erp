@@ -122,11 +122,11 @@
             opacity: 0.5;
         }
 
-        .content-qr{
+        .content-qr {
             float: left;
         }
 
-        .resumen{
+        .resumen {
             float: right;
         }
     </style>
@@ -144,8 +144,7 @@
         {{-- OJO EN EL PDF SE DEBE USAR LA RUTA COMPLETA, POR ESO SE USA ASSETS --}}
 
         @if ($order->store->getOption('upload_logo_invoice'))
-            <img class="logo" src="{{ $order->store->getOption('upload_logo_invoice') }}"
-                alt="">
+            <img class="logo" src="{{ $order->store->getOption('upload_logo_invoice') }}" alt="">
         @else
             <h1 class="my-5">SU LOGO AQUI</h1>
         @endif
@@ -207,17 +206,17 @@
         <div class="content-header pt-2">
 
             <div class="content-qr">
-                        
+
                 @if ($order->store->getOption('code_yape'))
                     <div class="qr text-center w-100">
                         <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG($order->store->getOption('code_yape'), 'QRCODE') }}"
-                        alt="barcode" height="100" width="100" />
+                            alt="barcode" height="100" width="100" />
                     </div>
                     <div class="w-100 text-center"> Yape </div>
                 @else
                     <div class="logo_temp p-3">
-                        <img src="{{ asset(Storage::url('upload_qr_temp.jpg')) }}" alt="barcode"
-                        height="100" width="100" />
+                        <img src="{{ asset(Storage::url('upload_qr_temp.jpg')) }}" alt="barcode" height="100"
+                            width="100" />
                     </div>
 
                     {{-- <style>
@@ -263,12 +262,25 @@
 
         <hr>
         <div class="transporte ">
-            <div class="text-center">
-                Se transportara por: {{ $order->carrier_address->name }}
-            </div>
-            <div class="logo w-100 text-center">
-                <img src="{{ $order->carrier_address->user->getOption('logo_profile') }}" height="50px">
-            </div>
+
+
+            @switch($order->delivery_method_id)
+                @case(1)
+                    <div class="text-center">
+                        Se transportara por: {{ $order->carrier_address->name }}
+                    </div>
+                    <div class="logo w-100 text-center">
+                        <img src="{{ $order->carrier_address->user->getOption('logo_profile') }}" height="50px">
+                    </div>
+                @break
+
+                @case(2)
+                    <h1 class="w-100 text-center">RECOJO EN TIENDA</h1>
+                @break
+
+            @endswitch
+
+
         </div>
 
         @if (!$order->is_pay())
