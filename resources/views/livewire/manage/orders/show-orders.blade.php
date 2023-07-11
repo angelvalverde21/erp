@@ -8,7 +8,7 @@
 
         <div class="row mt-3">
 
-            @if ($tasks->count() > 0)
+            @if (isset($tasks))
 
                 @foreach ($tasks as $task)
                     <div class="col-md-3">
