@@ -9,7 +9,7 @@
                         <tr>
                             <td class="text-center">ID</td>
                             <td class="text-center">QTY</td>
-                            <td>Talla solicitada</td>
+                            <td class="text-center">Talla solicitada</td>
                             <td class="text-center">Imagen</td>
                             <td>Descripcion</td>
                             <td>Precio</td>
@@ -44,12 +44,14 @@
                                 @if (isset($item->content->image))
                                     {{-- card-show-invoice.blade --}}
                                     <td class="text-center">
-                                        <a href="{{ Storage::url($item->content->image) }}"
-                                            data-lightbox="show-images-preview"
-                                            data-title="Click the right half of the image to move forward.">
-                                            <img src="{{ Storage::url($item->content->image) }}" height="125px"
-                                                alt="">
-                                        </a>
+                                        @for ($i = 0; $item->quantity; $i++)
+                                            <a href="{{ Storage::url($item->content->image) }}"
+                                                data-lightbox="show-images-preview"
+                                                data-title="Click the right half of the image to move forward.">
+                                                <img src="{{ Storage::url($item->content->image) }}" height="125px"
+                                                    alt="">
+                                            </a>
+                                        @endfor
                                     </td>
                                 @else
                                     <td class="text-center">Sin imagen</td>
