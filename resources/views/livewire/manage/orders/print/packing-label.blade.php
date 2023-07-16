@@ -257,7 +257,14 @@
 
             <div class="codigo-barras my-3 text-center">
                 <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG('011136', 'C39+', 2, 50) }}" alt="barcode" />
-                <p style="font-size: 14pt">#011136</p>
+                <p style="font-size: 14pt">#{{ $order->id }}</p>
+            </div>
+
+            <div class="text-center">
+                Se transportara por: {{ $order->carrier_address->name }}
+            </div>
+            <div class="logo w-100 text-center">
+                <img src="{{ $order->carrier_address->user->getOption('logo_profile') }}" height="50px">
             </div>
 
             {{-- <div class="registro">
