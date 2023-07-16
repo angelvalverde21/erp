@@ -263,9 +263,9 @@
             <div class="text-center">
                 Se transportara por: {{ $order->carrier_address->name }}
             </div>
-            <div class="logo w-100 text-center">
+            {{-- <div class="logo w-100 text-center">
                 <img src="{{ $order->carrier_address->user->getOption('logo_profile') }}" height="50px">
-            </div>
+            </div> --}}
 
             {{-- <div class="registro">
                 N° REGISTRO: 202305594774(1/7)
