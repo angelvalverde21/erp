@@ -103,6 +103,7 @@ class Sidebar extends Component
                             "active"=>"couriers",
                             "icon"=>"fa-solid fa-truck-fast",
                         ],
+
                         [
                             "name"=>"Staff",
                             "active"=>"staff",
@@ -127,6 +128,13 @@ class Sidebar extends Component
                             "active"=>"tasks",
                             "slug"=>route('manage.tasks',[$this->store->nickname]),
                             "icon"=>"fa-solid fa-images",
+                        ],
+
+                        [
+                            "name"=>"Almacenes",
+                            "active"=>"warehouses",
+                            "slug"=>route('manage.warehouses',[$this->store->nickname]),
+                            "icon"=>"fa-solid fa-warehouse",
                         ],
                     ]
                 ],

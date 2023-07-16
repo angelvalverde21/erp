@@ -128,7 +128,7 @@ class makeListSelectable extends Command
 
         // Log::info($livewirePath);
         //Leemos la plantilla
-        $fileContent = File::get(app_path('Console/Commands/makeSelectable.blade.php'));
+        $fileContent = File::get(app_path('Console/Commands/makeSelectable.blade.php')); //ojo tiene que ser .blade
 
         $updatedContents = str_replace(
             ['{{ $nameComponent }}', '{{ $pathNameView }}'],

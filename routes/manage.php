@@ -43,6 +43,7 @@ use App\Http\Livewire\Manage\Profile\ShowProfileWeb;
 use App\Http\Livewire\Manage\Staff\ShowStaff;
 use App\Http\Livewire\Manage\Tasks\EditTask;
 use App\Http\Livewire\Manage\Tasks\ShowTasks;
+use App\Http\Livewire\Manage\WareHouses\ShowWareHouses;
 use App\Http\Livewire\ShowAlbumsColor;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
@@ -184,11 +185,16 @@ Route::name('manage.')->middleware('StoreExist')->group(function () {
    
    Route::get('/orders/create-with-user/{user}', [ManageOrderController::class, 'createOrderWithUserId'])->name('orders.create.with.user');
 
+
    //Post upload home carousel
 
    Route::post('/post/profile/carousel', [UserImageController::class, 'uploadCarousel'])->name('post.profile.carousel');
 
    //carriers
+
+   //warehouse
+
+   Route::get('/warehouses', ShowWareHouses::class)->name('warehouses');
 
       // Route::get('/carriers', ShowCarriers::class)->name('carriers');
 

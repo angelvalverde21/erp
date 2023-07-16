@@ -263,15 +263,16 @@
         <hr>
         <div class="transporte ">
 
+            <div class="text-center">
+                Se transportara por: {{ $order->carrier_address->name }}
+            </div>
+            <div class="logo w-100 text-center">
+                <img src="{{ $order->carrier_address->user->getOption('logo_profile') }}" height="50px">
+            </div>
 
             @switch($order->delivery_method_id)
                 @case(1)
-                    <div class="text-center">
-                        Se transportara por: {{ $order->carrier_address->name }}
-                    </div>
-                    <div class="logo w-100 text-center">
-                        <img src="{{ $order->carrier_address->user->getOption('logo_profile') }}" height="50px">
-                    </div>
+
                 @break
 
                 @case(2)
