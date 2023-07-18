@@ -74,7 +74,7 @@
                                     @else
 
                                         <a style="color: rgb(100, 100, 100);"
-                                            href="{{ route('user.products.edit', [$store->nickname, $product->id]) }}"><span
+                                            href="{{ route('manage.products.edit', [$store->nickname, $product->id]) }}"><span
                                                 style="font-size: 50px;"><i
                                                     class="fa-solid fa-image"></i></span></a>
 
