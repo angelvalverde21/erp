@@ -42,7 +42,7 @@ class UserImageController extends Controller
 
     }
 
-    public function uploadImageOption($nickname, Request $request){
+    public function uploadImageOption($nickname, Request $request, $user=null){
 
         $existe = false;
 

@@ -212,7 +212,7 @@
                             Guardar</button>
 
                         {{-- el user es null porque solo estamos considerando los parametros de la tienda, en carriers se usa el paramtro de user --}}
-                        @livewire('components.profile.upload-option', ['store' => $store, 'field' => 'upload_qr_yape', 'user' => null, 'text' => 'Subir Qr Yape'], key('upload_qr_yape'))
+                        @livewire('components.profile.upload-option', ['store' => $store, 'field' => 'upload_qr_yape', 'text' => 'Subir Qr Yape'], key('upload_qr_yape'))
 
                     </div>
 
@@ -258,7 +258,7 @@
                             class="fa-solid fa-floppy-disk mr-1"></i>
                         Guardar</button>
 
-                        @livewire('components.profile.upload-option', ['store' => $store, 'field' => 'upload_qr_plin', 'user' => null, 'text' => 'Subir Qr Plin'], key('upload_qr_plin'))
+                        @livewire('components.profile.upload-option', ['store' => $store, 'field' => 'upload_qr_plin','text' => 'Subir Qr Plin'], key('upload_qr_plin'))
                     </div>
                 </div>
             </div>
