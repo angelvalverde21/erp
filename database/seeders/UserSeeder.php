@@ -129,11 +129,7 @@ class UserSeeder extends Seeder
 
         RoleStoreUser::create(
             [
-<<<<<<< HEAD
-                'user_id' => '232',
-=======
                 'user_id' => User::MAIN_ID,
->>>>>>> temp
                 'role_id' => '12',
                 'store_id' => '10'
             ]
@@ -155,11 +151,7 @@ class UserSeeder extends Seeder
 
         RoleStoreUser::create(
             [
-<<<<<<< HEAD
-                'user_id' => '232',
-=======
                 'user_id' => User::MAIN_ID, //propietario
->>>>>>> temp
                 'role_id' => '13',
                 'store_id' => '11'
             ]
@@ -170,30 +162,14 @@ class UserSeeder extends Seeder
             'name' => 'Internet',
             'nickname' => 'internet',
             'email' => 'internet@ara.pe',
-<<<<<<< HEAD
-            'phone' => '905700001',
-            'ruc' => '11111111811111',
-            'logo' => 'stores/logos/' . $this->faker->image('public/storage/stores/logos', 300, 300, null, false),
-=======
             'phone' => '561515666',
             'ruc'=> '11111111111111',
             'logo' => 'stores/logos/' . $this->faker->image('public/storage/stores/logos',300,300, null, false),
->>>>>>> temp
             'password' => bcrypt('6yhjentrksmlfdavn9565156fsdfsd')
 
         ])->syncRoles(['name' => 'internet']);
 
 
-<<<<<<< HEAD
-        User::create([
-            'id' => '13',
-            'name' => 'Juan Perez',
-            'email' => 'juanperez21@gmail.com',
-            'phone' => '995829199',
-            'dni' => '12345778',
-            'password' => bcrypt('12345678'),
-=======
->>>>>>> temp
 
 
     }

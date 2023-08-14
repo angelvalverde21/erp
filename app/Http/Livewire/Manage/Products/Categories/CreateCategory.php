@@ -53,7 +53,6 @@ class CreateCategory extends Component
         //este emit necesita un listener
         $this->emit('creado');
 
-
         //Log::debug($this->category);
         //$this->product->save();
 

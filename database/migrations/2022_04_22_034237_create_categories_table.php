@@ -21,8 +21,8 @@ class CreateCategoriesTable extends Migration
             
             $table->string('image')->nullable();
 
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')->references('id')->on('categories');
 
             $table->boolean('has_color')->default(false);
             $table->boolean('has_size')->default(false);

@@ -285,6 +285,14 @@ function corregirPhone($value)
     }
 }
 
+function corregirEmail($value)
+{
+    if ($value == "") {
+        return NULL;
+    } else {
+        return $value;
+    }
+}
 
 function corregirDistrict($value)
 {
@@ -296,14 +304,7 @@ function corregirDistrict($value)
     }
 }
 
-function corregirEmail($value)
-{
-    if ($value == "") {
-        return NULL;
-    } else {
-        return $value;
-    }
-}
+
 
 
 function corregirPrecio($value)

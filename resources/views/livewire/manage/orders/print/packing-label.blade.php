@@ -247,7 +247,7 @@
             <div class="sender-details">
                 <li>REMITE: VANESA HINOSTROZA GONZALES</li>
                 <li>DNI: 45631639</li>
-                <li>CEL: 945101774</li>
+                <li>CEL: {{ $order->store->options }}</li>
                 <li>Residencial Patria Nueva S/N, Los olivos - LIMA</li>
             </div>
 
